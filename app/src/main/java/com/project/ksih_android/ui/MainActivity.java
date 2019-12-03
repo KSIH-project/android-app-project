@@ -1,8 +1,10 @@
-package com.project.ksih_android;
+package com.project.ksih_android.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.project.ksih_android.R;
 
 public class MainActivity extends AppCompatActivity {
 
