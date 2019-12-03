@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "281196939942",
+    "firebase_url": "https://ksih-android.firebaseio.com",
+    "project_id": "ksih-android",
+    "storage_bucket": "ksih-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281196939942:android:1f891cbaab38ec1a5f0267",
+        "android_client_info": {
+          "package_name": "com.project.ksih_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281196939942-m49pr5590f0bhocb8si3kg0e10ijod5k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.ksih_android",
+            "certificate_hash": "3a717cc81d8b128c2ae6ca7d5578f223aa77b374"
+          }
+        },
+        {
+          "client_id": "281196939942-l2poo47187h9s9vfervirp0l3g3n1nk1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9Ml1lfWhIT3ucAI9XaDrI99Ot8z54aw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281196939942-l2poo47187h9s9vfervirp0l3g3n1nk1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
