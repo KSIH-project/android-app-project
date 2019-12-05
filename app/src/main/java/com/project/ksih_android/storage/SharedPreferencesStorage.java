@@ -50,7 +50,7 @@ public class SharedPreferencesStorage {
         return mPreferences.getString(key, "");
     }
 
-    public boolean hasSeenonBoardingScreen(String key) {
+    public boolean hasSeenOnBoardingScreen(String key) {
         return  mPreferences.getBoolean(key, false);
     }
 
