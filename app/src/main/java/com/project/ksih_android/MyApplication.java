@@ -11,7 +11,7 @@ import timber.log.Timber;
  */
 
 /*
-* This is not the MainActivity class
+* This is not the AuthActivity class
 *  This class is for Logging with Timber
 **/
 
