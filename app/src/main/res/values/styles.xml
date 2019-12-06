@@ -8,4 +8,36 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Custom theme. -->
+    <style name="customTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/button_color</item>
+    </style>
+
+    <!-- Toolbar text style -->
+    <style name="toolBarTextAppearance">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Button text style -->
+    <style name="buttonTextStyle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Button Style -->
+    <style name="buttonStyle">
+        <item name="backgroundTint">@color/button_color</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
 </resources>
