@@ -48,7 +48,7 @@ public class OnBoardingFragment extends Fragment {
             public void onChanged(OnBoardingViewModel.UserStates userStates) {
                 switch (userStates) {
                     case SEEN_ON_BOARDING_SCREEN:
-                        mNavController.navigate(R.id.loginFragment);
+                        mNavController.navigate(R.id.navigation_home);
                         break;
                     case NOT_SEEN_ON_BOARDING_SCREEN:
                         // Display OnBoarding Screen
@@ -62,7 +62,7 @@ public class OnBoardingFragment extends Fragment {
             public void onClick(View view) {
                 mOnBoardingViewModel.seenOnBoardingScreen(true);
                 mStorage.setSeenOnBoardingScreen(Constants.ON_BOARDING_KEY, true);
-                mNavController.navigate(R.id.loginFragment);
+                mNavController.navigate(R.id.navigation_home);
             }
         });
     }
