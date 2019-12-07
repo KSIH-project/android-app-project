@@ -81,43 +81,32 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            style="@style/textInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
-            android:layout_marginEnd="52dp"
             android:hint="Email"
             app:error="@{login.login.emailError}"
-            app:errorTextAppearance="@style/errorTextStyle"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/textInputEdittextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/color_text_input_background"
-                android:fontFamily="@font/roboto_medium"
                 android:inputType="textEmailAddress"
                 android:text="@={login.login.email}"
-                android:textSize="13sp"
-
                 app:onFocus="@{login.getEmailOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout2"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            style="@style/textInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
-            android:layout_marginEnd="52dp"
-            android:fontFamily="@font/roboto_medium"
             android:hint="Password"
-            android:textSize="13sp"
             app:error="@{login.login.passwordError}"
-            app:errorTextAppearance="@style/errorTextStyle"
             app:layout_constraintBottom_toTopOf="@+id/button_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,13 +114,11 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/textInputEdittextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/color_text_input_background"
-                android:fontFamily="@font/roboto_medium"
                 android:inputType="textPassword"
                 android:text="@={login.login.password}"
-                android:textSize="13sp"
                 app:onFocus="@{login.getPasswordOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
