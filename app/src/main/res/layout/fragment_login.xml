@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="login"
-            type="com.project.ksih_android.ui.auth.LoginViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
-            android:text="Forgot Password"
+            android:text="Forgot Password?"
+            android:textColor="@color/dark_text_color"
             android:textSize="13sp"
             app:layout_constraintBottom_toTopOf="@+id/register_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +38,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
             android:text="Register"
+            android:textColor="@color/dark_text_color"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,10 +70,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
             android:layout_marginEnd="52dp"
-            android:text="Sign In"
-            android:textAppearance="@style/buttonTextStyle"
             android:enabled="@{login.login.valid}"
             android:onClick="@{() -> login.onButtonClick()}"
+            android:text="Sign In"
+            android:textAppearance="@style/buttonTextStyle"
             app:layout_constraintBottom_toTopOf="@+id/forgot_password_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +103,7 @@
                 android:text="@={login.login.email}"
                 android:textSize="13sp"
 
-                app:onFocus="@{login.getEmailOnFocusChangeListener()}"/>
+                app:onFocus="@{login.getEmailOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -133,10 +130,17 @@
                 android:background="@color/color_text_input_background"
                 android:fontFamily="@font/roboto_medium"
                 android:inputType="textPassword"
-                android:textSize="13sp"
                 android:text="@={login.login.password}"
-                app:onFocus="@{login.getPasswordOnFocusChangeListener()}"/>
+                android:textSize="13sp"
+                app:onFocus="@{login.getPasswordOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="login"
+            type="com.project.ksih_android.ui.auth.LoginViewModel" />
+    </data>
 </layout>

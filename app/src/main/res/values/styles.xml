@@ -47,4 +47,12 @@
         <item name="android:paddingBottom">12dp</item>
     </style>
 
+    <!-- Borderless Button Style -->
+    <style name="borderlessButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">#111111</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">normal</item>
+        <!--<item name="android:fontFamily">@font/roboto_medium"</item>-->
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>

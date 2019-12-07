@@ -5,5 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="button_color">#8E2623</color>
     <color name="button_color_disabled">#966A69</color>
+    <color name="dark_text_color">#111111</color>
     <color name="color_text_input_background">#C4C4C4</color>
 </resources>
