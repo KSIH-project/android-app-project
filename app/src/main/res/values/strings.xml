@@ -4,4 +4,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="error_format_invalid">Invalid email format</string>
+    <string name="error_too_short_password">Password must be more than 5 characters</string>
+    <string name="error_too_short_email">Email is too short</string>
 </resources>

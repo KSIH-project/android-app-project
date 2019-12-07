@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.project.ksih_android.R;
+import com.project.ksih_android.databinding.FragmentLoginBinding;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 /**
@@ -18,10 +22,13 @@ import androidx.navigation.Navigation;
  */
 public class LoginFragment extends Fragment {
 
+    private LoginViewModel mViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        //return inflater.inflate(R.layout.fragment_login, container, false);
+        return setUpBindings(savedInstanceState, inflater, container);
     }
 
     @Override
@@ -32,6 +39,26 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment);
+            }
+        });
+    }
+
+    private View setUpBindings(Bundle savedInstanceState,LayoutInflater inflater, ViewGroup container) {
+        FragmentLoginBinding loginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
+        mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        if (savedInstanceState == null) {
+            mViewModel.init();
+        }
+        loginBinding.setLogin(mViewModel);
+        setUpButtonClick();
+        return loginBinding.getRoot();
+    }
+
+    private void setUpButtonClick() {
+        mViewModel.getButtonClick().observe(this, new Observer<LoginFields>() {
+            @Override
+            public void onChanged(LoginFields loginFields) {
+                //TODO: Navigate to Home Activity
             }
         });
     }
