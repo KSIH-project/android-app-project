@@ -22,7 +22,7 @@ import androidx.navigation.Navigation;
  */
 public class LoginFragment extends Fragment {
 
-    private LoginViewModel mViewModel;
+    private AuthViewModel mViewModel;
 
     @Nullable
     @Override
@@ -45,7 +45,7 @@ public class LoginFragment extends Fragment {
 
     private View setUpBindings(Bundle savedInstanceState,LayoutInflater inflater, ViewGroup container) {
         FragmentLoginBinding loginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
-        mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
         if (savedInstanceState == null) {
             mViewModel.init();
         }
@@ -55,9 +55,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void setUpButtonClick() {
-        mViewModel.getButtonClick().observe(this, new Observer<LoginFields>() {
+        mViewModel.getButtonClick().observe(this, new Observer<AuthFields>() {
             @Override
-            public void onChanged(LoginFields loginFields) {
+            public void onChanged(AuthFields authFields) {
                 //TODO: Navigate to Home Activity
             }
         });

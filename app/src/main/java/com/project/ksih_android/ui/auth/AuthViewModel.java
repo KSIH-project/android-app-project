@@ -12,14 +12,14 @@ import androidx.lifecycle.ViewModel;
 /**
  * Created by SegunFrancis
  */
-public class LoginViewModel extends ViewModel {
-    private LoginFields login;
+public class AuthViewModel extends ViewModel {
+    private AuthFields login;
     private View.OnFocusChangeListener onFocusEmail;
     private View.OnFocusChangeListener onFocusPassword;
-    private MutableLiveData<LoginFields> buttonClick = new MutableLiveData<>();
+    private MutableLiveData<AuthFields> buttonClick = new MutableLiveData<>();
 
     void init() {
-        login = new LoginFields();
+        login = new AuthFields();
         onFocusEmail = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focused) {
@@ -41,7 +41,7 @@ public class LoginViewModel extends ViewModel {
         };
     }
 
-    public LoginFields getLogin() {
+    public AuthFields getLogin() {
         return login;
     }
 
@@ -59,7 +59,7 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<LoginFields> getButtonClick() {
+    public MutableLiveData<AuthFields> getButtonClick() {
         return buttonClick;
     }
 

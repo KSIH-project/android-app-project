@@ -10,7 +10,7 @@ import androidx.databinding.library.baseAdapters.BR;
 /**
  * Created by SegunFrancis
  */
-public class LoginFields extends BaseObservable {
+public class AuthFields extends BaseObservable {
     private String email;
     private String password;
     public ObservableField<Integer> emailError = new ObservableField<>();
