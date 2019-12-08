@@ -5,7 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentLoginBinding;
 
@@ -16,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
+import timber.log.Timber;
 
 /**
  * Created by SegunFrancis
@@ -23,11 +30,12 @@ import androidx.navigation.Navigation;
 public class LoginFragment extends Fragment {
 
     private LoginViewModel mViewModel;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return inflater.inflate(R.layout.fragment_login, container, false);
+        mAuth = FirebaseAuth.getInstance();
         return setUpBindings(savedInstanceState, inflater, container);
     }
 
@@ -59,7 +67,41 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(LoginFields loginFields) {
                 //TODO: Navigate to Home Activity
+                signInUser(loginFields.getEmail(), loginFields.getPassword());
             }
         });
+    }
+
+    private void signInUser(final String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Timber.d("Log in successful");
+                    if (!isUserVerified(mAuth.getCurrentUser())) {
+                        Toast.makeText(getActivity(), "Your Email has not been verified", Toast.LENGTH_SHORT).show();
+                        logout();
+                        Timber.d("USerNotVerified");
+                    } else {
+                        Timber.d("UserIsVerified");
+                        Toast.makeText(getActivity(), "Sing in successful", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Sign in was not successful", Toast.LENGTH_SHORT).show();
+                    Timber.d("SignInError: " + task.getException().getMessage());
+                }
+            }
+        });
+    }
+
+    private boolean isUserVerified(FirebaseUser user) {
+        return user.isEmailVerified();
+    }
+
+    private void logout() {
+        if (mAuth.getCurrentUser() != null) {
+            mAuth.signOut();
+        }
     }
 }
