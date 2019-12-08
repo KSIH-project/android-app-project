@@ -79,17 +79,17 @@ public class RegisterFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
                                 // TODO: Open email app option
                             } else {
-                                Toast.makeText(getActivity(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
                                 Timber.d("Sending Verification Failed: " + task.getException().getMessage());
                             }
                         }
                     });
                 } else {
                     // Sign in fails
-                    Toast.makeText(getActivity(), "Couldn't create new account", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Couldn't create new account", Toast.LENGTH_SHORT).show();
                     Timber.d("CreateUserWithEmail:failure \n" + task.getException().getMessage());
                 }
             }
