@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toTopOf="@+id/register_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_sign_in" />
+            app:layout_constraintTop_toBottomOf="@id/button_reset_password" />
 
         <TextView
             android:id="@+id/register_text"
@@ -64,7 +64,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_sign_in"
+            android:id="@+id/button_reset_password"
             style="@style/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -96,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
                 android:text="@={login.login.email}"
                 app:onFocus="@{login.getEmailOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +108,7 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             app:error="@{login.login.passwordError}"
-            app:layout_constraintBottom_toTopOf="@+id/button_sign_in"
+            app:layout_constraintBottom_toTopOf="@+id/button_reset_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout"

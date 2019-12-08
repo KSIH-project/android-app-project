@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentRegisterBinding;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -25,23 +25,12 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return inflater.inflate(R.layout.fragment_register, container, false);
         return setUpBindings(savedInstanceState, inflater, container);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private View setUpBindings(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container) {
         FragmentRegisterBinding registerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false);
-        registerBinding.signUpToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requireActivity().onBackPressed();
-            }
-        });
+        onBackPressed(registerBinding.signUpToolbar);
         mViewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
         if (savedInstanceState == null) {
             mViewModel.init();
@@ -56,6 +45,15 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onChanged(AuthFields authFields) {
                 //TODO: Navigate to Login Fragment
+            }
+        });
+    }
+
+    private void onBackPressed(MaterialToolbar toolbar) {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().onBackPressed();
             }
         });
     }

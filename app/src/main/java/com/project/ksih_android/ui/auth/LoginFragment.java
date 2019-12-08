@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentLoginBinding;
 
@@ -23,28 +24,18 @@ import androidx.navigation.Navigation;
 public class LoginFragment extends Fragment {
 
     private AuthViewModel mViewModel;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return inflater.inflate(R.layout.fragment_login, container, false);
         return setUpBindings(savedInstanceState, inflater, container);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        TextView registerText = view.findViewById(R.id.register_text);
-        registerText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment);
-            }
-        });
-    }
-
-    private View setUpBindings(Bundle savedInstanceState,LayoutInflater inflater, ViewGroup container) {
+    private View setUpBindings(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container) {
         FragmentLoginBinding loginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
+        navigateToForgottenPasswordFragment(loginBinding.forgotPasswordText);
+        navigateToRegisterFragment(loginBinding.registerText);
         mViewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
         if (savedInstanceState == null) {
             mViewModel.init();
@@ -59,6 +50,24 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(AuthFields authFields) {
                 //TODO: Navigate to Home Activity
+            }
+        });
+    }
+
+    private void navigateToForgottenPasswordFragment(TextView view) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
+            }
+        });
+    }
+
+    private void navigateToRegisterFragment(TextView view) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment);
             }
         });
     }

@@ -41,6 +41,24 @@ public class AuthFields extends BaseObservable {
         return valid;
     }
 
+    @Bindable
+    public boolean isValidEmail() {
+        if (email != null && email.length() > 5) {
+            int indexOfAt = email.indexOf("@");
+            int indexOfDot = email.lastIndexOf(".");
+            if (indexOfAt > 0 && indexOfDot > indexOfAt && indexOfDot < email.length() - 1) {
+                emailError.set(null);
+                return true;
+            } else {
+                emailError.set(R.string.error_format_invalid);
+                return false;
+            }
+        } else {
+            emailError.set(R.string.error_too_short_email);
+            return false;
+        }
+    }
+
     public boolean isEmailValid(boolean setMessage) {
         if (email != null && email.length() > 5) {
             int indexOfAt = email.indexOf("@");

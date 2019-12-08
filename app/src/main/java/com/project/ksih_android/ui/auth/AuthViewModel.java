@@ -41,6 +41,13 @@ public class AuthViewModel extends ViewModel {
         };
     }
 
+    void forgotPasswordInit(TextInputEditText et) {
+        login = new AuthFields();
+        if (et.getText().length() > 0) {
+            login.isEmailValid(true);
+        }
+    }
+
     public AuthFields getLogin() {
         return login;
     }
@@ -55,6 +62,12 @@ public class AuthViewModel extends ViewModel {
 
     public void onButtonClick() {
         if (login.isValid()) {
+            buttonClick.setValue(login);
+        }
+    }
+
+    public void onRecoveryButtonClicked() {
+        if (login.isValidEmail()) {
             buttonClick.setValue(login);
         }
     }
