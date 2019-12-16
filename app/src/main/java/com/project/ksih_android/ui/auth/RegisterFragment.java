@@ -68,14 +68,14 @@ public class RegisterFragment extends Fragment {
     }
 
     private void createNewUser(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success
                     Timber.d("CreateUserWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
-                    user.sendEmailVerification().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                    user.sendEmailVerification().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
