@@ -27,3 +27,7 @@
   **[] $VALUES;
   public *;
 }
+
+# Firebase Authentication
+-keepattributes Signature
+-keepattributes *Annotation*
