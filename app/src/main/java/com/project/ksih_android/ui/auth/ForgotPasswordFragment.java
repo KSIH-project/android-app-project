@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentForgotPasswordBinding;
 
@@ -15,6 +19,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import timber.log.Timber;
 
 /**
  * Created by SegunFrancis
@@ -22,10 +27,12 @@ import androidx.lifecycle.ViewModelProviders;
 public class ForgotPasswordFragment extends Fragment {
 
     private AuthViewModel mViewModel;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         return setUpBindings(savedInstanceState, inflater, container);
     }
 
@@ -46,6 +53,7 @@ public class ForgotPasswordFragment extends Fragment {
             @Override
             public void onChanged(AuthFields authFields) {
                 //TODO: Navigate to Login Fragment
+                resetPassword(authFields.getEmail());
             }
         });
     }
@@ -55,6 +63,20 @@ public class ForgotPasswordFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 requireActivity().onBackPressed();
+            }
+        });
+    }
+
+    private void resetPassword(String password) {
+        mAuth.sendPasswordResetEmail(password).addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Check your email for password reset link", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    Timber.d(task.getException().getLocalizedMessage());
+                }
             }
         });
     }
