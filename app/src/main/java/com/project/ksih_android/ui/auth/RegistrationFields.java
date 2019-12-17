@@ -49,7 +49,7 @@ public class RegistrationFields extends BaseObservable {
     }
 
     @Bindable
-    public boolean isVslid() {
+    public boolean isValid() {
         boolean valid = isEmailValid(false);
         valid = isPasswordValid(false) && valid;
         return valid;

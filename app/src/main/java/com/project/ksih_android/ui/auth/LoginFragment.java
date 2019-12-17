@@ -29,7 +29,7 @@ import timber.log.Timber;
  */
 public class LoginFragment extends Fragment {
 
-    private LoginViewModel mViewModel;
+    /*private LoginViewModel mViewModel;
     private FirebaseAuth mAuth;
 
     @Nullable
@@ -103,5 +103,5 @@ public class LoginFragment extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             mAuth.signOut();
         }
-    }
+    }*/
 }

@@ -42,8 +42,8 @@
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/forgot_password_text" />
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
@@ -63,7 +63,7 @@
                 app:titleTextAppearance="@style/toolBarTextAppearance" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.button.MaterialButton
+    <!--    <com.google.android.material.button.MaterialButton
             android:id="@+id/button_sign_in"
             style="@style/buttonStyle"
             android:layout_width="0dp"
@@ -120,14 +120,14 @@
                 android:inputType="textPassword"
                 android:text="@={login.login.password}"
                 app:onFocus="@{login.getPasswordOnFocusChangeListener()}" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <data>
+    <!--<data>
 
         <variable
             name="login"
             type="com.project.ksih_android.ui.auth.AuthViewModel" />
-    </data>
+    </data>-->
 </layout>
