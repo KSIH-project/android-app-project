@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="registration"
+            name="registerModel"
             type="com.project.ksih_android.ui.auth.RegistrationViewModel" />
     </data>
 
@@ -52,8 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
             android:layout_marginEnd="52dp"
-            android:enabled="@{registration.mRegistrationFields.valid}"
-            android:onClick="@{() -> registration.onButtonClick()}"
+            android:enabled="@{registerModel.registration.valid}"
+            android:onClick="@{() -> registerModel.onButtonClick()}"
             android:text="Sign Up"
             android:textAppearance="@style/buttonTextStyle"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,7 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Email"
-            app:error="@{registration.mRegistrationFields.emailError}"
+            app:error="@{registerModel.registration.emailError}"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,8 +80,8 @@
                 android:layout_height="match_parent"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
-                android:text="@={registration.mRegistrationFields.email}"
-                app:onFocus="@{registration.getEmailOnFocusChangeListener()}" />
+                android:text="@={registerModel.registration.email}"
+                app:onFocus="@{registerModel.getEmailOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -90,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Password"
-            app:error="@{registration.mRegistrationFields.passwordError}"
+            app:error="@{registerModel.registration.passwordError}"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,8 +103,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
-                android:text="@={registration.mRegistrationFields.password}"
-                app:onFocus="@{registration.getPasswordOnFocusChangeListener()}" />
+                android:text="@={registerModel.registration.password}"
+                app:onFocus="@{registerModel.getPasswordOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -113,7 +113,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Confirm Password"
-            app:error="@{registration.mRegistrationFields.passwordError}"
+            app:error="@{registerModel.registration.passwordError}"
             app:layout_constraintBottom_toTopOf="@+id/button_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,8 +126,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
-                android:text="@={registration.mRegistrationFields.confirmPassword}"
-                app:onFocus="@{registration.getPasswordOnFocusChangeListener()}" />
+                android:text="@={registerModel.registration.confirmPassword}"
+                app:onFocus="@{registerModel.getConfirmPasswordOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,7 +51,13 @@ public class RegistrationFields extends BaseObservable {
     @Bindable
     public boolean isValid() {
         boolean valid = isEmailValid(false);
-        valid = isPasswordValid(false) && valid;
+        valid = isPasswordValid(false) && valid && isConfirmValid();
+        return valid;
+    }
+
+    public boolean isConfirmValid() {
+        boolean valid = isEmailValid(false);
+        valid = isConfirmPasswordValid(false) && valid;
         return valid;
     }
 
@@ -76,14 +82,21 @@ public class RegistrationFields extends BaseObservable {
     }
 
     public boolean isPasswordValid(boolean setMessage) {
-        if (password != null && password.length() > 5 && TextUtils.equals(password, confirmPassword)) {
+        if (password != null && password.length() > 5) {
             passwordError.set(null);
             return true;
-        } else if (!TextUtils.equals(password, confirmPassword)) {
-            passwordError.set(R.string.error_mismatch_password);
-            return false;
         } else {
             if (setMessage) passwordError.set(R.string.error_too_short_password);
+            return false;
+        }
+    }
+
+    public boolean isConfirmPasswordValid(boolean setMessage) {
+        if (TextUtils.equals(password, confirmPassword)) {
+            passwordError.set(null);
+            return true;
+        } else {
+            if (setMessage) passwordError.set(R.string.error_mismatch_password);
             return false;
         }
     }

@@ -29,6 +29,7 @@ import timber.log.Timber;
 public class RegisterFragment extends Fragment {
     private FirebaseAuth mAuth;
     private RegistrationViewModel mViewModel;
+    private FragmentRegisterBinding mRegisterBinding;
 
     @Nullable
     @Override
@@ -38,19 +39,20 @@ public class RegisterFragment extends Fragment {
     }
 
     private View setUpBindings(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container) {
-        FragmentRegisterBinding registerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false);
+        mRegisterBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false);
         mViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
         if (savedInstanceState == null) {
             mViewModel.init();
         }
-        registerBinding.signUpToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mRegisterBinding.signUpToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requireActivity().onBackPressed();
             }
         });
+        mRegisterBinding.setRegisterModel(mViewModel);
         setUpButtonClick();
-        return registerBinding.getRoot();
+        return mRegisterBinding.getRoot();
     }
 
     private void  setUpButtonClick() {
@@ -76,7 +78,7 @@ public class RegisterFragment extends Fragment {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
                                 // TODO: Open email app option
-                                // TODO: Navigate to login fragment
+                                navigateToLoginFragment(mRegisterBinding.buttonSignIn);
                             } else {
                                 Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
                                 Timber.d("Sending Verification Failed: " + task.getException().getMessage());
@@ -90,5 +92,9 @@ public class RegisterFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void navigateToLoginFragment(View v) {
+        Navigation.findNavController(v).navigate(R.id.loginFragment);
     }
 }

@@ -13,20 +13,20 @@ import androidx.lifecycle.ViewModel;
  * Created by SegunFrancis
  */
 public class RegistrationViewModel extends ViewModel {
-    private RegistrationFields mRegistrationFields;
+    private RegistrationFields registration;
     private View.OnFocusChangeListener onFocusEmail;
     private View.OnFocusChangeListener onFocusPassword;
     private View.OnFocusChangeListener onFocusConfirmPassword;
     private MutableLiveData<RegistrationFields> buttonClick = new MutableLiveData<>();
 
     void init() {
-        mRegistrationFields = new RegistrationFields();
+        registration = new RegistrationFields();
         onFocusEmail = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focused) {
                 TextInputEditText et = (TextInputEditText) view;
                 if (et.getText().length() > 0 && focused) {
-                    mRegistrationFields.isEmailValid(true);
+                    registration.isEmailValid(true);
                 }
             }
         };
@@ -36,7 +36,7 @@ public class RegistrationViewModel extends ViewModel {
             public void onFocusChange(View view, boolean focused) {
                 TextInputEditText et = (TextInputEditText) view;
                 if (et.getText().length() > 0 && !focused) {
-                    mRegistrationFields.isPasswordValid(true);
+                    registration.isPasswordValid(true);
                 }
             }
         };
@@ -46,14 +46,14 @@ public class RegistrationViewModel extends ViewModel {
             public void onFocusChange(View view, boolean focused) {
                 TextInputEditText et = (TextInputEditText) view;
                 if (et.getText().length() > 0 && !focused) {
-                    mRegistrationFields.isPasswordValid(true);
+                    registration.isConfirmPasswordValid(true);
                 }
             }
         };
     }
 
     public RegistrationFields getRegistration() {
-        return mRegistrationFields;
+        return registration;
     }
 
     public View.OnFocusChangeListener getEmailOnFocusChangeListener() {
@@ -69,8 +69,8 @@ public class RegistrationViewModel extends ViewModel {
     }
 
     public void onButtonClick() {
-        if (mRegistrationFields.isValid()) {
-            buttonClick.setValue(mRegistrationFields);
+        if (registration.isValid()) {
+            buttonClick.setValue(registration);
         }
     }
 
@@ -88,7 +88,7 @@ public class RegistrationViewModel extends ViewModel {
     }
 
     @BindingAdapter("onFocus")
-    public static void bindFocusChange(TextInputLayout editText, View.OnFocusChangeListener onFocusChangeListener) {
+    public static void bindFocusChange(TextInputEditText editText, View.OnFocusChangeListener onFocusChangeListener) {
         if (editText.getOnFocusChangeListener() == null) {
             editText.setOnFocusChangeListener(onFocusChangeListener);
         }
