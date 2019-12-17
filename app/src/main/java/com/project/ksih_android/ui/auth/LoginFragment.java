@@ -28,10 +28,26 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView registerText = view.findViewById(R.id.register_text);
-        registerText.setOnClickListener(new View.OnClickListener() {
+        TextView forgotPasswordText = view.findViewById(R.id.forgot_password_text);
+
+        navigateToRegisterFragment(registerText);
+        navigateToForgotPasswordFragment(forgotPasswordText);
+    }
+
+    private void navigateToRegisterFragment(TextView textView) {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment);
+            }
+        });
+    }
+
+    private void navigateToForgotPasswordFragment(TextView textView) {
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
             }
         });
     }
