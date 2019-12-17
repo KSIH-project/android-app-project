@@ -30,7 +30,6 @@ import timber.log.Timber;
  * Created by SegunFrancis
  */
 public class RegisterFragment extends Fragment {
-    private AuthViewModel mViewModel;
     private FirebaseAuth mAuth;
     private FragmentRegisterBinding mRegisterBinding;
 
@@ -49,22 +48,8 @@ public class RegisterFragment extends Fragment {
                 requireActivity().onBackPressed();
             }
         });
-        mViewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
-        if (savedInstanceState == null) {
-            mViewModel.init();
-        }
-        mRegisterBinding.setLogin(mViewModel);
-        setUpButtonClick();
-        return mRegisterBinding.getRoot();
-    }
 
-    private void setUpButtonClick() {
-        mViewModel.getButtonClick().observe(this, new Observer<AuthFields>() {
-            @Override
-            public void onChanged(AuthFields authFields) {
-                createNewUser(authFields.getEmail(), authFields.getPassword());
-            }
-        });
+        return mRegisterBinding.getRoot();
     }
 
     private void createNewUser(String email, String password) {
