@@ -1,5 +1,6 @@
 package com.project.ksih_android.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentLoginBinding;
+import com.project.ksih_android.ui.HomeActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,7 +68,6 @@ public class LoginFragment extends Fragment {
         mViewModel.getButtonClick().observe(this, new Observer<LoginFields>() {
             @Override
             public void onChanged(LoginFields loginFields) {
-                //TODO: Navigate to Home Activity
                 signInUser(loginFields.getEmail(), loginFields.getPassword());
             }
         });
@@ -86,6 +87,7 @@ public class LoginFragment extends Fragment {
                     } else {
                         Timber.d("UserIsVerified");
                         Toast.makeText(getActivity(), "Sing in successful", Toast.LENGTH_SHORT).show();
+                        navigateToHomeActivity();
                     }
                 } else {
                     Toast.makeText(getActivity(), "Sign in was not successful", Toast.LENGTH_SHORT).show();
@@ -103,5 +105,9 @@ public class LoginFragment extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             mAuth.signOut();
         }
+    }
+
+    private void navigateToHomeActivity() {
+        startActivity(new Intent(requireActivity(), HomeActivity.class));
     }
 }
