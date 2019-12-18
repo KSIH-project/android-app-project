@@ -29,6 +29,7 @@ import timber.log.Timber;
 /**
  * Created by SegunFrancis
  */
+
 public class LoginFragment extends Fragment {
 
     private LoginViewModel mViewModel;

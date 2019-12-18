@@ -42,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         return mNavController.navigateUp() || super.onSupportNavigateUp();
     }
 
+    // Use this to alter the visibility of the action bar and the bottom navigation bar
     private void initDestinationListener() {
         mNavController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
                     @Override
