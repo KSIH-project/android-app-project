@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="registerModel"
+            type="com.project.ksih_android.ui.auth.RegistrationViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -32,21 +39,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxHeight="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_back_button"
                 app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
                 app:title="Sign Up"
-                app:navigationIcon="@drawable/ic_back_button"
                 app:titleTextAppearance="@style/toolBarTextAppearance" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_reset_password"
+            android:id="@+id/button_sign_in"
             style="@style/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
             android:layout_marginEnd="52dp"
-            android:enabled="@{login.login.valid}"
-            android:onClick="@{() -> login.onButtonClick()}"
+            android:enabled="@{registerModel.registration.valid}"
+            android:onClick="@{() -> registerModel.onButtonClick()}"
             android:text="Sign Up"
             android:textAppearance="@style/buttonTextStyle"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,20 +67,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Email"
-            app:error="@{login.login.emailError}"
+            app:error="@{registerModel.registration.emailError}"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_edittext"
                 style="@style/textInputEdittextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textEmailAddress"
                 android:imeOptions="actionNext"
-                android:text="@={login.login.email}"
-                app:onFocus="@{login.getEmailOnFocusChangeListener()}" />
+                android:inputType="textEmailAddress"
+                android:text="@={registerModel.registration.email}"
+                app:onFocus="@{registerModel.getEmailOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Password"
-            app:error="@{login.login.passwordError}"
+            app:error="@{registerModel.registration.passwordError}"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,13 +98,13 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_edittext"
                 style="@style/textInputEdittextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
-                android:imeOptions="actionNext"
-                android:text="@={login.login.password}"
-                app:onFocus="@{login.getPasswordOnFocusChangeListener()}" />
+                android:text="@={registerModel.registration.password}"
+                app:onFocus="@{registerModel.getPasswordOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -105,28 +113,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Confirm Password"
-            app:error="@{login.login.passwordError}"
-            app:layout_constraintBottom_toTopOf="@+id/button_reset_password"
+            app:error="@{registerModel.registration.passwordError}"
+            app:layout_constraintBottom_toTopOf="@+id/button_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_password_edittext"
                 style="@style/textInputEdittextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
-                android:text="@={login.login.password}"
-                app:onFocus="@{login.getPasswordOnFocusChangeListener()}" />
+                android:text="@={registerModel.registration.confirmPassword}"
+                app:onFocus="@{registerModel.getConfirmPasswordOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <data>
-
-        <variable
-            name="login"
-            type="com.project.ksih_android.ui.auth.AuthViewModel" />
-    </data>
 </layout>
