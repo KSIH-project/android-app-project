@@ -55,6 +55,9 @@ dependencies {
     // Logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    // Progress Bar
+    implementation 'com.victor:lib:1.0.4'
+
     // Firebase
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-database:16.0.4'
