@@ -36,6 +36,7 @@
             android:id="@+id/register_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Register"
             android:textColor="@color/dark_text_color"
@@ -96,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
                 android:text="@={login.login.email}"
                 app:onFocus="@{login.getEmailOnFocusChangeListener()}" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -128,6 +130,6 @@
 
         <variable
             name="login"
-            type="com.project.ksih_android.ui.auth.AuthViewModel" />
+            type="com.project.ksih_android.ui.auth.LoginViewModel" />
     </data>
 </layout>
