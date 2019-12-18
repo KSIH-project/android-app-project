@@ -12,67 +12,39 @@ import androidx.lifecycle.ViewModel;
 /**
  * Created by SegunFrancis
  */
-public class AuthViewModel extends ViewModel {
-    private AuthFields login;
+public class ForgotPasswordViewModel extends ViewModel {
+    private ForgotPasswordField forgotPassword;
     private View.OnFocusChangeListener onFocusEmail;
-    private View.OnFocusChangeListener onFocusPassword;
-    private MutableLiveData<AuthFields> buttonClick = new MutableLiveData<>();
+    private MutableLiveData<ForgotPasswordField> buttonClick = new MutableLiveData<>();
 
     void init() {
-        login = new AuthFields();
+        forgotPassword = new ForgotPasswordField();
         onFocusEmail = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focused) {
                 TextInputEditText et = (TextInputEditText) view;
                 if (et.getText().length() > 0 && !focused) {
-                    login.isEmailValid(true);
-                }
-            }
-        };
-
-        onFocusPassword = new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean focused) {
-                TextInputEditText et = (TextInputEditText) view;
-                if (et.getText().length() > 0 && !focused) {
-                    login.isPasswordValid(true);
+                    forgotPassword.isEmailValid(true);
                 }
             }
         };
     }
 
-    void forgotPasswordInit(TextInputEditText et) {
-        login = new AuthFields();
-        if (et.getText().length() > 0) {
-            login.isEmailValid(true);
-        }
-    }
-
-    public AuthFields getLogin() {
-        return login;
+    public ForgotPasswordField getEmail() {
+        return forgotPassword;
     }
 
     public View.OnFocusChangeListener getEmailOnFocusChangeListener() {
         return onFocusEmail;
     }
 
-    public View.OnFocusChangeListener getPasswordOnFocusChangeListener() {
-        return onFocusPassword;
-    }
-
     public void onButtonClick() {
-        if (login.isValid()) {
-            buttonClick.setValue(login);
+        if (forgotPassword.isValid()) {
+            buttonClick.setValue(forgotPassword);
         }
     }
 
-    public void onRecoveryButtonClicked() {
-        if (login.isValidEmail()) {
-            buttonClick.setValue(login);
-        }
-    }
-
-    public MutableLiveData<AuthFields> getButtonClick() {
+    public MutableLiveData<ForgotPasswordField> getButtonClick() {
         return buttonClick;
     }
 

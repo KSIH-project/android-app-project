@@ -26,7 +26,7 @@ import timber.log.Timber;
  */
 public class ForgotPasswordFragment extends Fragment {
 
-    private AuthViewModel mViewModel;
+    private ForgotPasswordViewModel mViewModel;
     private FirebaseAuth mAuth;
 
     @Nullable
@@ -39,19 +39,19 @@ public class ForgotPasswordFragment extends Fragment {
     private View setUpBindings(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container) {
         FragmentForgotPasswordBinding forgotPasswordBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_forgot_password, container, false);
         onBackPressed(forgotPasswordBinding.forgotPasswordToolbar);
-        mViewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ForgotPasswordViewModel.class);
         if (savedInstanceState == null) {
-            mViewModel.forgotPasswordInit(forgotPasswordBinding.textInputForgotPassword);
+            mViewModel.init();
         }
-        forgotPasswordBinding.setLogin(mViewModel);
+        forgotPasswordBinding.setForgotPassword(mViewModel);
         setUpButtonClick();
         return forgotPasswordBinding.getRoot();
     }
 
     private void setUpButtonClick() {
-        mViewModel.getButtonClick().observe(this, new Observer<AuthFields>() {
+        mViewModel.getButtonClick().observe(this, new Observer<ForgotPasswordField>() {
             @Override
-            public void onChanged(AuthFields authFields) {
+            public void onChanged(ForgotPasswordField authFields) {
                 //TODO: Navigate to Login Fragment
                 resetPassword(authFields.getEmail());
             }
