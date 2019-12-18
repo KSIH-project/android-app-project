@@ -8,11 +8,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentRegisterBinding;
+import com.victor.loading.rotate.RotateLoading;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +28,7 @@ import timber.log.Timber;
 /**
  * Created by SegunFrancis
  */
+
 public class RegisterFragment extends Fragment {
     private FirebaseAuth mAuth;
     private RegistrationViewModel mViewModel;
@@ -59,6 +62,8 @@ public class RegisterFragment extends Fragment {
         mViewModel.getButtonClick().observe(this, new Observer<RegistrationFields>() {
             @Override
             public void onChanged(RegistrationFields registrationFields) {
+                startProgressBar(mRegisterBinding.progressBar);
+                hideButton(mRegisterBinding.buttonRegister);
                 createNewUser(registrationFields.getEmail(), registrationFields.getConfirmPassword());
             }
         });
@@ -77,17 +82,23 @@ public class RegisterFragment extends Fragment {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
+                                stopProgressBar(mRegisterBinding.progressBar);
+                                showButton(mRegisterBinding.buttonRegister);
                                 // TODO: Open email app option
-                                navigateToLoginFragment(mRegisterBinding.buttonSignIn);
+                                navigateToLoginFragment(mRegisterBinding.buttonRegister);
                             } else {
                                 Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
+                                stopProgressBar(mRegisterBinding.progressBar);
+                                showButton(mRegisterBinding.buttonRegister);
                                 Timber.d("Sending Verification Failed: " + task.getException().getMessage());
                             }
                         }
                     });
                 } else {
                     // Sign in fails
-                    Toast.makeText(getContext(), "Couldn't create new account", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    stopProgressBar(mRegisterBinding.progressBar);
+                    showButton(mRegisterBinding.buttonRegister);
                     Timber.d("CreateUserWithEmail:failure \n" + task.getException().getMessage());
                 }
             }
@@ -96,5 +107,21 @@ public class RegisterFragment extends Fragment {
 
     private void navigateToLoginFragment(View v) {
         Navigation.findNavController(v).navigate(R.id.loginFragment);
+    }
+
+    private void startProgressBar(RotateLoading loading) {
+        loading.start();
+    }
+
+    private void stopProgressBar(RotateLoading loading) {
+        loading.stop();
+    }
+
+    private void showButton(MaterialButton button) {
+        button.setVisibility(View.VISIBLE);
+    }
+
+    private void hideButton(MaterialButton button) {
+        button.setVisibility(View.INVISIBLE);
     }
 }

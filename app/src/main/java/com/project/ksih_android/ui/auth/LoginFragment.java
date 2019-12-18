@@ -10,12 +10,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentLoginBinding;
 import com.project.ksih_android.ui.HomeActivity;
+import com.victor.loading.rotate.RotateLoading;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +36,7 @@ public class LoginFragment extends Fragment {
 
     private LoginViewModel mViewModel;
     private FirebaseAuth mAuth;
+    private FragmentLoginBinding mLoginBinding;
 
     @Nullable
     @Override
@@ -53,20 +56,22 @@ public class LoginFragment extends Fragment {
     }
 
     private View setUpBindings(Bundle savedInstanceState,LayoutInflater inflater, ViewGroup container) {
-        FragmentLoginBinding loginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
+        mLoginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         if (savedInstanceState == null) {
             mViewModel.init();
         }
-        loginBinding.setLogin(mViewModel);
+        mLoginBinding.setLogin(mViewModel);
         setUpButtonClick();
-        return loginBinding.getRoot();
+        return mLoginBinding.getRoot();
     }
 
     private void setUpButtonClick() {
         mViewModel.getButtonClick().observe(this, new Observer<LoginFields>() {
             @Override
             public void onChanged(LoginFields loginFields) {
+                startProgressBar(mLoginBinding.progressBar);
+                hideButton(mLoginBinding.buttonSignIn);
                 signInUser(loginFields.getEmail(), loginFields.getPassword());
             }
         });
@@ -81,15 +86,21 @@ public class LoginFragment extends Fragment {
                     Timber.d("Log in successful");
                     if (!isUserVerified(mAuth.getCurrentUser())) {
                         Toast.makeText(getActivity(), "Your Email has not been verified", Toast.LENGTH_SHORT).show();
+                        stopProgressBar(mLoginBinding.progressBar);
+                        showButton(mLoginBinding.buttonSignIn);
                         logout();
-                        Timber.d("USerNotVerified");
+                        Timber.d("UserNotVerified");
                     } else {
                         Timber.d("UserIsVerified");
+                        stopProgressBar(mLoginBinding.progressBar);
+                        showButton(mLoginBinding.buttonSignIn);
                         Toast.makeText(getActivity(), "Sing in successful", Toast.LENGTH_SHORT).show();
                         navigateToHomeActivity();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Sign in was not successful", Toast.LENGTH_SHORT).show();
+                    stopProgressBar(mLoginBinding.progressBar);
+                    showButton(mLoginBinding.buttonSignIn);
+                    Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     Timber.d("SignInError: " + task.getException().getMessage());
                 }
             }
@@ -126,5 +137,21 @@ public class LoginFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
             }
         });
+    }
+
+    private void startProgressBar(RotateLoading loading) {
+        loading.start();
+    }
+
+    private void stopProgressBar(RotateLoading loading) {
+        loading.stop();
+    }
+
+    private void showButton(MaterialButton button) {
+        button.setVisibility(View.VISIBLE);
+    }
+
+    private void hideButton(MaterialButton button) {
+        button.setVisibility(View.INVISIBLE);
     }
 }

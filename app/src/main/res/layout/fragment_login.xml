@@ -64,6 +64,7 @@
                 app:titleTextAppearance="@style/toolBarTextAppearance" />
         </com.google.android.material.appbar.AppBarLayout>
 
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_sign_in"
             style="@style/buttonStyle"
@@ -79,6 +80,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
+        <com.victor.loading.rotate.RotateLoading
+            android:id="@+id/progress_bar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:loading_color="@color/button_color_background"
+            app:loading_width="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/button_sign_in"
+            app:layout_constraintEnd_toEndOf="@id/button_sign_in"
+            app:layout_constraintStart_toStartOf="@id/button_sign_in"
+            app:layout_constraintTop_toTopOf="@id/button_sign_in" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
