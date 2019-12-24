@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_chats"
+            android:title="Chats" />
+        <item
+            android:id="@+id/nav_rules"
+            android:title="KSIH Rules" />
+        <item
+            android:id="@+id/nav_about"
+            android:title="About KSIH" />
+        <item
+            android:id="@+id/nav_developers"
+            android:title="About Developers" />
+        <item
+            android:id="@+id/nav_signIn"
+            android:title="About Developers" />
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_terms"
+                android:title="Terms and Conditions" />
+            <item
+                android:id="@+id/nav_signOut"
+                android:title="Sign Out" />
+        </menu>
+    </item>
+</menu>

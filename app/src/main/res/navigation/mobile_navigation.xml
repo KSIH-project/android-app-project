@@ -27,4 +27,10 @@
         android:name="com.project.ksih_android.ui.onBoarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" />
+
+    <fragment
+        android:id="@+id/navigation_event"
+        android:name="com.project.ksih_android.ui.events.EventFragment"
+        android:label="@string/events"
+        tools:layout="@layout/fragment_event" />
 </navigation>

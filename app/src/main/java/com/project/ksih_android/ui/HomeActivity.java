@@ -2,24 +2,34 @@ package com.project.ksih_android.ui;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.internal.NavigationMenuView;
+import com.google.android.material.navigation.NavigationView;
 import com.project.ksih_android.R;
+import com.project.ksih_android.ui.drawer.DividerItemDecoration;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private BottomNavigationView mNavView;
     private NavController mNavController;
+    private Toolbar toolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,29 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, mNavController, appBarConfiguration);
         NavigationUI.setupWithNavController(mNavView, mNavController);
         initDestinationListener();
+
+        toolBar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolBar);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolBar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = findViewById(R.id.nav_drawer);
+        navigationView.setNavigationItemSelectedListener(this);
+        NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
+        navMenuView.addItemDecoration(new DividerItemDecoration(this));
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -56,13 +89,21 @@ public class HomeActivity extends AppCompatActivity {
                             case R.id.onBoardingFragment:
                                 hideBottomNavBar();
                                 hideToolbar();
+                                hideCustomToolBar();
                                 break;
                             default:
                                 showBottomNavBar();
                                 showToolbar();
+                                showCustomToolBar();
                         }
                     }
                 });
+    }
+    private void hideCustomToolBar(){
+        toolBar.setVisibility(View.INVISIBLE);
+    }
+    private void showCustomToolBar(){
+        toolBar.setVisibility(View.VISIBLE);
     }
 
     private void hideBottomNavBar() {
@@ -79,5 +120,17 @@ public class HomeActivity extends AppCompatActivity {
 
     private void showToolbar() {
         getSupportActionBar().show();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        switch(item.getItemId()) {
+            case 0:
+                return true;
+            case 1:
+                return true;
+        }
+        return false;
     }
 }
