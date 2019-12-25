@@ -1,5 +1,6 @@
 package com.project.ksih_android.ui;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;

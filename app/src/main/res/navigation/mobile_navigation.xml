@@ -7,11 +7,6 @@
 
 
     <fragment
-        android:id="@+id/nav_signIn"
-        android:name="com.project.ksih_android.ui.auth.LoginFragment"
-        tools:layout="@layout/fragment_login"/>
-
-    <fragment
         android:id="@+id/navigation_project"
         android:name="com.project.ksih_android.ui.project.ProjectFragment"
         android:label="@string/title_project"
@@ -45,6 +40,11 @@
         android:name="com.project.ksih_android.ui.onBoarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" />
+    <activity
+        android:id="@+id/nav_signIn"
+        android:name="com.project.ksih_android.ui.AuthActivity"
+        android:label="activity_auth"
+        tools:layout="@layout/activity_auth" />
 
 
 </navigation>
