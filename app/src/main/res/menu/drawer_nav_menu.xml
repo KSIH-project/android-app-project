@@ -4,18 +4,26 @@
         <item
             android:id="@+id/nav_signIn"
             android:title="Sign In" />
+
+        <item
+            android:id="@+id/navigation_project"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/title_project" />
+        <item
+            android:id="@+id/navigation_member"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="@string/title_members" />
+        <item
+            android:id="@+id/navigation_startup"
+            android:icon="@drawable/ic_notifications_black_24dp"
+            android:title="@string/title_startups" />
+        <item
+            android:id="@+id/navigation_event"
+            android:icon="@drawable/ic_event_available_black_24dp"
+            android:title="@string/events"/>
         <item
             android:id="@+id/nav_chats"
             android:title="Chats" />
-        <item
-            android:id="@+id/nav_rules"
-            android:title="KSIH Rules" />
-        <item
-            android:id="@+id/nav_about"
-            android:title="About KSIH" />
-        <item
-            android:id="@+id/nav_developers"
-            android:title="About Developers" />
 
     </group>
 
@@ -23,10 +31,7 @@
         <menu>
             <item
                 android:id="@+id/nav_terms"
-                android:title="Terms and Conditions" />
-            <item
-                android:id="@+id/nav_signOut"
-                android:title="Sign Out" />
+                android:title="Others" />
         </menu>
     </item>
 </menu>
