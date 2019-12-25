@@ -1,4 +1,4 @@
-package com.project.ksih_android.ui.dashboard;
+package com.project.ksih_android.ui.member;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.project.ksih_android.R;
 
-public class DashboardFragment extends Fragment {
+public class MemberFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private MemberViewModel mMemberViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        mMemberViewModel =
+                ViewModelProviders.of(this).get(MemberViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_member, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
+        mMemberViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

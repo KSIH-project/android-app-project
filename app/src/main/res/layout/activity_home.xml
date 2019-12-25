@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize">
+    android:layout_height="match_parent">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -44,7 +44,7 @@
         <include
             layout="@layout/app_bar_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="?attr/actionBarSize" />
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_drawer"
@@ -54,5 +54,6 @@
             app:headerLayout="@layout/drawer_header"
             app:menu="@menu/drawer_nav_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

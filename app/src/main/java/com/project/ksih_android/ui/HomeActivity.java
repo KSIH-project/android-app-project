@@ -14,6 +14,7 @@ import com.project.ksih_android.ui.drawer.DividerItemDecoration;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -30,39 +31,42 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView mNavView;
     private NavController mNavController;
     private Toolbar toolBar;
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mNavView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, mNavController, appBarConfiguration);
-        NavigationUI.setupWithNavController(mNavView, mNavController);
-        initDestinationListener();
 
         toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolBar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_drawer);
+        navigationView = findViewById(R.id.nav_drawer);
         navigationView.setNavigationItemSelectedListener(this);
         NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navMenuView.addItemDecoration(new DividerItemDecoration(this));
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+//                .build();
+        mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavigationUI.setupActionBarWithNavController(this, mNavController, appBarConfiguration);
+        NavigationUI.setupWithNavController(mNavView, mNavController);
+        initDestinationListener();
+
+
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -89,10 +93,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             case R.id.onBoardingFragment:
                                 hideBottomNavBar();
                                 hideCustomToolBar();
+                                drawer.setVisibility(View.INVISIBLE);
                                 break;
                             default:
                                 showBottomNavBar();
                                 showCustomToolBar();
+                                drawer.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -116,10 +122,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         switch(item.getItemId()) {
-            case 0:
-                return true;
-            case 1:
-                return true;
+
         }
         return false;
     }
