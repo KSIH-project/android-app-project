@@ -1,5 +1,6 @@
 package com.project.ksih_android.ui;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.ui.drawer.DividerItemDecoration;
+import com.project.ksih_android.ui.drawer.DrawerItemActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -123,6 +125,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         switch(item.getItemId()) {
 
+            case R.id.nav_signIn:
+//                Intent signIn = new Intent(this, DrawerItemActivity.class);
+//                startActivity(signIn);
+            case R.id.nav_chats:
+                Intent chat = new Intent(this, DrawerItemActivity.class);
+                startActivity(chat);
         }
         return false;
     }
