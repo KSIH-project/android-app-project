@@ -40,6 +40,11 @@
         android:name="com.project.ksih_android.ui.onBoarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" />
+    <activity
+        android:id="@+id/nav_signIn"
+        android:name="com.project.ksih_android.ui.AuthActivity"
+        android:label="activity_auth"
+        tools:layout="@layout/activity_auth" />
 
 
 </navigation>
