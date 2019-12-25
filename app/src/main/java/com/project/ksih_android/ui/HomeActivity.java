@@ -88,12 +88,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         switch (destination.getId()) {
                             case R.id.onBoardingFragment:
                                 hideBottomNavBar();
-                                hideToolbar();
                                 hideCustomToolBar();
                                 break;
                             default:
                                 showBottomNavBar();
-                                showToolbar();
                                 showCustomToolBar();
                         }
                     }
@@ -110,16 +108,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mNavView.setVisibility(View.GONE);
     }
 
-    private void hideToolbar() {
-        getSupportActionBar().hide();
-    }
-
     private void showBottomNavBar() {
         mNavView.setVisibility(View.VISIBLE);
-    }
-
-    private void showToolbar() {
-        getSupportActionBar().show();
     }
 
     @Override
