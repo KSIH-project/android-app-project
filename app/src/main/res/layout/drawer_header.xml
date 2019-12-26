@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:layout_marginStart="@dimen/magin_start_drawer"
+        android:id="@+id/profile_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="@dimen/magin_start_drawer"
-        android:src="@android:drawable/sym_def_app_icon"
-        android:id="@+id/profile_image" />
+        android:layout_marginTop="@dimen/margin_start_drawer"
+        android:src="@android:drawable/sym_def_app_icon" />
 
     <TextView
         android:id="@+id/profile_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:layout_marginStart="@dimen/magin_start_drawer"
         android:text="Name"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/profile_email"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:layout_marginStart="@dimen/magin_start_drawer"
         android:text="Email"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 </LinearLayout>

@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".ui.others.OthersFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/text_about_ksih"
         android:layout_width="0dp"

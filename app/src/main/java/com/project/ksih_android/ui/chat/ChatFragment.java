@@ -1,4 +1,4 @@
-package com.project.ksih_android.ui.drawer.chat;
+package com.project.ksih_android.ui.chat;
 
 
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.project.ksih_android.R;
-import com.project.ksih_android.ui.events.EventViewModel;
 
 /**
  * A simple {@link Fragment} subclass.

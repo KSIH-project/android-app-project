@@ -1,4 +1,4 @@
-package com.project.ksih_android.ui.drawer.chat;
+package com.project.ksih_android.ui.chat;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

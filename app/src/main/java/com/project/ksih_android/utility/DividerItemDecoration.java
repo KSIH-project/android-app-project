@@ -1,4 +1,4 @@
-package com.project.ksih_android.ui.drawer;
+package com.project.ksih_android.utility;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -9,7 +9,6 @@
     <string name="error_mismatch_password">Passwords do not match</string>
     <string name="error_too_short_email">Email is too short</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello event fragment</string>
     <string name="events">Events</string>
     <string name="navigation_drawer_open">Drawer open</string>
