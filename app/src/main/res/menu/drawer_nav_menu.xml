@@ -23,14 +23,19 @@
             android:title="@string/events"/>
         <item
             android:id="@+id/nav_chats"
+            android:icon="@drawable/ic_chat_black_24dp"
             android:title="Chats" />
+        <item
+            android:id="@+id/ksih_rules"
+            android:icon="@drawable/ic_block_black_24dp"
+            android:title="KSIH Rules" />
 
     </group>
 
     <item android:title="Settings">
         <menu>
             <item
-                android:id="@+id/nav_terms"
+                android:id="@+id/nav_others"
                 android:title="Others" />
         </menu>
     </item>

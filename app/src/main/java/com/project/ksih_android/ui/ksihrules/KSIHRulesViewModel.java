@@ -1,16 +1,15 @@
-package com.project.ksih_android.ui.member;
+package com.project.ksih_android.ui.ksihrules;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class MemberViewModel extends ViewModel {
-
+public class KSIHRulesViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
-    public MemberViewModel() {
+    public KSIHRulesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is member fragment");
+        mText.setValue("This is dashboard fragment");
     }
 
     public LiveData<String> getText() {
