@@ -36,6 +36,7 @@
         <menu>
             <item
                 android:id="@+id/nav_others"
+                android:icon="@drawable/ic_settings_black_24dp"
                 android:title="Settings" />
         </menu>
     </item>
