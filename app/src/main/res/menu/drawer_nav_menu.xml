@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_project"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/title_project" />
+        <item
+            android:id="@+id/navigation_member"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="@string/title_members" />
+        <item
+            android:id="@+id/nav_signIn"
+            android:title="Sign In"
+            android:icon="@drawable/ic_lock_open_black_24dp"/>
+        <item
+            android:id="@+id/navigation_startup"
+            android:icon="@drawable/ic_notifications_black_24dp"
+            android:title="@string/title_startups" />
+        <item
+            android:id="@+id/navigation_event"
+            android:icon="@drawable/ic_event_available_black_24dp"
+            android:title="@string/events"/>
+        <item
+            android:id="@+id/nav_chats"
+            android:icon="@drawable/ic_chat_black_24dp"
+            android:title="Chats" />
+        <item
+            android:id="@+id/ksih_rules"
+            android:icon="@drawable/ic_block_black_24dp"
+            android:title="KSIH Rules" />
+
+    </group>
+
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="Settings" />
+        </menu>
+    </item>
+</menu>

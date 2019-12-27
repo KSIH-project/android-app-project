@@ -5,26 +5,59 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/onBoardingFragment">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.project.ksih_android.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+
+    <activity
+        android:id="@+id/nav_signIn"
+        android:name="com.project.ksih_android.ui.AuthActivity"
+        android:label="Sign In"
+        tools:layout="@layout/fragment_login"/>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.project.ksih_android.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_project"
+        android:name="com.project.ksih_android.ui.project.ProjectFragment"
+        android:label="@string/title_project"
+        tools:layout="@layout/fragment_project" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.project.ksih_android.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_member"
+        android:name="com.project.ksih_android.ui.member.MemberFragment"
+        android:label="@string/title_members"
+        tools:layout="@layout/fragment_member" />
+
+    <fragment
+        android:id="@+id/navigation_startup"
+        android:name="com.project.ksih_android.ui.startup.StartupFragment"
+        android:label="@string/title_startups"
+        tools:layout="@layout/fragment_startup" />
+
+    <fragment
+        android:id="@+id/navigation_event"
+        android:name="com.project.ksih_android.ui.events.EventFragment"
+        android:label="@string/events"
+        tools:layout="@layout/fragment_event" />
+    <fragment
+        android:id="@+id/nav_chats"
+        android:name="com.project.ksih_android.ui.chat.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat"/>
+
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.project.ksih_android.ui.onBoarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" />
+
+    <fragment
+        android:id="@+id/ksih_rules"
+        android:name="com.project.ksih_android.ui.ksihrules.KSIHRules"
+        android:label="KSIH Rules"
+        tools:layout="@layout/fragment_ksihrules" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.project.ksih_android.ui.others.OthersFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_others" />
+
+
 </navigation>
