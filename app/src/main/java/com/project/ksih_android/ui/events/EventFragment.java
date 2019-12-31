@@ -33,13 +33,6 @@ public class EventFragment extends Fragment {
         eventViewModel = ViewModelProviders.of(this).get(EventViewModel.class);
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_event, container, false);
-        final TextView textView = root.findViewById(R.id.text_event);
-        eventViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 
