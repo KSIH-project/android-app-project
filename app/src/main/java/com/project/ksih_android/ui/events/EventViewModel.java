@@ -6,14 +6,22 @@ import androidx.lifecycle.ViewModel;
 
 public class EventViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<String> mEventTopic;
+    private MutableLiveData<String> mEventDescription;
+    private MutableLiveData<String> mEventType;
 
     public EventViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is event fragment");
+        mEventTopic = new MutableLiveData<>();
+        mEventTopic.setValue("Dev c training with Andela");
+        mEventDescription = new MutableLiveData<>();
+        mEventDescription.setValue("A Training that helps Android Developers on their journey");
+        mEventType = new MutableLiveData<>();
+        mEventType.setValue("Android");
+
     }
 
     public LiveData<String> getText() {
-        return mText;
+        return mEventTopic;
     }
+
 }
