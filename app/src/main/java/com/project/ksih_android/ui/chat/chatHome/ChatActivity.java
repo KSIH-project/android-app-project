@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toolbar;
 
 import com.project.ksih_android.R;
+import com.project.ksih_android.ui.chat.adapters.TabsPagerAdapter;
 
 public class ChatActivity extends AppCompatActivity {
     //Initialize variables
@@ -14,7 +15,7 @@ public class ChatActivity extends AppCompatActivity {
     private static long backPressed;
     private Toolbar mToolbar;
     private ViewPager mViewPager;
-
+    private TabsPagerAdapter mTabsPagerAdapter;
 
 
     @Override
