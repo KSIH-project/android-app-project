@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -25,7 +26,7 @@ public class ChatActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private ViewPager mViewPager;
     private TabsPagerAdapter mTabsPagerAdapter;
-    private ConnectivityManager connectivityReceiver;
+    public ConnectivityManager connectivityReceiver;
     private TabLayout mTabLayout;
 
     //firebase utils
@@ -74,5 +75,12 @@ public class ChatActivity extends AppCompatActivity {
         if (currentUser != null){
             userDatabaseReference.child("active_now").setValue("true");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Register connectivity BroadcastReceiver
+
     }
 }
