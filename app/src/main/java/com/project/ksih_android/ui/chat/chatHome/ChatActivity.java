@@ -24,7 +24,7 @@ public class ChatActivity extends AppCompatActivity {
     private static final int TIME_LIMIT = 1500;
     private static long backPressed;
     private Toolbar mToolbar;
-    private ViewPager mViewPager;
+    public ViewPager mViewPager;
     private TabsPagerAdapter mTabsPagerAdapter;
     public ConnectivityManager connectivityReceiver;
     private TabLayout mTabLayout;
