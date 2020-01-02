@@ -35,11 +35,12 @@
         android:name="com.project.ksih_android.ui.events.EventFragment"
         android:label="@string/events"
         tools:layout="@layout/fragment_event" />
-    <fragment
+
+    <activity
         android:id="@+id/nav_chats"
-        android:name="com.project.ksih_android.ui.chat.ChatFragment"
+        android:name="com.project.ksih_android.ui.chat.chatHome.ChatActivity"
         android:label="Chat"
-        tools:layout="@layout/fragment_chat"/>
+        tools:layout="@layout/activity_chat"/>
 
     <fragment
         android:id="@+id/onBoardingFragment"
