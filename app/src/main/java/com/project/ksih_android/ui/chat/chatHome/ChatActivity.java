@@ -1,11 +1,13 @@
 package com.project.ksih_android.ui.chat.chatHome;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.widget.Toolbar;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.project.ksih_android.R;
+import com.project.ksih_android.ui.HomeActivity;
 import com.project.ksih_android.ui.chat.adapters.TabsPagerAdapter;
 
 public class ChatActivity extends AppCompatActivity {
@@ -54,5 +57,22 @@ public class ChatActivity extends AppCompatActivity {
 
         mTabLayout = findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        mToolbar = findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("KSIH CHAT");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser == null){
+            Toast.makeText(this, "Login to use chat session", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, HomeActivity.class));
+        }
+        if (currentUser != null){
+            userDatabaseReference.child("active_now").setValue("true");
+        }
     }
 }
