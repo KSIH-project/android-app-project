@@ -30,6 +30,7 @@
         <activity
             android:name=".ui.AuthActivity"
             android:theme="@style/customTheme" />
+
     </application>
 
 </manifest>
