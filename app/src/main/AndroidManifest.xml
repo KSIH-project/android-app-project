@@ -31,6 +31,11 @@
             android:name=".ui.AuthActivity"
             android:theme="@style/customTheme" />
 
+        <service android:name=".utility.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
