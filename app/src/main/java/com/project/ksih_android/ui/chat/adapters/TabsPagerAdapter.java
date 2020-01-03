@@ -23,9 +23,8 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return new ChatFragment();
             case 1:
                 return new RequestsFragment();
-            default:
-                return null;
         }
+        return null;
     }
 
     @Override

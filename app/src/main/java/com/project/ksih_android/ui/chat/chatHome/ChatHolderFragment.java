@@ -82,9 +82,11 @@ public class ChatHolderFragment extends Fragment {
         mViewPager = root.findViewById(R.id.tabs_pager);
         mTabsPagerAdapter = new TabsPagerAdapter(getChildFragmentManager(), 2);
         mViewPager.setAdapter(mTabsPagerAdapter);
-
         mTabLayout = root.findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+
+
+
         return root;
     }
 
