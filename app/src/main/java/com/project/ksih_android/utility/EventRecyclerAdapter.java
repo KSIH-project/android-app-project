@@ -1,14 +1,10 @@
 package com.project.ksih_android.utility;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,8 +14,6 @@ import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.EventsItemsListBinding;
 
 import java.util.ArrayList;
-
-import static com.project.ksih_android.databinding.EventsItemsListBinding.inflate;
 
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.EventRecyclerViewHolder> {
     ArrayList<Events> mEvents;
@@ -68,10 +62,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     public EventRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater =
                 LayoutInflater.from(parent.getContext());
-        EventsItemsListBinding
-                itemsListBinding = EventsItemsListBinding.inflate(layoutInflater, parent, false);
+        binding = EventsItemsListBinding.inflate(layoutInflater, parent, false);
 
-        return new EventRecyclerViewHolder(itemsListBinding);
+        return new EventRecyclerViewHolder(binding);
     }
 
     @Override
@@ -85,14 +78,14 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         return mEvents != null ? mEvents.size() : 0;
     }
 
-    public class EventRecyclerViewHolder extends RecyclerView.ViewHolder {
+    class EventRecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public EventRecyclerViewHolder(@NonNull EventsItemsListBinding eventBinding) {
+        EventRecyclerViewHolder(@NonNull EventsItemsListBinding eventBinding) {
             super(eventBinding.getRoot());
 
         }
 
-        public void bind(Events nEvent) {
+        void bind(Events nEvent) {
             binding.textEventsTittle.setText(nEvent.getEventName());
             binding.textEventsDescription.setText(nEvent.getEventDescription());
             binding.textEventsType.setText(nEvent.getEventType());
