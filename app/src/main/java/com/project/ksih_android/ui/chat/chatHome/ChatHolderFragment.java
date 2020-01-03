@@ -1,9 +1,11 @@
 package com.project.ksih_android.ui.chat.chatHome;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.BroadcastReceiver;
@@ -15,9 +17,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -30,7 +35,7 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.ui.chat.adapters.TabsPagerAdapter;
 
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatHolderFragment extends Fragment {
     //Initialize variables
     private static final int TIME_LIMIT = 1500;
     private static long backPressed;
@@ -45,15 +50,25 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference userDatabaseReference;
     public FirebaseUser currentUser;
 
+    public ChatHolderFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_chat_holder, container, false);
 
         //inflate tool bar
-        mToolbar = findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("KSIH CHAT");
+        mToolbar =root.findViewById(R.id.main_page_toolbar);
+        mToolbar.setTitle("KSIH CHAT");
 
         //check and get current user data
         mAuth = FirebaseAuth.getInstance();
@@ -67,16 +82,17 @@ public class ChatActivity extends AppCompatActivity {
         /*
          * Tabs >> Viewpager for Chat Activity
          */
-        mViewPager = findViewById(R.id.tabs_pager);
-        mTabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager(), 2);
+        mViewPager = root.findViewById(R.id.tabs_pager);
+        mTabsPagerAdapter = new TabsPagerAdapter(getChildFragmentManager(), 2);
         mViewPager.setAdapter(mTabsPagerAdapter);
 
-        mTabLayout = findViewById(R.id.main_tabs);
+        mTabLayout = root.findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+        return root;
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 //        currentUser = mAuth.getCurrentUser();
 //        if (currentUser == null){
@@ -89,22 +105,22 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         //Register connectivity BroadcastReceiver
         connectivityReceiver = new ConnectivityReceiver();
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(connectivityReceiver, intentFilter);
+        getContext().registerReceiver(connectivityReceiver, intentFilter);
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
 
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         if (currentUser != null){
             userDatabaseReference.child("active_now").setValue(ServerValue.TIMESTAMP);
@@ -112,9 +128,9 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
