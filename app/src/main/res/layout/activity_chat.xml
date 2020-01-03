@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/main_tabs"
+        android:layout_below="@id/main_page_toolbar"
         android:background="@drawable/brown_border_bottom"
         android:theme="@style/AppTheme"/>
 

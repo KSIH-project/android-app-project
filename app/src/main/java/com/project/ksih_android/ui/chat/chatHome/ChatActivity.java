@@ -3,16 +3,23 @@ package com.project.ksih_android.ui.chat.chatHome;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,9 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.project.ksih_android.R;
-import com.project.ksih_android.ui.HomeActivity;
 import com.project.ksih_android.ui.chat.adapters.TabsPagerAdapter;
-import com.project.ksih_android.ui.chat.network.ConnectivityReceiver;
+
 
 public class ChatActivity extends AppCompatActivity {
     //Initialize variables
@@ -39,11 +45,15 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference userDatabaseReference;
     public FirebaseUser currentUser;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        //inflate tool bar
+        mToolbar = findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("KSIH CHAT");
 
         //check and get current user data
         mAuth = FirebaseAuth.getInstance();
@@ -63,10 +73,6 @@ public class ChatActivity extends AppCompatActivity {
 
         mTabLayout = findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
-
-        mToolbar = findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("KSIH CHAT");
     }
 
     @Override
@@ -123,5 +129,32 @@ public class ChatActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public class ConnectivityReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(
+                    Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()){
+
+            }else {
+                Snackbar snackbar = Snackbar
+                        .make(mViewPager, "No internet Connection! ", Snackbar.LENGTH_LONG)
+                        .setAction("Go settings", view -> {
+                            Intent settings = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                            context.startActivity(settings);
+                        });
+                // customizing snackbar
+                snackbar.setActionTextColor(Color.BLACK);
+                View view = snackbar.getView();
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.button_color_disabled));
+                snackbar.setText("Check network");
+                snackbar.setTextColor(Color.WHITE);
+                snackbar.show();
+            }
+        }
     }
 }
