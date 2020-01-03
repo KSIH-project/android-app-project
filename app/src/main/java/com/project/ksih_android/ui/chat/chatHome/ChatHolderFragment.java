@@ -66,9 +66,6 @@ public class ChatHolderFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_chat_holder, container, false);
 
-        //inflate tool bar
-        mToolbar =root.findViewById(R.id.main_page_toolbar);
-        mToolbar.setTitle("KSIH CHAT");
 
         //check and get current user data
         mAuth = FirebaseAuth.getInstance();
