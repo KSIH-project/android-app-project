@@ -61,7 +61,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     @NonNull
     @Override
     public EventRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(, parent, false);
+        View itemView;
 
         return null;
     }
