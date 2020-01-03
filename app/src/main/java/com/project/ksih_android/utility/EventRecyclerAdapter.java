@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -14,14 +15,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.project.ksih_android.data.Events;
+import com.project.ksih_android.databinding.EventsItemsListBinding;
 
 import java.util.ArrayList;
+
+import static com.project.ksih_android.databinding.EventsItemsListBinding.inflate;
 
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.EventRecyclerViewHolder> {
     ArrayList<Events> mEvents;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabasereference;
     private ChildEventListener mChildEventListner;
+    private EventsItemsListBinding binding;
 
     public EventRecyclerAdapter() {
         mEvents = new ArrayList<>();
@@ -61,26 +66,38 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     @NonNull
     @Override
     public EventRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView;
+        LayoutInflater layoutInflater =
+                LayoutInflater.from(parent.getContext());
+        EventsItemsListBinding
+                itemsListBinding = EventsItemsListBinding.inflate(layoutInflater, parent, false);
 
-        return null;
+        return new EventRecyclerViewHolder(itemsListBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EventRecyclerViewHolder holder, int position) {
-
+        Events events = mEvents.get(position);
+        holder.bind(events);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mEvents != null ? mEvents.size() : 0;
     }
 
     public class EventRecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public EventRecyclerViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public EventRecyclerViewHolder(@NonNull EventsItemsListBinding eventBinding) {
+            super(eventBinding.getRoot());
+
+        }
+
+        public void bind(Events nEvent) {
+            binding.textEventsTittle.setText(nEvent.getEventName());
+            binding.textEventsDescription.setText(nEvent.getEventDescription());
+            binding.textEventsType.setText(nEvent.getEventType());
         }
     }
+
 }
 
