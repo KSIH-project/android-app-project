@@ -39,7 +39,6 @@ public class ChatHolderFragment extends Fragment {
     //Initialize variables
     private static final int TIME_LIMIT = 1500;
     private static long backPressed;
-    private Toolbar mToolbar;
     public ViewPager mViewPager;
     private TabsPagerAdapter mTabsPagerAdapter;
     public ConnectivityReceiver connectivityReceiver;
@@ -85,8 +84,6 @@ public class ChatHolderFragment extends Fragment {
         mTabLayout = root.findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
 
-
-
         return root;
     }
 
@@ -96,7 +93,6 @@ public class ChatHolderFragment extends Fragment {
 //        currentUser = mAuth.getCurrentUser();
 //        if (currentUser == null){
 //            Toast.makeText(this, "Login to use chat session", Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(this, HomeActivity.class));
 //        }
 //        if (currentUser != null){
 //            userDatabaseReference.child("active_now").setValue("true");
