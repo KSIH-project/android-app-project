@@ -9,4 +9,5 @@
     <color name="color_text_input_background">#C4C4C4</color>
     <color name="color_text_default">#000000</color>
     <color name="color_text_pressed">#888888</color>
+    <color name="colorDivider">#AAAAAA</color>
 </resources>
