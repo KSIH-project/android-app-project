@@ -37,8 +37,6 @@ import com.project.ksih_android.ui.chat.adapters.TabsPagerAdapter;
 
 public class ChatHolderFragment extends Fragment {
     //Initialize variables
-    private static final int TIME_LIMIT = 1500;
-    private static long backPressed;
     public ViewPager mViewPager;
     private TabsPagerAdapter mTabsPagerAdapter;
     public ConnectivityReceiver connectivityReceiver;
