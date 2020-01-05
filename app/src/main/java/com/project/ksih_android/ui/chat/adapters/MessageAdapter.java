@@ -1,5 +1,7 @@
 package com.project.ksih_android.ui.chat.adapters;
 
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +82,35 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             }
         });
+
+        //when message type is Text
+        if (from_message_TYPE.equals("text")){
+            holder.receiver_text_message.setVisibility(View.VISIBLE);
+            holder.user_profile_image.setVisibility(View.VISIBLE);
+
+            //when message is Text, Image views are gone
+            holder.senderImageMsg.setVisibility(View.GONE);
+            holder.receiverImageMsg.setVisibility(View.GONE);
+
+            //checking message sender
+            if (from_user_ID.equals(sender_UID)){
+                holder.sender_text_message.setBackgroundResource
+                        (R.drawable.single_message_text_another_background);
+                holder.sender_text_message.setTextColor(Color.BLACK);
+                holder.sender_text_message.setGravity(Gravity.START);
+                holder.sender_text_message.setText(message.getMessage());
+            }else {
+                holder.sender_text_message.setVisibility(View.INVISIBLE);
+                holder.receiver_text_message.setVisibility(View.VISIBLE);
+                holder.user_profile_image.setVisibility(View.VISIBLE);
+
+                holder.receiver_text_message.setBackgroundResource
+                        (R.drawable.single_message_text_background);
+                holder.receiver_text_message.setTextColor(Color.WHITE);
+                holder.receiver_text_message.setGravity(Gravity.START);
+                holder.receiver_text_message.setText(message.getMessage());
+            }
+        }
 
     }
 

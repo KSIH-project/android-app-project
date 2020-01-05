@@ -39,7 +39,7 @@
         android:layout_marginStart="51dp"
         android:padding="8dp"
         android:text="From Receiver"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:background="@drawable/single_message_text_background"/>
 
     <TextView
