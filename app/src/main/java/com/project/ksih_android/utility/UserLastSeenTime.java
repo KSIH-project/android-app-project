@@ -11,6 +11,7 @@ public class UserLastSeenTime extends Application {
 
     public static String getTimeAgo(long time, Context applicationContext){
         if (time < 1000000000000L){
+            //if time stamp is in seconds, convert to millis
             time *= 1000;
         }
 
