@@ -9,10 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.ui.chat.models.Message;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -41,7 +47,40 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
 
-        //bind message views
+        //declare message views
+        String sender_UID = mAuth.getCurrentUser().getUid();
+        Message message = messageList.get(position);
+
+        //declare message type and sender
+        String from_user_ID = message.getFrom();
+        String from_message_TYPE = message.getType();
+
+        //firebase for offline
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(from_user_ID);
+        databaseReference.keepSynced(true);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    String userName = dataSnapshot.child("user_name").getValue().toString();
+                    String userProfileImage = dataSnapshot.child("user_thumb_image").getValue().toString();
+
+                    //Load profile with picasso
+                    Picasso.get()
+                            .load(userProfileImage)
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.default_profile_image)
+                            .into(holder.user_profile_image);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
