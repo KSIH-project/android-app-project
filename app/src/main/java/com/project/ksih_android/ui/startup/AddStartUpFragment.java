@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import timber.log.Timber;
 
 import android.provider.MediaStore;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -86,6 +88,7 @@ public class AddStartUpFragment extends Fragment {
     private View setUpBinding(Bundle savedinstanceState, LayoutInflater inflater, ViewGroup container) {
         FragmentAddStartUpBinding addStartUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_start_up, container, false);
         mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
+        setUpToolbar(addStartUpBinding);
         galleryIcon = addStartUpBinding.galleryIcon;
         galleryIcon.setOnClickListener(view -> openGallery());
         addStartUpBinding.saveStartup.setOnClickListener(view -> {
@@ -95,6 +98,13 @@ public class AddStartUpFragment extends Fragment {
                 Toast.makeText(requireActivity(), "Select an image", Toast.LENGTH_SHORT).show();
         });
         return addStartUpBinding.getRoot();
+    }
+
+    private void setUpToolbar(FragmentAddStartUpBinding addStartUpBinding) {
+        MaterialToolbar addStartUpToolbar = addStartUpBinding.addStartupToolbar;
+        addStartUpToolbar.setTitle("Add Startup");
+        addStartUpToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        addStartUpToolbar.setNavigationOnClickListener(view -> Navigation.findNavController(view).navigateUp());
     }
 
     private void openGallery() {

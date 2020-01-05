@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/addStartUpFragment"
         android:name="com.project.ksih_android.ui.startup.AddStartUpFragment"
-        android:label="fragment_add_start_up"
+        android:label="Add Startup"
         tools:layout="@layout/fragment_add_start_up" />
     <fragment
         android:id="@+id/startUpDetailsFragment"
