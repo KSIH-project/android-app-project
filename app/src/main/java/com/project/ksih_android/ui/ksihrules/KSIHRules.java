@@ -25,12 +25,13 @@ public class KSIHRules extends Fragment {
     private FragmentKsihrulesBinding mFragmentKsihrulesBinding;
 
 
-
     private KSIHRulesViewModel mKSIHRulesViewModel;
+
 
     public KSIHRules() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
