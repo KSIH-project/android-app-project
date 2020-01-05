@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="4dp">
 
-</LinearLayout>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:id="@+id/messageImageVreceiver"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="08dp"
+        android:layout_marginStart="51dp"
+        app:riv_corner_radius="15dp"
+        app:riv_border_width="0.5dip"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/messageUserImage"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="05dp"
+        android:layout_marginStart="1dp"
+        app:riv_border_color="@color/colorPrimary"
+        app:riv_border_width="0.40dp"
+        android:src="@drawable/default_profile_image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/receiverMessageText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="08dp"
+        android:layout_marginStart="51dp"
+        android:padding="8dp"
+        android:text="From Receiver"
+        android:textColor="@color/white"
+        android:background=""/>
+</RelativeLayout>
