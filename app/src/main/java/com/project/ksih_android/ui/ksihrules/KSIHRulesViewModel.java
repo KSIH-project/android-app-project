@@ -9,7 +9,7 @@ public class KSIHRulesViewModel extends ViewModel {
 
     public KSIHRulesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("KSIH RULES");
     }
 
     public LiveData<String> getText() {
