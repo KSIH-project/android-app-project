@@ -24,6 +24,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
     //intializing message list
@@ -109,6 +111,31 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 holder.receiver_text_message.setTextColor(Color.WHITE);
                 holder.receiver_text_message.setGravity(Gravity.START);
                 holder.receiver_text_message.setText(message.getMessage());
+            }
+        }
+
+        //when message type is Image
+        if (from_message_TYPE.equals("image")){
+            //test views are gone
+            holder.sender_text_message.setVisibility(View.GONE);
+            holder.receiver_text_message.setVisibility(View.GONE);
+
+            if (from_user_ID.equals(sender_UID)){
+                holder.user_profile_image.setVisibility(View.GONE);
+                holder.receiverImageMsg.setVisibility(View.GONE);
+                Picasso.get()
+                        .load(message.getMessage())
+                        .networkPolicy(NetworkPolicy.OFFLINE)
+                        .into(holder.senderImageMsg);
+                Timber.d("from adapter, link : %s", message.getMessage());
+            }else {
+                holder.user_profile_image.setVisibility(View.VISIBLE);
+                holder.senderImageMsg.setVisibility(View.GONE);
+                Picasso.get()
+                        .load(message.getMessage())
+                        .networkPolicy(NetworkPolicy.OFFLINE)
+                        .into(holder.receiverImageMsg);
+                Timber.d("from adapter, link : %s", message.getMessage());
             }
         }
 
