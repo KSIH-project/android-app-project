@@ -1,4 +1,4 @@
-package com.project.ksih_android.ui.chat;
+package com.project.ksih_android.ui.chat.requestFragment;
 
 
 import android.os.Bundle;

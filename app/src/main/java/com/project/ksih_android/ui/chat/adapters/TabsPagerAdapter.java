@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.project.ksih_android.ui.chat.ChatFragment;
-import com.project.ksih_android.ui.chat.RequestsFragment;
+import com.project.ksih_android.ui.chat.chatFragment.ChatFragment;
+import com.project.ksih_android.ui.chat.requestFragment.RequestsFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
