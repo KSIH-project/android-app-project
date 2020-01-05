@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.bumptech.glide.Glide;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -40,15 +43,13 @@ import static com.project.ksih_android.utility.Constants.REQUEST_CODE;
 public class AddStartUpFragment extends Fragment {
 
     private StartupViewModel mStartupViewModel;
-    private FirebaseAuth mAuth;
-    private StorageReference mStorageReference;
     private Bitmap mBitmap;
+    private String imagePath = "";
+    private ImageView galleryIcon;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        mStorageReference = firebaseStorage.getReference("images/");
         mBitmap = null;
         return setUpBinding(savedInstanceState, inflater, container);
     }
@@ -59,9 +60,17 @@ public class AddStartUpFragment extends Fragment {
             Uri imageUri = data.getData();
             if (imageUri != null) {
                 try {
-                    ImageDecoder.Source source = ImageDecoder.createSource(requireActivity().getContentResolver(), imageUri);
-                    mBitmap = ImageDecoder.decodeBitmap(source);
-                    uploadImageToFirebaseStorage();
+                    imagePath = imageUri.getLastPathSegment();
+                    if (Build.VERSION.SDK_INT >= 29) {
+                        ImageDecoder.Source source = ImageDecoder.createSource(requireActivity().getContentResolver(), imageUri);
+                        mBitmap = ImageDecoder.decodeBitmap(source);
+                        // Load image using Glide
+                        Glide.with(requireContext()).load(mBitmap).into(galleryIcon);
+                    } else {
+                        mBitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
+                        // Load image using Glide
+                        Glide.with(requireContext()).load(mBitmap).into(galleryIcon);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Timber.d(e.getLocalizedMessage());
@@ -75,10 +84,16 @@ public class AddStartUpFragment extends Fragment {
     }
 
     private View setUpBinding(Bundle savedinstanceState, LayoutInflater inflater, ViewGroup container) {
-        mAuth = FirebaseAuth.getInstance();
         FragmentAddStartUpBinding addStartUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_start_up, container, false);
         mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
-        addStartUpBinding.galleryIcon.setOnClickListener(view -> openGallery());
+        galleryIcon = addStartUpBinding.galleryIcon;
+        galleryIcon.setOnClickListener(view -> openGallery());
+        addStartUpBinding.saveStartup.setOnClickListener(view -> {
+            if (mBitmap != null)
+                uploadImageToFirebaseStorage();
+            else
+                Toast.makeText(requireActivity(), "Select an image", Toast.LENGTH_SHORT).show();
+        });
         return addStartUpBinding.getRoot();
     }
 
@@ -90,18 +105,23 @@ public class AddStartUpFragment extends Fragment {
 
     private void uploadImageToFirebaseStorage() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
         byte[] data = outputStream.toByteArray();
-        UploadTask uploadTask = mStorageReference.putBytes(data);
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference("images/startup_logo/" + imagePath);
+        Timber.d("Image Path: %s", imagePath);
+        UploadTask uploadTask = storageReference.putBytes(data);
         uploadTask.addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                task.addOnSuccessListener(taskSnapshot -> {
-                    if (task.isSuccessful()) {
-                        String imageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
+                // Upload successful
+                // Get image download URL
+                task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task1 -> {
+                    if (task1.isSuccessful()) {
+                        String imageUrl = task1.getResult().toString();
                         Timber.d("Download URL: %s", imageUrl);
                         Toast.makeText(getActivity(), imageUrl, Toast.LENGTH_SHORT).show();
                     } else {
-                        Timber.d(taskSnapshot.getError().getLocalizedMessage());
+                        Timber.d(task1.getException().getLocalizedMessage());
                     }
                 });
             } else {

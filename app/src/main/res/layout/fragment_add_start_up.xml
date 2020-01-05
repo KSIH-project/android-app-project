@@ -106,10 +106,20 @@
 
             <ImageView
                 android:id="@+id/gallery_icon"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 app:srcCompat="@drawable/ic_image_add" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_startup"
+                style="@style/buttonStyle"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Save" />
         </LinearLayout>
     </ScrollView>
 </layout>
