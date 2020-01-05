@@ -13,6 +13,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import timber.log.Timber;
 
@@ -48,6 +50,14 @@ public class MyApplication extends Application {
 
         //firebase persistence
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        // all images >> load offline
+        Picasso.Builder builder = new Picasso.Builder(this);
+        builder.downloader(new OkHttp3Downloader(this, Integer.MAX_VALUE));
+        Picasso builtPicasso = builder.build();
+        builtPicasso.setIndicatorsEnabled(true);
+        builtPicasso.setLoggingEnabled(true);
+        Picasso.setSingletonInstance(builtPicasso);
 
         //Online Status
         mAuth = FirebaseAuth.getInstance();
