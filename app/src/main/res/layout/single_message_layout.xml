@@ -53,5 +53,16 @@
         android:padding="8dp"
         android:text="From Sender"
         android:textColor="@color/black"
-        android:background=""/>
+        android:background="@drawable/single_message_text_another_background"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:id="@+id/messageImageVsender"
+        android:layout_marginTop="08dp"
+        android:layout_marginEnd="1dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:riv_corner_radius="15dp"
+        app:riv_border_width="0.5dip"/>
 </RelativeLayout>
