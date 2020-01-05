@@ -40,5 +40,18 @@
         android:padding="8dp"
         android:text="From Receiver"
         android:textColor="@color/white"
+        android:background="@drawable/single_message_text_background"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/senderMessageText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="08dp"
+        android:layout_marginEnd="1dp"
+        android:padding="8dp"
+        android:text="From Sender"
+        android:textColor="@color/black"
         android:background=""/>
 </RelativeLayout>
