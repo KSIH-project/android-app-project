@@ -25,6 +25,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -35,6 +38,7 @@ import java.io.ByteArrayOutputStream;
 
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE;
+import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,10 +52,20 @@ public class AddStartUpFragment extends Fragment {
     private Bitmap mBitmap;
     private String imagePath = "";
     private ImageView galleryIcon;
+    private TextInputEditText startupName;
+    private TextInputEditText startupDescription;
+    private TextInputEditText startupFounder;
+    private TextInputEditText startupCoFounder;
+    private TextInputEditText startupWebsite;
+    private TextInputEditText facebookUrl;
+    private TextInputEditText twitterUrl;
+    private String imageUrl;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
+
         mBitmap = null;
         return setUpBinding(savedInstanceState, inflater, container);
     }
@@ -89,6 +103,13 @@ public class AddStartUpFragment extends Fragment {
         FragmentAddStartUpBinding addStartUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_start_up, container, false);
         mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         setUpToolbar(addStartUpBinding);
+        startupName = addStartUpBinding.startupName;
+        startupDescription = addStartUpBinding.description;
+        startupFounder = addStartUpBinding.founder;
+        startupCoFounder = addStartUpBinding.coFounder;
+        startupWebsite = addStartUpBinding.website;
+        facebookUrl = addStartUpBinding.facebookUrl;
+        twitterUrl = addStartUpBinding.twitterUrl;
         galleryIcon = addStartUpBinding.galleryIcon;
         galleryIcon.setOnClickListener(view -> openGallery());
         addStartUpBinding.saveStartup.setOnClickListener(view -> {
@@ -104,7 +125,10 @@ public class AddStartUpFragment extends Fragment {
         MaterialToolbar addStartUpToolbar = addStartUpBinding.addStartupToolbar;
         addStartUpToolbar.setTitle("Add Startup");
         addStartUpToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        addStartUpToolbar.setNavigationOnClickListener(view -> Navigation.findNavController(view).navigateUp());
+        addStartUpToolbar.setNavigationOnClickListener(view -> {
+            Navigation.findNavController(view).navigateUp();
+            hideSoftKeyboard(requireActivity());
+        });
     }
 
     private void openGallery() {
@@ -127,7 +151,8 @@ public class AddStartUpFragment extends Fragment {
                 // Get image download URL
                 task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task1 -> {
                     if (task1.isSuccessful()) {
-                        String imageUrl = task1.getResult().toString();
+                        imageUrl = task1.getResult().toString();
+                        addStartUp();
                         Timber.d("Download URL: %s", imageUrl);
                         Toast.makeText(getActivity(), imageUrl, Toast.LENGTH_SHORT).show();
                     } else {
@@ -139,5 +164,14 @@ public class AddStartUpFragment extends Fragment {
                 Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void addStartUp() {
+        StartUpField startUpField = new StartUpField(startupName.getText().toString(),
+                startupDescription.getText().toString(), startupFounder.getText().toString(),
+                startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
+                facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl);
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("startups");
+        firebaseDatabase.push().setValue(startUpField);
     }
 }

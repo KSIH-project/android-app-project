@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="addStartUp"
+            type="com.project.ksih_android.ui.startup.StartupViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,6 +51,7 @@
                     android:hint="Startup Name">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/startup_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="textPersonName|textCapWords" />
@@ -57,6 +64,7 @@
                     android:hint="Description">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="textMultiLine"
@@ -70,6 +78,7 @@
                     android:hint="Founder">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/founder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="textPersonName|textCapWords" />
@@ -82,6 +91,7 @@
                     android:hint="Co-founder">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/co_founder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="textPersonName|textCapWords" />
@@ -94,6 +104,7 @@
                     android:hint="Website">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/website"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="textUri" />
@@ -106,6 +117,7 @@
                     android:hint="Facebook">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/facebook_url"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="textUri" />
@@ -118,6 +130,7 @@
                     android:hint="Twitter">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/twitter_url"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="textUri" />
