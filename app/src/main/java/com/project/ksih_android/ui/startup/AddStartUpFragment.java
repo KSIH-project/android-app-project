@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
@@ -35,6 +36,7 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentAddStartUpBinding;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE;
@@ -65,7 +67,6 @@ public class AddStartUpFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
-
         mBitmap = null;
         return setUpBinding(savedInstanceState, inflater, container);
     }
@@ -166,6 +167,9 @@ public class AddStartUpFragment extends Fragment {
         });
     }
 
+    /**
+     * Creates new startup object and adds it to firebase database
+     */
     private void addStartUp() {
         StartUpField startUpField = new StartUpField(startupName.getText().toString(),
                 startupDescription.getText().toString(), startupFounder.getText().toString(),

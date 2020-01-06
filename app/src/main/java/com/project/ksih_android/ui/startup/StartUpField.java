@@ -2,6 +2,7 @@ package com.project.ksih_android.ui.startup;
 
 import android.util.Patterns;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
@@ -14,9 +15,13 @@ public class StartUpField extends BaseObservable {
     private String startupName;
     private String startupDescription;
     private String startupFounder;
+    @Nullable
     private String startupCoFounder;
+    @Nullable
     private String startupWebsite;
+    @Nullable
     private String facebookUrl;
+    @Nullable
     private String twitterUrl;
     private String imageUrl;
 
@@ -79,7 +84,7 @@ public class StartUpField extends BaseObservable {
         return startupCoFounder;
     }
 
-    public void setStartupCoFounder(String startupCoFounder) {
+    public void setStartupCoFounder(@Nullable String startupCoFounder) {
         this.startupCoFounder = startupCoFounder;
     }
 
@@ -87,7 +92,7 @@ public class StartUpField extends BaseObservable {
         return startupWebsite;
     }
 
-    public void setStartupWebsite(String startupWebsite) {
+    public void setStartupWebsite(@Nullable String startupWebsite) {
         this.startupWebsite = startupWebsite;
     }
 
@@ -95,7 +100,7 @@ public class StartUpField extends BaseObservable {
         return facebookUrl;
     }
 
-    public void setFacebookUrl(String facebookUrl) {
+    public void setFacebookUrl(@Nullable String facebookUrl) {
         this.facebookUrl = facebookUrl;
     }
 
@@ -103,7 +108,7 @@ public class StartUpField extends BaseObservable {
         return twitterUrl;
     }
 
-    public void setTwitterUrl(String twitterUrl) {
+    public void setTwitterUrl(@Nullable String twitterUrl) {
         this.twitterUrl = twitterUrl;
     }
 
