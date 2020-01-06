@@ -148,25 +148,25 @@ public class ChatFragment extends Fragment {
                         }
 
                         //implement on click listener for items
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //user active status validation
-                                if (dataSnapshot.child("active_now").exists()){
+                        holder.itemView.setOnClickListener(view -> {
+                            //user active status validation
+                            if (dataSnapshot.child("active_now").exists()){
 
-                                    //call intent to chat section
+                                /**
+                                 * @Todo add intent to chat Section
+                                 */
+                                //call intent to chat section
 
-                                }else {
-                                    userDatabaseReference.child(userID).child("active_now")
-                                            .setValue(ServerValue.TIMESTAMP).addOnSuccessListener(
-                                            new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    //call intent to chat section
+                            }else {
+                                userDatabaseReference.child(userID).child("active_now")
+                                        .setValue(ServerValue.TIMESTAMP).addOnSuccessListener(
+                                        aVoid -> {
+                                            /**
+                                             * @Todo add intent to chat section
+                                             */
+                                            //call intent to chat section
 
-                                                }
-                                            });
-                                }
+                                        });
                             }
                         });
                     }

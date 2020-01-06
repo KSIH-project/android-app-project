@@ -217,6 +217,9 @@ public class RequestsFragment extends Fragment {
                                                                 });
                                                     }
                                                     if (which == 2){
+                                                        /**
+                                                         * @Todo add intent to profile
+                                                         */
                                                         //on friend request accepted send intent to profile
 
                                                     }
@@ -270,6 +273,48 @@ public class RequestsFragment extends Fragment {
                                             if (userVerified.contains("true")){
                                                 holder.verified_icon.setVisibility(View.VISIBLE);
                                             }
+
+                                            holder.itemView.setOnClickListener(view -> {
+                                                CharSequence options[] = new CharSequence[]{
+                                                        "Cancel Sent Request", userName+"'s profile"
+                                                };
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int which) {
+                                                        if (which == 0){
+                                                            //for cancellation, delete data from user node
+                                                            //delete from sender >> receiver > values
+                                                            friendReqDatabaseReference.child(user_UId).child(userID).removeValue()
+                                                                    .addOnCompleteListener(task -> {
+                                                                        if (task.isSuccessful()){
+                                                                            //delete from receiver >. sender > values
+                                                                            friendReqDatabaseReference.child(userID).child(user_UId).removeValue()
+                                                                                    .addOnCompleteListener(task14 -> {
+                                                                                        if (task14.isSuccessful()){
+                                                                                            Snackbar snackbar = Snackbar
+                                                                                                    .make(view, "Cancel Sent Request", Snackbar.LENGTH_LONG);
+                                                                                                    //customize snack bar
+                                                                                            View sView = snackbar.getView();
+                                                                                            sView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.button_color_disabled));
+                                                                                            snackbar.setTextColor(Color.WHITE);
+                                                                                            snackbar.show();
+                                                                                        }
+                                                                                    });
+                                                                        }
+                                                                    });
+                                                        }
+                                                        if (which == 1){
+                                                            /**
+                                                             * @Todo add intent to profile
+                                                             */
+                                                            //send intent to Profile
+
+                                                        }
+                                                    }
+                                                });
+                                                builder.show();
+                                            });
                                         }
                                     }
 
@@ -292,9 +337,12 @@ public class RequestsFragment extends Fragment {
             @NonNull
             @Override
             public RequestsVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return null;
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_single, parent, false);
+                return new RequestsVH(view);
             }
         };
+        request_list.setAdapter(adapter);
+        adapter.startListening();
     }
 
     public static class RequestsVH extends RecyclerView.ViewHolder{
