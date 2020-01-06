@@ -4,7 +4,7 @@
     android:id="@+id/main_appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/white_gray_border_bottom">
 
 
 </androidx.appcompat.widget.Toolbar>
