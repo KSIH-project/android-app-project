@@ -192,9 +192,85 @@ public class RequestsFragment extends Fragment {
                                                                             });
                                                                 });
                                                     }
+
+                                                    //implement second condition
+                                                    if (which == 1){
+                                                        //for cancellation, delete data from user nodes
+                                                        //delete from, sender >> receiver >. values
+                                                        friendReqDatabaseReference.child(user_UId).child(userID).removeValue()
+                                                                .addOnCompleteListener(task -> {
+                                                                    if (task.isSuccessful()){
+                                                                        //delete from receiver >> sender >> values
+                                                                        friendReqDatabaseReference.child(userID).child(user_UId).removeValue()
+                                                                                .addOnCompleteListener(task13 -> {
+                                                                                    if (task13.isSuccessful()){
+                                                                                        Snackbar snackbar = Snackbar
+                                                                                                .make(view, "Cancel Request", Snackbar.LENGTH_LONG);
+                                                                                        //customizing snackbar
+                                                                                        View sView = snackbar.getView();
+                                                                                        sView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.button_color_disabled));
+                                                                                        snackbar.setTextColor(Color.WHITE);
+                                                                                        snackbar.show();
+                                                                                    }
+                                                                                });
+                                                                    }
+                                                                });
+                                                    }
+                                                    if (which == 2){
+                                                        //on friend request accepted send intent to profile
+
+                                                    }
                                                 }
                                             });
+                                            builder.show();
                                         });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                            if (requestType.equals("sent")){
+                                holder.re_icon.setVisibility(View.GONE);
+                                holder.se_icon.setVisibility(View.VISIBLE);
+                                userDatabaseReference.child(userID).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        final String userName = dataSnapshot.child("user_name").getValue().toString();
+                                        final String userVerified = dataSnapshot.child("verified").getValue().toString();
+                                        final String userThumbPhoto = dataSnapshot.child("user_thumb_image").getValue().toString();
+                                        final String user_status = dataSnapshot.child("user_status").getValue().toString();
+
+                                        holder.name.setText(userName);
+                                        holder.status.setText(user_status);
+
+                                        //load user photo
+                                        if (!userThumbPhoto.equals("default_image")){
+                                            Picasso.get()
+                                                    .load(userThumbPhoto)
+                                                    .networkPolicy(NetworkPolicy.OFFLINE)
+                                                    .placeholder(R.drawable.default_profile_image)
+                                                    .into(holder.user_photo, new Callback() {
+                                                        @Override
+                                                        public void onSuccess() {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onError(Exception e) {
+                                                            Picasso.get()
+                                                                    .load(userThumbPhoto)
+                                                                    .placeholder(R.drawable.default_profile_image)
+                                                                    .into(holder.user_photo);
+                                                        }
+                                                    });
+
+                                            if (userVerified.contains("true")){
+                                                holder.verified_icon.setVisibility(View.VISIBLE);
+                                            }
+                                        }
                                     }
 
                                     @Override
