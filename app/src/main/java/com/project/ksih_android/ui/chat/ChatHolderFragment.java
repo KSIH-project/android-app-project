@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.provider.Settings;
@@ -34,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.project.ksih_android.R;
 import com.project.ksih_android.ui.chat.adapters.TabsPagerAdapter;
+import com.project.ksih_android.ui.chat.friends.FriendsFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -139,7 +141,10 @@ public class ChatHolderFragment extends Fragment {
             case R.id.profile_settings:
                 return true;
             case R.id.all_friends:
-                return true;
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                FriendsFragment friendsFragment = new FriendsFragment();
+                ft.replace(R.id.nav_host_fragment, friendsFragment);
+                ft.commit();
         }
         return super.onOptionsItemSelected(item);
     }
