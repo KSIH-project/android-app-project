@@ -1,7 +1,10 @@
 package com.project.ksih_android.ui;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -11,6 +14,7 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.utility.DividerItemDecoration;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -56,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, mNavController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, mNavController);
         initDestinationListener();
+        isFirstTimeLogin();
     }
 
     @Override
@@ -120,4 +125,38 @@ public class HomeActivity extends AppCompatActivity {
     private void showDrawer() {
         drawer.setVisibility(View.VISIBLE);
     }
+
+    private void isFirstTimeLogin() {
+
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstTimeLogin = preferences.getBoolean("First Login", true);
+
+        if (firstTimeLogin) {
+
+            AlertDialog.Builder messageBuilder = new AlertDialog.Builder(this);
+            messageBuilder.setMessage(getString(R.string.first_time_welcoming_message));
+
+            messageBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferences.Editor messageEditor = preferences.edit();
+                    messageEditor.putBoolean("First Login", false);
+                    messageEditor.commit();
+                    dialog.dismiss();
+
+                }
+            });
+
+            messageBuilder.setIcon(R.drawable.ksih_background);
+            messageBuilder.setTitle(" ");
+            AlertDialog alertDialogKsih = messageBuilder.create();
+            alertDialogKsih.show();
+
+
+        }
+
+
+    }
+
+
 }

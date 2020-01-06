@@ -39,11 +39,12 @@ public class KSIHRules extends Fragment {
         // Inflate the layout for this fragment
         mFragmentKsihrulesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_ksihrules, container, false);
         mFragmentKsihrulesBinding.getLifecycleOwner();
-        mFragmentKsihrulesBinding.textviewKsihRules.setText("Ksih rules");
+
         mKSIHRulesViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                mFragmentKsihrulesBinding.textviewKsihRules.setText(s);
+                mFragmentKsihrulesBinding.textviewKsihRules.setText("Ksih rules");
+                //             mFragmentKsihrulesBinding.textviewKsihRules.setText(s);
             }
         });
         return mFragmentKsihrulesBinding.getRoot();
