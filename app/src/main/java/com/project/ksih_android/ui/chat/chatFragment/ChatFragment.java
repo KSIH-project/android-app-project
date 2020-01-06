@@ -193,7 +193,6 @@ public class ChatFragment extends Fragment {
 
     //chat view holder
     public static class ChatsVH extends RecyclerView.ViewHolder{
-
         //initialize views
         TextView user_name, user_presence;
         RoundedImageView user_photo;
