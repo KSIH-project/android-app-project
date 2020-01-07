@@ -42,34 +42,34 @@ import timber.log.Timber;
  * A simple {@link Fragment} subclass.
  */
 public class ChatFragment extends Fragment {
-//    private ChatViewModel chatViewModel;
-//    String current_user_id;
-//
-//    //initialize variables
-//    private View view;
-//    private RecyclerView chat_list;
-//
-//    //firebase variables
-//    private DatabaseReference friendsDatabaseReference;
-//    private DatabaseReference userDatabaseReference;
-//    private FirebaseAuth mAuth;
-//
-//    public ChatFragment() {
-//        // Required empty public constructor
-//    }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        chatViewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
-//        // Inflate the layout for this fragment
-//        View root = inflater.inflate(R.layout.fragment_chat, container, false);
-//        chatViewModel.getText().observe(this, s -> {
-//
-//        });
-//
-//        //initializing variables for recycler view
-//        chat_list = root.findViewById(R.id.chatList);
+    private ChatViewModel chatViewModel;
+    String current_user_id;
+
+    //initialize variables
+    private View view;
+    private RecyclerView chat_list;
+
+    //firebase variables
+    private DatabaseReference friendsDatabaseReference;
+    private DatabaseReference userDatabaseReference;
+    private FirebaseAuth mAuth;
+
+    public ChatFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        chatViewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_chat, container, false);
+        chatViewModel.getText().observe(this, s -> {
+
+        });
+
+        //initializing variables for recycler view
+        chat_list = root.findViewById(R.id.chatList);
 //        mAuth = FirebaseAuth.getInstance();
 //        current_user_id = mAuth.getCurrentUser().getUid();
 //        friendsDatabaseReference = FirebaseDatabase.getInstance().getReference().child("friends")
@@ -82,14 +82,14 @@ public class ChatFragment extends Fragment {
 //        linearLayoutManager.setReverseLayout(true);
 //        linearLayoutManager.setStackFromEnd(true);
 //        chat_list.setLayoutManager(linearLayoutManager);
-//
-//        return root;
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
+
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
 //        FirebaseRecyclerOptions<Friends> recyclerOptions = new FirebaseRecyclerOptions.Builder<Friends>()
 //                .setQuery(friendsDatabaseReference, Friends.class)
 //                .build();
@@ -205,7 +205,7 @@ public class ChatFragment extends Fragment {
 //            user_presence = itemView.findViewById(R.id.all_user_status);
 //            active_icon = itemView.findViewById(R.id.activeIcon);
 //        }
-//    }
+    }
 }
 
 

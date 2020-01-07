@@ -54,7 +54,6 @@ public class ChatHolderFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference userDatabaseReference;
     public FirebaseUser currentUser;
-    private NavController mNavController;
 
 
     public ChatHolderFragment() {
@@ -145,6 +144,7 @@ public class ChatHolderFragment extends Fragment {
 
             case R.id.all_friends:
                 Navigation.findNavController(mTabLayout).navigate(R.id.all_friends);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

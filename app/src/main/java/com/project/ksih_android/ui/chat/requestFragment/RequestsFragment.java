@@ -45,33 +45,33 @@ import java.util.Calendar;
  * A simple {@link Fragment} subclass.
  */
 public class RequestsFragment extends Fragment {
-//    //initialize variables
-//    private View view;
-//    private RecyclerView request_list;
-//    private Context context;
-//
-//    //firebase
-//    private DatabaseReference databaseReference;
-//    private FirebaseAuth mAuth;
-//    String user_UId;
-//    private DatabaseReference userDatabaseReference;
-//
-//    //for accept and cancel request
-//    private DatabaseReference friendsDatabaseReference;
-//    private DatabaseReference friendReqDatabaseReference;
-//
-//
-//    public RequestsFragment() {
-//        // Required empty public constructor
-//    }
-//
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        view = inflater.inflate(R.layout.fragment_requests, container, false);
-//
+    //initialize variables
+    private View view;
+    private RecyclerView request_list;
+    private Context context;
+
+    //firebase
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    String user_UId;
+    private DatabaseReference userDatabaseReference;
+
+    //for accept and cancel request
+    private DatabaseReference friendsDatabaseReference;
+    private DatabaseReference friendReqDatabaseReference;
+
+
+    public RequestsFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_requests, container, false);
+
 //        request_list = view.findViewById(R.id.requestList);
 //        request_list.setHasFixedSize(true);
 //
@@ -87,14 +87,14 @@ public class RequestsFragment extends Fragment {
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 //        request_list.setHasFixedSize(true);
 //        request_list.setLayoutManager(linearLayoutManager);
-//
-//        return view;
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
 //        FirebaseRecyclerOptions<Requests> recyclerOptions = new FirebaseRecyclerOptions.Builder<Requests>()
 //                .setQuery(databaseReference, Requests.class)
 //                .build();
@@ -360,5 +360,5 @@ public class RequestsFragment extends Fragment {
 //            verified_icon = itemView.findViewById(R.id.verifiedIcon);
 //
 //        }
-//    }
+    }
 }
