@@ -39,6 +39,9 @@
             android:id="@+id/action_navigation_event_to_eventDetailsFragment"
             app:destination="@id/eventDetailsFragment"
             app:enterAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_navigation_event_to_eventAddFragment"
+            app:destination="@id/eventAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_chats"
@@ -73,6 +76,15 @@
             app:destination="@id/navigation_event"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventAddFragment"
+        android:name="com.project.ksih_android.EventAddFragment"
+        android:label="fragment_event_add"
+        tools:layout="@layout/fragment_event_add">
+        <action
+            android:id="@+id/action_eventAddFragment_to_navigation_event"
+            app:destination="@id/navigation_event" />
     </fragment>
 
 
