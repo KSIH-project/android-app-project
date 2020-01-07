@@ -139,6 +139,7 @@ public class ChatHolderFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.menu_search:
+                Navigation.findNavController(mTabLayout).navigate(R.id.menu_search);
                 break;
             case R.id.profile_settings:
                 break;

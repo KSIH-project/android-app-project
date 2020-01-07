@@ -90,6 +90,7 @@ public class HomeActivity extends AppCompatActivity {
                     hideDrawer();
                     break;
                 case R.id.all_friends:
+                case R.id.menu_search:
                     hideCustomToolBar();
                     getSupportActionBar().hide();
                     break;

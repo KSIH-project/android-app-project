@@ -66,4 +66,10 @@
         android:label="Friends"
         tools:layout="@layout/fragment_friends"/>
 
+    <fragment
+        android:id="@+id/menu_search"
+        android:name="com.project.ksih_android.ui.chat.search.SearchFragment"
+        android:label=""
+        tools:layout="@layout/fragment_search"/>
+
 </navigation>
