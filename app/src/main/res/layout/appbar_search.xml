@@ -4,32 +4,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:layout_marginTop="16dp"
     android:layout_gravity="center_horizontal">
 
     <ImageView
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/backButton"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:padding="10dp"
-        app:srcCompat="@drawable/ic_back_button"/>
+        app:srcCompat="@drawable/ic_back_button" />
 
-    <cn.zhaiyifan.rememberedittext.RememberEditText
+    <EditText
+        android:id="@+id/SearchInput"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/SearchInput"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
         android:layout_toEndOf="@id/backButton"
+        android:background="@drawable/rounded_edittext"
+        android:drawableStart="@drawable/ic_search_black_24dp"
         android:hint="Search a name"
         android:inputType="textCapWords"
-        android:background="@drawable/rounded_edittext"
-        app:autoFill="false"
-        app:autoSave="true"
-        app:rememberId="searchText"
-        app:rememberCount="5"
-        app:deleteIcon="@drawable/search_clear"
-        app:dropDownIcon="drawable/search_down"
-        app:dropUpIcon="drawable/search_up"/>
+        android:paddingStart="8dp" />
 
 </RelativeLayout>

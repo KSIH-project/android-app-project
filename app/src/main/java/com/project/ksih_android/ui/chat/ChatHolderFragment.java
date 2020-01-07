@@ -163,7 +163,7 @@ public class ChatHolderFragment extends Fragment {
             } else {
                 Snackbar snackbar = Snackbar
                         .make(mViewPager, "No internet Connection! ", Snackbar.LENGTH_LONG)
-                        .setAction("Go settings", view -> {
+                        .setAction("Check settings", view -> {
                             Intent settings = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
                             context.startActivity(settings);
                         });
