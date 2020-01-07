@@ -1,7 +1,7 @@
 package com.project.ksih_android.ui.chat.models;
 
 public class ProfileInfo {
-    private String user_name;
+    private String user_name, verified;
     private String user_image;
     private String user_status;
     private String user_thumb_image;
@@ -9,8 +9,9 @@ public class ProfileInfo {
     public ProfileInfo(){
     }
 
-    public ProfileInfo(String user_name, String user_image, String user_status, String user_thumb_image) {
+    public ProfileInfo(String user_name, String verified, String user_image, String user_status, String user_thumb_image) {
         this.user_name = user_name;
+        this.verified = verified;
         this.user_image = user_image;
         this.user_status = user_status;
         this.user_thumb_image = user_thumb_image;
@@ -46,5 +47,13 @@ public class ProfileInfo {
 
     public void setUser_thumb_image(String user_thumb_image) {
         this.user_thumb_image = user_thumb_image;
+    }
+
+    public String getVerified() {
+        return verified;
+    }
+
+    public void setVerified(String verified) {
+        this.verified = verified;
     }
 }
