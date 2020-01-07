@@ -50,6 +50,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
+            android:autoLink="phone"
+            android:textColorLink="@android:color/holo_blue_dark"
             android:fontFamily="@font/roboto_medium"
             tools:text="Telephone: +2349065211300" />
 
@@ -61,6 +63,8 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto_medium"
+            android:autoLink="email"
+            android:textColorLink="@android:color/holo_blue_dark"
             tools:text="Email: awseqe.12@comail.xn" />
 
         <TextView
@@ -71,6 +75,8 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto_medium"
+            android:autoLink="web"
+            android:textColorLink="@android:color/holo_blue_dark"
             tools:text="Website: https://www.euibbiweq.com" />
 
         <TextView
@@ -81,6 +87,8 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto_medium"
+            android:autoLink="web"
+            android:textColorLink="@android:color/holo_blue_dark"
             tools:text="Facebook: https://facebook.com/thisstartup" />
 
         <TextView
@@ -90,6 +98,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
+            android:autoLink="web"
+            android:textColorLink="@android:color/holo_blue_dark"
             android:fontFamily="@font/roboto_medium"
             tools:text="Twitter: https://twitter.com/thisstartup" />
     </LinearLayout>
