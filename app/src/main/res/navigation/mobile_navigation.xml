@@ -60,5 +60,10 @@
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
 
+    <fragment
+        android:id="@id/all_friends"
+        android:name="com.project.ksih_android.ui.chat.friends.FriendsFragment"
+        android:label="Friends"
+        tools:layout="@layout/fragment_friends"/>
 
 </navigation>

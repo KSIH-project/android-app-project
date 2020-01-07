@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 import android.provider.Settings;
@@ -52,6 +54,7 @@ public class ChatHolderFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference userDatabaseReference;
     public FirebaseUser currentUser;
+    private NavController mNavController;
 
 
     public ChatHolderFragment() {
@@ -137,14 +140,11 @@ public class ChatHolderFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.menu_search:
-                return true;
+
             case R.id.profile_settings:
-                return true;
+
             case R.id.all_friends:
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                FriendsFragment friendsFragment = new FriendsFragment();
-                ft.replace(R.id.nav_host_fragment, friendsFragment);
-                ft.commit();
+                Navigation.findNavController(mTabLayout).navigate(R.id.all_friends);
         }
         return super.onOptionsItemSelected(item);
     }
