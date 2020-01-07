@@ -95,13 +95,13 @@ public class ChatHolderFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            Toast.makeText(getContext(), "Login to use chat session", Toast.LENGTH_SHORT).show();
-        }
-        if (currentUser != null) {
-            userDatabaseReference.child("active_now").setValue("true");
-        }
+//        currentUser = mAuth.getCurrentUser();
+//        if (currentUser == null) {
+//            Toast.makeText(getContext(), "Login to use chat session", Toast.LENGTH_SHORT).show();
+//        }
+//        if (currentUser != null) {
+//            userDatabaseReference.child("active_now").setValue("true");
+//        }
     }
 
 
@@ -139,9 +139,9 @@ public class ChatHolderFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.menu_search:
-
+                break;
             case R.id.profile_settings:
-
+                break;
             case R.id.all_friends:
                 Navigation.findNavController(mTabLayout).navigate(R.id.all_friends);
                 break;
