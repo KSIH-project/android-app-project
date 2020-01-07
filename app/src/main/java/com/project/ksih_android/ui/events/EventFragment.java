@@ -20,7 +20,7 @@ import com.project.ksih_android.utility.EventRecyclerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by ChukwuwaUchenna
  */
 public class EventFragment extends Fragment {
 

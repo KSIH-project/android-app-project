@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.events.EventDetailsFragment">
+
+        <ImageView
+            android:id="@+id/image_events_details"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="8dp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_event_tittle_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_events_details"
+            tools:text="Dev c Training with Andela" />
+
+        <TextView
+            android:id="@+id/text_events_type_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Android"
+            app:layout_constraintEnd_toEndOf="@+id/text_event_tittle_details"
+            app:layout_constraintTop_toBottomOf="@+id/text_event_tittle_details" />
+
+        <TextView
+            android:id="@+id/text_events_descrip_details"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="This is an event that allows us to go and go and go and go"
+            app:layout_constraintBottom_toTopOf="@+id/text_events_link_details"
+            app:layout_constraintEnd_toEndOf="@+id/text_event_tittle_details"
+            app:layout_constraintStart_toStartOf="@+id/text_event_tittle_details"
+            app:layout_constraintTop_toBottomOf="@+id/text_events_type_details" />
+
+        <TextView
+            android:id="@+id/text_events_link_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:autoLink="all"
+            android:fontFamily="@font/roboto_medium"
+            android:text="www.google.com"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/text_event_email_details"
+            app:layout_constraintEnd_toEndOf="@+id/text_event_tittle_details"
+            app:layout_constraintStart_toStartOf="@+id/text_event_tittle_details" />
+
+        <TextView
+            android:id="@+id/text_event_email_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="52dp"
+            android:autoLink="email"
+            android:fontFamily="@font/roboto_medium"
+            android:text="myemailadress@gmail.com"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_events_link_details"
+            app:layout_constraintStart_toStartOf="@+id/text_events_link_details" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
