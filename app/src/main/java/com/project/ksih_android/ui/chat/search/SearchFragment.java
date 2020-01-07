@@ -18,7 +18,6 @@ import com.project.ksih_android.R;
  */
 public class SearchFragment extends Fragment {
 
-    Toolbar toolbar;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -31,8 +30,6 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        toolbar = view.findViewById(R.id.search_appbar);
-        toolbar.setNavigationIcon(R.drawable.ic_back_button);
 
         return view;
     }
