@@ -61,6 +61,8 @@ public class AddStartUpFragment extends Fragment {
     private TextInputEditText startupWebsite;
     private TextInputEditText facebookUrl;
     private TextInputEditText twitterUrl;
+    private TextInputEditText telephone;
+    private TextInputEditText email;
     private String imageUrl;
 
     @Override
@@ -111,6 +113,8 @@ public class AddStartUpFragment extends Fragment {
         startupWebsite = addStartUpBinding.website;
         facebookUrl = addStartUpBinding.facebookUrl;
         twitterUrl = addStartUpBinding.twitterUrl;
+        telephone = addStartUpBinding.telephone;
+        email = addStartUpBinding.email;
         galleryIcon = addStartUpBinding.galleryIcon;
         galleryIcon.setOnClickListener(view -> openGallery());
         addStartUpBinding.saveStartup.setOnClickListener(view -> {
@@ -174,7 +178,8 @@ public class AddStartUpFragment extends Fragment {
         StartUpField startUpField = new StartUpField(startupName.getText().toString(),
                 startupDescription.getText().toString(), startupFounder.getText().toString(),
                 startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
-                facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl);
+                facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
+                telephone.getText().toString(), email.getText().toString());
         DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("startups");
         firebaseDatabase.push().setValue(startUpField);
     }

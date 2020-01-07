@@ -9,12 +9,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
+import com.project.ksih_android.storage.SharedPreferencesStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+import timber.log.Timber;
+
+import static com.project.ksih_android.utility.Constants.STARTUP_ITEM_KEY;
 
 /**
  * Created by SegunFrancis
@@ -23,9 +28,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpViewHolder> {
 
     private List<StartUpField> mList = new ArrayList<>();
+    private SharedPreferencesStorage mStorage;
+    private Context mContext;
 
-    public StartUpAdapter(List<StartUpField> list) {
+    public StartUpAdapter(List<StartUpField> list, Context context) {
         mList = list;
+        mContext = context.getApplicationContext();
+        mStorage = new SharedPreferencesStorage(mContext);
     }
 
     @NonNull
@@ -37,7 +46,7 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
     @Override
     public void onBindViewHolder(@NonNull StartUpViewHolder holder, int position) {
         StartUpField field = mList.get(position);
-        Glide.with(holder.mContext).load(field.getImageUrl()).into(holder.roundLogo);
+        Glide.with(mContext).load(field.getImageUrl()).into(holder.roundLogo);
         holder.startupName.setText(field.getStartupName());
         holder.startupDescription.setText(field.getStartupDescription());
     }
@@ -51,15 +60,20 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
         RoundedImageView roundLogo;
         TextView startupName;
         TextView startupDescription;
-        Context mContext;
 
         public StartUpViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            mContext = itemView.getContext();
             roundLogo = itemView.findViewById(R.id.startup_icon_image);
             startupName = itemView.findViewById(R.id.startup_name_item);
             startupDescription = itemView.findViewById(R.id.startup_description_item);
+
+            itemView.setOnClickListener(view -> {
+                StartUpField field = mList.get(getAdapterPosition());
+                mStorage.setStartupField(STARTUP_ITEM_KEY, field);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_startUpDetailsFragment);
+                Timber.d("Field: %s", field);
+            });
         }
     }
 }

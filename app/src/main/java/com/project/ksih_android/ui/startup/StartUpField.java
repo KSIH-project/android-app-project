@@ -2,6 +2,8 @@ package com.project.ksih_android.ui.startup;
 
 import android.util.Patterns;
 
+import java.io.Serializable;
+
 import androidx.annotation.Nullable;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -10,7 +12,8 @@ import androidx.databinding.library.baseAdapters.BR;
 /**
  * Created by SegunFrancis
  */
-public class StartUpField extends BaseObservable {
+
+public class StartUpField extends BaseObservable implements Serializable {
     private String url;
     private String startupName;
     private String startupDescription;
@@ -24,13 +27,15 @@ public class StartUpField extends BaseObservable {
     @Nullable
     private String twitterUrl;
     private String imageUrl;
+    private String telephone;
+    private String email;
 
     public StartUpField() {
     }
 
     public StartUpField(String startupName, String startupDescription, String startupFounder,
-                        String startupCoFounder, String startupWebsite, String facebookUrl,
-                        String twitterUrl, String imageUrl) {
+                        @Nullable String startupCoFounder, @Nullable String startupWebsite, @Nullable String facebookUrl,
+                        @Nullable String twitterUrl, String imageUrl, String telephone, String email) {
         this.startupName = startupName;
         this.startupDescription = startupDescription;
         this.startupFounder = startupFounder;
@@ -39,6 +44,24 @@ public class StartUpField extends BaseObservable {
         this.facebookUrl = facebookUrl;
         this.twitterUrl = twitterUrl;
         this.imageUrl = imageUrl;
+        this.telephone = telephone;
+        this.email = email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUrl() {

@@ -58,15 +58,13 @@ public class StartupViewModel extends ViewModel {
                     }
                 }
                 startupList.setValue(mList);
-                Timber.d("mList: %s", mList.toString());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Timber.d("Database Error: %s", databaseError.getDetails());
             }
         });
-        Timber.d("StartUp List: %s", startupList.toString());
         return startupList;
     }
 }

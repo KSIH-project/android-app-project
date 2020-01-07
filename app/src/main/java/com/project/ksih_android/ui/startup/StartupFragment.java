@@ -50,7 +50,7 @@ public class StartupFragment extends Fragment {
         mStartupViewModel.getStartUps().observe(this, new Observer<List<StartUpField>>() {
             @Override
             public void onChanged(List<StartUpField> startUpFields) {
-                StartUpAdapter adapter = new StartUpAdapter(startUpFields);
+                StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext());
                 startupBinding.startUpRecyclerView.setAdapter(adapter);
                 startupBinding.rotateLoading.stop();
             }
