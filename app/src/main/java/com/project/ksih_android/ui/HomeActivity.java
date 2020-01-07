@@ -10,6 +10,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.utility.DividerItemDecoration;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private NavController mNavController;
     private Toolbar toolBar;
     private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navMenuView.addItemDecoration(new DividerItemDecoration(this));
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolBar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -86,6 +88,10 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.onBoardingFragment:
                     hideCustomToolBar();
                     hideDrawer();
+                    break;
+                case R.id.all_friends:
+                    hideCustomToolBar();
+                    getSupportActionBar().hide();
                     break;
                 default:
                     showCustomToolBar();
