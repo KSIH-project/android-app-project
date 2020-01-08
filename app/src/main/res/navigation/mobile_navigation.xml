@@ -5,7 +5,6 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/onBoardingFragment">
 
-
     <activity
         android:id="@+id/nav_signIn"
         android:name="com.project.ksih_android.ui.AuthActivity"
@@ -28,21 +27,20 @@
         android:id="@+id/navigation_startup"
         android:name="com.project.ksih_android.ui.startup.StartupFragment"
         android:label="@string/title_startups"
-        tools:layout="@layout/fragment_startup" />
+        tools:layout="@layout/fragment_startup" >
+        <action
+            android:id="@+id/action_navigation_startup_to_addStartUpFragment"
+            app:destination="@id/addStartUpFragment" />
+        <action
+            android:id="@+id/action_navigation_startup_to_startUpDetailsFragment"
+            app:destination="@id/startUpDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_event"
         android:name="com.project.ksih_android.ui.events.EventFragment"
         android:label="@string/events"
-        tools:layout="@layout/fragment_event">
-        <action
-            android:id="@+id/action_navigation_event_to_eventDetailsFragment"
-            app:destination="@id/eventDetailsFragment"
-            app:enterAnim="@anim/slide_in_right" />
-        <action
-            android:id="@+id/action_navigation_event_to_eventAddFragment"
-            app:destination="@id/eventAddFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_event" />
     <fragment
         android:id="@+id/nav_chats"
         android:name="com.project.ksih_android.ui.chat.ChatFragment"
@@ -63,29 +61,18 @@
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.project.ksih_android.ui.others.OthersFragment"
+        android:name="com.project.ksih_android.ui.others.SettingsFragment"
         android:label="Settings"
-        tools:layout="@layout/fragment_others" />
+        tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/eventDetailsFragment"
-        android:name="com.project.ksih_android.ui.events.EventDetailsFragment"
-        android:label="fragment_event_details"
-        tools:layout="@layout/fragment_event_details">
-        <action
-            android:id="@+id/action_eventDetailsFragment_to_navigation_event"
-            app:destination="@id/navigation_event"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-    </fragment>
+        android:id="@+id/addStartUpFragment"
+        android:name="com.project.ksih_android.ui.startup.AddStartUpFragment"
+        android:label="Add Startup"
+        tools:layout="@layout/fragment_add_start_up" />
     <fragment
-        android:id="@+id/eventAddFragment"
-        android:name="com.project.ksih_android.ui.events.EventAddFragment"
-        android:label="fragment_event_add"
-        tools:layout="@layout/fragment_event_add">
-        <action
-            android:id="@+id/action_eventAddFragment_to_navigation_event"
-            app:destination="@id/navigation_event" />
-    </fragment>
-
+        android:id="@+id/startUpDetailsFragment"
+        android:name="com.project.ksih_android.ui.startup.StartUpDetailsFragment"
+        android:label="fragment_start_up_details"
+        tools:layout="@layout/fragment_start_up_details" />
 
 </navigation>

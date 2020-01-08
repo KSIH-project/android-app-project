@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
@@ -12,7 +13,6 @@ import com.project.ksih_android.utility.DividerItemDecoration;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -24,7 +24,7 @@ import timber.log.Timber;
 public class HomeActivity extends AppCompatActivity {
 
     private NavController mNavController;
-    private Toolbar toolBar;
+    private MaterialToolbar toolBar;
     private DrawerLayout drawer;
 
     @Override
@@ -87,6 +87,9 @@ public class HomeActivity extends AppCompatActivity {
                     hideCustomToolBar();
                     hideDrawer();
                     break;
+                case R.id.addStartUpFragment:
+                    hideCustomToolBar();
+                    break;
                 default:
                     showCustomToolBar();
                     showDrawer();
@@ -106,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void hideCustomToolBar() {
-        toolBar.setVisibility(View.INVISIBLE);
+        toolBar.setVisibility(View.GONE);
     }
 
     private void showCustomToolBar() {

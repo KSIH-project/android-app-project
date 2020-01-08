@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment {
                     stopProgressBar(mLoginBinding.progressBar);
                     showButton(mLoginBinding.buttonSignIn);
                     Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    Timber.d("SignInError: " + task.getException().getMessage());
+                    Timber.d("SignInError: %s", task.getException().getMessage());
                 }
             }
         });

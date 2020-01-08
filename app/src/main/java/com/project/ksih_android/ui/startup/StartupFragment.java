@@ -1,21 +1,23 @@
 package com.project.ksih_android.ui.startup;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.project.ksih_android.R;
-import com.project.ksih_android.ui.AuthActivity;
+import com.project.ksih_android.databinding.FragmentStartupBinding;
+
+import java.util.List;
 
 public class StartupFragment extends Fragment {
 
@@ -25,21 +27,33 @@ public class StartupFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         mStartupViewModel =
                 ViewModelProviders.of(this).get(StartupViewModel.class);
-        final View root = inflater.inflate(R.layout.fragment_startup, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
         mStartupViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                //textView.setText(s);
+
             }
         });
-        // TODO: Remove temporary navigation
-        textView.setOnClickListener(new OnClickListener() {
+        return setUpBinding(inflater, container);
+    }
+
+    private View setUpBinding(LayoutInflater inflater, ViewGroup container) {
+        FragmentStartupBinding startupBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_startup, container, false);
+        startupBinding.rotateLoading.start();
+        setUpRecyclerView(startupBinding);
+        startupBinding.tempFab.setOnClickListener(view ->
+                Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_addStartUpFragment));
+        return startupBinding.getRoot();
+    }
+
+    private void setUpRecyclerView(FragmentStartupBinding startupBinding) {
+        startupBinding.startUpRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        mStartupViewModel.getStartUps().observe(this, new Observer<List<StartUpField>>() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(root.getContext(), AuthActivity.class));
+            public void onChanged(List<StartUpField> startUpFields) {
+                StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext());
+                startupBinding.startUpRecyclerView.setAdapter(adapter);
+                startupBinding.rotateLoading.stop();
             }
         });
-        return root;
     }
 }

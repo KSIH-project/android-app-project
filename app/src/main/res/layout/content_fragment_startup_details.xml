@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:layout="@layout/fragment_start_up_details">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/startupDescriptionET"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto_medium"
+            tools:text="Startup Description: Curabitur blandit mollis lacus. Maecenas malesuada. Quisque rutrum. In ut quam vitae odio lacinia tincidunt. Fusce fermentum." />
+
+        <TextView
+            android:id="@+id/startupFounderET"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto_medium"
+            tools:text="Startup Founder: Nullam accumsan" />
+
+        <TextView
+            android:id="@+id/startupCoFounderET"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto_medium"
+            tools:text="Startup Co-Founders: Etiam ultricies nisi\nEtiam iaculis nunc\nAliquam lobortis." />
+
+        <TextView
+            android:id="@+id/startupTelephoneET"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:autoLink="phone"
+            android:textColorLink="@android:color/holo_blue_dark"
+            android:fontFamily="@font/roboto_medium"
+            tools:text="Telephone: +2349065211300" />
+
+        <TextView
+            android:id="@+id/startupEmailET"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto_medium"
+            android:autoLink="email"
+            android:textColorLink="@android:color/holo_blue_dark"
+            tools:text="Email: awseqe.12@comail.xn" />
+
+        <TextView
+            android:id="@+id/startupWebsiteET"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto_medium"
+            android:autoLink="web"
+            android:textColorLink="@android:color/holo_blue_dark"
+            tools:text="Website: https://www.euibbiweq.com" />
+
+        <TextView
+            android:id="@+id/facebookET"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto_medium"
+            android:autoLink="web"
+            android:textColorLink="@android:color/holo_blue_dark"
+            tools:text="Facebook: https://facebook.com/thisstartup" />
+
+        <TextView
+            android:id="@+id/twitterET"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:autoLink="web"
+            android:textColorLink="@android:color/holo_blue_dark"
+            android:fontFamily="@font/roboto_medium"
+            tools:text="Twitter: https://twitter.com/thisstartup" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
