@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,7 +77,12 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        backButton.setOnClickListener(view1 -> Navigation.findNavController(view).navigate(R.id.nav_chats));
+        backButton.setOnClickListener(view1 -> {
+            Navigation.findNavController(view).navigate(R.id.nav_chats);
+            getActivity().getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+            );
+        });
 
         //setup recycler view
         people_list = view.findViewById(R.id.SearchList);
