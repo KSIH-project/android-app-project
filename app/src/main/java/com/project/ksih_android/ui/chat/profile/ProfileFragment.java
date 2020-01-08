@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.ksih_android.R;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * By david
@@ -211,11 +216,56 @@ public class ProfileFragment extends Fragment {
                     sendFriendRequest();
                 }else if (CURRENT_STATE.equals("request_sent")){
                     cancelFriendRequest();
+                }else if (CURRENT_STATE.equals("request_received")){
+                    acceptFriendRequest();
+                }else if (CURRENT_STATE.equals("friends")){
+                    unfriendPerson();
                 }
+            });
+        }else {
+            sendFriendRequest_Button.setVisibility(View.INVISIBLE);
+            declineFriendRequest_Button.setVisibility(View.INVISIBLE);
+            go_my_profile.setVisibility(View.VISIBLE);
+            go_my_profile.setOnClickListener(view14 -> {
+
+                /**
+                 * Todo send intent to settings fragment
+                 */
             });
         }
 
         return view;
+    }
+
+    private void unfriendPerson() {
+        //for unfriend, delete data from friends node
+        //delete from sender >> receiver > values
+        friendsDatabaseReference.child(senderID).child(receiver_userID).removeValue()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        friendsDatabaseReference.child(receiver_userID).child(senderID).removeValue()
+                                .addOnCompleteListener(task1 -> {
+                                     sendFriendRequest_Button.setEnabled(true);
+                                     CURRENT_STATE = "not_friends";
+                                     sendFriendRequest_Button.setText("Send Friend Request");
+
+                                     declineFriendRequest_Button.setVisibility(View.INVISIBLE);
+                                     declineFriendRequest_Button.setEnabled(false);
+                                });
+                    }
+                });
+    }
+
+    private void acceptFriendRequest() {
+        //for accepting friend request
+        Calendar myCalender = Calendar.getInstance();
+        SimpleDateFormat currrentDate = new SimpleDateFormat("EEEE, dd MMM, yyyy");
+        final String friendshipDate = currrentDate.format(myCalender.getTime());
+
+        friendsDatabaseReference.child(senderID).child(receiver_userID).child("date").setValue(friendshipDate)
+                .addOnCompleteListener(task -> {
+
+                });
     }
 
     private void cancelFriendRequest() {
@@ -225,6 +275,21 @@ public class ProfileFragment extends Fragment {
     }
 
     private void declineFriendRequest() {
+        //for declination, delete data from friend_request nodes
+        //delete from, sender >> receiver > values
+
+        friendRequestReference.child(senderID).child(receiver_userID).removeValue()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        //after deleting data just set button attributes
+                        sendFriendRequest_Button.setEnabled(true);
+                        CURRENT_STATE = "not_friends";
+                        sendFriendRequest_Button.setText("Send Friend Request");
+
+                        declineFriendRequest_Button.setVisibility(View.INVISIBLE);
+                        declineFriendRequest_Button.setEnabled(false);
+                    }
+                });
     }
 
 }
