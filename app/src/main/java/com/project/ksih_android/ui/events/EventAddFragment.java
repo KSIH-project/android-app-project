@@ -21,6 +21,8 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventAddBinding;
 
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,12 +30,11 @@ import com.project.ksih_android.databinding.FragmentEventAddBinding;
 public class EventAddFragment extends Fragment {
 
     private FragmentEventAddBinding binding;
-    private Events mEvents;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("events");
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_add, container, false);
@@ -51,19 +52,16 @@ public class EventAddFragment extends Fragment {
         String contactsEmail = binding.textInputLayoutContactsEmail.getEditText().getText().toString();
         String contactsPhone = binding.textInputLayoutPhone.getEditText().getText().toString();
         String rsvp = binding.textInputLayoutRsvp.getEditText().getText().toString();
-        mEvents = new Events("", tittle, contactsEmail, contactsPhone, descp, type, rsvp);
-        databaseReference.setValue(mEvents).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Event Added", Toast.LENGTH_SHORT).show();
-                    navigateToEventsListFragment(binding.buttonAddEvents);
-                } else {
-                    Toast.makeText(getContext(), "Try Again", Toast.LENGTH_SHORT).show();
-                }
-
-
+        Events mEvents = new Events("", tittle, contactsEmail, contactsPhone, descp, type, rsvp);
+        databaseReference.setValue(mEvents).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(getContext(), "Event Added", Toast.LENGTH_SHORT).show();
+                navigateToEventsListFragment(binding.buttonAddEvents);
+            } else {
+                Toast.makeText(getContext(), "Try Again", Toast.LENGTH_SHORT).show();
             }
+
+
         });
     }
 

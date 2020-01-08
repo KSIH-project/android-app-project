@@ -29,3 +29,4 @@ public class EventViewModel extends ViewModel {
     }
 
 }
+

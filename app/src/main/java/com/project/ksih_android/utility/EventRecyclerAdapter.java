@@ -22,39 +22,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     private ChildEventListener mChildEventListner;
     private EventsItemsListBinding binding;
 
-    public EventRecyclerAdapter() {
-        mEvents = new ArrayList<>();
-        mDatabasereference.addChildEventListener(mChildEventListner = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Events events = dataSnapshot.getValue(Events.class);
-                events.setId(dataSnapshot.getKey());
-                mEvents.add(events);
-                notifyItemInserted(mEvents.size() - 1);
 
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 
     @NonNull
