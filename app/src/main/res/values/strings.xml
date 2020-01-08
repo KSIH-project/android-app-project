@@ -13,4 +13,19 @@
     <string name="events">Events</string>
     <string name="navigation_drawer_open">Drawer open</string>
     <string name="navigation_drawer_close">Drawer close</string>
+    <string name="clear_history">Clear History</string>
+
+    //for chat
+    <string-array name="spinerViewPeople">
+        <item>Default</item>
+        <item>Name</item>
+        <item>Date</item>
+    </string-array>
+
+    <string name="profile">Profile</string>
+    <string name="friends">Friends</string>
+    <string name="all_peoples">Peoples</string>
+    <string name="all_friends">Friends</string>
+    <string name="menu_search">Search</string>
+    <string name="profile_settings">My Profile</string>
 </resources>

@@ -64,10 +64,10 @@ dependencies {
     implementation 'com.victor:lib:1.0.4'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-auth:16.0.5'
-    implementation 'com.google.firebase:firebase-database:16.0.4'
-    implementation 'com.google.firebase:firebase-storage:16.0.4'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.4'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-database:19.2.0'
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
     //implementation 'com.google.firebase:firebase-analytics:17.2.1'
     //implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
@@ -86,3 +86,5 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.6'
 }
+
+apply plugin: 'com.google.gms.google-services'
