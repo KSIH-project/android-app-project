@@ -92,6 +92,7 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.all_friends:
                 case R.id.menu_search:
                 case R.id.profile_settings:
+                case R.id.go_my_profile:
                     hideCustomToolBar();
                     getSupportActionBar().hide();
                     break;

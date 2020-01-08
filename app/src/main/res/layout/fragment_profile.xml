@@ -101,7 +101,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/visitUserFrndRqstSendButton"

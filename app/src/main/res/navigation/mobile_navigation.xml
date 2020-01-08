@@ -76,6 +76,16 @@
         android:id="@+id/profile_settings"
         android:name="com.project.ksih_android.ui.chat.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_settings_to_go_my_profile"
+            app:destination="@id/go_my_profile" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/go_my_profile"
+        android:name="com.project.ksih_android.ui.chat.userSettings.ProfileSettingsFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_profile_settings"/>
 
 </navigation>
