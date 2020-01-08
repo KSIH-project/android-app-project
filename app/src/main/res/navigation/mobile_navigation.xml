@@ -72,4 +72,10 @@
         android:label=""
         tools:layout="@layout/fragment_search"/>
 
+    <fragment
+        android:id="@+id/profile_settings"
+        android:name="com.project.ksih_android.ui.chat.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile"/>
+
 </navigation>

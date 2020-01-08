@@ -142,6 +142,7 @@ public class ChatHolderFragment extends Fragment {
                 Navigation.findNavController(mTabLayout).navigate(R.id.menu_search);
                 break;
             case R.id.profile_settings:
+                Navigation.findNavController(mTabLayout).navigate(R.id.profile_settings);
                 break;
             case R.id.all_friends:
                 Navigation.findNavController(mTabLayout).navigate(R.id.all_friends);
