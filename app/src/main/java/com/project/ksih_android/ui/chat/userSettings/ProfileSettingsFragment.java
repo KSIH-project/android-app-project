@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,7 +25,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,14 +38,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.utility.Constants;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import timber.log.Timber;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -222,6 +233,66 @@ public class ProfileSettingsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.GALLERY_PICK_CODE && resultCode == RESULT_OK && data != null){
+            Uri imageUri = data.getData();
+
+            final String user_id = mAuth.getCurrentUser().getUid();
+            final StorageReference filePath = mProfileStorageRef.child(user_id + ".jpg");
+
+            if (imageUri != null) {
+                UploadTask uploadTask = filePath.putFile(imageUri);
+                Task<Uri> uriTask = uploadTask.continueWithTask(task -> {
+                    if (!task.isSuccessful()){
+                        Toast.makeText(getContext(), "Profile photo error", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                    profile_download_url = filePath.getDownloadUrl().toString();
+                    return filePath.getDownloadUrl();
+                }).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        profile_download_url = task.getResult().toString();
+                        Timber.d("profile url: %s", profile_download_url);
+
+                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                        thumb_Bitmap.compress(Bitmap.CompressFormat.JPEG, 45, outputStream);
+                        final byte[] thumb_byte = outputStream.toByteArray();
+
+                        //firebase storage for uploading the cropped and compressed image
+                        final StorageReference thumn_filePath = thumb_image_ref.child(user_id + "jpg");
+                        UploadTask thumb_uploadTask = thumn_filePath.putBytes(thumb_byte);
+
+                        Task<Uri> thumbUriTask = thumb_uploadTask.continueWithTask(task1 -> {
+                            if (!task1.isSuccessful()){
+                                Toast.makeText(getContext(), "Image upload error",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            profile_thumb_download_url = thumn_filePath.getDownloadUrl().toString();
+                            return thumn_filePath.getDownloadUrl();
+                        }).addOnCompleteListener(task12 -> {
+                            profile_thumb_download_url = task12.getResult().toString();
+                            Timber.d("thumb url: %s", profile_thumb_download_url);
+
+                            if (task12.isSuccessful()){
+                                Timber.d("thumb profile updated");
+
+                                HashMap<String, Object> update_user_data = new HashMap<>();
+                                update_user_data.put("user_image", profile_download_url);
+                                update_user_data.put("user_thumb_image", profile_thumb_download_url);
+
+                                getUserDatabaseReference.updateChildren(new HashMap<>(update_user_data))
+                                        .addOnSuccessListener(aVoid -> Timber.d("thumb profile updated")).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Timber.d("for thumb profile%s", e.getMessage());
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        }
     }
 
     private void saveInformation(String uName, String uNickname, String uPhone, String uProfession,
