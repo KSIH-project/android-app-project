@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/navigation_project">
 
     <activity
         android:id="@+id/nav_signIn"
@@ -40,7 +40,14 @@
         android:id="@+id/navigation_event"
         android:name="com.project.ksih_android.ui.events.EventFragment"
         android:label="@string/events"
-        tools:layout="@layout/fragment_event" />
+        tools:layout="@layout/fragment_event">
+        <action
+            android:id="@+id/action_navigation_event_to_eventAddFragment"
+            app:destination="@id/eventAddFragment" />
+        <action
+            android:id="@+id/action_navigation_event_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_chats"
         android:name="com.project.ksih_android.ui.chat.ChatFragment"
@@ -74,5 +81,23 @@
         android:name="com.project.ksih_android.ui.startup.StartUpDetailsFragment"
         android:label="fragment_start_up_details"
         tools:layout="@layout/fragment_start_up_details" />
+    <fragment
+        android:id="@+id/eventAddFragment"
+        android:name="com.project.ksih_android.ui.events.EventAddFragment"
+        android:label="fragment_event_add"
+        tools:layout="@layout/fragment_event_add">
+        <action
+            android:id="@+id/action_eventAddFragment_to_navigation_event"
+            app:destination="@id/navigation_event" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.project.ksih_android.ui.events.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details">
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_navigation_event"
+            app:destination="@id/navigation_event" />
+    </fragment>
 
 </navigation>

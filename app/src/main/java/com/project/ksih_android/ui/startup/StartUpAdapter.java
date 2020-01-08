@@ -27,7 +27,7 @@ import static com.project.ksih_android.utility.Constants.STARTUP_ITEM_KEY;
 
 public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpViewHolder> {
 
-    private List<StartUpField> mList = new ArrayList<>();
+    private List<StartUpField> mList;
     private SharedPreferencesStorage mStorage;
     private Context mContext;
 

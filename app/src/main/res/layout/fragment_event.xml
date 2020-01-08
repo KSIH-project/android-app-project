@@ -16,6 +16,18 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/events_items_list" />
 
+    <com.victor.loading.rotate.RotateLoading
+        android:id="@+id/progressBar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:loading_width="50dp">
+
+    </com.victor.loading.rotate.RotateLoading>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
