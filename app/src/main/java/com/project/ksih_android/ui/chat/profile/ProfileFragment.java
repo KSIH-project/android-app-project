@@ -29,6 +29,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * By david
@@ -290,10 +291,58 @@ public class ProfileFragment extends Fragment {
     }
 
     private void cancelFriendRequest() {
+        //for cancellation, delete data from user node
+        friendRequestReference.child(senderID).child(receiver_userID).removeValue()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        // delete from receiver >> sender > values
+                        friendRequestReference.child(receiver_userID).child(senderID).removeValue()
+                                .addOnCompleteListener(task1 -> {
+                                    if (task.isSuccessful()){
+                                        //set button attributes
+                                        sendFriendRequest_Button.setEnabled(true);
+                                        CURRENT_STATE = "not_friends";
+                                        sendFriendRequest_Button.setText("Send Friend Request");
 
+                                        declineFriendRequest_Button.setVisibility(View.INVISIBLE);
+                                        declineFriendRequest_Button.setEnabled(false);
+                                    }
+                                });
+                    }
+                });
     }
 
     private void sendFriendRequest() {
+        //for sending friend request
+        friendRequestReference.child(senderID).child(receiver_userID)
+                .child("request_type").setValue("sent")
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        //send data to receiver
+                        friendRequestReference.child(receiver_userID).child(senderID)
+                                .child("request_type").setValue("received")
+                                .addOnCompleteListener(task1 -> {
+                                    if (task.isSuccessful()){
+                                        //Request Notification mechanism
+                                        HashMap<String, String> notificationData = new HashMap<>();
+                                        notificationData.put("from", senderID);
+                                        notificationData.put("type", "request");
+
+                                        notificationDatabaseReference.child(receiver_userID).push().setValue(notificationData)
+                                                .addOnCompleteListener(task2 -> {
+                                                    if (task.isSuccessful()){
+                                                        sendFriendRequest_Button.setEnabled(true);
+                                                        CURRENT_STATE = "request_sent";
+                                                        sendFriendRequest_Button.setText("Cancel Friend Request");
+
+                                                        declineFriendRequest_Button.setVisibility(View.INVISIBLE);
+                                                        declineFriendRequest_Button.setEnabled(false);
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
     }
 
     private void declineFriendRequest() {
