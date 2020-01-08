@@ -1,12 +1,5 @@
-package com.project.ksih_android.ui.chat.chatHome;
+package com.project.ksih_android.ui.chat;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,6 +9,16 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.viewpager.widget.ViewPager;
+
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -33,12 +37,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.project.ksih_android.R;
 import com.project.ksih_android.ui.chat.adapters.TabsPagerAdapter;
+import com.project.ksih_android.ui.chat.friends.FriendsFragment;
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class ChatHolderFragment extends Fragment {
+
     //Initialize variables
-    private static final int TIME_LIMIT = 1500;
-    private static long backPressed;
     public ViewPager mViewPager;
     private TabsPagerAdapter mTabsPagerAdapter;
     public ConnectivityReceiver connectivityReceiver;
@@ -48,6 +54,7 @@ public class ChatHolderFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference userDatabaseReference;
     public FirebaseUser currentUser;
+
 
     public ChatHolderFragment() {
         // Required empty public constructor
@@ -65,11 +72,10 @@ public class ChatHolderFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_chat_holder, container, false);
 
-
         //check and get current user data
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        if (currentUser != null){
+        if (currentUser != null) {
             String user_uID = mAuth.getCurrentUser().getUid();
             userDatabaseReference = FirebaseDatabase.getInstance().getReference()
                     .child("users").child(user_uID);
@@ -83,7 +89,6 @@ public class ChatHolderFragment extends Fragment {
         mViewPager.setAdapter(mTabsPagerAdapter);
         mTabLayout = root.findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
-
         return root;
     }
 
@@ -91,13 +96,14 @@ public class ChatHolderFragment extends Fragment {
     public void onStart() {
         super.onStart();
 //        currentUser = mAuth.getCurrentUser();
-//        if (currentUser == null){
-//            Toast.makeText(this, "Login to use chat session", Toast.LENGTH_SHORT).show();
+//        if (currentUser == null) {
+//            Toast.makeText(getContext(), "Login to use chat session", Toast.LENGTH_SHORT).show();
 //        }
-//        if (currentUser != null){
+//        if (currentUser != null) {
 //            userDatabaseReference.child("active_now").setValue("true");
 //        }
     }
+
 
     @Override
     public void onResume() {
@@ -117,7 +123,7 @@ public class ChatHolderFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (currentUser != null){
+        if (currentUser != null) {
             userDatabaseReference.child("active_now").setValue(ServerValue.TIMESTAMP);
         }
     }
@@ -131,16 +137,19 @@ public class ChatHolderFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_search:
-                return true;
+                Navigation.findNavController(mTabLayout).navigate(R.id.menu_search);
+                break;
             case R.id.profile_settings:
-                return true;
+                break;
             case R.id.all_friends:
-                return true;
+                Navigation.findNavController(mTabLayout).navigate(R.id.all_friends);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     public class ConnectivityReceiver extends BroadcastReceiver {
 
@@ -149,9 +158,9 @@ public class ChatHolderFragment extends Fragment {
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(
                     Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()){
+            if (networkInfo != null && networkInfo.isConnected()) {
 
-            }else {
+            } else {
                 Snackbar snackbar = Snackbar
                         .make(mViewPager, "No internet Connection! ", Snackbar.LENGTH_LONG)
                         .setAction("Go settings", view -> {
@@ -168,4 +177,5 @@ public class ChatHolderFragment extends Fragment {
             }
         }
     }
+
 }

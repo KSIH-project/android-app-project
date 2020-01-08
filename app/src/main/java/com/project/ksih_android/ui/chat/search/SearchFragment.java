@@ -1,8 +1,10 @@
-package com.project.ksih_android.ui.chat;
+package com.project.ksih_android.ui.chat.search;
 
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,10 +16,10 @@ import com.project.ksih_android.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RequestsFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
 
-    public RequestsFragment() {
+    public SearchFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +28,10 @@ public class RequestsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_requests, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+
+        return view;
     }
 
 }

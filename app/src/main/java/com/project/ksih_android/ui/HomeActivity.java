@@ -4,15 +4,16 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.utility.DividerItemDecoration;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -24,8 +25,9 @@ import timber.log.Timber;
 public class HomeActivity extends AppCompatActivity {
 
     private NavController mNavController;
-    private MaterialToolbar toolBar;
+    private Toolbar toolBar;
     private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navMenuView.addItemDecoration(new DividerItemDecoration(this));
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolBar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -87,8 +89,10 @@ public class HomeActivity extends AppCompatActivity {
                     hideCustomToolBar();
                     hideDrawer();
                     break;
-                case R.id.addStartUpFragment:
+                case R.id.all_friends:
+                case R.id.menu_search:
                     hideCustomToolBar();
+                    getSupportActionBar().hide();
                     break;
                 default:
                     showCustomToolBar();
@@ -109,7 +113,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void hideCustomToolBar() {
-        toolBar.setVisibility(View.GONE);
+        toolBar.setVisibility(View.INVISIBLE);
     }
 
     private void showCustomToolBar() {

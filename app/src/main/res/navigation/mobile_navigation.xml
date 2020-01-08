@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/nav_chats"
-        android:name="com.project.ksih_android.ui.chat.chatHome.ChatHolderFragment"
+        android:name="com.project.ksih_android.ui.chat.ChatHolderFragment"
         android:label="Chat"
         tools:layout="@layout/fragment_chat_holder"/>
 
@@ -60,5 +60,16 @@
         android:label="Settings"
         tools:layout="@layout/fragment_others" />
 
+    <fragment
+        android:id="@id/all_friends"
+        android:name="com.project.ksih_android.ui.chat.friends.FriendsFragment"
+        android:label="Friends"
+        tools:layout="@layout/fragment_friends"/>
+
+    <fragment
+        android:id="@+id/menu_search"
+        android:name="com.project.ksih_android.ui.chat.search.SearchFragment"
+        android:label=""
+        tools:layout="@layout/fragment_search"/>
 
 </navigation>
