@@ -264,11 +264,33 @@ public class ProfileFragment extends Fragment {
 
         friendsDatabaseReference.child(senderID).child(receiver_userID).child("date").setValue(friendshipDate)
                 .addOnCompleteListener(task -> {
+                    friendsDatabaseReference.child(receiver_userID).child(senderID).child("date").setValue(friendshipDate)
+                            .addOnCompleteListener(task1 -> {
+                             //delete the node after accepting friend request
+                                friendRequestReference.child(senderID).child(receiver_userID).removeValue()
+                                        .addOnCompleteListener(task2 -> {
+                                            if (task.isSuccessful()){
+                                                //delete from users friend request node
+                                                friendRequestReference.child(receiver_userID).child(senderID).removeValue()
+                                                        .addOnCompleteListener(task3 -> {
+                                                            if (task.isSuccessful()){
+                                                                //after deleting data, set button attributes
+                                                                sendFriendRequest_Button.setEnabled(true);
+                                                                CURRENT_STATE = "friends";
+                                                                sendFriendRequest_Button.setText("Unfriend This Person");
 
+                                                                declineFriendRequest_Button.setVisibility(View.INVISIBLE);
+                                                                declineFriendRequest_Button.setEnabled(false);
+                                                            }
+                                                        });
+                                            }
+                                        });
+                            });
                 });
     }
 
     private void cancelFriendRequest() {
+
     }
 
     private void sendFriendRequest() {
