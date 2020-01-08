@@ -56,6 +56,7 @@
                        app:riv_corner_radius="50dp"/>
 
                     <ImageView
+                        android:id="@+id/editPhotoIcon"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:padding="5dp"
