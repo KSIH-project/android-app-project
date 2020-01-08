@@ -8,9 +8,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +39,9 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.utility.Constants;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -211,10 +219,36 @@ public class ProfileSettingsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void saveInformation(String uName, String uNickname, String uPhone, String uProfession,
                                  String uGender) {
             if (uGender.length()<1){
                 recheckGender.setTextColor(Color.RED);
+            }else if (TextUtils.isEmpty(uName)){
+                Toast.makeText(getContext(), "Oops! your name can't be empty", Toast.LENGTH_SHORT).show();
+            }else if (uName.length()<3 || uName.length()>40){
+                Toast.makeText(getContext(), "Your name should be 3 to 40 numbers of characters"
+                        , Toast.LENGTH_SHORT).show();
+            }else{
+                getUserDatabaseReference.child("user_name").setValue(uName);
+                getUserDatabaseReference.child("user_nickname").setValue(uNickname);
+                getUserDatabaseReference.child("search_name").setValue(uName.toLowerCase());
+                getUserDatabaseReference.child("user_profession").setValue(uProfession);
+                getUserDatabaseReference.child("user_mobile").setValue(uPhone);
+                getUserDatabaseReference.child("user_gender").setValue(uGender)
+                        .addOnCompleteListener(task -> {
+                            updatedMsg.setVisibility(View.VISIBLE);
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    updatedMsg.setVisibility(View.GONE);
+                                }
+                            }, 1500);
+                        });
             }
     }
 
