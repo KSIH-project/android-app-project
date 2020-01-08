@@ -4,16 +4,39 @@ public class Events {
     private String id;
     private String imageUrl;
     private String eventName;
+    private String email;
+    private String phoneNumber;
     private String eventDescription;
     private String eventType;
+    private String eventRSVP;
 
-    public Events(String id, String imageUrl, String eventName, String eventDescription, String eventType) {
-        this.id = id;
-        this.imageUrl = imageUrl;
+
+    public Events(String imageUrl, String eventName, String email, String phoneNumber, String eventDescription, String eventType, String eventRSVP) {
         this.eventName = eventName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.eventDescription = eventDescription;
         this.eventType = eventType;
     }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
 
     public String getId() {
         return id;

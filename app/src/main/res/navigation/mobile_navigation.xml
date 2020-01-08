@@ -79,7 +79,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventAddFragment"
-        android:name="com.project.ksih_android.EventAddFragment"
+        android:name="com.project.ksih_android.ui.events.EventAddFragment"
         android:label="fragment_event_add"
         tools:layout="@layout/fragment_event_add">
         <action
