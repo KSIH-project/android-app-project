@@ -10,4 +10,5 @@ public class Constants {
     public static String REMEMBER_ME = "user_checks_remember_me_checkbox";
     public static String SHARED_PREF_KEY = "KSIH-android-app";
     public static int GALLERY_PICK_CODE = 1;
+    public static int GALLERY_PICK_CODE_MESSAGE = 2;
 }
