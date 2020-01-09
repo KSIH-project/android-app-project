@@ -27,6 +27,7 @@
 
     <LinearLayout
         android:id="@+id/chat_navigate_back"
+        android:background="@drawable/ripplebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
