@@ -13,11 +13,13 @@
             android:layout_height="wrap_content"
             tools:context=".ui.events.EventAddFragment">
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageView_add"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="24dp"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="300dp"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

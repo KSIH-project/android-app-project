@@ -71,7 +71,7 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
             itemView.setOnClickListener(view -> {
                 StartUpField field = mList.get(getAdapterPosition());
                 mStorage.setStartupField(STARTUP_ITEM_KEY, field);
-                Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_startUpDetailsFragment);
+//                Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_startUpDetailsFragment);
                 Timber.d("Field: %s", field);
             });
         }

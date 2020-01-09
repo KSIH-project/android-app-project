@@ -51,18 +51,13 @@
                 android:id="@+id/image_events_list"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher_round"
-                app:riv_border_color="#333333"
-                app:riv_border_width="2dp"
                 app:riv_corner_radius="30dp"
-                app:riv_mutate_background="true"
-                app:riv_oval="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:riv_tile_mode="repeat" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_events_tittle"

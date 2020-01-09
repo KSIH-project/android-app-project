@@ -51,9 +51,9 @@ dependencies {
     testImplementation "org.mockito:mockito-core:3.2.0"
 
     // Glide
-//    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-//    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     // RoundedImageView
     implementation 'com.makeramen:roundedimageview:2.3.0'
@@ -63,6 +63,16 @@ dependencies {
 
     // Progress Bar
     implementation 'com.victor:lib:1.0.4'
+    // RxJava && RxAndroid
+    implementation 'io.reactivex:rxjava:1.3.0'
+    implementation 'io.reactivex:rxandroid:1.2.0'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // Firebase
     implementation 'com.google.firebase:firebase-auth:19.2.0'

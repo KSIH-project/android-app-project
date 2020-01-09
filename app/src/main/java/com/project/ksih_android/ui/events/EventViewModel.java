@@ -22,7 +22,7 @@ import java.util.List;
 public class EventViewModel extends ViewModel {
 
     private MutableLiveData<String> mEventTopic;
-    private MutableLiveData<Boolean> isButtonEnabled;
+    MutableLiveData<Boolean> isButtonEnabled = new MutableLiveData<>();
     private Events mEvents;
     private DatabaseReference reference;
     private List<Events> mList = new ArrayList<>();

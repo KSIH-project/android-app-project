@@ -44,7 +44,7 @@ public class EventFragment extends Fragment {
         mFragmentEventBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_event, container, false);
         mFragmentEventBinding.progressBar.start();
         mFragmentEventBinding.floatingActionButton.setOnClickListener(view ->
-                Navigation.findNavController(view).navigate(R.id.action_navigation_event_to_eventDetailsFragment));
+                Navigation.findNavController(view).navigate(R.id.action_navigation_event_to_eventAddFragment));
         setupRecyclerView();
         return mFragmentEventBinding.getRoot();
     }

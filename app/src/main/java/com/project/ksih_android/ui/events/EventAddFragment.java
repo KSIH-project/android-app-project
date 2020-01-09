@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ import timber.log.Timber;
 public class EventAddFragment extends Fragment {
 
     private EventViewModel viewModel;
+    private Events mEvents = new Events();
     private Bitmap mBitmap;
     private String imagePath = "";
     private String imageUrl;
@@ -66,8 +68,8 @@ public class EventAddFragment extends Fragment {
         mBitmap = null;
         binding.imageViewAdd.setOnClickListener(view -> openGallery());
         binding.buttonAddEvents.setOnClickListener(v -> {
-            addEvents();
             saveImage();
+            navigateToEventsListFragment(binding.buttonAddEvents);
         });
 
         return binding.getRoot();
@@ -92,9 +94,9 @@ public class EventAddFragment extends Fragment {
                 task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task2 -> {
                     if (task2.isSuccessful()) {
                         imageUrl = task2.getResult().toString();
+                        Toast.makeText(requireContext(), "Success saved", Toast.LENGTH_SHORT).show();
+                        mEvents.setImageUrl(imageUrl);
                         addEvents();
-                        Toast.makeText(getActivity(), "Event added Successfully", Toast.LENGTH_SHORT).show();
-                        navigateToEventsListFragment(binding.buttonAddEvents);
                     }
                 });
             } else {
@@ -105,17 +107,23 @@ public class EventAddFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == RESULT_OK && requestCode == REQUEST_CODE_EVENTS_IMAGE) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EVENTS_IMAGE) {
             Uri uri = data.getData();
             if (uri != null) {
+                Toast.makeText(requireContext(), "success uri", Toast.LENGTH_SHORT).show();
                 try {
                     imagePath = uri.getLastPathSegment();
                     if (Build.VERSION.SDK_INT >= 29) {
                         ImageDecoder.Source source = ImageDecoder.createSource(requireActivity().getContentResolver(), uri);
                         mBitmap = ImageDecoder.decodeBitmap(source);
 
+                        Glide.with(requireContext()).load(uri).into(binding.imageViewAdd);
+                    } else {
+                        mBitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
+                        // Load image using Glide
                         Glide.with(requireContext()).load(mBitmap).into(binding.imageViewAdd);
                     }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Timber.d(e.getLocalizedMessage());
@@ -136,14 +144,15 @@ public class EventAddFragment extends Fragment {
     }
 
     private void addEvents() {
-        String tittle = binding.textInputLayoutTittle.getEditText().getText().toString();
-        String type = binding.textInputLayoutType.getEditText().getText().toString();
-        String descp = binding.textInputLayoutDesc.getEditText().getText().toString();
-        String contactsEmail = binding.textInputLayoutContactsEmail.getEditText().getText().toString();
-        String contactsPhone = binding.textInputLayoutPhone.getEditText().getText().toString();
-        String rsvp = binding.textInputLayoutRsvp.getEditText().getText().toString();
-        Events mEvents = new Events(imageUrl, tittle, contactsEmail, contactsPhone, descp, type, rsvp);
-        databaseReference.setValue(mEvents);
+        mEvents.setImageUrl(imageUrl);
+        mEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString());
+        mEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString());
+        mEvents.setEventDescription(binding.textInputLayoutDesc.getEditText().getText().toString());
+        mEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString());
+        mEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString());
+        mEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
+        Toast.makeText(getActivity(), "Event added Successfully", Toast.LENGTH_SHORT).show();
+        databaseReference.push().setValue(mEvents);
     }
 
     private void navigateToEventsListFragment(View v) {

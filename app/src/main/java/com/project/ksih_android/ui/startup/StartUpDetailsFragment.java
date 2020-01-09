@@ -29,11 +29,10 @@ public class StartUpDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_start_up_details, container, false);
+        View root = inflater.inflate(R.layout.content_fragment_startup_details, container, false);
         SharedPreferencesStorage mStorage = new SharedPreferencesStorage(requireContext());
         StartUpField field = mStorage.getStartUpField(STARTUP_ITEM_KEY);
 
-        ImageView startupIcon = root.findViewById(R.id.startup_detail_icon);
         TextView startupDescriptionET = root.findViewById(R.id.startupDescriptionET);
         TextView startupFounderET = root.findViewById(R.id.startupFounderET);
         TextView startupCoFounderET = root.findViewById(R.id.startupCoFounderET);
@@ -43,7 +42,7 @@ public class StartUpDetailsFragment extends Fragment {
         TextView facebookET = root.findViewById(R.id.facebookET);
         TextView twitterET = root.findViewById(R.id.twitterET);
 
-        Glide.with(requireContext()).load(field.getImageUrl()).into(startupIcon);
+//        Glide.with(requireContext()).load(field.getImageUrl()).into(startupIcon);
         startupDescriptionET.setText(field.getStartupDescription());
         startupFounderET.setText(field.getStartupFounder());
         startupCoFounderET.setText(field.getStartupCoFounder());
