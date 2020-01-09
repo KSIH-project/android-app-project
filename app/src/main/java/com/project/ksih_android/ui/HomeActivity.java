@@ -88,6 +88,7 @@ public class HomeActivity extends AppCompatActivity {
                     hideDrawer();
                     break;
                 case R.id.addStartUpFragment:
+                case R.id.startUpDetailsFragment:
                     hideCustomToolBar();
                     break;
                 default:

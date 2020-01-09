@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -27,12 +26,6 @@ public class StartupFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         mStartupViewModel =
                 ViewModelProviders.of(this).get(StartupViewModel.class);
-        mStartupViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-            }
-        });
         return setUpBinding(inflater, container);
     }
 
