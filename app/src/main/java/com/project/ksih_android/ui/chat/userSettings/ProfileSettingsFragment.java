@@ -41,6 +41,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
+import com.project.ksih_android.ui.chat.dialog.UpdateStatusDialog;
 import com.project.ksih_android.utility.Constants;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -199,6 +200,8 @@ public class ProfileSettingsFragment extends Fragment {
         //Edit status
         editStatusBtn.setOnClickListener(view13 -> {
             String previous_status = display_status.getText().toString();
+            UpdateStatusDialog updateStatusDialog = new UpdateStatusDialog();
+            updateStatusDialog.show(getActivity().getSupportFragmentManager(),"dialog_status_reset");
 
             /**
              * Todo send Intent to Status Dialog
