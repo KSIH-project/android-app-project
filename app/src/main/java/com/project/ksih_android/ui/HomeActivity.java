@@ -38,8 +38,10 @@ public class HomeActivity extends AppCompatActivity {
         drawer = findViewById(R.id.drawer_layout);
         toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        // isFirstTimeLogin();
         NavigationView navigationView = findViewById(R.id.nav_drawer);
         NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navMenuView.addItemDecoration(new DividerItemDecoration(this));
@@ -60,7 +62,6 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, mNavController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, mNavController);
         initDestinationListener();
-        isFirstTimeLogin();
     }
 
     @Override
@@ -126,37 +127,7 @@ public class HomeActivity extends AppCompatActivity {
         drawer.setVisibility(View.VISIBLE);
     }
 
-    private void isFirstTimeLogin() {
 
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean firstTimeLogin = preferences.getBoolean("First Login", true);
-
-        if (firstTimeLogin) {
-
-            AlertDialog.Builder messageBuilder = new AlertDialog.Builder(this);
-            messageBuilder.setMessage(getString(R.string.first_time_welcoming_message));
-
-            messageBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferences.Editor messageEditor = preferences.edit();
-                    messageEditor.putBoolean("First Login", false);
-                    messageEditor.commit();
-                    dialog.dismiss();
-
-                }
-            });
-
-            messageBuilder.setIcon(R.drawable.ksih_background);
-            messageBuilder.setTitle(" ");
-            AlertDialog alertDialogKsih = messageBuilder.create();
-            alertDialogKsih.show();
-
-
-        }
-
-
-    }
 
 
 }
