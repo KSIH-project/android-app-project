@@ -44,6 +44,7 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.utility.Constants;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -65,6 +66,7 @@ public class ProfileSettingsFragment extends Fragment {
     private ImageView editPhotoIcon, editStatusBtn;
     private EditText display_name, display_email, user_phone, user_profession, user_nickname;
     private RadioButton maleRB, femaleRB;
+    private RotateLoading loading;
 
     private Button saveInfoBtn;
 
@@ -75,7 +77,6 @@ public class ProfileSettingsFragment extends Fragment {
     private StorageReference thumb_image_ref;
 
     Bitmap thumb_Bitmap = null;
-    private ProgressDialog progressDialog;
     private String selectedGender = "", profile_download_url, profile_thumb_download_url;
 
 
@@ -117,11 +118,11 @@ public class ProfileSettingsFragment extends Fragment {
         updatedMsg = view.findViewById(R.id.updateMsg);
         recheckGender = view.findViewById(R.id.recheckGender);
         recheckGender.setVisibility(View.VISIBLE);
+        loading = view.findViewById(R.id.progress_bar_profile);
 
         maleRB = view.findViewById(R.id.maleRB);
         femaleRB = view.findViewById(R.id.femaleRB);
 
-        progressDialog = new ProgressDialog(getContext());
 
         //Retrieve data from firebase
         getUserDatabaseReference.addValueEventListener(new ValueEventListener() {
@@ -190,7 +191,8 @@ public class ProfileSettingsFragment extends Fragment {
             String uNickname = user_nickname.getText().toString();
             String uPhone = user_phone.getText().toString();
             String uProfession = user_profession.getText().toString();
-            
+
+            loading.start();
             saveInformation(uName, uNickname, uPhone, uProfession, selectedGender);
         });
 
@@ -237,6 +239,7 @@ public class ProfileSettingsFragment extends Fragment {
         if (requestCode == Constants.GALLERY_PICK_CODE && resultCode == RESULT_OK && data != null){
             Uri imageUri = data.getData();
 
+            loading.start();
             final String user_id = mAuth.getCurrentUser().getUid();
             final StorageReference filePath = mProfileStorageRef.child(user_id + ".jpg");
 
@@ -281,12 +284,14 @@ public class ProfileSettingsFragment extends Fragment {
                                 update_user_data.put("user_thumb_image", profile_thumb_download_url);
 
                                 getUserDatabaseReference.updateChildren(new HashMap<>(update_user_data))
-                                        .addOnSuccessListener(aVoid -> Timber.d("thumb profile updated")).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Timber.d("for thumb profile%s", e.getMessage());
-                                    }
-                                });
+                                        .addOnSuccessListener(aVoid -> {
+                                            Timber.d("thumb profile updated");
+                                            loading.stop();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Timber.d("for thumb profile%s", e.getMessage());
+                                            loading.stop();
+                                        });
                             }
                         });
                     }
@@ -312,6 +317,7 @@ public class ProfileSettingsFragment extends Fragment {
                 getUserDatabaseReference.child("user_mobile").setValue(uPhone);
                 getUserDatabaseReference.child("user_gender").setValue(uGender)
                         .addOnCompleteListener(task -> {
+                            loading.stop();
                             updatedMsg.setVisibility(View.VISIBLE);
                             new Timer().schedule(new TimerTask() {
                                 @Override
@@ -319,6 +325,9 @@ public class ProfileSettingsFragment extends Fragment {
                                     updatedMsg.setVisibility(View.GONE);
                                 }
                             }, 1500);
+                        }).addOnFailureListener(e -> {
+                            loading.stop();
+                            Toast.makeText(getContext(), "Failed to update try again", Toast.LENGTH_SHORT).show();
                         });
             }
     }
