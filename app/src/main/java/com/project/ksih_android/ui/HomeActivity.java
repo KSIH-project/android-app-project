@@ -62,7 +62,8 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        return mNavController.navigateUp() || super.onSupportNavigateUp();
+        mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(mNavController, drawer);
     }
 
     @Override
