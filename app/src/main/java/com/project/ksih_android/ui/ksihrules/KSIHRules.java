@@ -24,6 +24,8 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentKsihrulesBinding;
 import com.project.ksih_android.ui.member.MemberViewModel;
 
+import timber.log.Timber;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -33,7 +35,6 @@ public class KSIHRules extends Fragment {
 
     private KSIHRulesViewModel mKSIHRulesViewModel;
     private String ksihRules;
-    private FirebaseDatabase mFirebaseDatabaseKsihRules;
     private DatabaseReference mDatabaseReferenceKsihRules;
 
 
@@ -47,22 +48,22 @@ public class KSIHRules extends Fragment {
         mKSIHRulesViewModel = ViewModelProviders.of(this).get(KSIHRulesViewModel.class);
         // Inflate the layout for this fragment
         mFragmentKsihrulesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_ksihrules, container, false);
-        mDatabaseReferenceKsihRules = mFirebaseDatabaseKsihRules.getReference("ksih_rules");
+        mFragmentKsihrulesBinding.ksihRulesProgressBar.start();
+        mDatabaseReferenceKsihRules = FirebaseDatabase.getInstance().getReference("ksih_rules");
         mDatabaseReferenceKsihRules.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
+                mFragmentKsihrulesBinding.textviewKsihRules.setText(dataSnapshot.getValue(String.class));
+                mFragmentKsihrulesBinding.ksihRulesProgressBar.stop();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                mFragmentKsihrulesBinding.ksihRulesProgressBar.stop();
+                Timber.d("Database Error: %s", databaseError.getDetails());
             }
         });
-
-
-        mKSIHRulesViewModel.getText().observe(this, s -> mFragmentKsihrulesBinding.textviewKsihRules.setText("Ksih rules"));
+        //mKSIHRulesViewModel.getText().observe(this, s -> mFragmentKsihrulesBinding.textviewKsihRules.setText("Ksih rules"));
         return mFragmentKsihrulesBinding.getRoot();
     }
 

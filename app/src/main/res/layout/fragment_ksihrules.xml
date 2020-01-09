@@ -3,33 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.ksihrules.KSIHRules">
-
         <!-- TODO: Update blank fragment layout -->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="wrap_content">
 
             <com.victor.loading.rotate.RotateLoading
                 android:id="@+id/ksihRules_progressBar"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="200dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="200dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textview_ksih_rules"
+                app:layout_constraintTop_toTopOf="parent"
                 app:loading_color="@color/button_color"
-                app:loading_width="4dp"
-                tools:layout_editor_absoluteX="145dp"
-                tools:layout_editor_absoluteY="207dp">
-
-            </com.victor.loading.rotate.RotateLoading>
+                app:loading_width="4dp"></com.victor.loading.rotate.RotateLoading>
 
             <TextView
                 android:id="@+id/textview_ksih_rules"
@@ -37,13 +34,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="The story of Joseph is one of the best known tales in the Bible. The events of Joseph's life are also found in the Torah and the Qur'an. Today it is perhaps most associated with the West End and Sunday school. Written down by scribes about 1000 years after the events supposedly took place, it is often thought that the story may have some historical tradition, but with a healthy portion of dramatic license. Egyptologists, however, have uncovered some intriguing evidence.  The story begins in Canaan - modern day Palestine, Syria and Israel - around 1600 to 1700 BC. Joseph was 11th of 12 sons of a wealthy nomad Jacob and his second wife Rachel. His story is told in the book of Genesis 37-50.  Joseph was very much loved by Jacob because he had been born to him in his old age. He was given a special gift by his father - a richly ornamented coat. This favouritism wasn't well received by his brothers.  Anthropologists today have found that this sibling rivalry is a common by-product of polygamous marriages. Children were often born by different wives, and each wife wanted the best for their child. The Bible tells us that Joseph and Benjamin are the sons of Jacob's second wife, while all the other sons are from different wives. Being given a special coat would have only fuelled the brothers' jealousy.  The choice of colours in the coat held great prestige. In the ancient world colour was a precious commodity and vivid colours such as red and purple were held in high esteem, as it was very costly to create the dyes. Joseph's coat of red and purple reinforced the message to his brothers that he was Jacob's favourite." />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </ScrollView>
-
 </layout>
