@@ -66,7 +66,7 @@ public class UpdateStatusDialog extends DialogFragment {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()){
                             loading.stop();
-                            //navigate backward
+                            dismiss();
                         }else {
                             Toast.makeText(getContext(), "Failed to update", Toast.LENGTH_SHORT).show();
                         }
