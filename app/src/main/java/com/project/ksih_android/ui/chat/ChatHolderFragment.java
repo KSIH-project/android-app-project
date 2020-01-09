@@ -117,6 +117,7 @@ public class ChatHolderFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        requireContext().unregisterReceiver(connectivityReceiver);
 
     }
 

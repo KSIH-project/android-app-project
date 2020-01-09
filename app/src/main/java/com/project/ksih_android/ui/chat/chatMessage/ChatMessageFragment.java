@@ -9,15 +9,18 @@ import android.graphics.Color;
 import android.icu.util.ValueIterator;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +28,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +44,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.ui.chat.ChatHolderFragment;
@@ -50,11 +59,14 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import timber.log.Timber;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -211,6 +223,12 @@ public class ChatMessageFragment extends Fragment {
         requireContext().registerReceiver(connectivityReceiver, intentFilter);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        requireContext().unregisterReceiver(connectivityReceiver);
+    }
+
     public class ConnectivityReceiver extends BroadcastReceiver{
 
         @Override
@@ -244,10 +262,123 @@ public class ChatMessageFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.GALLERY_PICK_CODE_MESSAGE && resultCode == RESULT_OK && data!= null
+        && data.getData() != null){
+            Uri imageUri = data.getData();
+
+            final String message_sender_reference = "messages/" + messageSenderId + "/" + messageReceiverID;
+            final String message_receiver_reference = "messages/" + messageReceiverID + '/' + messageSenderId;
+
+            DatabaseReference user_message_key = rootReference.child("messages").child(messageSenderId).child(messageReceiverID).push();
+            final String message_push_id = user_message_key.getKey();
+
+            final StorageReference file_path = imageMessageStorageRef.child(message_push_id + ".jpg");
+
+            UploadTask uploadTask = file_path.putFile(imageUri);
+            Task<Uri> uriTask = uploadTask.continueWithTask(task -> {
+                if (!task.isSuccessful()){
+                    Toast.makeText(getContext(), "Upload fail", Toast.LENGTH_SHORT).show();
+                }
+                download_url = file_path.getDownloadUrl().toString();
+                return file_path.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    download_url = task.getResult().toString();
+
+                    HashMap<String, Object> message_text_body = new HashMap<>();
+                    message_text_body.put("message", download_url);
+                    message_text_body.put("seen", false);
+                    message_text_body.put("type", "image");
+                    message_text_body.put("time", ServerValue.TIMESTAMP);
+                    message_text_body.put("from", messageSenderId);
+
+                    HashMap<String, Object> messageBodyDetails = new HashMap<>();
+                    messageBodyDetails.put(message_sender_reference + '/' + message_push_id, message_text_body);
+                    messageBodyDetails.put(message_receiver_reference + "/" + message_push_id, message_text_body);
+
+                    rootReference.updateChildren(messageBodyDetails, (databaseError, databaseReference) -> {
+                        if (databaseError != null){
+                            Timber.d("from_image_chat %s", databaseError.getMessage());
+                        }
+                        input_user_message.setText("");
+                    });
+                    Timber.d("Image sent Successfully");
+                }else {
+                    Toast.makeText(getContext(), "Failed to send image", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     private void sendMessage() {
+        String message = input_user_message.getText().toString();
+        if (TextUtils.isEmpty(message)){
+            Toast.makeText(getContext(), "Please type a message", Toast.LENGTH_SHORT).show();
+        }else {
+            String message_sender_reference = "messages/" + messageSenderId + "/" + messageReceiverID;
+            String message_receiver_reference = "messages/" + messageReceiverID + "/" + messageSenderId;
+
+            DatabaseReference user_message_key = rootReference.child("messages").child(messageSenderId).child(messageReceiverID).push();
+            String message_push_id = user_message_key.getKey();
+
+            HashMap<String, Object> message_text_body = new HashMap<>();
+            message_text_body.put("message", message);
+            message_text_body.put("seen", false);
+            message_text_body.put("type", "text");
+            message_text_body.put("time", ServerValue.TIMESTAMP);
+            message_text_body.put("from", messageSenderId);
+
+            HashMap<String, Object> messageBodyDetails = new HashMap<>();
+            messageBodyDetails.put(message_sender_reference + "/" + message_push_id, message_text_body);
+            messageBodyDetails.put(message_receiver_reference + "/" + message_push_id, message_text_body);
+
+            rootReference.updateChildren(messageBodyDetails, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                    if (databaseError != null){
+                        Timber.d("Sending message%s", databaseError.getMessage());
+                    }
+                    input_user_message.setText("");
+                }
+            });
+        }
     }
 
     private void fetchMessage() {
+        rootReference.child("messages").child(messageSenderId).child(messageReceiverID)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        if (dataSnapshot.exists()){
+                            Message message = dataSnapshot.getValue(Message.class);
+                            messageList.add(message);
+                            messageAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 
 }
