@@ -88,4 +88,10 @@
         android:label="Edit Profile"
         tools:layout="@layout/fragment_profile_settings"/>
 
+    <fragment
+        android:id="@+id/friendList"
+        android:name="com.project.ksih_android.ui.chat.chatMessage.ChatMessageFragment"
+        android:label=""
+        tools:layout="@layout/fragment_chat_message"/>
+
 </navigation>
