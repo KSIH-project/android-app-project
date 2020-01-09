@@ -57,7 +57,7 @@
     <fragment
         android:id="@+id/eventAddFragment"
         android:name="com.project.ksih_android.ui.events.EventAddFragment"
-        android:label="fragment_event_add"
+        android:label="Add Events"
         tools:layout="@layout/fragment_event_add">
         <action
             android:id="@+id/action_eventAddFragment_to_navigation_event"

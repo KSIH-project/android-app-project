@@ -1,7 +1,6 @@
 package com.project.ksih_android.ui.events;
 
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -18,6 +17,7 @@ import android.view.ViewGroup;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventBinding;
+import com.project.ksih_android.storage.SharedPreferencesStorage;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,10 +30,7 @@ public class EventFragment extends Fragment {
 
     private EventViewModel eventViewModel;
     private FragmentEventBinding mFragmentEventBinding;
-    public EventFragment() {
-
-        // Required empty public constructor
-    }
+    private SharedPreferencesStorage mStorage;
 
 
     @Override

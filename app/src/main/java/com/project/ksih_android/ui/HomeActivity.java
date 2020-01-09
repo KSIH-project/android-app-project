@@ -85,6 +85,10 @@ public class HomeActivity extends AppCompatActivity {
                 destination.getId();
             }
             switch (destination.getId()) {
+                case R.id.eventAddFragment:
+                case R.id.eventDetailsFragment:
+                    lockDrawer();
+                    break;
                 case R.id.onBoardingFragment:
                     hideCustomToolBar();
                     hideDrawer();
@@ -122,6 +126,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private void hideDrawer() {
         drawer.setVisibility(View.INVISIBLE);
+    }
+
+    private void lockDrawer() {
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     private void showDrawer() {

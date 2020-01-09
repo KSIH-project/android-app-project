@@ -14,7 +14,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -37,6 +39,7 @@ import com.project.ksih_android.databinding.FragmentEventAddBinding;
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE_EVENTS_IMAGE;
+import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,6 +58,7 @@ public class EventAddFragment extends Fragment {
     private Bitmap mBitmap;
     private String imagePath = "";
     private String imageUrl;
+    private NavController navController;
     private FragmentEventAddBinding binding;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("events");
 
@@ -69,6 +73,7 @@ public class EventAddFragment extends Fragment {
         binding.imageViewAdd.setOnClickListener(view -> openGallery());
         binding.buttonAddEvents.setOnClickListener(v -> {
             saveImage();
+            hideSoftKeyboard(requireActivity());
             navigateToEventsListFragment(binding.buttonAddEvents);
         });
 
