@@ -6,8 +6,10 @@ import android.os.Bundle;
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
 
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,4 +50,14 @@ public class EventDetailsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Events events = mStorage.getEvents(EVENTS_ITEM_KEY);
+        Bundle bundle = new Bundle();
+        bundle.putString("eventsImage", events.getImageUrl());
+        binding.imageEventsDetails.setOnClickListener(view ->
+                Navigation.findNavController(view).navigate(R.id.action_eventDetailsFragment_to_zoomFragment, bundle));
+
+    }
 }

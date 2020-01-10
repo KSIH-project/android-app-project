@@ -71,6 +71,14 @@
         <action
             android:id="@+id/action_eventDetailsFragment_to_navigation_event"
             app:destination="@id/navigation_event" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_zoomFragment"
+            app:destination="@id/zoomFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/zoomFragment"
+        android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
+        android:label="fragment_zoom"
+        tools:layout="@layout/fragment_zoom" />
 
 </navigation>

@@ -48,14 +48,11 @@ public class EventFragment extends Fragment {
 
     private void setupRecyclerView() {
         mFragmentEventBinding.recyclerEvents.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        eventViewModel.getEvents().observe(this, new Observer<List<Events>>() {
-            @Override
-            public void onChanged(List<Events> events) {
-                EventRecyclerAdapter adapter = new EventRecyclerAdapter(events, requireContext());
-                mFragmentEventBinding.recyclerEvents.setAdapter(adapter);
-                mFragmentEventBinding.progressBar.stop();
+        eventViewModel.getEvents().observe(this, events -> {
+            EventRecyclerAdapter adapter = new EventRecyclerAdapter(events, requireContext());
+            mFragmentEventBinding.recyclerEvents.setAdapter(adapter);
+            mFragmentEventBinding.progressBar.stop();
 
-            }
         });
 
     }
