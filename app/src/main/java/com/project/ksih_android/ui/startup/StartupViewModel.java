@@ -1,7 +1,5 @@
 package com.project.ksih_android.ui.startup;
 
-import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +23,11 @@ public class StartupViewModel extends ViewModel {
     private DatabaseReference ref;
     private MutableLiveData<List<StartUpField>> startupList = new MutableLiveData<>();
     private List<StartUpField> mList = new ArrayList<>();
+    private MutableLiveData<STATE> startupState = new MutableLiveData<>();
+
+    public enum STATE {
+        newStartup, editStartup
+    }
 
     public StartupViewModel() {
         ref = FirebaseDatabase.getInstance().getReference("startups");
@@ -42,11 +45,19 @@ public class StartupViewModel extends ViewModel {
         return isButtonEnabled;
     }
 
+    public LiveData<STATE> getStartupState() {
+        return startupState;
+    }
+
+    public void setStartupState(STATE state) {
+        startupState.setValue(state);
+    }
+
     public StartUpField getUrl() {
         return mStartUpField;
     }
 
-    public LiveData<List<StartUpField>> getStartUps() {
+    LiveData<List<StartUpField>> getStartUps() {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

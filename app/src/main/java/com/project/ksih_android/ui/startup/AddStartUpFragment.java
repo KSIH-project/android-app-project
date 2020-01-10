@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
@@ -36,7 +37,6 @@ import com.project.ksih_android.databinding.FragmentAddStartUpBinding;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_ITEM_KEY;
@@ -73,6 +73,12 @@ public class AddStartUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         mBitmap = null;
+        mStartupViewModel.getStartupState().observe(this, new Observer<StartupViewModel.STATE>() {
+            @Override
+            public void onChanged(StartupViewModel.STATE state) {
+
+            }
+        });
         return setUpBinding(savedInstanceState, inflater, container);
     }
 
@@ -207,8 +213,9 @@ public class AddStartUpFragment extends Fragment {
 
             DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("startups");
             String id = field.getId();
-            if (imageUrl != null) {
-                // Admin changes the original photo
+            if (imageUrl == null) {
+                // Admin did not change the original photo
+                imageUrl = field.getImageUrl();
                 StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
                         startupDescription.getText().toString(), startupFounder.getText().toString(),
                         startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
@@ -216,8 +223,7 @@ public class AddStartUpFragment extends Fragment {
                         telephone.getText().toString(), email.getText().toString());
                 firebaseDatabase.child(id).setValue(startUpField);
             } else {
-                // Admin did not change the original photo
-                imageUrl = field.getImageUrl();
+                // Admin changes the original photo
                 StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
                         startupDescription.getText().toString(), startupFounder.getText().toString(),
                         startupCoFounder.getText().toString(), startupWebsite.getText().toString(),

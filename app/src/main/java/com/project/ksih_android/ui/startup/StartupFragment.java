@@ -33,8 +33,10 @@ public class StartupFragment extends Fragment {
         FragmentStartupBinding startupBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_startup, container, false);
         startupBinding.rotateLoading.start();
         setUpRecyclerView(startupBinding);
-        startupBinding.tempFab.setOnClickListener(view ->
-                Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_addStartUpFragment));
+        startupBinding.tempFab.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_addStartUpFragment);
+            mStartupViewModel.setStartupState(StartupViewModel.STATE.newStartup);
+        });
         return startupBinding.getRoot();
     }
 
