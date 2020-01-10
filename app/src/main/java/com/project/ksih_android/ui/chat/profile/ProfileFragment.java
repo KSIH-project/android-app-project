@@ -74,173 +74,170 @@ public class ProfileFragment extends Fragment {
 
 
 
-//            //set firebase
-//        userDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-//        friendRequestReference = FirebaseDatabase.getInstance().getReference().child("friend_request");
-//        friendRequestReference.keepSynced(true);
-//
-//        mAuth = FirebaseAuth.getInstance();
-//        senderID = mAuth.getCurrentUser().getUid();
-//        friendsDatabaseReference = FirebaseDatabase.getInstance().getReference().child("friends");
-//        friendsDatabaseReference.keepSynced(true);
-//
-//        //notification
-//        notificationDatabaseReference = FirebaseDatabase.getInstance().getReference().child("notifications");
-//        notificationDatabaseReference.keepSynced(true);
-//
-//        /**
-//         * @Todo receive intent from visitUserId
-//         */
-//
-//        //views
-//        sendFriendRequest_Button = view.findViewById(R.id.visitUserFrndRqstSendButton);
-//        declineFriendRequest_Button = view.findViewById(R.id.visitUserFrndRqstDeclineButton);
-//        profileName = view.findViewById(R.id.visitUserProfileName);
-//        profileStatus = view.findViewById(R.id.visitUserProfileStatus);
-//        verified_icon = view.findViewById(R.id.visit_verified_icon);
-//        profileImage = view.findViewById(R.id.visit_user_profile_image);
+            //set firebase
+        userDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+        friendRequestReference = FirebaseDatabase.getInstance().getReference().child("friend_request");
+        friendRequestReference.keepSynced(true);
+
+        mAuth = FirebaseAuth.getInstance();
+        senderID = mAuth.getCurrentUser().getUid();
+        friendsDatabaseReference = FirebaseDatabase.getInstance().getReference().child("friends");
+        friendsDatabaseReference.keepSynced(true);
+
+        //notification
+        notificationDatabaseReference = FirebaseDatabase.getInstance().getReference().child("notifications");
+        notificationDatabaseReference.keepSynced(true);
+
+        /**
+         * @Todo receive intent from Request fragment visitUserId
+         */
+        if (getArguments() != null) {
+            receiver_userID = getArguments().getString("visitUserId");
+        }
+
+        //views
+        sendFriendRequest_Button = view.findViewById(R.id.visitUserFrndRqstSendButton);
+        declineFriendRequest_Button = view.findViewById(R.id.visitUserFrndRqstDeclineButton);
+        profileName = view.findViewById(R.id.visitUserProfileName);
+        profileStatus = view.findViewById(R.id.visitUserProfileStatus);
+        verified_icon = view.findViewById(R.id.visit_verified_icon);
+        profileImage = view.findViewById(R.id.visit_user_profile_image);
         go_my_profile = view.findViewById(R.id.go_my_profile);
-        go_my_profile.setOnClickListener(view12 -> {
-            //test
-            Navigation.findNavController(view).navigate(R.id.action_profile_settings_to_go_my_profile);
+
+        u_work = view.findViewById(R.id.visit_work);
+
+        verified_icon.setVisibility(View.INVISIBLE);
+        CURRENT_STATE = "not_friends";
+
+        /**
+         * Load every single users data
+         */
+        userDatabaseReference.child(receiver_userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("user_name").getValue().toString();
+                String status = dataSnapshot.child("user_status").getValue().toString();
+                String nickname = dataSnapshot.child("user_nickname").getValue().toString();
+                String profession = dataSnapshot.child("user_profession").getValue().toString();
+                String image = dataSnapshot.child("user_image").getValue().toString();
+                String verified = dataSnapshot.child("veridied").getValue().toString();
+
+                //setting logics
+                if (nickname.isEmpty()){
+                    profileName.setText(name);
+                }else {
+                    String full_name = name +" ("+nickname+")";
+                    profileName.setText(full_name);
+                }
+
+                if (profession.length() > 2){
+                    u_work.setText(" " + profession);
+                }if (profession.equals("")){
+                    u_work.setText(" No Profession");
+                }
+
+                profileStatus.setText(status);
+                Picasso.get()
+                        .load(image)
+                        .placeholder(R.drawable.default_profile_image)
+                        .into(profileImage);
+
+                if (verified.contains("true")){
+                    verified_icon.setVisibility(View.VISIBLE);
+                }
+
+                //for fixing dynamic cancel / firend / unfriend / accept button
+                friendRequestReference.child(senderID)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                //if database has these data, then execute the condition below
+                                if (dataSnapshot.hasChild(receiver_userID)){
+                                    String requestType = dataSnapshot.child(receiver_userID)
+                                            .child("request_type").getValue().toString();
+
+                                    if (requestType.equals("sent")){
+                                        CURRENT_STATE = "request_sent";
+                                        sendFriendRequest_Button.setText("Cancel Friend Request");
+
+                                        declineFriendRequest_Button.setVisibility(View.VISIBLE);
+                                        declineFriendRequest_Button.setEnabled(false);
+                                    }else if (requestType.equals("received")){
+                                        CURRENT_STATE = "request_received";
+                                        sendFriendRequest_Button.setText("Accept Friend Request");
+
+                                        declineFriendRequest_Button.setVisibility(View.VISIBLE);
+                                        declineFriendRequest_Button.setEnabled(true);
+
+                                        declineFriendRequest_Button.setOnClickListener(view12 -> {
+                                            declineFriendRequest();
+                                        });
+                                    }else {
+                                         friendsDatabaseReference.child(senderID)
+                                                 .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                     @Override
+                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                         if (dataSnapshot.exists()){
+                                                             if (dataSnapshot.hasChild(receiver_userID)){
+                                                                 CURRENT_STATE = "friends";
+                                                                 sendFriendRequest_Button.setText("Unfriend This Person");
+
+                                                                 declineFriendRequest_Button.setVisibility(View.INVISIBLE);
+                                                                 declineFriendRequest_Button.setEnabled(false);
+                                                             }
+                                                         }
+                                                     }
+
+                                                     @Override
+                                                     public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                     }
+                                                 });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
-//        u_work = view.findViewById(R.id.visit_work);
-//
-//        verified_icon.setVisibility(View.INVISIBLE);
-//        CURRENT_STATE = "not_friends";
-//
-//        /**
-//         * Load every single users data
-//         */
-//        userDatabaseReference.child(receiver_userID).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String name = dataSnapshot.child("user_name").getValue().toString();
-//                String status = dataSnapshot.child("user_status").getValue().toString();
-//                String nickname = dataSnapshot.child("user_nickname").getValue().toString();
-//                String profession = dataSnapshot.child("user_profession").getValue().toString();
-//                String image = dataSnapshot.child("user_image").getValue().toString();
-//                String verified = dataSnapshot.child("veridied").getValue().toString();
-//
-//                //setting logics
-//                if (nickname.isEmpty()){
-//                    profileName.setText(name);
-//                }else {
-//                    String full_name = name +" ("+nickname+")";
-//                    profileName.setText(full_name);
-//                }
-//
-//                if (profession.length() > 2){
-//                    u_work.setText(" " + profession);
-//                }if (profession.equals("")){
-//                    u_work.setText(" No Profession");
-//                }
-//
-//                profileStatus.setText(status);
-//                Picasso.get()
-//                        .load(image)
-//                        .placeholder(R.drawable.default_profile_image)
-//                        .into(profileImage);
-//
-//                if (verified.contains("true")){
-//                    verified_icon.setVisibility(View.VISIBLE);
-//                }
-//
-//                //for fixing dynamic cancel / firend / unfriend / accept button
-//                friendRequestReference.child(senderID)
-//                        .addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                //if database has these data, then execute the condition below
-//                                if (dataSnapshot.hasChild(receiver_userID)){
-//                                    String requestType = dataSnapshot.child(receiver_userID)
-//                                            .child("request_type").getValue().toString();
-//
-//                                    if (requestType.equals("sent")){
-//                                        CURRENT_STATE = "request_sent";
-//                                        sendFriendRequest_Button.setText("Cancel Friend Request");
-//
-//                                        declineFriendRequest_Button.setVisibility(View.VISIBLE);
-//                                        declineFriendRequest_Button.setEnabled(false);
-//                                    }else if (requestType.equals("received")){
-//                                        CURRENT_STATE = "request_received";
-//                                        sendFriendRequest_Button.setText("Accept Friend Request");
-//
-//                                        declineFriendRequest_Button.setVisibility(View.VISIBLE);
-//                                        declineFriendRequest_Button.setEnabled(true);
-//
-//                                        declineFriendRequest_Button.setOnClickListener(view12 -> {
-//                                            declineFriendRequest();
-//                                        });
-//                                    }else {
-//                                         friendsDatabaseReference.child(senderID)
-//                                                 .addListenerForSingleValueEvent(new ValueEventListener() {
-//                                                     @Override
-//                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                                         if (dataSnapshot.exists()){
-//                                                             if (dataSnapshot.hasChild(receiver_userID)){
-//                                                                 CURRENT_STATE = "friends";
-//                                                                 sendFriendRequest_Button.setText("Unfriend This Person");
-//
-//                                                                 declineFriendRequest_Button.setVisibility(View.INVISIBLE);
-//                                                                 declineFriendRequest_Button.setEnabled(false);
-//                                                             }
-//                                                         }
-//                                                     }
-//
-//                                                     @Override
-//                                                     public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                                     }
-//                                                 });
-//                                    }
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                            }
-//                        });
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        declineFriendRequest_Button.setVisibility(View.GONE);
-//        declineFriendRequest_Button.setEnabled(false);
-//
-//        // send / cancel / Accept / Unfriend / request Mechanism
-//        // condition for current owner
-//        if (!senderID.equals(receiver_userID)){
-//            sendFriendRequest_Button.setOnClickListener(view13 -> {
-//                sendFriendRequest_Button.setEnabled(false);
-//
-//                if (CURRENT_STATE.equals("not_friends")){
-//                    sendFriendRequest();
-//                }else if (CURRENT_STATE.equals("request_sent")){
-//                    cancelFriendRequest();
-//                }else if (CURRENT_STATE.equals("request_received")){
-//                    acceptFriendRequest();
-//                }else if (CURRENT_STATE.equals("friends")){
-//                    unfriendPerson();
-//                }
-//            });
-//        }else {
-//            sendFriendRequest_Button.setVisibility(View.INVISIBLE);
-//            declineFriendRequest_Button.setVisibility(View.INVISIBLE);
-//            go_my_profile.setVisibility(View.VISIBLE);
-//            go_my_profile.setOnClickListener(view14 -> {
-//
-//                /**
-//                 * Todo send intent to settings fragment
-//                 */
-//                Navigation.findNavController(view).navigate(R.id.go_my_profile);
-//            });
-//        }
+
+        declineFriendRequest_Button.setVisibility(View.GONE);
+        declineFriendRequest_Button.setEnabled(false);
+
+        // send / cancel / Accept / Unfriend / request Mechanism
+        // condition for current owner
+        if (!senderID.equals(receiver_userID)){
+            sendFriendRequest_Button.setOnClickListener(view13 -> {
+                sendFriendRequest_Button.setEnabled(false);
+
+                if (CURRENT_STATE.equals("not_friends")){
+                    sendFriendRequest();
+                }else if (CURRENT_STATE.equals("request_sent")){
+                    cancelFriendRequest();
+                }else if (CURRENT_STATE.equals("request_received")){
+                    acceptFriendRequest();
+                }else if (CURRENT_STATE.equals("friends")){
+                    unfriendPerson();
+                }
+            });
+        }else {
+            sendFriendRequest_Button.setVisibility(View.INVISIBLE);
+            declineFriendRequest_Button.setVisibility(View.INVISIBLE);
+            go_my_profile.setVisibility(View.VISIBLE);
+            go_my_profile.setOnClickListener(view14 -> {
+
+        Navigation.findNavController(view).navigate(R.id.action_profile_settings_to_go_my_profile);
+            });
+        }
 
 
         return view;

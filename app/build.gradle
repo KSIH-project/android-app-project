@@ -74,7 +74,8 @@ dependencies {
     //implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     annotationProcessor 'com.android.databinding:compiler:3.1.4'
 
-
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 apply plugin: 'com.google.gms.google-services'

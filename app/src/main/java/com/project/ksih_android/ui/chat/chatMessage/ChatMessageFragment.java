@@ -114,8 +114,12 @@ public class ChatMessageFragment extends Fragment {
 
         //receive user details intent
         /**
-         * Todo receive intent for message receiver details
+         * Todo receive intent from chat fragment for message receiver details
          */
+        if (getArguments() != null) {
+            messageReceiverID = getArguments().getString("visitUserId");
+            messageReceiverName = getArguments().getString("userName");
+        }
 
         imageMessageStorageRef = FirebaseStorage.getInstance().getReference().child("messages_image");
 
@@ -195,21 +199,13 @@ public class ChatMessageFragment extends Fragment {
                 });
 
         //send text message button
-        send_message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendMessage();
-            }
-        });
+        send_message.setOnClickListener(view12 -> sendMessage());
 
         //send image message button
-        send_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent().setAction(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, Constants.GALLERY_PICK_CODE_MESSAGE);
-            }
+        send_image.setOnClickListener(view13 -> {
+            Intent galleryIntent = new Intent().setAction(Intent.ACTION_GET_CONTENT);
+            galleryIntent.setType("image/*");
+            startActivityForResult(galleryIntent, Constants.GALLERY_PICK_CODE_MESSAGE);
         });
 
         return view;
@@ -245,12 +241,7 @@ public class ChatMessageFragment extends Fragment {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                       getActivity().runOnUiThread(new Runnable() {
-                           @Override
-                           public void run() {
-                               ChatConnectionTV.setVisibility(View.GONE);
-                           }
-                       });
+                       getActivity().runOnUiThread(() -> ChatConnectionTV.setVisibility(View.GONE));
                     }
                 }, 1200);
             }else {
@@ -335,14 +326,11 @@ public class ChatMessageFragment extends Fragment {
             messageBodyDetails.put(message_sender_reference + "/" + message_push_id, message_text_body);
             messageBodyDetails.put(message_receiver_reference + "/" + message_push_id, message_text_body);
 
-            rootReference.updateChildren(messageBodyDetails, new DatabaseReference.CompletionListener() {
-                @Override
-                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                    if (databaseError != null){
-                        Timber.d("Sending message%s", databaseError.getMessage());
-                    }
-                    input_user_message.setText("");
+            rootReference.updateChildren(messageBodyDetails, (databaseError, databaseReference) -> {
+                if (databaseError != null){
+                    Timber.d("Sending message%s", databaseError.getMessage());
                 }
+                input_user_message.setText("");
             });
         }
     }

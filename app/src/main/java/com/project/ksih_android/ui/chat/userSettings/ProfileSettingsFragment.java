@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -200,12 +201,17 @@ public class ProfileSettingsFragment extends Fragment {
         //Edit status
         editStatusBtn.setOnClickListener(view13 -> {
             String previous_status = display_status.getText().toString();
-            UpdateStatusDialog updateStatusDialog = new UpdateStatusDialog();
-            updateStatusDialog.show(getActivity().getSupportFragmentManager(),"dialog_status_reset");
+
 
             /**
              * Todo send Intent to Status Dialog
              */
+            UpdateStatusDialog updateStatusDialog = new UpdateStatusDialog();
+            Bundle args = new Bundle();
+            args.putString("ex_status", previous_status);
+            updateStatusDialog.setArguments(args);
+
+            updateStatusDialog.show(getActivity().getSupportFragmentManager(),"dialog_status_reset");
         });
 
         //hide soft Keyboard

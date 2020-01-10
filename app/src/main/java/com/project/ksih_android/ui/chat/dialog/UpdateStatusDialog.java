@@ -12,10 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.navigation.Navigation;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,7 +34,6 @@ public class UpdateStatusDialog extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_update_status, container, false);
 
-
         mAuth = FirebaseAuth.getInstance();
         String user_id = mAuth.getCurrentUser().getUid();
         statusDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(user_id);
@@ -52,6 +48,12 @@ public class UpdateStatusDialog extends DialogFragment {
         /**
          * Todo retrieve previous profile status from settings Fragment
          */
+        String previousStatus = null;
+        if (getArguments() != null) {
+            previousStatus = getArguments().getString("ex_status");
+        }
+        status_from_input.setText(previousStatus);
+        status_from_input.setSelection(status_from_input.getText().length());
 
         return view;
     }

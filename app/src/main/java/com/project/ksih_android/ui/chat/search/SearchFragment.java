@@ -29,6 +29,7 @@ import com.google.firebase.database.Query;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.ui.chat.models.ProfileInfo;
+import com.project.ksih_android.ui.chat.profile.ProfileFragment;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -129,6 +130,11 @@ public class SearchFragment extends Fragment {
                     /**
                      * @Todo send intent to profile fragment
                      */
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    Bundle args = new Bundle();
+                    args.putString("visitUserId", visit_user_id);
+                    profileFragment.setArguments(args);
+                    Navigation.findNavController(view).navigate(R.id.profile_settings, args);
                 });
             }
 
