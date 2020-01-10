@@ -2,13 +2,10 @@ package com.project.ksih_android.ui.startup;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,11 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.StartUpField;
 
@@ -69,23 +66,15 @@ public class StartUpDetailsFragment extends Fragment {
         startUpDetailsToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         startUpDetailsToolbar.setTitle(mField.getStartupName());
         startUpDetailsToolbar.inflateMenu(R.menu.edit_menu);
-        startUpDetailsToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.edit_startup) {
-                    editStartupDetails();
-                } else if (item.getItemId() == R.id.delete_startup) {
-                    deleteStartup(mField.getId());
-                }
-                return true;
+        startUpDetailsToolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.edit_startup) {
+                editStartupDetails();
+            } else if (item.getItemId() == R.id.delete_startup) {
+                deleteStartup(mField.getId());
             }
+            return true;
         });
-        startUpDetailsToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigateUp();
-            }
-        });
+        startUpDetailsToolbar.setNavigationOnClickListener(view -> Navigation.findNavController(view).navigateUp());
     }
 
     private void editStartupDetails() {
@@ -96,15 +85,24 @@ public class StartUpDetailsFragment extends Fragment {
 
     private void deleteStartup(String id) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("startups");
-        ref.child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Item removed!", Toast.LENGTH_SHORT).show();
-                    // TODO: Navigate back to StartupFragment
-                } else {
-                    Toast.makeText(requireContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                }
+        ref.child(id).removeValue().addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(requireContext(), "Item removed!", Toast.LENGTH_SHORT).show();
+                deleteImage(mField.getImageUrl());
+                Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+            } else {
+                Toast.makeText(requireContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void deleteImage(String fullUrl) {
+        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
+        ref.delete().addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(requireContext(), "Image Removed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

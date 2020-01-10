@@ -1,6 +1,5 @@
 package com.project.ksih_android.ui.startup;
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
@@ -225,7 +224,14 @@ public class AddStartUpFragment extends Fragment {
                 startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
                 facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
                 telephone.getText().toString(), email.getText().toString());
-        firebaseDatabase.child(id).setValue(startUpField);
+        firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+            } else {
+                Toast.makeText(requireContext(), "Unable to add Startup", Toast.LENGTH_SHORT).show();
+                Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
+            }
+        });
     }
 
     private void getStartUpDetails() {
@@ -252,7 +258,14 @@ public class AddStartUpFragment extends Fragment {
                     startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
                     facebookUrl.getText().toString(), twitterUrl.getText().toString(), mField.getImageUrl(),
                     telephone.getText().toString(), email.getText().toString());
-            firebaseDatabase.child(id).setValue(startUpField);
+            firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
+                if (task.isSuccessful()) {
+                    Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                } else {
+                    Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                    Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
+                }
+            });
         } else {
             // Admin changes the original photo
             StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
@@ -260,7 +273,14 @@ public class AddStartUpFragment extends Fragment {
                     startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
                     facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
                     telephone.getText().toString(), email.getText().toString());
-            firebaseDatabase.child(id).setValue(startUpField);
+            firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
+                if (task.isSuccessful()) {
+                    Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                } else {
+                    Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                    Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
+                }
+            });
         }
     }
 }
