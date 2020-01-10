@@ -14,8 +14,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.project.ksih_android.R;
+import com.project.ksih_android.data.StartUpField;
 import com.project.ksih_android.databinding.FragmentStartupBinding;
-import com.project.ksih_android.ui.HomeActivity;
 
 import java.util.List;
 
@@ -36,7 +36,6 @@ public class StartupFragment extends Fragment {
         setUpRecyclerView(startupBinding);
         startupBinding.tempFab.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_addStartUpFragment);
-            mStartupViewModel.setStartupState(StartupViewModel.STATE.newStartup);
         });
         return startupBinding.getRoot();
     }
@@ -46,10 +45,16 @@ public class StartupFragment extends Fragment {
         mStartupViewModel.getStartUps().observe(this, new Observer<List<StartUpField>>() {
             @Override
             public void onChanged(List<StartUpField> startUpFields) {
-                StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext(), new HomeActivity());
+                StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext());
                 startupBinding.startUpRecyclerView.setAdapter(adapter);
                 startupBinding.rotateLoading.stop();
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mStartupViewModel.removeListeners();
     }
 }

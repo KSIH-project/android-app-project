@@ -1,6 +1,7 @@
 package com.project.ksih_android.ui.startup;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +10,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
-import com.project.ksih_android.storage.SharedPreferencesStorage;
-import com.project.ksih_android.ui.HomeActivity;
+import com.project.ksih_android.data.StartUpField;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
-
-import static com.project.ksih_android.utility.Constants.STARTUP_ITEM_KEY;
 
 /**
  * Created by SegunFrancis
@@ -30,15 +27,15 @@ import static com.project.ksih_android.utility.Constants.STARTUP_ITEM_KEY;
 public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpViewHolder> {
 
     private List<StartUpField> mList = new ArrayList<>();
-    private SharedPreferencesStorage mStorage;
+    //private SharedPreferencesStorage mStorage;
     private Context mContext;
-    private StartupViewModel mViewModel;
+    //private StartupViewModel mViewModel;
 
-    public StartUpAdapter(List<StartUpField> list, Context context, HomeActivity homeActivity) {
+    public StartUpAdapter(List<StartUpField> list, Context context) {
         mList = list;
         mContext = context.getApplicationContext();
-        mStorage = new SharedPreferencesStorage(mContext);
-        mViewModel = ViewModelProviders.of(homeActivity).get(StartupViewModel.class);
+        //mStorage = new SharedPreferencesStorage(mContext);
+        //mViewModel = ViewModelProviders.of(homeActivity).get(StartupViewModel.class);
     }
 
     @NonNull
@@ -74,9 +71,11 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
 
             itemView.setOnClickListener(view -> {
                 StartUpField field = mList.get(getAdapterPosition());
-                mStorage.setStartupField(STARTUP_ITEM_KEY, field);
-                mViewModel.setStartupState(StartupViewModel.STATE.editStartup);
-                Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_startUpDetailsFragment);
+                //mStorage.setStartupField(STARTUP_ITEM_KEY, field);
+                //mViewModel.select(mList.get(getAdapterPosition()));
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("startup_details", mList.get(getAdapterPosition()));
+                Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_startUpDetailsFragment, bundle);
                 Timber.d("Field: %s", field);
             });
         }

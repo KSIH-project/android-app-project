@@ -1,4 +1,4 @@
-package com.project.ksih_android.ui.startup;
+package com.project.ksih_android.data;
 
 import java.io.Serializable;
 

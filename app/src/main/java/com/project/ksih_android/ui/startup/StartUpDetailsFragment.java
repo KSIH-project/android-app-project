@@ -2,6 +2,7 @@ package com.project.ksih_android.ui.startup;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -12,14 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.project.ksih_android.R;
-import com.project.ksih_android.storage.SharedPreferencesStorage;
-
-import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_ITEM_KEY;
-import static com.project.ksih_android.utility.Constants.STARTUP_ITEM_KEY;
+import com.project.ksih_android.data.StartUpField;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,9 +38,8 @@ public class StartUpDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_start_up_details, container, false);
-        SharedPreferencesStorage mStorage = new SharedPreferencesStorage(requireContext());
-        mField = mStorage.getStartUpField(STARTUP_ITEM_KEY);
 
+        mField = (StartUpField) getArguments().getSerializable("startup_details");
         MaterialToolbar startUpDetailsToolbar = root.findViewById(R.id.startup_details_toolbar);
         ImageView startupIcon = root.findViewById(R.id.startup_detail_logo);
         TextView startupDescriptionET = root.findViewById(R.id.startupDescriptionET);
@@ -72,6 +74,8 @@ public class StartUpDetailsFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.edit_startup) {
                     editStartupDetails();
+                } else if (item.getItemId() == R.id.delete_startup) {
+                    deleteStartup(mField.getId());
                 }
                 return true;
             }
@@ -85,9 +89,23 @@ public class StartUpDetailsFragment extends Fragment {
     }
 
     private void editStartupDetails() {
-        // TODO: Edit startup details
-        SharedPreferencesStorage pref = new SharedPreferencesStorage(requireContext());
-        pref.setStartupField(EDIT_STARTUP_ITEM_KEY, mField);
-        Navigation.findNavController(requireView()).navigate(R.id.addStartUpFragment);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("edit_startup_details", mField);
+        Navigation.findNavController(requireView()).navigate(R.id.action_startUpDetailsFragment_to_addStartUpFragment, bundle);
+    }
+
+    private void deleteStartup(String id) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("startups");
+        ref.child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Item removed!", Toast.LENGTH_SHORT).show();
+                    // TODO: Navigate back to StartupFragment
+                } else {
+                    Toast.makeText(requireContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.project.ksih_android.data.StartUpField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,67 +16,39 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import timber.log.Timber;
 
-public class StartupViewModel extends ViewModel {
+public class StartupViewModel extends ViewModel implements ValueEventListener{
 
-    private MutableLiveData<String> mText;
-    private MutableLiveData<Boolean> isButtonEnabled = new MutableLiveData<>();
-    private StartUpField mStartUpField;
     private DatabaseReference ref;
     private MutableLiveData<List<StartUpField>> startupList = new MutableLiveData<>();
     private List<StartUpField> mList = new ArrayList<>();
-    private MutableLiveData<STATE> startupState = new MutableLiveData<>();
-
-    public enum STATE {
-        newStartup, editStartup
-    }
 
     public StartupViewModel() {
         ref = FirebaseDatabase.getInstance().getReference("startups");
-        mStartUpField = new StartUpField();
-        mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
-        isButtonEnabled.setValue(true);
+        ref.addValueEventListener(this);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        mList.clear();
+        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+            StartUpField field = snapshot.getValue(StartUpField.class);
+            if (field != null) {
+                mList.add(field);
+            }
+        }
+        startupList.setValue(mList);
     }
 
-    public LiveData<Boolean> getIsButtonEnabled() {
-        return isButtonEnabled;
-    }
-
-    public LiveData<STATE> getStartupState() {
-        return startupState;
-    }
-
-    public void setStartupState(STATE state) {
-        startupState.setValue(state);
-    }
-
-    public StartUpField getUrl() {
-        return mStartUpField;
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
+        Timber.d("Database Error: %s", databaseError.getDetails());
     }
 
     LiveData<List<StartUpField>> getStartUps() {
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    StartUpField field = snapshot.getValue(StartUpField.class);
-                    if (field != null) {
-                        mList.add(field);
-                    }
-                }
-                startupList.setValue(mList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Timber.d("Database Error: %s", databaseError.getDetails());
-            }
-        });
         return startupList;
+    }
+
+    void removeListeners() {
+        ref.removeEventListener(this);
     }
 }

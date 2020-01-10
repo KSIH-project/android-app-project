@@ -29,11 +29,11 @@
         android:label="@string/title_startups"
         tools:layout="@layout/fragment_startup" >
         <action
-            android:id="@+id/action_navigation_startup_to_addStartUpFragment"
-            app:destination="@id/addStartUpFragment" />
-        <action
             android:id="@+id/action_navigation_startup_to_startUpDetailsFragment"
             app:destination="@id/startUpDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_startup_to_addStartUpFragment"
+            app:destination="@id/addStartUpFragment" />
     </fragment>
 
     <fragment
@@ -73,6 +73,10 @@
         android:id="@+id/startUpDetailsFragment"
         android:name="com.project.ksih_android.ui.startup.StartUpDetailsFragment"
         android:label="fragment_start_up_details"
-        tools:layout="@layout/fragment_start_up_details" />
+        tools:layout="@layout/fragment_start_up_details" >
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_addStartUpFragment"
+            app:destination="@id/addStartUpFragment" />
+    </fragment>
 
 </navigation>

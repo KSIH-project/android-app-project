@@ -6,4 +6,10 @@
         android:icon="@drawable/ic_edit_24dp"
         android:title="Edit Startup"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/delete_startup"
+        android:icon="@drawable/ic_delete_24dp"
+        android:title="Delete Startup"
+        app:showAsAction="ifRoom" />
 </menu>

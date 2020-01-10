@@ -12,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
 
@@ -33,13 +31,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.project.ksih_android.R;
+import com.project.ksih_android.data.StartUpField;
 import com.project.ksih_android.databinding.FragmentAddStartUpBinding;
-import com.project.ksih_android.storage.SharedPreferencesStorage;
 
 import java.io.ByteArrayOutputStream;
 
 import static android.app.Activity.RESULT_OK;
-import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_ITEM_KEY;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE;
 import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 
@@ -51,9 +48,9 @@ import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 
 public class AddStartUpFragment extends Fragment {
 
-    private StartupViewModel mStartupViewModel;
     private Bitmap mBitmap;
     private String imagePath = "";
+    private StartUpField mField;
 
     private MaterialToolbar addStartUpToolbar;
     private ImageView galleryIcon;
@@ -67,21 +64,12 @@ public class AddStartUpFragment extends Fragment {
     private TextInputEditText telephone;
     private TextInputEditText email;
     private String imageUrl;
-    private int observeState = 0;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         mBitmap = null;
-        mStartupViewModel.getStartupState().observe(this, state -> {
-            if (state == StartupViewModel.STATE.newStartup) {
-                observeState = 0;
-            } else {
-                observeState = 1;
-            }
-        });
         return setUpBinding(savedInstanceState, inflater, container);
     }
 
@@ -116,7 +104,6 @@ public class AddStartUpFragment extends Fragment {
 
     private View setUpBinding(Bundle savedinstanceState, LayoutInflater inflater, ViewGroup container) {
         FragmentAddStartUpBinding addStartUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_start_up, container, false);
-        mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         addStartUpToolbar = addStartUpBinding.addStartupToolbar;
         setUpToolbar();
         startupName = addStartUpBinding.startupName;
@@ -130,13 +117,23 @@ public class AddStartUpFragment extends Fragment {
         email = addStartUpBinding.email;
         galleryIcon = addStartUpBinding.galleryIcon;
         galleryIcon.setOnClickListener(view -> openGallery());
-        editStartUpDetails();
         addStartUpBinding.saveStartup.setOnClickListener(view -> {
-            if (mBitmap != null)
+            // New Entry
+            if (mField == null) {
+                if (mBitmap != null)
+                    uploadNewImageToFirebaseStorage();
+                else
+                    Toast.makeText(requireActivity(), "Select an image", Toast.LENGTH_SHORT).show();
+            } else {
+                // Update existing entry
                 uploadImageToFirebaseStorage();
-            else
-                Toast.makeText(requireActivity(), "Select an image", Toast.LENGTH_SHORT).show();
+            }
         });
+        if (getArguments() != null) {
+            mField = (StartUpField) getArguments().getSerializable("edit_startup_details");
+            getStartUpDetails();
+            Timber.d("mField: %s", mField.getId());
+        }
         return addStartUpBinding.getRoot();
     }
 
@@ -155,7 +152,7 @@ public class AddStartUpFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE);
     }
 
-    private void uploadImageToFirebaseStorage() {
+    private void uploadNewImageToFirebaseStorage() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
         byte[] data = outputStream.toByteArray();
@@ -184,6 +181,39 @@ public class AddStartUpFragment extends Fragment {
         });
     }
 
+    private void uploadImageToFirebaseStorage() {
+        if (mBitmap != null) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
+            byte[] data = outputStream.toByteArray();
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            StorageReference storageReference = firebaseStorage.getReference("images/startup_logo/" + imagePath);
+            Timber.d("Image Path: %s", imagePath);
+            UploadTask uploadTask = storageReference.putBytes(data);
+            uploadTask.addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Upload successful
+                    // Get image download URL
+                    task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task1 -> {
+                        if (task1.isSuccessful()) {
+                            imageUrl = task1.getResult().toString();
+                            editStartupDetails();
+                            Timber.d("Download URL: %s", imageUrl);
+                            Toast.makeText(getActivity(), imageUrl, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Timber.d("Download URL error: %s", task1.getException().getLocalizedMessage());
+                        }
+                    });
+                } else {
+                    Timber.d("Image upload error: %s", task.getException().getLocalizedMessage());
+                    Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            editStartupDetails();
+        }
+    }
+
     /**
      * Creates new startup object and adds it to firebase database
      */
@@ -198,42 +228,39 @@ public class AddStartUpFragment extends Fragment {
         firebaseDatabase.child(id).setValue(startUpField);
     }
 
-    private void editStartUpDetails() {
-        SharedPreferencesStorage pref = new SharedPreferencesStorage(requireContext());
-        StartUpField field = pref.getStartUpField(EDIT_STARTUP_ITEM_KEY);
-        if (field != null) {
-            Glide.with(requireContext()).load(field.getImageUrl()).into(galleryIcon);
-            addStartUpToolbar.setTitle(field.getStartupName());
-            startupName.setText(field.getStartupName());
-            startupDescription.setText(field.getStartupDescription());
-            startupFounder.setText(field.getStartupFounder());
-            startupCoFounder.setText(field.getStartupCoFounder());
-            startupWebsite.setText(field.getStartupWebsite());
-            facebookUrl.setText(field.getFacebookUrl());
-            twitterUrl.setText(field.getTwitterUrl());
-            telephone.setText(field.getTelephone());
-            email.setText(field.getEmail());
+    private void getStartUpDetails() {
+        Glide.with(requireContext()).load(mField.getImageUrl()).into(galleryIcon);
+        addStartUpToolbar.setTitle(mField.getStartupName());
+        startupName.setText(mField.getStartupName());
+        startupDescription.setText(mField.getStartupDescription());
+        startupFounder.setText(mField.getStartupFounder());
+        startupCoFounder.setText(mField.getStartupCoFounder());
+        startupWebsite.setText(mField.getStartupWebsite());
+        facebookUrl.setText(mField.getFacebookUrl());
+        twitterUrl.setText(mField.getTwitterUrl());
+        telephone.setText(mField.getTelephone());
+        email.setText(mField.getEmail());
+    }
 
-            DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("startups");
-            String id = field.getId();
-            if (imageUrl == null) {
-                // Admin did not change the original photo
-                imageUrl = field.getImageUrl();
-                StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
-                        startupDescription.getText().toString(), startupFounder.getText().toString(),
-                        startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
-                        facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
-                        telephone.getText().toString(), email.getText().toString());
-                firebaseDatabase.child(id).setValue(startUpField);
-            } else {
-                // Admin changes the original photo
-                StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
-                        startupDescription.getText().toString(), startupFounder.getText().toString(),
-                        startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
-                        facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
-                        telephone.getText().toString(), email.getText().toString());
-                firebaseDatabase.child(id).setValue(startUpField);
-            }
+    private void editStartupDetails() {
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("startups");
+        String id = mField.getId();
+        if (imageUrl == null) {
+            // Admin did not change the original photo
+            StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
+                    startupDescription.getText().toString(), startupFounder.getText().toString(),
+                    startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
+                    facebookUrl.getText().toString(), twitterUrl.getText().toString(), mField.getImageUrl(),
+                    telephone.getText().toString(), email.getText().toString());
+            firebaseDatabase.child(id).setValue(startUpField);
+        } else {
+            // Admin changes the original photo
+            StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
+                    startupDescription.getText().toString(), startupFounder.getText().toString(),
+                    startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
+                    facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
+                    telephone.getText().toString(), email.getText().toString());
+            firebaseDatabase.child(id).setValue(startUpField);
         }
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.project.ksih_android.ui.startup.StartUpField;
+import com.project.ksih_android.data.StartUpField;
 import com.project.ksih_android.utility.Constants;
 
 /**
