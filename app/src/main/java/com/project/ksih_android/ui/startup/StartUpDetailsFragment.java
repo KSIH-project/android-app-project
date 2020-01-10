@@ -18,6 +18,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.project.ksih_android.R;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
 
+import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_ITEM_KEY;
 import static com.project.ksih_android.utility.Constants.STARTUP_ITEM_KEY;
 
 /**
@@ -85,5 +86,8 @@ public class StartUpDetailsFragment extends Fragment {
 
     private void editStartupDetails() {
         // TODO: Edit startup details
+        SharedPreferencesStorage pref = new SharedPreferencesStorage(requireContext());
+        pref.setStartupField(EDIT_STARTUP_ITEM_KEY, mField);
+        Navigation.findNavController(requireView()).navigate(R.id.addStartUpFragment);
     }
 }

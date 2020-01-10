@@ -1,7 +1,5 @@
 package com.project.ksih_android.ui.startup;
 
-import android.util.Patterns;
-
 import java.io.Serializable;
 
 import androidx.annotation.Nullable;
@@ -14,7 +12,7 @@ import androidx.databinding.library.baseAdapters.BR;
  */
 
 public class StartUpField extends BaseObservable implements Serializable {
-    private String url;
+    private String id;
     private String startupName;
     private String startupDescription;
     private String startupFounder;
@@ -33,9 +31,10 @@ public class StartUpField extends BaseObservable implements Serializable {
     public StartUpField() {
     }
 
-    public StartUpField(String startupName, String startupDescription, String startupFounder,
+    public StartUpField(String id, String startupName, String startupDescription, String startupFounder,
                         @Nullable String startupCoFounder, @Nullable String startupWebsite, @Nullable String facebookUrl,
                         @Nullable String twitterUrl, String imageUrl, String telephone, String email) {
+        this.id = id;
         this.startupName = startupName;
         this.startupDescription = startupDescription;
         this.startupFounder = startupFounder;
@@ -46,6 +45,14 @@ public class StartUpField extends BaseObservable implements Serializable {
         this.imageUrl = imageUrl;
         this.telephone = telephone;
         this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTelephone() {
@@ -62,21 +69,6 @@ public class StartUpField extends BaseObservable implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-        notifyPropertyChanged(BR.valid);
-    }
-
-
-    public boolean isUrlValid() {
-        //return Patterns.WEB_URL.matcher(url).matches();
-        return true;
     }
 
     public String getStartupName() {
