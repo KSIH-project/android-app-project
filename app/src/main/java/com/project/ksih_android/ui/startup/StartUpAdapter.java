@@ -10,11 +10,13 @@ import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
+import com.project.ksih_android.ui.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
@@ -30,11 +32,13 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
     private List<StartUpField> mList = new ArrayList<>();
     private SharedPreferencesStorage mStorage;
     private Context mContext;
+    private StartupViewModel mViewModel;
 
-    public StartUpAdapter(List<StartUpField> list, Context context) {
+    public StartUpAdapter(List<StartUpField> list, Context context, HomeActivity homeActivity) {
         mList = list;
         mContext = context.getApplicationContext();
         mStorage = new SharedPreferencesStorage(mContext);
+        mViewModel = ViewModelProviders.of(homeActivity).get(StartupViewModel.class);
     }
 
     @NonNull
@@ -71,6 +75,7 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
             itemView.setOnClickListener(view -> {
                 StartUpField field = mList.get(getAdapterPosition());
                 mStorage.setStartupField(STARTUP_ITEM_KEY, field);
+                mViewModel.setStartupState(StartupViewModel.STATE.editStartup);
                 Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_startUpDetailsFragment);
                 Timber.d("Field: %s", field);
             });

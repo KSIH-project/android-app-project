@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentStartupBinding;
+import com.project.ksih_android.ui.HomeActivity;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class StartupFragment extends Fragment {
         mStartupViewModel.getStartUps().observe(this, new Observer<List<StartUpField>>() {
             @Override
             public void onChanged(List<StartUpField> startUpFields) {
-                StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext());
+                StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext(), new HomeActivity());
                 startupBinding.startUpRecyclerView.setAdapter(adapter);
                 startupBinding.rotateLoading.stop();
             }

@@ -67,16 +67,19 @@ public class AddStartUpFragment extends Fragment {
     private TextInputEditText telephone;
     private TextInputEditText email;
     private String imageUrl;
+    private int observeState = 0;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mStartupViewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         mBitmap = null;
-        mStartupViewModel.getStartupState().observe(this, new Observer<StartupViewModel.STATE>() {
-            @Override
-            public void onChanged(StartupViewModel.STATE state) {
-
+        mStartupViewModel.getStartupState().observe(this, state -> {
+            if (state == StartupViewModel.STATE.newStartup) {
+                observeState = 0;
+            } else {
+                observeState = 1;
             }
         });
         return setUpBinding(savedInstanceState, inflater, container);
