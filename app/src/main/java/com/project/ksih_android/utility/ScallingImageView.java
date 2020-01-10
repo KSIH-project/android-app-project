@@ -47,6 +47,7 @@ public class ScallingImageView extends AppCompatImageView implements
     PointF mStart = new PointF();
 
 
+
     public ScallingImageView(Context context) {
         super(context);
         sharedConstructing(context);
@@ -86,7 +87,7 @@ public class ScallingImageView extends AppCompatImageView implements
         int imageWidth = drawable.getIntrinsicWidth();
         int imageHeight = drawable.getIntrinsicHeight();
 
-        Timber.d("imageWidth: " + imageWidth + " imageHeight : " + imageHeight);
+        Timber.d( "imageWidth: " + imageWidth + " imageHeight : " + imageHeight);
 
         float scaleX = (float) viewWidth / (float) imageWidth;
         float scaleY = (float) viewHeight / (float) imageHeight;
@@ -103,6 +104,8 @@ public class ScallingImageView extends AppCompatImageView implements
 
         Timber.d("fitToScreen: redundantXSpace: %s", redundantXSpace);
         Timber.d("fitToScreen: redundantYSpace: %s", redundantYSpace);
+        Timber.d( "fitToScreen: redundantXSpace: %s", redundantXSpace);
+        Timber.d( "fitToScreen: redundantYSpace: %s", redundantYSpace);
 
         mMatrix.postTranslate(redundantXSpace, redundantYSpace);
 
@@ -191,9 +194,9 @@ public class ScallingImageView extends AppCompatImageView implements
                     float dy = currentPoint.y - mLast.y;
 
                     float fixTransX = getFixDragTrans(dx, viewWidth, origWidth * mSaveScale);
-                    Timber.d("onTouch: fixTransX: %s", fixTransX);
+                    Timber.d( "onTouch: fixTransX: %s", fixTransX);
                     float fixTransY = getFixDragTrans(dy, viewHeight, origHeight * mSaveScale);
-                    Timber.d("onTouch: fixTransY: %s", fixTransY);
+                    Timber.d( "onTouch: fixTransY: %s", fixTransY);
                     mMatrix.postTranslate(fixTransX, fixTransY);
 
                     fixTranslation();
@@ -213,17 +216,14 @@ public class ScallingImageView extends AppCompatImageView implements
     }
 
     /*
-        Ontouch
+        GestureListener
      */
+
 
     @Override
     public boolean onDown(MotionEvent motionEvent) {
         return false;
     }
-
-    /*
-        GestureListener
-     */
 
     @Override
     public void onShowPress(MotionEvent motionEvent) {
@@ -250,14 +250,14 @@ public class ScallingImageView extends AppCompatImageView implements
         return false;
     }
 
+    /*
+        onDoubleTap
+     */
+
     @Override
     public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
         return false;
     }
-
-    /*
-        onDoubleTap
-     */
 
     @Override
     public boolean onDoubleTap(MotionEvent motionEvent) {

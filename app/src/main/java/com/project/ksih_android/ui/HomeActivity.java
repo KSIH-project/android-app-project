@@ -10,7 +10,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.utility.DividerItemDecoration;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     private NavController mNavController;
     private Toolbar toolBar;
     private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +41,11 @@ public class HomeActivity extends AppCompatActivity {
         NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navMenuView.addItemDecoration(new DividerItemDecoration(this));
 
-        toggle = new ActionBarDrawerToggle(
+        mToggle = new ActionBarDrawerToggle(
                 this, drawer, toolBar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawer.addDrawerListener(mToggle);
+        mToggle.syncState();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_signIn, R.id.navigation_project, R.id.navigation_member,
@@ -81,27 +80,23 @@ public class HomeActivity extends AppCompatActivity {
         mNavController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             try {
                 String dest = getResources().getResourceName(destination.getId());
-                Timber.d("onDestinationChanged: " + dest);
+                Timber.d("onDestinationChanged: %s", dest);
             } catch (Resources.NotFoundException e) {
                 destination.getId();
             }
             switch (destination.getId()) {
                 case R.id.eventAddFragment:
                 case R.id.eventDetailsFragment:
-                    lockDrawer();
+                  hideCustomToolBar();
+                   disableNavDrawer();
                     break;
                 case R.id.onBoardingFragment:
                     hideCustomToolBar();
-                    hideDrawer();
-                    break;
-                case R.id.all_friends:
-                case R.id.menu_search:
-                    hideCustomToolBar();
-                    getSupportActionBar().hide();
+                    disableNavDrawer();
                     break;
                 default:
                     showCustomToolBar();
-                    showDrawer();
+                    enableNavDrawer();
             }
         });
     }
@@ -118,22 +113,22 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void hideCustomToolBar() {
-        toolBar.setVisibility(View.INVISIBLE);
+        toolBar.setVisibility(View.GONE);
     }
 
     private void showCustomToolBar() {
         toolBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideDrawer() {
-        drawer.setVisibility(View.INVISIBLE);
+    private void enableNavDrawer() {
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        mToggle.setDrawerIndicatorEnabled(true);
+        mToggle.syncState();
     }
 
-    private void lockDrawer() {
+    private void disableNavDrawer() {
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
-
-    private void showDrawer() {
-        drawer.setVisibility(View.VISIBLE);
+        mToggle.setDrawerIndicatorEnabled(false);
+        mToggle.syncState();
     }
 }
