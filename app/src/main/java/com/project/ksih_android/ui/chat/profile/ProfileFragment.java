@@ -91,9 +91,8 @@ public class ProfileFragment extends Fragment {
         /**
          * @Todo receive intent from Request fragment visitUserId
          */
-        if (getArguments() != null) {
             receiver_userID = getArguments().getString("visitUserId");
-        }
+
 
         //views
         sendFriendRequest_Button = view.findViewById(R.id.visitUserFrndRqstSendButton);
@@ -120,7 +119,7 @@ public class ProfileFragment extends Fragment {
                 String nickname = dataSnapshot.child("user_nickname").getValue().toString();
                 String profession = dataSnapshot.child("user_profession").getValue().toString();
                 String image = dataSnapshot.child("user_image").getValue().toString();
-                String verified = dataSnapshot.child("veridied").getValue().toString();
+//                String verified = dataSnapshot.child("veridied").getValue().toString();
 
                 //setting logics
                 if (nickname.isEmpty()){
@@ -142,9 +141,9 @@ public class ProfileFragment extends Fragment {
                         .placeholder(R.drawable.default_profile_image)
                         .into(profileImage);
 
-                if (verified.contains("true")){
-                    verified_icon.setVisibility(View.VISIBLE);
-                }
+//                if (verified.contains("true")){
+//                    verified_icon.setVisibility(View.VISIBLE);
+//                }
 
                 //for fixing dynamic cancel / firend / unfriend / accept button
                 friendRequestReference.child(senderID)

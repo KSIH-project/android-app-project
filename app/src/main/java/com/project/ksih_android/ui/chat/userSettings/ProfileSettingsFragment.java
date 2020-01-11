@@ -218,28 +218,28 @@ public class ProfileSettingsFragment extends Fragment {
         getActivity().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
-        selectedGenderRB(view);
+//        selectedGenderRB(view);
 
         return  view;
     }
 
-    private void selectedGenderRB(View view){
-        boolean checked = ((RadioButton)view).isChecked();
-        switch (view.getId()){
-            case R.id.maleRB:
-                if (checked){
-                    selectedGender = "Male";
-                    recheckGender.setVisibility(View.GONE);
-                    break;
-                }
-            case R.id.femaleRB:
-                if (checked){
-                    selectedGender = "Female";
-                    recheckGender.setVisibility(View.GONE);
-                    break;
-                }
-        }
-    }
+//    private void selectedGenderRB(View view){
+//        boolean checked = ((RadioButton)view).isChecked();
+//        switch (view.getId()){
+//            case R.id.maleRB:
+//                if (checked){
+//                    selectedGender = "Male";
+//                    recheckGender.setVisibility(View.GONE);
+//                    break;
+//                }
+//            case R.id.femaleRB:
+//                if (checked){
+//                    selectedGender = "Female";
+//                    recheckGender.setVisibility(View.GONE);
+//                    break;
+//                }
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -21,7 +21,6 @@ import com.victor.loading.rotate.RotateLoading;
 
 public class UpdateStatusDialog extends DialogFragment {
     private EditText status_from_input;
-    private RotateLoading loading;
     TextView confirmStatus;
 
     //firebase
@@ -62,12 +61,10 @@ public class UpdateStatusDialog extends DialogFragment {
         if (TextUtils.isEmpty(new_status)){
             Toast.makeText(getContext(), "Please write", Toast.LENGTH_SHORT).show();
         }else {
-            loading.start();
 
             statusDatabaseReference.child("user_status").setValue(new_status)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()){
-                            loading.stop();
                             dismiss();
                         }else {
                             Toast.makeText(getContext(), "Failed to update", Toast.LENGTH_SHORT).show();
