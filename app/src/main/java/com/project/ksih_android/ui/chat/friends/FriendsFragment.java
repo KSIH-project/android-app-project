@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.ui.HomeActivity;
+import com.project.ksih_android.ui.chat.chatMessage.ChatMessageFragment;
 import com.project.ksih_android.ui.chat.models.Friends;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -131,36 +132,44 @@ public class FriendsFragment extends Fragment {
                                     "Send Message", userName+"'s profile"
                             };
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                            builder.setItems(options, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int which) {
-                                    if (which == 0){
-                                        //user active validation status
-                                        if (dataSnapshot.child("active_now").exists()){
+                            builder.setItems(options, (dialogInterface, which) -> {
+                                if (which == 0){
+                                    //user active validation status
+                                    if (dataSnapshot.child("active_now").exists()){
 
-                                            /**
-                                             * @Todo send intent to Chat Fragment
-                                             */
-
-                                        }else {
-                                            userDatabaseReference.child(userID).child("active_now")
-                                                    .setValue(ServerValue.TIMESTAMP).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    /**
-                                                     * @Todo initialize intent to chat Fragment
-                                                     */
-
-                                                }
-                                            });
-                                        }
-                                    }
-
-                                    if (which == 1){
                                         /**
-                                         * @Todo send intent to profile fragment
+                                         * @Todo send intent to Chat Message Fragment
                                          */
+                                        ChatMessageFragment chatMessageFragment = new ChatMessageFragment();
+                                        Bundle args = new Bundle();
+                                        args.putString("visitUserId", userID);
+                                        args.putString("userName", userName);
+                                        chatMessageFragment.setArguments(args);
+                                        Navigation.findNavController(view).navigate(R.id.friendList, args);
+                                    }else {
+                                        userDatabaseReference.child(userID).child("active_now")
+                                                .setValue(ServerValue.TIMESTAMP).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                /**
+                                                 * @Todo initialize intent to chat Message Fragment
+                                                 */
+                                                ChatMessageFragment chatMessageFragment = new ChatMessageFragment();
+                                                Bundle args = new Bundle();
+                                                args.putString("visitUserId", userID);
+                                                args.putString("userName", userName);
+                                                chatMessageFragment.setArguments(args);
+                                                Navigation.findNavController(view).navigate(R.id.friendList, args);
+
+                                            }
+                                        });
                                     }
+                                }
+
+                                if (which == 1){
+                                    /**
+                                     * @Todo send intent to profile fragment
+                                     */
                                 }
                             });
                             builder.show();
