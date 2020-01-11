@@ -87,6 +87,9 @@ public class HomeActivity extends AppCompatActivity {
                     hideCustomToolBar();
                     hideDrawer();
                     break;
+                case R.id.aboutKsihFragment:
+                    hideCustomToolBar();
+                    break;
                 default:
                     showCustomToolBar();
                     showDrawer();
@@ -106,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void hideCustomToolBar() {
-        toolBar.setVisibility(View.INVISIBLE);
+        toolBar.setVisibility(View.GONE);
     }
 
     private void showCustomToolBar() {
