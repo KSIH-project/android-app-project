@@ -16,6 +16,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import timber.log.Timber;
 
+import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_DATABASE_REFERENCE;
+
 public class StartupViewModel extends ViewModel implements ValueEventListener{
 
     private DatabaseReference ref;
@@ -23,7 +25,7 @@ public class StartupViewModel extends ViewModel implements ValueEventListener{
     private List<StartUpField> mList = new ArrayList<>();
 
     public StartupViewModel() {
-        ref = FirebaseDatabase.getInstance().getReference("startups");
+        ref = FirebaseDatabase.getInstance().getReference(STARTUP_FIREBASE_DATABASE_REFERENCE);
         ref.addValueEventListener(this);
     }
 

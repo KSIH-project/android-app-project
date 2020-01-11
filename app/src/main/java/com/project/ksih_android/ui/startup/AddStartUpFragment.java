@@ -36,6 +36,9 @@ import com.project.ksih_android.databinding.FragmentAddStartUpBinding;
 import java.io.ByteArrayOutputStream;
 
 import static android.app.Activity.RESULT_OK;
+import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_DETAILS_KEY;
+import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_DATABASE_REFERENCE;
+import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_STORAGE_REFERENCE;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE;
 import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 
@@ -129,7 +132,7 @@ public class AddStartUpFragment extends Fragment {
             }
         });
         if (getArguments() != null) {
-            mField = (StartUpField) getArguments().getSerializable("edit_startup_details");
+            mField = (StartUpField) getArguments().getSerializable(EDIT_STARTUP_DETAILS_KEY);
             getStartUpDetails();
             Timber.d("mField: %s", mField.getId());
         }
@@ -156,7 +159,7 @@ public class AddStartUpFragment extends Fragment {
         mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
         byte[] data = outputStream.toByteArray();
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference("images/startup_logo/" + imagePath);
+        StorageReference storageReference = firebaseStorage.getReference(STARTUP_FIREBASE_STORAGE_REFERENCE + imagePath);
         Timber.d("Image Path: %s", imagePath);
         UploadTask uploadTask = storageReference.putBytes(data);
         uploadTask.addOnCompleteListener(task -> {
@@ -186,7 +189,7 @@ public class AddStartUpFragment extends Fragment {
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
             byte[] data = outputStream.toByteArray();
             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-            StorageReference storageReference = firebaseStorage.getReference("images/startup_logo/" + imagePath);
+            StorageReference storageReference = firebaseStorage.getReference(STARTUP_FIREBASE_STORAGE_REFERENCE + imagePath);
             Timber.d("Image Path: %s", imagePath);
             UploadTask uploadTask = storageReference.putBytes(data);
             uploadTask.addOnCompleteListener(task -> {
@@ -217,7 +220,7 @@ public class AddStartUpFragment extends Fragment {
      * Creates new startup object and adds it to firebase database
      */
     private void addStartUp() {
-        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("startups");
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference(STARTUP_FIREBASE_DATABASE_REFERENCE);
         String id = firebaseDatabase.push().getKey();
         StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
                 startupDescription.getText().toString(), startupFounder.getText().toString(),
@@ -249,7 +252,7 @@ public class AddStartUpFragment extends Fragment {
     }
 
     private void editStartupDetails() {
-        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("startups");
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference(STARTUP_FIREBASE_DATABASE_REFERENCE);
         String id = mField.getId();
         if (imageUrl == null) {
             // Admin did not change the original photo
@@ -278,7 +281,7 @@ public class AddStartUpFragment extends Fragment {
                     Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
                 } else {
                     Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
-                    Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
+                    Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
                 }
             });
         }

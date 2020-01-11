@@ -20,6 +20,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
+import static com.project.ksih_android.utility.Constants.STARTUP_DETAILS_BUNDLE_KEY;
+
 /**
  * Created by SegunFrancis
  */
@@ -27,15 +29,11 @@ import timber.log.Timber;
 public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpViewHolder> {
 
     private List<StartUpField> mList = new ArrayList<>();
-    //private SharedPreferencesStorage mStorage;
     private Context mContext;
-    //private StartupViewModel mViewModel;
 
     public StartUpAdapter(List<StartUpField> list, Context context) {
         mList = list;
         mContext = context.getApplicationContext();
-        //mStorage = new SharedPreferencesStorage(mContext);
-        //mViewModel = ViewModelProviders.of(homeActivity).get(StartupViewModel.class);
     }
 
     @NonNull
@@ -71,10 +69,8 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
 
             itemView.setOnClickListener(view -> {
                 StartUpField field = mList.get(getAdapterPosition());
-                //mStorage.setStartupField(STARTUP_ITEM_KEY, field);
-                //mViewModel.select(mList.get(getAdapterPosition()));
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("startup_details", mList.get(getAdapterPosition()));
+                bundle.putSerializable(STARTUP_DETAILS_BUNDLE_KEY, mList.get(getAdapterPosition()));
                 Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_startUpDetailsFragment, bundle);
                 Timber.d("Field: %s", field);
             });

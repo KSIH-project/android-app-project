@@ -21,6 +21,10 @@ import com.google.firebase.storage.StorageReference;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.StartUpField;
 
+import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_DETAILS_KEY;
+import static com.project.ksih_android.utility.Constants.STARTUP_DETAILS_BUNDLE_KEY;
+import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_DATABASE_REFERENCE;
+
 /**
  * A simple {@link Fragment} subclass.
  * <p>
@@ -36,7 +40,7 @@ public class StartUpDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_start_up_details, container, false);
 
-        mField = (StartUpField) getArguments().getSerializable("startup_details");
+        mField = (StartUpField) getArguments().getSerializable(STARTUP_DETAILS_BUNDLE_KEY);
         MaterialToolbar startUpDetailsToolbar = root.findViewById(R.id.startup_details_toolbar);
         ImageView startupIcon = root.findViewById(R.id.startup_detail_logo);
         TextView startupDescriptionET = root.findViewById(R.id.startupDescriptionET);
@@ -79,12 +83,12 @@ public class StartUpDetailsFragment extends Fragment {
 
     private void editStartupDetails() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("edit_startup_details", mField);
+        bundle.putSerializable(EDIT_STARTUP_DETAILS_KEY, mField);
         Navigation.findNavController(requireView()).navigate(R.id.action_startUpDetailsFragment_to_addStartUpFragment, bundle);
     }
 
     private void deleteStartup(String id) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("startups");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(STARTUP_FIREBASE_DATABASE_REFERENCE);
         ref.child(id).removeValue().addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(requireContext(), "Item removed!", Toast.LENGTH_SHORT).show();
