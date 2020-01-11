@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -76,7 +77,7 @@ public class ChatMessageFragment extends Fragment {
     //variables
     private String messageReceiverID;
     private String messageReceiverName;
-    private LinearLayout chatNavigateBack;
+    private FrameLayout chatNavigateBack;
     private TextView chatUserName;
     private TextView chatUserActiveStatus, ChatConnectionTV;
     private RoundedImageView chatUserImageView;
@@ -109,6 +110,7 @@ public class ChatMessageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat_message, container, false);
 
         //firebase initialization
+        rootReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         messageSenderId = mAuth.getCurrentUser().getUid();
 
@@ -116,15 +118,13 @@ public class ChatMessageFragment extends Fragment {
         /**
          * Todo receive intent from chat fragment for message receiver details
          */
-        if (getArguments() != null) {
             messageReceiverID = getArguments().getString("visitUserId");
             messageReceiverName = getArguments().getString("userName");
-        }
 
         imageMessageStorageRef = FirebaseStorage.getInstance().getReference().child("messages_image");
 
         chatNavigateBack = view.findViewById(R.id.chat_navigate_back);
-        chatNavigateBack.setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.nav_chats));
+        chatNavigateBack.setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.action_friendList_to_nav_chats2));
 
 
         //set views

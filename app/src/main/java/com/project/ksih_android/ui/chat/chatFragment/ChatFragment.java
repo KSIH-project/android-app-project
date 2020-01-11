@@ -104,6 +104,7 @@ public class ChatFragment extends Fragment {
             protected void onBindViewHolder(@NonNull ChatsVH holder, int position, @NonNull Friends model) {
 
                 final String userID = getRef(position).getKey();
+                Timber.d(userID);
                 userDatabaseReference.child(userID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

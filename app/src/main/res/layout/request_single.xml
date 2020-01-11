@@ -17,6 +17,7 @@
             android:layout_height="65dp"
             android:src="@drawable/default_profile_image"
             android:id="@+id/r_profileImage"
+            app:riv_corner_radius="360dp"
             app:riv_border_color="@color/colorPrimary"
             app:riv_border_width="0.10dp"/>
 

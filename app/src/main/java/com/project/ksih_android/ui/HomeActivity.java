@@ -87,6 +87,14 @@ public class HomeActivity extends AppCompatActivity {
                     hideCustomToolBar();
                     hideDrawer();
                     break;
+                case R.id.all_friends:
+                case R.id.menu_search:
+                case R.id.profile_settings:
+                case R.id.go_my_profile:
+                case R.id.friendList:
+                    hideCustomToolBar();
+                    getSupportActionBar().hide();
+                    break;
                 default:
                     showCustomToolBar();
                     showDrawer();

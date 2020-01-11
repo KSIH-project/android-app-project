@@ -92,6 +92,10 @@
         android:id="@+id/friendList"
         android:name="com.project.ksih_android.ui.chat.chatMessage.ChatMessageFragment"
         android:label=""
-        tools:layout="@layout/fragment_chat_message"/>
+        tools:layout="@layout/fragment_chat_message">
+        <action
+            android:id="@+id/action_friendList_to_nav_chats2"
+            app:destination="@id/nav_chats" />
+    </fragment>
 
 </navigation>
