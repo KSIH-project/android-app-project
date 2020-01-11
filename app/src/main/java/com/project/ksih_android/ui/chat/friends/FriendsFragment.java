@@ -35,6 +35,7 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.ui.HomeActivity;
 import com.project.ksih_android.ui.chat.chatMessage.ChatMessageFragment;
 import com.project.ksih_android.ui.chat.models.Friends;
+import com.project.ksih_android.ui.chat.profile.ProfileFragment;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -170,6 +171,11 @@ public class FriendsFragment extends Fragment {
                                     /**
                                      * @Todo send intent to profile fragment
                                      */
+                                    ProfileFragment profileFragment = new ProfileFragment();
+                                    Bundle args = new Bundle();
+                                    args.putString("visitUserId", userID);
+                                    profileFragment.setArguments(args);
+                                    Navigation.findNavController(view).navigate(R.id.profile_settings, args);
                                 }
                             });
                             builder.show();
