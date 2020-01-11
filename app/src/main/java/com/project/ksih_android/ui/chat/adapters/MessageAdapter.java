@@ -90,8 +90,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         //when message type is Text
         if (from_message_TYPE.equals("text")){
-            holder.receiver_text_message.setVisibility(View.VISIBLE);
-            holder.user_profile_image.setVisibility(View.VISIBLE);
+            holder.receiver_text_message.setVisibility(View.INVISIBLE);
+            holder.user_profile_image.setVisibility(View.INVISIBLE);
 
             //when message is Text, Image views are gone
             holder.senderImageMsg.setVisibility(View.GONE);
@@ -126,6 +126,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             if (from_user_ID.equals(sender_UID)){
                 holder.user_profile_image.setVisibility(View.GONE);
                 holder.receiverImageMsg.setVisibility(View.GONE);
+//                holder.senderImageMsg.setVisibility(View.VISIBLE);
                 Picasso.get()
                         .load(message.getMessage())
                         .networkPolicy(NetworkPolicy.OFFLINE)
@@ -134,6 +135,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             }else {
                 holder.user_profile_image.setVisibility(View.VISIBLE);
                 holder.senderImageMsg.setVisibility(View.GONE);
+//                holder.receiverImageMsg.setVisibility(View.VISIBLE);
                 Picasso.get()
                         .load(message.getMessage())
                         .networkPolicy(NetworkPolicy.OFFLINE)
