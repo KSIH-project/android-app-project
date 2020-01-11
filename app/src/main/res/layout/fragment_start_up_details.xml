@@ -37,5 +37,12 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.victor.loading.rotate.RotateLoading
+        android:id="@+id/startup_details_progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        app:loading_color="@color/button_color_background"
+        app:loading_width="4dp" />
     <include layout="@layout/content_fragment_startup_details" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

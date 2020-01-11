@@ -21,8 +21,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.StartUpField;
+import com.victor.loading.rotate.RotateLoading;
 
 import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_DETAILS_KEY;
+import static com.project.ksih_android.utility.Constants.SCALE_IMAGE_KEY;
 import static com.project.ksih_android.utility.Constants.STARTUP_DETAILS_BUNDLE_KEY;
 import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_DATABASE_REFERENCE;
 
@@ -35,6 +37,7 @@ import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_DATABA
 public class StartUpDetailsFragment extends Fragment {
 
     private StartUpField mField;
+    private RotateLoading progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +56,7 @@ public class StartUpDetailsFragment extends Fragment {
         TextView startupWebsiteET = root.findViewById(R.id.startupWebsiteET);
         TextView facebookET = root.findViewById(R.id.facebookET);
         TextView twitterET = root.findViewById(R.id.twitterET);
+        progressBar = root.findViewById(R.id.startup_details_progress_bar);
 
         Glide.with(requireContext()).load(mField.getImageUrl()).into(startupLogo);
         startupDescriptionET.setText(mField.getStartupDescription());
@@ -81,7 +85,7 @@ public class StartUpDetailsFragment extends Fragment {
     private void initImageClick(ImageView startupLogo) {
         startupLogo.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putString("scale_image", mField.getImageUrl());
+            bundle.putString(SCALE_IMAGE_KEY, mField.getImageUrl());
             Navigation.findNavController(view).navigate(R.id.action_startUpDetailsFragment_to_zoomImageFragment, bundle);
         });
     }
@@ -101,6 +105,7 @@ public class StartUpDetailsFragment extends Fragment {
             if (item.getItemId() == R.id.edit_startup) {
                 editStartupDetails();
             } else if (item.getItemId() == R.id.delete_startup) {
+                startProgressBar(progressBar);
                 showDialog();
             }
             return true;
@@ -118,11 +123,10 @@ public class StartUpDetailsFragment extends Fragment {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(STARTUP_FIREBASE_DATABASE_REFERENCE);
         ref.child(id).removeValue().addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(requireContext(), "Item removed!", Toast.LENGTH_SHORT).show();
                 deleteImage(mField.getImageUrl());
-                Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
             } else {
                 Toast.makeText(requireContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                stopProgressBar(progressBar);
             }
         });
     }
@@ -136,8 +140,11 @@ public class StartUpDetailsFragment extends Fragment {
         StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
         ref.delete().addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(requireContext(), "Image Removed", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                stopProgressBar(progressBar);
+                Toast.makeText(requireContext(), "Startup Removed", Toast.LENGTH_SHORT).show();
             } else {
+                stopProgressBar(progressBar);
                 Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -155,5 +162,14 @@ public class StartUpDetailsFragment extends Fragment {
                 })
                 .setNegativeButton("NO", (dialogInterface, i) -> dialogInterface.dismiss());
         dialog.create().show();
+    }
+
+
+    private void startProgressBar(RotateLoading loading) {
+        loading.start();
+    }
+
+    private void stopProgressBar(RotateLoading loading) {
+        loading.stop();
     }
 }

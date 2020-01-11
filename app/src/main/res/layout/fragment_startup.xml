@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -7,6 +8,15 @@
         android:layout_height="match_parent">
 
         <!-- TODO: Temporary navigation, replace when permanent navigation is in place -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/startUp_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/temp_fab"
             android:layout_width="wrap_content"
@@ -21,24 +31,47 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/startUp_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.victor.loading.rotate.RotateLoading
             android:id="@+id/rotate_loading"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:loading_color="@color/button_color_background"
-            app:loading_width="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/startUp_recycler_view"
             app:layout_constraintEnd_toEndOf="@+id/startUp_recycler_view"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:loading_color="@color/button_color_background"
+            app:loading_width="4dp" />
+
+        <ImageView
+            android:id="@+id/empty_list_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/ic_undraw_no_data" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="No Startup Added"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/empty_list_image"
+            app:layout_constraintStart_toStartOf="@+id/empty_list_image"
+            app:layout_constraintTop_toBottomOf="@+id/empty_list_image" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/empty_list_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="textView,empty_list_image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

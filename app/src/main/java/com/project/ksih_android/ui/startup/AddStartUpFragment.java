@@ -18,20 +18,22 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.StartUpField;
 import com.project.ksih_android.databinding.FragmentAddStartUpBinding;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.io.ByteArrayOutputStream;
 
@@ -55,7 +57,9 @@ public class AddStartUpFragment extends Fragment {
     private StartUpField mField;
 
     private MaterialToolbar addStartUpToolbar;
-    private ImageView galleryIcon;
+    private MaterialButton saveStartupButton;
+    private RotateLoading progressBar;
+    private RoundedImageView galleryIcon;
     private TextInputEditText startupName;
     private TextInputEditText startupDescription;
     private TextInputEditText startupFounder;
@@ -66,7 +70,6 @@ public class AddStartUpFragment extends Fragment {
     private TextInputEditText telephone;
     private TextInputEditText email;
     private String imageUrl;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -108,6 +111,8 @@ public class AddStartUpFragment extends Fragment {
         FragmentAddStartUpBinding addStartUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_start_up, container, false);
         addStartUpToolbar = addStartUpBinding.addStartupToolbar;
         setUpToolbar();
+        saveStartupButton = addStartUpBinding.saveStartup;
+        progressBar = addStartUpBinding.startupProgressBar;
         startupName = addStartUpBinding.startupName;
         startupDescription = addStartUpBinding.description;
         startupFounder = addStartUpBinding.founder;
@@ -119,15 +124,19 @@ public class AddStartUpFragment extends Fragment {
         email = addStartUpBinding.email;
         galleryIcon = addStartUpBinding.galleryIcon;
         galleryIcon.setOnClickListener(view -> openGallery());
-        addStartUpBinding.saveStartup.setOnClickListener(view -> {
+        saveStartupButton.setOnClickListener(view -> {
             // New Entry
             if (mField == null) {
-                if (mBitmap != null)
+                if (mBitmap != null) {
+                    startProgressBar(progressBar);
+                    hideButton(saveStartupButton);
                     uploadNewImageToFirebaseStorage();
-                else
+                } else
                     Toast.makeText(requireActivity(), "Select an image", Toast.LENGTH_SHORT).show();
             } else {
                 // Update existing entry
+                startProgressBar(progressBar);
+                hideButton(saveStartupButton);
                 uploadImageToFirebaseStorage();
             }
         });
@@ -171,14 +180,18 @@ public class AddStartUpFragment extends Fragment {
                         imageUrl = task1.getResult().toString();
                         addStartUp();
                         Timber.d("Download URL: %s", imageUrl);
-                        Toast.makeText(getActivity(), imageUrl, Toast.LENGTH_SHORT).show();
                     } else {
                         Timber.d("Download URL error: %s", task1.getException().getLocalizedMessage());
+                        Toast.makeText(requireContext(), task1.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        stopProgressBar(progressBar);
+                        showButton(saveStartupButton);
                     }
                 });
             } else {
                 Timber.d("Image upload error: %s", task.getException().getLocalizedMessage());
                 Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                stopProgressBar(progressBar);
+                showButton(saveStartupButton);
             }
         });
     }
@@ -201,14 +214,15 @@ public class AddStartUpFragment extends Fragment {
                             imageUrl = task1.getResult().toString();
                             editStartupDetails();
                             Timber.d("Download URL: %s", imageUrl);
-                            Toast.makeText(getActivity(), imageUrl, Toast.LENGTH_SHORT).show();
                         } else {
                             Timber.d("Download URL error: %s", task1.getException().getLocalizedMessage());
+                            stopProgressBar(progressBar);
                         }
                     });
                 } else {
-                    Timber.d("Image upload error: %s", task.getException().getLocalizedMessage());
-                    Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    Timber.d(task.getException().getLocalizedMessage());
+                    Toast.makeText(getActivity(), "Image upload error: %s" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    stopProgressBar(progressBar);
                 }
             });
         } else {
@@ -230,9 +244,14 @@ public class AddStartUpFragment extends Fragment {
         firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful()) {
                 Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                showButton(saveStartupButton);
+                stopProgressBar(progressBar);
+                Toast.makeText(requireContext(), "Startup added", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(requireContext(), "Unable to add Startup", Toast.LENGTH_SHORT).show();
                 Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
+                showButton(saveStartupButton);
+                stopProgressBar(progressBar);
             }
         });
     }
@@ -263,10 +282,14 @@ public class AddStartUpFragment extends Fragment {
                     telephone.getText().toString(), email.getText().toString());
             firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
                 if (task.isSuccessful()) {
+                    stopProgressBar(progressBar);
                     Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                    showButton(saveStartupButton);
                 } else {
                     Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
                     Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
+                    stopProgressBar(progressBar);
+                    showButton(saveStartupButton);
                 }
             });
         } else {
@@ -278,12 +301,32 @@ public class AddStartUpFragment extends Fragment {
                     telephone.getText().toString(), email.getText().toString());
             firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
                 if (task.isSuccessful()) {
+                    stopProgressBar(progressBar);
                     Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                    showButton(saveStartupButton);
                 } else {
                     Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
                     Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
+                    stopProgressBar(progressBar);
+                    showButton(saveStartupButton);
                 }
             });
         }
+    }
+
+    private void startProgressBar(RotateLoading loading) {
+        loading.start();
+    }
+
+    private void stopProgressBar(RotateLoading loading) {
+        loading.stop();
+    }
+
+    private void showButton(MaterialButton button) {
+        button.setVisibility(View.VISIBLE);
+    }
+
+    private void hideButton(MaterialButton button) {
+        button.setVisibility(View.INVISIBLE);
     }
 }

@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentZoomImageBinding;
 
+import static com.project.ksih_android.utility.Constants.SCALE_IMAGE_KEY;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +30,7 @@ public class ZoomImageFragment extends Fragment {
         FragmentZoomImageBinding root = DataBindingUtil.inflate(inflater, R.layout.fragment_zoom_image, container, false);
         root.zoomImageToolbar.setNavigationOnClickListener(view -> Navigation.findNavController(view).navigateUp());
         if (getArguments() != null) {
-            Glide.with(requireContext()).load(getArguments().getString("scale_image")).into(root.startupImageLarge);
+            Glide.with(requireContext()).load(getArguments().getString(SCALE_IMAGE_KEY)).into(root.startupImageLarge);
         }
         return root.getRoot();
     }

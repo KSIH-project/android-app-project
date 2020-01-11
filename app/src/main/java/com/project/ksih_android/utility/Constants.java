@@ -14,4 +14,5 @@ public class Constants {
     public static String STARTUP_DETAILS_BUNDLE_KEY = "startup_details";
     public static String STARTUP_FIREBASE_STORAGE_REFERENCE = "images/startup_logo/";
     public static String STARTUP_FIREBASE_DATABASE_REFERENCE = "startups";
+    public static String SCALE_IMAGE_KEY = "scale_image";
 }

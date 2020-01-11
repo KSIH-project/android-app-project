@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.Group;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -39,6 +40,12 @@ public class StartupFragment extends Fragment {
         mStartupViewModel.getStartUps().observe(this, startUpFields -> {
             StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext());
             startupBinding.startUpRecyclerView.setAdapter(adapter);
+            // Toggle empty list sign
+            if (startUpFields.size() < 1) {
+                displayEmptyListImage(startupBinding.emptyListGroup);
+            } else {
+                hideEmptyListImage(startupBinding.emptyListGroup);
+            }
             startupBinding.rotateLoading.stop();
         });
     }
@@ -47,5 +54,13 @@ public class StartupFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mStartupViewModel.removeListeners();
+    }
+
+    private void displayEmptyListImage(Group emptyListGroup) {
+        emptyListGroup.setVisibility(View.VISIBLE);
+    }
+
+    private void hideEmptyListImage(Group emptyListGroup) {
+        emptyListGroup.setVisibility(View.INVISIBLE);
     }
 }
