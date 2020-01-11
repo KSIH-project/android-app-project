@@ -28,7 +28,6 @@ import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
  */
 public class EventDetailsFragment extends Fragment {
     private FragmentEventDetailsBinding binding;
-    private SharedPreferencesStorage mStorage;
 
 
     @Override
@@ -38,8 +37,7 @@ public class EventDetailsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_details, container, false);
-        mStorage = new SharedPreferencesStorage(requireContext());
-        Events events = mStorage.getEvents(EVENTS_ITEM_KEY);
+        Events events = getArguments().getParcelable("recycler_events");
         binding.textEventTittleDetails.setText(events.getEventName());
         binding.textEventEmailDetails.setText(events.getEmail());
         binding.textEventsDescripDetails.setText(events.getEventDescription());
@@ -53,7 +51,7 @@ public class EventDetailsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Events events = mStorage.getEvents(EVENTS_ITEM_KEY);
+        Events events = getArguments().getParcelable("recycler_events");
         Bundle bundle = new Bundle();
         bundle.putString("eventsImage", events.getImageUrl());
         binding.imageEventsDetails.setOnClickListener(view ->

@@ -1,6 +1,7 @@
 package com.project.ksih_android.ui.events;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
@@ -50,8 +51,10 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         holder.bind(events);
         holder.itemView.setOnClickListener(v -> {
             Events events1 = mEvents.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("recycler_events", events1);
             mStorage.setEvent(EVENTS_ITEM_KEY, events1);
-            Navigation.findNavController(v).navigate(R.id.action_navigation_event_to_eventDetailsFragment);
+            Navigation.findNavController(v).navigate(R.id.action_navigation_event_to_eventDetailsFragment, bundle);
         });
 
     }

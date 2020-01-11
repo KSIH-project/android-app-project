@@ -94,7 +94,7 @@ public class LoginFragment extends Fragment {
                         Timber.d("UserIsVerified");
                         stopProgressBar(mLoginBinding.progressBar);
                         showButton(mLoginBinding.buttonSignIn);
-                        Toast.makeText(getActivity(), "Sing in successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
                         navigateToHomeActivity();
                     }
                 } else {

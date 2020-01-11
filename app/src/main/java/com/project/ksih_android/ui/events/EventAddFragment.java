@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -19,6 +20,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,6 +39,8 @@ import com.google.firebase.storage.UploadTask;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventAddBinding;
+import com.project.ksih_android.ui.auth.RegistrationFields;
+import com.project.ksih_android.ui.auth.RegistrationViewModel;
 
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE;
@@ -53,36 +59,64 @@ import timber.log.Timber;
  */
 public class EventAddFragment extends Fragment {
 
-    private EventViewModel viewModel;
     private Events mEvents = new Events();
     private Bitmap mBitmap;
     private String imagePath = "";
     private String imageUrl;
-    private NavController navController;
     private FragmentEventAddBinding binding;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("events");
 
+
+    private static boolean hasText(TextInputLayout editText, String error_message) {
+
+        String text = editText.getEditText().getText().toString().trim();
+        editText.setError(null);
+
+        // length 0 means there is no text
+        if (text.length() == 0) {
+            editText.setError(error_message);
+            return false;
+        }
+
+        return true;
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_add, container, false);
-        viewModel = ViewModelProviders.of(this).get(EventViewModel.class);
         mBitmap = null;
         binding.imageViewAdd.setOnClickListener(view -> openGallery());
-        binding.buttonAddEvents.setOnClickListener(v -> {
-            saveImage();
-            hideSoftKeyboard(requireActivity());
-            navigateToEventsListFragment(binding.buttonAddEvents);
-        });
 
+        binding.buttonAddEvents.setOnClickListener(v -> {
+            if (validate()) {
+                saveImage();
+                hideSoftKeyboard(requireActivity());
+            } else
+                Toast.makeText(requireContext(), "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+        });
         return binding.getRoot();
     }
 
+    private void disableViews() {
+        binding.buttonAddEvents.setEnabled(false);
+        binding.textInputLayoutContactsEmail.setEnabled(false);
+        binding.textInputLayoutDesc.setEnabled(false);
+        binding.textInputLayoutPhone.setEnabled(false);
+        binding.textInputLayoutRsvp.setEnabled(false);
+        binding.textInputLayoutTittle.setEnabled(false);
+        binding.textInputLayoutType.setEnabled(false);
+
+    }
+
     private void saveImage() {
-        if (mBitmap != null)
+        if (mBitmap != null) {
+            binding.progressBarEventsAddFragment.start();
+            disableViews();
             uploadImageToFireBaseStorage();
+        }
+
         else
             Toast.makeText(requireActivity(), "Select An Image", Toast.LENGTH_SHORT).show();
     }
@@ -99,13 +133,16 @@ public class EventAddFragment extends Fragment {
                 task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task2 -> {
                     if (task2.isSuccessful()) {
                         imageUrl = task2.getResult().toString();
-                        Toast.makeText(requireContext(), "Success saved", Toast.LENGTH_SHORT).show();
-                        mEvents.setImageUrl(imageUrl);
                         addEvents();
+                        mEvents.setImageUrl(imageUrl);
+                        binding.progressBarEventsAddFragment.stop();
+                        navigateToEventsListFragment(binding.buttonAddEvents);
+                        Toast.makeText(getActivity(), "Event added Successfully", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
-                Toast.makeText(getActivity(), task1.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Failed to add Events", Toast.LENGTH_SHORT).show();
+                enableViews();
             }
         });
     }
@@ -148,6 +185,29 @@ public class EventAddFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE_EVENTS_IMAGE);
     }
 
+    private void enableViews() {
+        binding.buttonAddEvents.setEnabled(true);
+        binding.textInputLayoutContactsEmail.setEnabled(true);
+        binding.textInputLayoutDesc.setEnabled(true);
+        binding.textInputLayoutPhone.setEnabled(true);
+        binding.textInputLayoutRsvp.setEnabled(true);
+        binding.textInputLayoutTittle.setEnabled(true);
+        binding.textInputLayoutType.setEnabled(true);
+
+    }
+
+    private boolean validate() {
+        String error = getString(R.string.event_error_message);
+
+
+        if (!hasText(binding.textInputLayoutTittle, error)) return false;
+        if (!hasText(binding.textInputLayoutType, error)) return false;
+        if (!hasText(binding.textInputLayoutDesc, error)) return false;
+        if (!hasText(binding.textInputLayoutContactsEmail, error)) return false;
+        if (!hasText(binding.textInputLayoutPhone, error)) return false;
+        return hasText(binding.textInputLayoutRsvp, error);
+    }
+
     private void addEvents() {
         mEvents.setImageUrl(imageUrl);
         mEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString());
@@ -156,7 +216,6 @@ public class EventAddFragment extends Fragment {
         mEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString());
         mEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString());
         mEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
-        Toast.makeText(getActivity(), "Event added Successfully", Toast.LENGTH_SHORT).show();
         databaseReference.push().setValue(mEvents);
     }
 
