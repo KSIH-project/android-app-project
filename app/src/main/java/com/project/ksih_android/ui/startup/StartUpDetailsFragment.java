@@ -105,7 +105,6 @@ public class StartUpDetailsFragment extends Fragment {
             if (item.getItemId() == R.id.edit_startup) {
                 editStartupDetails();
             } else if (item.getItemId() == R.id.delete_startup) {
-                startProgressBar(progressBar);
                 showDialog();
             }
             return true;
@@ -157,6 +156,7 @@ public class StartUpDetailsFragment extends Fragment {
         MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(requireContext());
         dialog.setMessage("Are you sure you want to delete this Startup?")
                 .setPositiveButton("YES", (dialogInterface, i) -> {
+                    startProgressBar(progressBar);
                     deleteStartup(mField.getId());
                     dialogInterface.dismiss();
                 })
