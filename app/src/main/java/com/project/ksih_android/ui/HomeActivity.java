@@ -90,6 +90,7 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.addStartUpFragment:
                 case R.id.startUpDetailsFragment:
+                case R.id.zoomImageFragment:
                     hideCustomToolBar();
                     break;
                 default:

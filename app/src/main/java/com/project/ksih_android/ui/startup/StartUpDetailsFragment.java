@@ -42,7 +42,7 @@ public class StartUpDetailsFragment extends Fragment {
 
         mField = (StartUpField) getArguments().getSerializable(STARTUP_DETAILS_BUNDLE_KEY);
         MaterialToolbar startUpDetailsToolbar = root.findViewById(R.id.startup_details_toolbar);
-        ImageView startupIcon = root.findViewById(R.id.startup_detail_logo);
+        ImageView startupLogo = root.findViewById(R.id.startup_detail_logo);
         TextView startupDescriptionET = root.findViewById(R.id.startupDescriptionET);
         TextView startupFounderET = root.findViewById(R.id.startupFounderET);
         TextView startupCoFounderET = root.findViewById(R.id.startupCoFounderET);
@@ -52,7 +52,7 @@ public class StartUpDetailsFragment extends Fragment {
         TextView facebookET = root.findViewById(R.id.facebookET);
         TextView twitterET = root.findViewById(R.id.twitterET);
 
-        Glide.with(requireContext()).load(mField.getImageUrl()).into(startupIcon);
+        Glide.with(requireContext()).load(mField.getImageUrl()).into(startupLogo);
         startupDescriptionET.setText(mField.getStartupDescription());
         startupFounderET.setText(mField.getStartupFounder());
         startupCoFounderET.setText(mField.getStartupCoFounder());
@@ -61,6 +61,13 @@ public class StartUpDetailsFragment extends Fragment {
         startupWebsiteET.setText(mField.getStartupWebsite());
         facebookET.setText(mField.getFacebookUrl());
         twitterET.setText(mField.getTwitterUrl());
+
+        // On Click of imageView, display a larger image that supports zooming
+        startupLogo.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("scale_image", mField.getImageUrl());
+            Navigation.findNavController(view).navigate(R.id.action_startUpDetailsFragment_to_zoomImageFragment, bundle);
+        });
 
         setupToolbar(startUpDetailsToolbar);
         return root;
