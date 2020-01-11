@@ -285,6 +285,7 @@ public class AddStartUpFragment extends Fragment {
                     stopProgressBar(progressBar);
                     Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
                     showButton(saveStartupButton);
+                    Toast.makeText(requireContext(), "Startup edited", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
                     Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
@@ -304,6 +305,7 @@ public class AddStartUpFragment extends Fragment {
                     stopProgressBar(progressBar);
                     Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
                     showButton(saveStartupButton);
+                    Toast.makeText(requireContext(), "Startup edited", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
                     Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());

@@ -4,6 +4,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.project.ksih_android.data.StartUpField;
 
@@ -18,14 +19,16 @@ import timber.log.Timber;
 
 import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_DATABASE_REFERENCE;
 
-public class StartupViewModel extends ViewModel implements ValueEventListener{
+public class StartupViewModel extends ViewModel implements ValueEventListener {
 
-    private DatabaseReference ref;
+    private Query ref;
     private MutableLiveData<List<StartUpField>> startupList = new MutableLiveData<>();
     private List<StartUpField> mList = new ArrayList<>();
 
     public StartupViewModel() {
-        ref = FirebaseDatabase.getInstance().getReference(STARTUP_FIREBASE_DATABASE_REFERENCE);
+        ref = FirebaseDatabase.getInstance()
+                .getReference(STARTUP_FIREBASE_DATABASE_REFERENCE)
+                .orderByChild("startupName"); /* Sort start ups by name */
         ref.addValueEventListener(this);
     }
 

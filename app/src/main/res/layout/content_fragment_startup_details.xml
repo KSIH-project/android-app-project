@@ -27,16 +27,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto_medium"
             tools:text="Startup Description: Curabitur blandit mollis lacus. Maecenas malesuada. Quisque rutrum. In ut quam vitae odio lacinia tincidunt. Fusce fermentum." />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/browser_actions_divider_color"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto"
             android:text="Founder" />
@@ -46,16 +51,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto_medium"
             tools:text="Startup Founder: Nullam accumsan" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/browser_actions_divider_color"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/roboto"
             android:text="Co-founder(s)" />
@@ -65,10 +75,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto_medium"
             tools:text="Startup Co-Founders: Etiam ultricies nisi\nEtiam iaculis nunc\nAliquam lobortis." />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/browser_actions_divider_color" />
 
         <TextView
             android:layout_width="match_parent"
@@ -84,13 +100,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:autoLink="phone"
             android:fontFamily="@font/roboto_medium"
             android:textColorLink="@android:color/holo_blue_dark"
             tools:text="Telephone: +2349065211300" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/browser_actions_divider_color"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,12 +126,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:autoLink="email"
             android:fontFamily="@font/roboto_medium"
             android:textColorLink="@android:color/holo_blue_dark"
             tools:text="Email: awseqe.12@comail.xn" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/browser_actions_divider_color"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -126,12 +153,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:autoLink="web"
             android:fontFamily="@font/roboto_medium"
             android:textColorLink="@android:color/holo_blue_dark"
             tools:text="Website: https://www.euibbiweq.com" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/browser_actions_divider_color"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -147,12 +180,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:autoLink="web"
             android:fontFamily="@font/roboto_medium"
             android:textColorLink="@android:color/holo_blue_dark"
             tools:text="Facebook: https://facebook.com/thisstartup" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/browser_actions_divider_color"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -168,8 +207,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:autoLink="web"
             android:fontFamily="@font/roboto_medium"
             android:textColorLink="@android:color/holo_blue_dark"
