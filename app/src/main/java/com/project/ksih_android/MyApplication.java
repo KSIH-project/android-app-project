@@ -51,14 +51,6 @@ public class MyApplication extends Application {
         //firebase persistence
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
-        // all images >> load offline
-        Picasso.Builder builder = new Picasso.Builder(this);
-        builder.downloader(new OkHttp3Downloader(this, Integer.MAX_VALUE));
-        Picasso builtPicasso = builder.build();
-        builtPicasso.setIndicatorsEnabled(true);
-        builtPicasso.setLoggingEnabled(true);
-        Picasso.setSingletonInstance(builtPicasso);
-
         //Online Status
         mAuth = FirebaseAuth.getInstance();
         currentOnlineUser = mAuth.getCurrentUser();

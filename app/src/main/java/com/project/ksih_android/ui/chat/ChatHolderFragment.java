@@ -14,10 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.viewpager.widget.ViewPager;
 
 import android.provider.Settings;
 import android.view.LayoutInflater;
@@ -26,18 +22,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.project.ksih_android.R;
-import com.project.ksih_android.ui.chat.adapters.TabsPagerAdapter;
-import com.project.ksih_android.ui.chat.friends.FriendsFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,10 +37,7 @@ import com.project.ksih_android.ui.chat.friends.FriendsFragment;
 public class ChatHolderFragment extends Fragment {
 
     //Initialize variables
-    public ViewPager mViewPager;
-    private TabsPagerAdapter mTabsPagerAdapter;
     public ConnectivityReceiver connectivityReceiver;
-    private TabLayout mTabLayout;
 
     //firebase utils
     private FirebaseAuth mAuth;
@@ -81,14 +70,6 @@ public class ChatHolderFragment extends Fragment {
                     .child("users").child(user_uID);
         }
 
-        /*
-         * Tabs >> Viewpager for Chat Activity
-         */
-        mViewPager = root.findViewById(R.id.tabs_pager);
-        mTabsPagerAdapter = new TabsPagerAdapter(getChildFragmentManager(), 2);
-        mViewPager.setAdapter(mTabsPagerAdapter);
-        mTabLayout = root.findViewById(R.id.main_tabs);
-        mTabLayout.setupWithViewPager(mViewPager);
         return root;
     }
 
@@ -139,14 +120,7 @@ public class ChatHolderFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_search:
-                Navigation.findNavController(mTabLayout).navigate(R.id.menu_search);
-                break;
             case R.id.profile_settings:
-                Navigation.findNavController(mTabLayout).navigate(R.id.profile_settings);
-                break;
-            case R.id.all_friends:
-                Navigation.findNavController(mTabLayout).navigate(R.id.all_friends);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -164,7 +138,7 @@ public class ChatHolderFragment extends Fragment {
 
             } else {
                 Snackbar snackbar = Snackbar
-                        .make(mViewPager, "No internet Connection! ", Snackbar.LENGTH_LONG)
+                        .make(getParentFragment().getView(), "No internet Connection! ", Snackbar.LENGTH_LONG)
                         .setAction("Check settings", view -> {
                             Intent settings = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
                             context.startActivity(settings);
