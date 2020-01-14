@@ -170,7 +170,7 @@ public class ChatHolderFragment extends Fragment {
                 // customizing snackbar
                 snackbar.setActionTextColor(Color.BLACK);
                 View view = snackbar.getView();
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.button_color_disabled));
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.secondaryColor));
                 snackbar.setText("Check network");
                 snackbar.setTextColor(Color.WHITE);
                 snackbar.show();

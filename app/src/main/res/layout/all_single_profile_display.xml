@@ -24,7 +24,7 @@
             android:layout_height="60dp"
             android:id="@+id/all_user_profile_img"
             android:src="@drawable/default_profile_image"
-            app:riv_border_color="@color/colorPrimary"
+            app:riv_border_color="@color/primaryColor"
             app:riv_border_width="0.10dp"/>
         <ImageView
             android:layout_width="14dp"

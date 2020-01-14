@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,27 +77,30 @@ public class EventAddFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_add, container, false);
         mBitmap = null;
         binding.imageViewAdd.setOnClickListener(view -> openGallery());
+
+
+        binding.buttonAddEvents.setOnClickListener(v -> {
+
+
+            if (validate() && mEvents == null) {
+                disableViews();
+                binding.progressBarEventsAddFragment.start();
+                binding.buttonAddEvents.setEnabled(false);
+                uploadImageToFireBaseStorage();
+            } else if (validate() && getArguments() != null) {
+                binding.progressBarEventsAddFragment.start();
+                binding.buttonAddEvents.setEnabled(false);
+//                saveEvents();
+                uploadNewImageToFireBaseStorage();
+            } else {
+                Toast.makeText(requireContext(), "Please Fill in the Required Fields", Toast.LENGTH_SHORT).show();
+            }
+        });
         if (getArguments() != null) {
             binding.buttonAddEvents.setText("Save Events");
             mEvents = getArguments().getParcelable(EVENT_TO_EDIT);
             getEventsDetails();
         }
-
-        binding.buttonAddEvents.setOnClickListener(v -> {
-
-            if (validate() && mEvents == null) {
-                mEvents = new Events();
-                binding.buttonAddEvents.setEnabled(false);
-                saveEvents();
-            } else if (validate()) {
-                binding.progressBarEventsAddFragment.start();
-                binding.buttonAddEvents.setEnabled(false);
-                saveEvents();
-//                uploadNewImageToFireBaseStorage();
-            } else {
-                Toast.makeText(requireContext(), "Please Fill in the Required Fields", Toast.LENGTH_SHORT).show();
-            }
-        });
 
 
         return binding.getRoot();
@@ -219,19 +223,25 @@ public class EventAddFragment extends Fragment {
             nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
             nEvents.setDate(binding.textInputLayoutDate.getEditText().getText().toString());
             nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString());
-            databaseReference.child(id).setValue(nEvents).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    binding.progressBarEventsAddFragment.stop();
-                    binding.buttonAddEvents.setEnabled(true);
-                    navigateToEventsListFragment(binding.buttonAddEvents);
-                    Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
-                    Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
-                    binding.progressBarEventsAddFragment.stop();
-                    binding.buttonAddEvents.setEnabled(true);
-                }
-            });
+            if (id == null) {
+                addEvents();
+                Toast.makeText(requireContext(), "error detected", Toast.LENGTH_SHORT).show();
+            } else {
+                databaseReference.child(id).setValue(nEvents).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        binding.progressBarEventsAddFragment.stop();
+                        binding.buttonAddEvents.setEnabled(true);
+                        navigateToEventsListFragment(binding.buttonAddEvents);
+                        Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                        Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
+                        binding.progressBarEventsAddFragment.stop();
+                        binding.buttonAddEvents.setEnabled(true);
+                    }
+                });
+            }
+
         } else {
             deleteImage(mEvents.getImageUrl());
             Events nEvents = new Events();
@@ -249,7 +259,7 @@ public class EventAddFragment extends Fragment {
                 if (task.isSuccessful()) {
                     binding.progressBarEventsAddFragment.stop();
                     binding.buttonAddEvents.setEnabled(true);
-                    navigateToEventsListFragment(binding.buttonAddEvents);
+                    navigateToEventsListFragment(requireView());
                     Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
@@ -346,13 +356,21 @@ public class EventAddFragment extends Fragment {
     }
 
     private void deleteImage(String fullUrl) {
-        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
-        ref.delete().addOnCompleteListener(requireActivity(), task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(requireContext(), "Old Photo Deleted", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (fullUrl.contains("")) {
+            Throwable e = new Throwable();
+            Log.d("full url is null", "deleteImage: ", e.getCause());
+        } else {
+
+
+            StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
+            ref.delete().addOnCompleteListener(requireActivity(), task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Old Photo Deleted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 }

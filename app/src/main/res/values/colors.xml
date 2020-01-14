@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1933C5</color>
-    <color name="colorPrimaryDark">#071A8F</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="button_color">#8E2623</color>
-    <color name="button_color_disabled">#966A69</color>
-    <color name="dark_text_color">#111111</color>
-    <color name="color_text_input_background">#C4C4C4</color>
-    <color name="color_text_default">#000000</color>
+    <color name="primaryColor">#1b6884</color>
+    <color name="primaryLightColor">#5396b4</color>
+    <color name="primaryDarkColor">#003d57</color>
+    <color name="secondaryColor">#8e2623</color>
+    <color name="secondaryLightColor">#c3554b</color>
+    <color name="secondaryDarkColor">#5b0000</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
     <color name="color_text_pressed">#888888</color>
     <color name="colorDivider">#AAAAAA</color>
+    <color name="color_text_default">#000000</color>
+
 
     <!-- My Common Colors -->
     <color name="black">#000000</color>
