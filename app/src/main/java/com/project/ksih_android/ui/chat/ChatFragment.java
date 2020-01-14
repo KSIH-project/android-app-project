@@ -34,7 +34,7 @@ import com.project.ksih_android.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatHolderFragment extends Fragment {
+public class ChatFragment extends Fragment {
 
     //Initialize variables
     public ConnectivityReceiver connectivityReceiver;
@@ -45,7 +45,7 @@ public class ChatHolderFragment extends Fragment {
     public FirebaseUser currentUser;
 
 
-    public ChatHolderFragment() {
+    public ChatFragment() {
         // Required empty public constructor
     }
 
@@ -59,7 +59,7 @@ public class ChatHolderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_chat_holder, container, false);
+        View root = inflater.inflate(R.layout.fragment_chat, container, false);
 
         //check and get current user data
         mAuth = FirebaseAuth.getInstance();
