@@ -1,6 +1,9 @@
 package com.project.ksih_android.ui.events;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
@@ -23,6 +26,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.dialog.MaterialDialogs;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -73,9 +78,19 @@ public class EventDetailsFragment extends Fragment {
             if (item.getItemId() == R.id.events_edit_menu)
                 editEvent();
             else if (item.getItemId() == R.id.events_delete_menu)
-                deleteEvent(mEvents.getId());
+                alertMessage();
             return true;
         });
+    }
+
+    private void alertMessage() {
+        new MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+                .setTitle("Delete Event")
+                .setMessage(getString(R.string.event_delete_alert_message))
+                .setIcon(R.drawable.ksih_background)
+                .setPositiveButton("Yes", (dialogInterface, i) -> deleteEvent(mEvents.getId()))
+                .setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.dismiss())
+                .show();
     }
 
     private void deleteEvent(String id) {
