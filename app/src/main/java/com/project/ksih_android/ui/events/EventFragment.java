@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,13 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.project.ksih_android.R;
-import com.project.ksih_android.data.Events;
+
 import com.project.ksih_android.databinding.FragmentEventBinding;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 
 /**
  * Created by ChukwuwaUchenna
@@ -30,8 +29,6 @@ public class EventFragment extends Fragment {
 
     private EventViewModel eventViewModel;
     private FragmentEventBinding mFragmentEventBinding;
-    private SharedPreferencesStorage mStorage;
-
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,

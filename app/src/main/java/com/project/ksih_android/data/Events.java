@@ -13,6 +13,8 @@ public class Events implements Parcelable {
     private String eventType;
     private String eventRSVP;
     private String imageUrl = "";
+    private String date;
+    private String time;
 
     public Events() {
 
@@ -31,7 +33,8 @@ public class Events implements Parcelable {
         }
     };
 
-    public Events(String id, String imageUrl, String eventName, String email, String phoneNumber, String eventDescription, String eventType, String eventRSVP) {
+    public Events(String id, String imageUrl, String eventName, String email, String phoneNumber, String date,
+                  String time, String eventDescription, String eventType, String eventRSVP) {
         this.imageUrl = imageUrl;
         this.eventName = eventName;
         this.email = email;
@@ -40,6 +43,7 @@ public class Events implements Parcelable {
         this.eventType = eventType;
         this.eventRSVP = eventRSVP;
         this.id = id;
+        this.time = time;
     }
 
     private Events(Parcel in) {
@@ -51,6 +55,8 @@ public class Events implements Parcelable {
         eventDescription = in.readString();
         eventType = in.readString();
         eventRSVP = in.readString();
+        date = in.readString();
+        time = in.readString();
     }
 
     public String getEmail() {
@@ -119,6 +125,23 @@ public class Events implements Parcelable {
         this.eventRSVP = eventRSVP;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+
 
     @Override
     public int describeContents() {
@@ -135,5 +158,7 @@ public class Events implements Parcelable {
         dest.writeString(eventDescription);
         dest.writeString(eventType);
         dest.writeString(eventRSVP);
+        dest.writeString(date);
+        dest.writeString(time);
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
     android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -78,41 +78,69 @@
                 <TextView
                     android:id="@+id/text_events_descrip_details"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="This is an event that allows us to go and go and go and go"
-                    app:layout_constraintBottom_toTopOf="@+id/text_events_link_details"
                     app:layout_constraintEnd_toEndOf="@+id/text_event_tittle_details"
                     app:layout_constraintStart_toStartOf="@+id/text_event_tittle_details"
-                    app:layout_constraintTop_toBottomOf="@+id/text_events_type_details" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_type_details"
+                    tools:text="This is an event that allows us to go and go and go and go" />
+
+                <TextView
+                    android:id="@+id/text_event_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_descrip_details"
+                    tools:text="Dev c Training with Andela" />
+
+                <TextView
+                    android:id="@+id/text_event_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_medium"
+
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="@+id/text_phone_number"
+                    app:layout_constraintStart_toStartOf="@+id/text_phone_number"
+                    app:layout_constraintTop_toBottomOf="@+id/text_event_date"
+                    tools:text="Dev c Training with Andela" />
 
                 <TextView
                     android:id="@+id/text_events_link_details"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
                     android:autoLink="all"
+                    android:textColorLink="@color/button_color"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="www.google.com"
+                    app:layout_constraintHorizontal_bias="1.0"
                     android:textAlignment="center"
-                    app:layout_constraintBottom_toTopOf="@+id/text_event_email_details"
                     app:layout_constraintEnd_toEndOf="@+id/text_event_tittle_details"
-                    app:layout_constraintStart_toStartOf="@+id/text_event_tittle_details" />
+                    app:layout_constraintStart_toStartOf="@+id/text_event_tittle_details"
+                    app:layout_constraintTop_toBottomOf="@+id/text_event_time"
+                    tools:text="www.google.com" />
 
                 <TextView
                     android:id="@+id/text_event_email_details"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="52dp"
+                    android:layout_marginTop="16dp"
                     android:autoLink="email"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="myemailadress@gmail.com"
+                    android:textColorLink="@color/button_color"
+                    app:layout_constraintStart_toStartOf="@+id/text_events_link_details"
                     android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_events_link_details"
-                    app:layout_constraintStart_toStartOf="@+id/text_events_link_details" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_link_details"
+                    tools:text="myemailadress@gmail.com" />
 
                 <TextView
                     android:id="@+id/text_phone_number"
@@ -122,9 +150,11 @@
                     android:autoLink="phone"
                     android:fontFamily="@font/roboto_medium"
                     android:maxLength="11"
-                    android:text="09034565969"
+                    android:textColorLink="@color/button_color"
+                    app:layout_constraintHorizontal_bias="1.0"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="@+id/text_event_email_details"
+                    tools:text="09034565969"
                     app:layout_constraintStart_toStartOf="@+id/text_event_email_details"
                     app:layout_constraintTop_toBottomOf="@+id/text_event_email_details">
 

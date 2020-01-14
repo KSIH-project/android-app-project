@@ -15,7 +15,6 @@ import com.project.ksih_android.databinding.EventsItemsListBinding;
 
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
 
-import com.project.ksih_android.storage.SharedPreferencesStorage;
 
 
 import java.util.List;
@@ -70,6 +69,8 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
 
         void bind(Events nEvent) {
             Glide.with(mContext).load(nEvent.getImageUrl()).into(binding.imageEventsList);
+            binding.textEventsDate.setText(nEvent.getDate());
+            binding.textEventsTime.setText(nEvent.getTime());
             binding.textEventsTittle.setText(nEvent.getEventName());
             binding.textEventsDescription.setText(nEvent.getEventDescription());
             binding.textEventsType.setText(nEvent.getEventType());

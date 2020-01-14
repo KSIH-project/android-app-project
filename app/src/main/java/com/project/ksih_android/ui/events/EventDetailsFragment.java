@@ -1,9 +1,6 @@
 package com.project.ksih_android.ui.events;
 
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
@@ -11,13 +8,13 @@ import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -27,7 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.dialog.MaterialDialogs;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,9 +32,9 @@ import com.google.firebase.storage.StorageReference;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventDetailsBinding;
-import com.project.ksih_android.storage.SharedPreferencesStorage;
 
-import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
+
+import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
 
 /**
  * Created by ChukwuwaUchenna
@@ -94,19 +91,16 @@ public class EventDetailsFragment extends Fragment {
     }
 
     private void deleteEvent(String id) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("events");
-        reference.child(id).removeValue().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Item removed!", Toast.LENGTH_SHORT).show();
-                    deleteImage(mEvents.getImageUrl());
-                    Navigation.findNavController(requireView()).navigate(R.id.action_eventDetailsFragment_to_navigation_event);
-                } else {
-                    Toast.makeText(requireContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                }
-
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(EVENTS_FIREBASE_PATH);
+        reference.child(id).removeValue().addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(requireContext(), "Item removed!", Toast.LENGTH_SHORT).show();
+                deleteImage(mEvents.getImageUrl());
+                Navigation.findNavController(requireView()).navigate(R.id.action_eventDetailsFragment_to_navigation_event);
+            } else {
+                Toast.makeText(requireContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 

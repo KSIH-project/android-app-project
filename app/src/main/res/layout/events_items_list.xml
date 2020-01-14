@@ -34,6 +34,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textAlignment="center"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_medium"
+                    android:maxLines="2"
                     app:layout_constraintEnd_toEndOf="@+id/text_events_tittle"
                     app:layout_constraintStart_toStartOf="@+id/text_events_tittle"
                     app:layout_constraintTop_toBottomOf="@+id/text_events_tittle"
@@ -44,24 +47,49 @@
                     style="@style/buttonTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/roboto_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_events_description"
-                    app:layout_constraintTop_toBottomOf="@+id/text_events_description"
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_time"
                     tools:text="Android" />
+
+                <TextView
+                    android:id="@+id/text_events_date"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_medium"
+                    app:layout_constraintEnd_toEndOf="@+id/text_events_description"
+                    app:layout_constraintStart_toStartOf="@+id/text_events_description"
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_description"
+                    tools:text="21 auuat 2010" />
+
+                <TextView
+                    android:id="@+id/text_events_time"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_medium"
+                    app:layout_constraintEnd_toEndOf="@+id/text_events_date"
+                    app:layout_constraintStart_toStartOf="@+id/text_events_date"
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_date"
+                    tools:text="12:am" />
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/image_events_list"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_medium"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher_round"
+                    android:src="@drawable/ksih_background"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:riv_corner_radius="30dp" />
+                    app:riv_corner_radius="300dp" />
 
                 <TextView
                     android:id="@+id/text_events_tittle"
@@ -69,8 +97,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/roboto_medium"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/image_events_list"

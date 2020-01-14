@@ -8,28 +8,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -39,11 +29,10 @@ import com.google.firebase.storage.UploadTask;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventAddBinding;
-import com.project.ksih_android.ui.auth.RegistrationFields;
-import com.project.ksih_android.ui.auth.RegistrationViewModel;
 
 import static android.app.Activity.RESULT_OK;
-import static com.project.ksih_android.utility.Constants.REQUEST_CODE;
+import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
+import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE_EVENTS_IMAGE;
 import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 
@@ -64,7 +53,7 @@ public class EventAddFragment extends Fragment {
     private String imagePath = "";
     private String imageUrl;
     private FragmentEventAddBinding binding;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("events");
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(EVENTS_FIREBASE_PATH);
 
 
     private static boolean hasText(TextInputLayout editText, String error_message) {
@@ -89,7 +78,7 @@ public class EventAddFragment extends Fragment {
         binding.imageViewAdd.setOnClickListener(view -> openGallery());
         if (getArguments() != null) {
             binding.buttonAddEvents.setText("Save Events");
-            mEvents = getArguments().getParcelable("eventToEdit");
+            mEvents = getArguments().getParcelable(EVENT_TO_EDIT);
             getEventsDetails();
         }
 
@@ -99,10 +88,13 @@ public class EventAddFragment extends Fragment {
                 mEvents = new Events();
                 binding.buttonAddEvents.setEnabled(false);
                 saveEvents();
-            } else {
+            } else if (validate()) {
                 binding.progressBarEventsAddFragment.start();
                 binding.buttonAddEvents.setEnabled(false);
-                uploadNewImageToFireBaseStorage();
+                saveEvents();
+//                uploadNewImageToFireBaseStorage();
+            } else {
+                Toast.makeText(requireContext(), "Please Fill in the Required Fields", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -118,6 +110,8 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutContactsEmail.getEditText().setText(mEvents.getEmail());
         binding.textInputLayoutPhone.getEditText().setText(mEvents.getPhoneNumber());
         binding.textInputLayoutRsvp.getEditText().setText(mEvents.getEventRSVP());
+        binding.textInputLayoutTime.getEditText().setText(mEvents.getTime());
+        binding.textInputLayoutDate.getEditText().setText(mEvents.getDate());
         Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageViewAdd);
     }
 
@@ -134,68 +128,83 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutRsvp.setEnabled(false);
         binding.textInputLayoutTittle.setEnabled(false);
         binding.textInputLayoutType.setEnabled(false);
+        binding.textInputLayoutDate.setEnabled(false);
+        binding.textInputLayoutTime.setEnabled(false);
     }
 
     private void saveImage() {
-        if (mBitmap != null || mEvents.getImageUrl() != null) {
+        if (mBitmap != null && mEvents.getImageUrl() != null) {
             binding.progressBarEventsAddFragment.start();
             disableViews();
             uploadImageToFireBaseStorage();
-        } else
-            Toast.makeText(requireActivity(), "Select An Image", Toast.LENGTH_SHORT).show();
+        } else if (mBitmap == null && mEvents.getImageUrl() != null) {
+            uploadNewImageToFireBaseStorage();
+        }
     }
 
     private void uploadImageToFireBaseStorage() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
-        byte[] data = outputStream.toByteArray();
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
-        UploadTask task = storageReference.putBytes(data);
-        task.addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task2 -> {
-                    if (task2.isSuccessful()) {
-                        imageUrl = task2.getResult().toString();
-                        addEvents();
-                    }
-                });
-            } else {
-                Toast.makeText(getActivity(), "Failed to add Events", Toast.LENGTH_SHORT).show();
-                enableViews();
-            }
-        });
+        if (mBitmap != null) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
+            byte[] data = outputStream.toByteArray();
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
+            UploadTask task = storageReference.putBytes(data);
+            task.addOnCompleteListener(task1 -> {
+                if (task1.isSuccessful()) {
+                    task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task2 -> {
+                        if (task2.isSuccessful()) {
+                            imageUrl = task2.getResult().toString();
+                            addEvents();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(), "Failed to add Events", Toast.LENGTH_SHORT).show();
+                    enableViews();
+                }
+            });
+
+        } else {
+            Toast.makeText(requireContext(), "Please Select An Image to upload", Toast.LENGTH_SHORT).show();
+            enableViews();
+            binding.progressBarEventsAddFragment.stop();
+        }
 
 
     }
 
     private void uploadNewImageToFireBaseStorage() {
-        deleteImage(mEvents.getImageUrl());
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
-        byte[] data = outputStream.toByteArray();
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
-        UploadTask task = storageReference.putBytes(data);
-        task.addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task2 -> {
-                    if (task2.isSuccessful()) {
-                        imageUrl = task2.getResult().toString();
-                        editEvents();
-                    }
-                });
-            } else {
-                Toast.makeText(getActivity(), "Failed to add Events", Toast.LENGTH_SHORT).show();
-                enableViews();
-            }
-        });
+        if (mBitmap == null) {
+            editEvents();
+        } else {
 
 
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
+            byte[] data = outputStream.toByteArray();
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
+            UploadTask task = storageReference.putBytes(data);
+            task.addOnCompleteListener(task1 -> {
+                if (task1.isSuccessful()) {
+                    task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task2 -> {
+                        if (task2.isSuccessful()) {
+                            imageUrl = task2.getResult().toString();
+                            editEvents();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(), "Failed to add Events", Toast.LENGTH_SHORT).show();
+                    enableViews();
+                }
+            });
+        }
     }
 
+
+
     private void editEvents() {
-        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("events");
         String id = mEvents.getId();
         Timber.d("mField: %s", mEvents.getId());
         if (imageUrl == null) {
@@ -208,23 +217,23 @@ public class EventAddFragment extends Fragment {
             nEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString());
             nEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString());
             nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
-            firebaseDatabase.child(id).setValue(nEvents).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        binding.progressBarEventsAddFragment.stop();
-                        binding.buttonAddEvents.setEnabled(true);
-                        navigateToEventsListFragment(binding.buttonAddEvents);
-                        Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
-                        Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
-                        binding.progressBarEventsAddFragment.stop();
-                        binding.buttonAddEvents.setEnabled(true);
-                    }
+            nEvents.setDate(binding.textInputLayoutDate.getEditText().getText().toString());
+            nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString());
+            databaseReference.child(id).setValue(nEvents).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    binding.progressBarEventsAddFragment.stop();
+                    binding.buttonAddEvents.setEnabled(true);
+                    navigateToEventsListFragment(binding.buttonAddEvents);
+                    Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                    Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
+                    binding.progressBarEventsAddFragment.stop();
+                    binding.buttonAddEvents.setEnabled(true);
                 }
             });
         } else {
+            deleteImage(mEvents.getImageUrl());
             Events nEvents = new Events();
             nEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString());
             nEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString());
@@ -234,20 +243,19 @@ public class EventAddFragment extends Fragment {
             nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
             nEvents.setId(id);
             nEvents.setImageUrl(imageUrl);
-            databaseReference.child(id).setValue(nEvents).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        binding.progressBarEventsAddFragment.stop();
-                        binding.buttonAddEvents.setEnabled(true);
-                        navigateToEventsListFragment(binding.buttonAddEvents);
-                        Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
-                        Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
-                        binding.progressBarEventsAddFragment.stop();
-                        binding.buttonAddEvents.setEnabled(true);
-                    }
+            nEvents.setDate(binding.textInputLayoutDate.getEditText().getText().toString());
+            nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString());
+            databaseReference.child(id).setValue(nEvents).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    binding.progressBarEventsAddFragment.stop();
+                    binding.buttonAddEvents.setEnabled(true);
+                    navigateToEventsListFragment(binding.buttonAddEvents);
+                    Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                    Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
+                    binding.progressBarEventsAddFragment.stop();
+                    binding.buttonAddEvents.setEnabled(true);
                 }
             });
         }
@@ -299,6 +307,8 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutRsvp.setEnabled(true);
         binding.textInputLayoutTittle.setEnabled(true);
         binding.textInputLayoutType.setEnabled(true);
+        binding.textInputLayoutDate.setEnabled(true);
+        binding.textInputLayoutTime.setEnabled(true);
 
     }
 
@@ -309,26 +319,28 @@ public class EventAddFragment extends Fragment {
         if (!hasText(binding.textInputLayoutDesc, error)) return false;
         if (!hasText(binding.textInputLayoutContactsEmail, error)) return false;
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
+        if (!hasText(binding.textInputLayoutDate, error)) return false;
+        if (!hasText(binding.textInputLayoutTime, error)) return false;
         return hasText(binding.textInputLayoutRsvp, error);
     }
+
     private void addEvents() {
         String id = databaseReference.push().getKey();
         mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString(),
                 binding.textInputLayoutContactsEmail.getEditText().getText().toString(),
                 binding.textInputLayoutPhone.getEditText().getText().toString(),
+                binding.textInputLayoutDate.getEditText().getText().toString(), binding.textInputLayoutTime.getEditText().getText().toString(),
                 binding.textInputLayoutDesc.getEditText().getText().toString(), binding.textInputLayoutType.getEditText().getText().toString()
                 , binding.textInputLayoutRsvp.getEditText().getText().toString());
-        databaseReference.child(id).setValue(mEvents).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    navigateToEventsListFragment(binding.buttonAddEvents);
-                    binding.progressBarEventsAddFragment.stop();
-                    Toast.makeText(requireContext(), "Events Added Successfully", Toast.LENGTH_SHORT).show();
-                }
+        databaseReference.child(id).setValue(mEvents).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                navigateToEventsListFragment(binding.buttonAddEvents);
+                binding.progressBarEventsAddFragment.stop();
+                Toast.makeText(requireContext(), "Events Added Successfully", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private void navigateToEventsListFragment(View v) {
         Navigation.findNavController(v).navigate(R.id.action_eventAddFragment_to_navigation_event);
     }
