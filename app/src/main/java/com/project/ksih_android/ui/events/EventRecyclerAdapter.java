@@ -23,13 +23,11 @@ import java.util.List;
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.EventRecyclerViewHolder> {
     private List<Events> mEvents;
     private EventsItemsListBinding binding;
-    private SharedPreferencesStorage mStorage;
     private Context mContext;
 
     public EventRecyclerAdapter(List<Events> events, Context context) {
         mEvents = events;
         mContext = context.getApplicationContext();
-        mStorage = new SharedPreferencesStorage(mContext);
 
 
     }
@@ -52,8 +50,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         holder.itemView.setOnClickListener(v -> {
             Events events1 = mEvents.get(position);
             Bundle bundle = new Bundle();
-            bundle.putParcelable("recycler_events", events1);
-            mStorage.setEvent(EVENTS_ITEM_KEY, events1);
+            bundle.putParcelable(EVENTS_ITEM_KEY, events1);
             Navigation.findNavController(v).navigate(R.id.action_navigation_event_to_eventDetailsFragment, bundle);
         });
 

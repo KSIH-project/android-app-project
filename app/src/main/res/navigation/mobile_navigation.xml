@@ -74,6 +74,9 @@
         <action
             android:id="@+id/action_eventDetailsFragment_to_zoomFragment"
             app:destination="@id/zoomFragment" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_eventAddFragment"
+            app:destination="@id/eventAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/zoomFragment"

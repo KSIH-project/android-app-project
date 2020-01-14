@@ -59,7 +59,7 @@ import timber.log.Timber;
  */
 public class EventAddFragment extends Fragment {
 
-    private Events mEvents = new Events();
+    private Events mEvents;
     private Bitmap mBitmap;
     private String imagePath = "";
     private String imageUrl;
@@ -77,7 +77,6 @@ public class EventAddFragment extends Fragment {
             editText.setError(error_message);
             return false;
         }
-
         return true;
     }
 
@@ -88,15 +87,43 @@ public class EventAddFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_add, container, false);
         mBitmap = null;
         binding.imageViewAdd.setOnClickListener(view -> openGallery());
+        if (getArguments() != null) {
+            binding.buttonAddEvents.setText("Save Events");
+            mEvents = getArguments().getParcelable("eventToEdit");
+            getEventsDetails();
+        }
 
         binding.buttonAddEvents.setOnClickListener(v -> {
-            if (validate()) {
-                saveImage();
-                hideSoftKeyboard(requireActivity());
-            } else
-                Toast.makeText(requireContext(), "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+
+            if (validate() && mEvents == null) {
+                mEvents = new Events();
+                binding.buttonAddEvents.setEnabled(false);
+                saveEvents();
+            } else {
+                binding.progressBarEventsAddFragment.start();
+                binding.buttonAddEvents.setEnabled(false);
+                uploadNewImageToFireBaseStorage();
+            }
         });
+
+
         return binding.getRoot();
+    }
+
+    private void getEventsDetails() {
+
+        binding.textInputLayoutTittle.getEditText().setText(mEvents.getEventName());
+        binding.textInputLayoutType.getEditText().setText(mEvents.getEventType());
+        binding.textInputLayoutDesc.getEditText().setText(mEvents.getEventDescription());
+        binding.textInputLayoutContactsEmail.getEditText().setText(mEvents.getEmail());
+        binding.textInputLayoutPhone.getEditText().setText(mEvents.getPhoneNumber());
+        binding.textInputLayoutRsvp.getEditText().setText(mEvents.getEventRSVP());
+        Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageViewAdd);
+    }
+
+    private void saveEvents() {
+        saveImage();
+        hideSoftKeyboard(requireActivity());
     }
 
     private void disableViews() {
@@ -107,17 +134,14 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutRsvp.setEnabled(false);
         binding.textInputLayoutTittle.setEnabled(false);
         binding.textInputLayoutType.setEnabled(false);
-
     }
 
     private void saveImage() {
-        if (mBitmap != null) {
+        if (mBitmap != null || mEvents.getImageUrl() != null) {
             binding.progressBarEventsAddFragment.start();
             disableViews();
             uploadImageToFireBaseStorage();
-        }
-
-        else
+        } else
             Toast.makeText(requireActivity(), "Select An Image", Toast.LENGTH_SHORT).show();
     }
 
@@ -134,10 +158,6 @@ public class EventAddFragment extends Fragment {
                     if (task2.isSuccessful()) {
                         imageUrl = task2.getResult().toString();
                         addEvents();
-                        mEvents.setImageUrl(imageUrl);
-                        binding.progressBarEventsAddFragment.stop();
-                        navigateToEventsListFragment(binding.buttonAddEvents);
-                        Toast.makeText(getActivity(), "Event added Successfully", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
@@ -145,6 +165,92 @@ public class EventAddFragment extends Fragment {
                 enableViews();
             }
         });
+
+
+    }
+
+    private void uploadNewImageToFireBaseStorage() {
+        deleteImage(mEvents.getImageUrl());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
+        byte[] data = outputStream.toByteArray();
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
+        UploadTask task = storageReference.putBytes(data);
+        task.addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task2 -> {
+                    if (task2.isSuccessful()) {
+                        imageUrl = task2.getResult().toString();
+                        editEvents();
+                    }
+                });
+            } else {
+                Toast.makeText(getActivity(), "Failed to add Events", Toast.LENGTH_SHORT).show();
+                enableViews();
+            }
+        });
+
+
+    }
+
+    private void editEvents() {
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("events");
+        String id = mEvents.getId();
+        Timber.d("mField: %s", mEvents.getId());
+        if (imageUrl == null) {
+            Events nEvents = new Events();
+            nEvents.setImageUrl(mEvents.getImageUrl());
+            nEvents.setId(id);
+            nEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString());
+            nEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString());
+            nEvents.setEventDescription(binding.textInputLayoutDesc.getEditText().getText().toString());
+            nEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString());
+            nEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString());
+            nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
+            firebaseDatabase.child(id).setValue(nEvents).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        binding.progressBarEventsAddFragment.stop();
+                        binding.buttonAddEvents.setEnabled(true);
+                        navigateToEventsListFragment(binding.buttonAddEvents);
+                        Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                        Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
+                        binding.progressBarEventsAddFragment.stop();
+                        binding.buttonAddEvents.setEnabled(true);
+                    }
+                }
+            });
+        } else {
+            Events nEvents = new Events();
+            nEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString());
+            nEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString());
+            nEvents.setEventDescription(binding.textInputLayoutDesc.getEditText().getText().toString());
+            nEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString());
+            nEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString());
+            nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
+            nEvents.setId(id);
+            nEvents.setImageUrl(imageUrl);
+            databaseReference.child(id).setValue(nEvents).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        binding.progressBarEventsAddFragment.stop();
+                        binding.buttonAddEvents.setEnabled(true);
+                        navigateToEventsListFragment(binding.buttonAddEvents);
+                        Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                        Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
+                        binding.progressBarEventsAddFragment.stop();
+                        binding.buttonAddEvents.setEnabled(true);
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -198,8 +304,6 @@ public class EventAddFragment extends Fragment {
 
     private boolean validate() {
         String error = getString(R.string.event_error_message);
-
-
         if (!hasText(binding.textInputLayoutTittle, error)) return false;
         if (!hasText(binding.textInputLayoutType, error)) return false;
         if (!hasText(binding.textInputLayoutDesc, error)) return false;
@@ -207,20 +311,36 @@ public class EventAddFragment extends Fragment {
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
         return hasText(binding.textInputLayoutRsvp, error);
     }
-
     private void addEvents() {
-        mEvents.setImageUrl(imageUrl);
-        mEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString());
-        mEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString());
-        mEvents.setEventDescription(binding.textInputLayoutDesc.getEditText().getText().toString());
-        mEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString());
-        mEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString());
-        mEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
-        databaseReference.push().setValue(mEvents);
+        String id = databaseReference.push().getKey();
+        mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString(),
+                binding.textInputLayoutContactsEmail.getEditText().getText().toString(),
+                binding.textInputLayoutPhone.getEditText().getText().toString(),
+                binding.textInputLayoutDesc.getEditText().getText().toString(), binding.textInputLayoutType.getEditText().getText().toString()
+                , binding.textInputLayoutRsvp.getEditText().getText().toString());
+        databaseReference.child(id).setValue(mEvents).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    navigateToEventsListFragment(binding.buttonAddEvents);
+                    binding.progressBarEventsAddFragment.stop();
+                    Toast.makeText(requireContext(), "Events Added Successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
-
     private void navigateToEventsListFragment(View v) {
         Navigation.findNavController(v).navigate(R.id.action_eventAddFragment_to_navigation_event);
     }
 
+    private void deleteImage(String fullUrl) {
+        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
+        ref.delete().addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(requireContext(), "Old Photo Deleted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

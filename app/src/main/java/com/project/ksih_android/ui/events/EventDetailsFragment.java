@@ -6,16 +6,27 @@ import android.os.Bundle;
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventDetailsBinding;
@@ -29,6 +40,8 @@ import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
 public class EventDetailsFragment extends Fragment {
     private FragmentEventDetailsBinding binding;
 
+    private Events mEvents;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,23 +50,76 @@ public class EventDetailsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_details, container, false);
-        Events events = getArguments().getParcelable("recycler_events");
-        binding.textEventTittleDetails.setText(events.getEventName());
-        binding.textEventEmailDetails.setText(events.getEmail());
-        binding.textEventsDescripDetails.setText(events.getEventDescription());
-        binding.textPhoneNumber.setText(events.getPhoneNumber());
-        binding.textEventsTypeDetails.setText(events.getEventType());
-        Glide.with(requireContext()).load(events.getImageUrl()).into(binding.imageEventsDetails);
+
+        mEvents = getArguments().getParcelable(EVENTS_ITEM_KEY);
+
+        binding.textEventTittleDetails.setText(mEvents.getEventName());
+        binding.textEventEmailDetails.setText(mEvents.getEmail());
+        binding.textEventsDescripDetails.setText(mEvents.getEventDescription());
+        binding.textPhoneNumber.setText(mEvents.getPhoneNumber());
+        binding.textEventsTypeDetails.setText(mEvents.getEventType());
+        Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageEventsDetails);
+        setupToolBar(binding.eventsDetailsToolbar);
 
         return binding.getRoot();
+    }
+
+    private void setupToolBar(MaterialToolbar eventsDetailsToolbar) {
+        eventsDetailsToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        eventsDetailsToolbar.setTitle(mEvents.getEventName());
+        eventsDetailsToolbar.inflateMenu(R.menu.events_menu);
+        eventsDetailsToolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).navigateUp());
+        eventsDetailsToolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.events_edit_menu)
+                editEvent();
+            else if (item.getItemId() == R.id.events_delete_menu)
+                deleteEvent(mEvents.getId());
+            return true;
+        });
+    }
+
+    private void deleteEvent(String id) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("events");
+        reference.child(id).removeValue().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Item removed!", Toast.LENGTH_SHORT).show();
+                    deleteImage(mEvents.getImageUrl());
+                    Navigation.findNavController(requireView()).navigate(R.id.action_eventDetailsFragment_to_navigation_event);
+                } else {
+                    Toast.makeText(requireContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+    private void deleteImage(String imageUrl) {
+        StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
+        reference.delete().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Image Successfully Removed", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void editEvent() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("eventToEdit", mEvents);
+        Navigation.findNavController(requireView()).navigate(R.id.action_eventDetailsFragment_to_eventAddFragment, bundle);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Events events = getArguments().getParcelable("recycler_events");
         Bundle bundle = new Bundle();
-        bundle.putString("eventsImage", events.getImageUrl());
+        bundle.putString("eventsImage", mEvents.getImageUrl());
         binding.imageEventsDetails.setOnClickListener(view ->
                 Navigation.findNavController(view).navigate(R.id.action_eventDetailsFragment_to_zoomFragment, bundle));
 

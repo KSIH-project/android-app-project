@@ -6,17 +6,6 @@ import android.os.Parcelable;
 
 public class Events implements Parcelable {
     private String id;
-    public static final Creator<Events> CREATOR = new Creator<Events>() {
-        @Override
-        public Events createFromParcel(Parcel in) {
-            return new Events(in);
-        }
-
-        @Override
-        public Events[] newArray(int size) {
-            return new Events[size];
-        }
-    };
     private String eventName;
     private String email;
     private String phoneNumber;
@@ -30,7 +19,19 @@ public class Events implements Parcelable {
     }
 
 
-    public Events(String imageUrl, String eventName, String email, String phoneNumber, String eventDescription, String eventType, String eventRSVP) {
+    public static final Creator<Events> CREATOR = new Creator<Events>() {
+        @Override
+        public Events createFromParcel(Parcel in) {
+            return new Events(in);
+        }
+
+        @Override
+        public Events[] newArray(int size) {
+            return new Events[size];
+        }
+    };
+
+    public Events(String id, String imageUrl, String eventName, String email, String phoneNumber, String eventDescription, String eventType, String eventRSVP) {
         this.imageUrl = imageUrl;
         this.eventName = eventName;
         this.email = email;
@@ -38,6 +39,7 @@ public class Events implements Parcelable {
         this.eventDescription = eventDescription;
         this.eventType = eventType;
         this.eventRSVP = eventRSVP;
+        this.id = id;
     }
 
     private Events(Parcel in) {
