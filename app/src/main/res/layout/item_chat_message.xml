@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_marginStart="42dp"
+        android:text="Sunday david"
+        android:id="@+id/messengerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <LinearLayout
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/messengerImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/default_profile_image"
-            app:riv_corner_radius="360dp"
+            app:riv_border_color="@color/colorPrimary"
             app:riv_border_width="1dp"
-            app:riv_border_color="@color/colorPrimary"/>
+            app:riv_corner_radius="360dp" />
+
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <TextView
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_weight="0"
                 android:id="@+id/messageTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="15dp">
 
             <ImageView
                 android:id="@+id/messageImageView"
@@ -40,14 +56,9 @@
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
                 android:background="@color/colorPrimary"
-                android:scaleType="fitCenter"/>
+                android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/messengerTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         </LinearLayout>
 
