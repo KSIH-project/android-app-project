@@ -3,12 +3,16 @@ package com.project.ksih_android.ui.zoom;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.project.ksih_android.R;
 
 /**
@@ -16,17 +20,28 @@ import com.project.ksih_android.R;
  */
 public class ZoomFragment extends Fragment {
 
-
-    public ZoomFragment() {
-        // Required empty public constructor
-    }
-
+    ImageView imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_zoom, container, false);
+        View view = inflater.inflate(R.layout.fragment_zoom, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        imageView = view.findViewById(R.id.image_zoom_pic);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        String imageUrl = getArguments().getString("eventsImage");
+        Glide.with(requireContext()).load(imageUrl).into(imageView);
     }
 
 }
