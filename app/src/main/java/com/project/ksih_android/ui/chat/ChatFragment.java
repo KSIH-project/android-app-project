@@ -101,12 +101,13 @@ public class ChatFragment extends Fragment {
         //check and get current user data
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            if (currentUser.getPhotoUrl() != null)
+        if (currentUser == null) {
+            Navigation.findNavController(root).navigate(R.id.nav_signIn);
+        }else {
+            mUserName = currentUser.getDisplayName();
+            if (currentUser.getPhotoUrl() != null){
                 mPhotoUrl = currentUser.getPhotoUrl().toString();
-            String user_uID = mAuth.getCurrentUser().getUid();
-            mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference()
-                    .child("users").child(user_uID);
+            }
         }
 
         //setting views
@@ -118,6 +119,7 @@ public class ChatFragment extends Fragment {
         mLinearLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
 
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         SnapshotParser<ChatMessage> parser = snapshot -> {
             ChatMessage chatMessage = snapshot.getValue(ChatMessage.class);
             if (chatMessage != null){
@@ -171,25 +173,7 @@ public class ChatFragment extends Fragment {
                     viewHolder.messageImageView.setVisibility(ImageView.VISIBLE);
                     viewHolder.messageTextView.setVisibility(TextView.GONE);
                 }
-
-                final String[] userName = new String[1];
-                String user_uID = mAuth.getCurrentUser().getUid();
-                DatabaseReference firebaseDatabaseReference = FirebaseDatabase.getInstance().getReference()
-                        .child("users").child(user_uID);
-                firebaseDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        userName[0] = dataSnapshot.child("user_name").getValue().toString();
-                        Timber.d(userName[0]);
-                        viewHolder.messengerTextView.setText(userName[0]);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
+                    viewHolder.messengerTextView.setText(friendlyMessage.getName());
                 if (friendlyMessage.getPhotoUrl() == null) {
                     viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(getContext(),
                             R.drawable.default_profile_image));
@@ -240,17 +224,37 @@ public class ChatFragment extends Fragment {
             }
         });
 
-
+            //send message with sender details
         mSendButton = root.findViewById(R.id.sendButton);
         mSendButton.setOnClickListener(view -> {
-            ChatMessage friendlyMessage = new
-                    ChatMessage(mMessageEditText.getText().toString(),
-                    mUserName,
-                    mPhotoUrl,
-                    null /* no image */);
-            mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
-                    .push().setValue(friendlyMessage);
-            mMessageEditText.setText("");
+
+            String user_uID = mAuth.getCurrentUser().getUid();
+            DatabaseReference firebaseDatabaseReference = FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(user_uID);
+            firebaseDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    String userName = dataSnapshot.child("user_name").getValue().toString();
+                    String userImage = dataSnapshot.child("user_image").getValue().toString();
+
+                    ChatMessage friendlyMessage = new
+                            ChatMessage(mMessageEditText.getText().toString(),
+                            userName,
+                            userImage,
+                            null /* no image */);
+                    mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                            .push().setValue(friendlyMessage);
+                    mMessageEditText.setText("");
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
         });
 
         mAddMessageImageView = root.findViewById(R.id.addMessageImageView);
