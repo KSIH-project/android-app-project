@@ -88,6 +88,12 @@ public class HomeActivity extends AppCompatActivity {
                     hideCustomToolBar();
                     disableNavDrawer();
                     break;
+                case R.id.appInfo:
+                    hideCustomToolBar();
+                    break;
+                case R.id.fragment_ksih_android_team:
+                    hideCustomToolBar();
+                    break;
                 default:
                     showCustomToolBar();
                     enableNavDrawer();

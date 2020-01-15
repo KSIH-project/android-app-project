@@ -51,6 +51,7 @@
         android:layout_marginStart="8dp"
         android:text="App info"
         android:textSize="18sp"
+        android:textColor="@color/text_color_state"
         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
