@@ -190,8 +190,8 @@ public class ChatFragment extends Fragment {
                         ZoomFragment zoomFragment = new ZoomFragment();
                             Bundle bundle = new Bundle();
                             zoomFragment.setArguments(bundle);
-                            bundle.putString("eventsImage", friendlyMessage.getImageUrl());
-                            
+                            bundle.putString("chatImage", friendlyMessage.getImageUrl());
+                            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.messageRecyclerView, bundle);
 
 
                     }

@@ -42,6 +42,9 @@ public class ZoomFragment extends Fragment {
 
         String imageUrl = getArguments().getString("eventsImage");
         Glide.with(requireContext()).load(imageUrl).into(imageView);
+
+        String chatImageUrl = getArguments().getString("chatImage");
+        Glide.with(requireContext()).load(chatImageUrl).into(imageView);
     }
 
 }

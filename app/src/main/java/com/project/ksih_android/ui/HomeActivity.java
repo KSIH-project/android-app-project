@@ -88,6 +88,10 @@ public class HomeActivity extends AppCompatActivity {
                     hideCustomToolBar();
                     disableNavDrawer();
                     break;
+                case R.id.messageRecyclerView:
+                    hideCustomToolBar();
+                    getSupportActionBar().hide();
+                    break;
                 default:
                     showCustomToolBar();
                     enableNavDrawer();
