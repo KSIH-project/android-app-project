@@ -85,6 +85,7 @@ public class HomeActivity extends AppCompatActivity {
             }
             switch (destination.getId()) {
                 case R.id.onBoardingFragment:
+                case R.id.zoomFragment:
                     hideCustomToolBar();
                     disableNavDrawer();
                     break;
