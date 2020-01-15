@@ -1,4 +1,4 @@
-package com.project.ksih_android.ui.notifications;
+package com.project.ksih_android.ui.startup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,17 +17,17 @@ import androidx.lifecycle.ViewModelProviders;
 import com.project.ksih_android.R;
 import com.project.ksih_android.ui.AuthActivity;
 
-public class NotificationsFragment extends Fragment {
+public class StartupFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private StartupViewModel mStartupViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        final View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+        mStartupViewModel =
+                ViewModelProviders.of(this).get(StartupViewModel.class);
+        final View root = inflater.inflate(R.layout.fragment_startup, container, false);
         final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(this, new Observer<String>() {
+        mStartupViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 //textView.setText(s);

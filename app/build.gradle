@@ -24,6 +24,10 @@ android {
     dataBinding {
         enabled true
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -40,6 +44,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.1.0'
 
     // Android Test
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -65,4 +70,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.4'
     //implementation 'com.google.firebase:firebase-analytics:17.2.1'
     //implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    annotationProcessor 'com.android.databinding:compiler:3.1.4'
 }
