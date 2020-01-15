@@ -215,6 +215,7 @@ public class ChatFragment extends Fragment {
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
 
         //initialize edittext logic
+        mSendButton = root.findViewById(R.id.sendButton);
         mMessageEditText = root.findViewById(R.id.messageEditText);
         mMessageEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -236,7 +237,6 @@ public class ChatFragment extends Fragment {
         });
 
             //send message with sender details
-        mSendButton = root.findViewById(R.id.sendButton);
         mSendButton.setOnClickListener(view -> {
 
             String user_uID = mAuth.getCurrentUser().getUid();
