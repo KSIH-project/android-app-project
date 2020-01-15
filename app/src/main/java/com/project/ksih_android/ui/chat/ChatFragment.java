@@ -289,7 +289,6 @@ public class ChatFragment extends Fragment {
             startActivityForResult(intent, Constants.REQUEST_IMAGE);
         });
 
-
         return root;
     }
 
