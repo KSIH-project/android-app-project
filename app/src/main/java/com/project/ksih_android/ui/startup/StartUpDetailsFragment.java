@@ -24,9 +24,9 @@ import com.project.ksih_android.data.StartUpField;
 import com.victor.loading.rotate.RotateLoading;
 
 import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_DETAILS_KEY;
-import static com.project.ksih_android.utility.Constants.SCALE_IMAGE_KEY;
 import static com.project.ksih_android.utility.Constants.STARTUP_DETAILS_BUNDLE_KEY;
 import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_DATABASE_REFERENCE;
+import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,7 +85,7 @@ public class StartUpDetailsFragment extends Fragment {
     private void initImageClick(ImageView startupLogo) {
         startupLogo.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putString(SCALE_IMAGE_KEY, mField.getImageUrl());
+            bundle.putString(ZOOM_IMAGE_GENERAL_KEY, mField.getImageUrl());
             Navigation.findNavController(view).navigate(R.id.action_startUpDetailsFragment_to_zoomImageFragment, bundle);
         });
     }
