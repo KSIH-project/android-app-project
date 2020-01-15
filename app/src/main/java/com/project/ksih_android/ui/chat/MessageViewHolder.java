@@ -1,5 +1,6 @@
 package com.project.ksih_android.ui.chat;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
+import com.project.ksih_android.ui.zoom.ZoomFragment;
 
 class MessageViewHolder extends RecyclerView.ViewHolder {
 
@@ -25,5 +27,13 @@ class MessageViewHolder extends RecyclerView.ViewHolder {
         messageImageView = itemView.findViewById(R.id.messageImageView);
         messengerTextView = itemView.findViewById(R.id.messengerTextView);
         messengerImageView = itemView.findViewById(R.id.messengerImageView);
+
+        messageImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZoomFragment zoomFragment = new ZoomFragment();
+                Bundle args = new Bundle();
+            }
+        });
     }
 }
