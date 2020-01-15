@@ -27,13 +27,5 @@ class MessageViewHolder extends RecyclerView.ViewHolder {
         messageImageView = itemView.findViewById(R.id.messageImageView);
         messengerTextView = itemView.findViewById(R.id.messengerTextView);
         messengerImageView = itemView.findViewById(R.id.messengerImageView);
-
-        messageImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ZoomFragment zoomFragment = new ZoomFragment();
-                Bundle args = new Bundle();
-            }
-        });
     }
 }

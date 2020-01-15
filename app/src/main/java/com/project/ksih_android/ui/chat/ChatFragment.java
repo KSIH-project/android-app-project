@@ -50,6 +50,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.ChatMessage;
+import com.project.ksih_android.ui.zoom.ZoomFragment;
 import com.project.ksih_android.utility.Constants;
 import com.victor.loading.rotate.RotateLoading;
 
@@ -182,6 +183,19 @@ public class ChatFragment extends Fragment {
                             .load(friendlyMessage.getPhotoUrl())
                             .into(viewHolder.messengerImageView);
                 }
+
+                viewHolder.messageImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ZoomFragment zoomFragment = new ZoomFragment();
+                            Bundle bundle = new Bundle();
+                            zoomFragment.setArguments(bundle);
+                            bundle.putString("eventsImage", friendlyMessage.getImageUrl());
+                            
+
+
+                    }
+                });
             }
         };
 
@@ -252,7 +266,7 @@ public class ChatFragment extends Fragment {
                         ChatMessage friendlyMessage = new
                                 ChatMessage(mMessageEditText.getText().toString(),
                                 userName,
-                                mUserName,
+                                mPhotoUrl,
                                 null /* no image */);
                         mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
                                 .push().setValue(friendlyMessage);
