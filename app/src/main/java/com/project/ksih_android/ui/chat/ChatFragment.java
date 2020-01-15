@@ -238,14 +238,27 @@ public class ChatFragment extends Fragment {
                     String userName = dataSnapshot.child("user_name").getValue().toString();
                     String userImage = dataSnapshot.child("user_image").getValue().toString();
 
-                    ChatMessage friendlyMessage = new
-                            ChatMessage(mMessageEditText.getText().toString(),
-                            userName,
-                            userImage,
-                            null /* no image */);
-                    mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
-                            .push().setValue(friendlyMessage);
-                    mMessageEditText.setText("");
+                    if (!userImage.equals("default image")){
+                        ChatMessage friendlyMessage = new
+                                ChatMessage(mMessageEditText.getText().toString(),
+                                userName,
+                                userImage,
+                                null /* no image */);
+                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                                .push().setValue(friendlyMessage);
+                        mMessageEditText.setText("");
+
+                    }else {
+                        ChatMessage friendlyMessage = new
+                                ChatMessage(mMessageEditText.getText().toString(),
+                                userName,
+                                mUserName,
+                                null /* no image */);
+                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                                .push().setValue(friendlyMessage);
+                        mMessageEditText.setText("");
+                    }
+
 
                 }
 
@@ -372,24 +385,46 @@ public class ChatFragment extends Fragment {
                             String userName = dataSnapshot.child("user_name").getValue().toString();
                             String userImage = dataSnapshot.child("user_image").getValue().toString();
 
-                            final Uri uri = data.getData();
-                            ChatMessage tempMessage = new ChatMessage(null, userName, userImage, "");
+                            if (!userImage.equals("default image")){
+                                final Uri uri = data.getData();
+                                ChatMessage tempMessage = new ChatMessage(null, userName, userImage, "");
 
-                            mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
-                                    .setValue(tempMessage, (databaseError, databaseReference) -> {
-                                        if (databaseError == null){
-                                            String key = databaseReference.getKey();
-                                            StorageReference storageReference = FirebaseStorage.getInstance()
-                                                    .getReference(currentUser.getUid())
-                                                    .child(key)
-                                                    .child(uri.getLastPathSegment());
+                                mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
+                                        .setValue(tempMessage, (databaseError, databaseReference) -> {
+                                            if (databaseError == null){
+                                                String key = databaseReference.getKey();
+                                                StorageReference storageReference = FirebaseStorage.getInstance()
+                                                        .getReference(currentUser.getUid())
+                                                        .child(key)
+                                                        .child(uri.getLastPathSegment());
 
-                                            putImageInStorage(storageReference, uri, key);
+                                                putImageInStorage(storageReference, uri, key);
 
-                                        }else {
-                                            Timber.d("unable to write to %s", databaseError.toException());
-                                        }
-                                    });
+                                            }else {
+                                                Timber.d("unable to write to %s", databaseError.toException());
+                                            }
+                                        });
+                            }else {
+                                final Uri uri = data.getData();
+                                ChatMessage tempMessage = new ChatMessage(null, userName, mPhotoUrl, "");
+
+                                mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
+                                        .setValue(tempMessage, (databaseError, databaseReference) -> {
+                                            if (databaseError == null){
+                                                String key = databaseReference.getKey();
+                                                StorageReference storageReference = FirebaseStorage.getInstance()
+                                                        .getReference(currentUser.getUid())
+                                                        .child(key)
+                                                        .child(uri.getLastPathSegment());
+
+                                                putImageInStorage(storageReference, uri, key);
+
+                                            }else {
+                                                Timber.d("unable to write to %s", databaseError.toException());
+                                            }
+                                        });
+                            }
+
 
                         }
 
@@ -421,10 +456,17 @@ public class ChatFragment extends Fragment {
                                         String userName = dataSnapshot.child("user_name").getValue().toString();
                                         String userImage = dataSnapshot.child("user_image").getValue().toString();
 
-                                        ChatMessage chatMessage = new ChatMessage(
-                                                null, userName, userImage, task1.getResult().toString());
-                                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
-                                                .setValue(chatMessage);
+                                        if (!userImage.equals("default image")){
+                                            ChatMessage chatMessage = new ChatMessage(
+                                                    null, userName, userImage, task1.getResult().toString());
+                                            mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
+                                                    .setValue(chatMessage);
+                                        }else {
+                                            ChatMessage chatMessage = new ChatMessage(
+                                                    null, userName, mPhotoUrl, task1.getResult().toString());
+                                            mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
+                                                    .setValue(chatMessage);
+                                        }
                                     }
 
                                     @Override

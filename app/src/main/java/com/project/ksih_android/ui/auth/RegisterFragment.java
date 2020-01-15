@@ -22,6 +22,7 @@ import com.victor.loading.rotate.RotateLoading;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -94,7 +95,7 @@ public class RegisterFragment extends Fragment {
                     storeDefaultDatabaseReference.child("user_gender").setValue("");
                     storeDefaultDatabaseReference.child("user_profession").setValue("");
                     storeDefaultDatabaseReference.child("created_at").setValue(ServerValue.TIMESTAMP);
-                    storeDefaultDatabaseReference.child("user_image").setValue("default_image");
+                    storeDefaultDatabaseReference.child("user_image").setValue("default image");
                     storeDefaultDatabaseReference.child("device_token").setValue(deviceToken)
                             .addOnCompleteListener(task1 -> {
                                 // Sign in success
