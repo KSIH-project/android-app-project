@@ -404,7 +404,7 @@ public class ChatFragment extends Fragment {
                                             if (databaseError == null){
                                                 String key = databaseReference.getKey();
                                                 StorageReference storageReference = FirebaseStorage.getInstance()
-                                                        .getReference(currentUser.getUid())
+                                                        .getReference("images/chat_image/")
                                                         .child(key)
                                                         .child(uri.getLastPathSegment());
 
@@ -423,7 +423,7 @@ public class ChatFragment extends Fragment {
                                             if (databaseError == null){
                                                 String key = databaseReference.getKey();
                                                 StorageReference storageReference = FirebaseStorage.getInstance()
-                                                        .getReference(currentUser.getUid())
+                                                        .getReference("images/chat_image/")
                                                         .child(key)
                                                         .child(uri.getLastPathSegment());
 
