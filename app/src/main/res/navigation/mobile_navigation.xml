@@ -27,7 +27,14 @@
         android:id="@+id/navigation_startup"
         android:name="com.project.ksih_android.ui.startup.StartupFragment"
         android:label="@string/title_startups"
-        tools:layout="@layout/fragment_startup" />
+        tools:layout="@layout/fragment_startup" >
+        <action
+            android:id="@+id/action_navigation_startup_to_startUpDetailsFragment"
+            app:destination="@id/startUpDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_startup_to_addStartUpFragment"
+            app:destination="@id/addStartUpFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_event"
@@ -62,5 +69,27 @@
         android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
         android:label="fragment_zoom"
         tools:layout="@layout/fragment_zoom" />
-
+  
+  <fragment
+        android:id="@+id/addStartUpFragment"
+        android:name="com.project.ksih_android.ui.startup.AddStartUpFragment"
+        android:label="Add Startup"
+        tools:layout="@layout/fragment_add_start_up" />
+  
+    <fragment
+        android:id="@+id/startUpDetailsFragment"
+        android:name="com.project.ksih_android.ui.startup.StartUpDetailsFragment"
+        android:label="fragment_start_up_details"
+        tools:layout="@layout/fragment_start_up_details" >
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_addStartUpFragment"
+            app:destination="@id/addStartUpFragment" />
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_zoomImageFragment"
+            app:destination="@id/zoomImageFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>

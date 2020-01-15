@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
@@ -12,7 +13,6 @@ import com.project.ksih_android.utility.DividerItemDecoration;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -24,8 +24,9 @@ import timber.log.Timber;
 public class HomeActivity extends AppCompatActivity {
 
     private NavController mNavController;
-    private Toolbar toolBar;
+    private MaterialToolbar toolBar;
     private DrawerLayout drawer;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +41,11 @@ public class HomeActivity extends AppCompatActivity {
         NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navMenuView.addItemDecoration(new DividerItemDecoration(this));
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        mToggle = new ActionBarDrawerToggle(
                 this, drawer, toolBar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawer.addDrawerListener(mToggle);
+        mToggle.syncState();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_signIn, R.id.navigation_project, R.id.navigation_member,
@@ -86,11 +87,16 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.onBoardingFragment:
                 case R.id.zoomFragment:
                     hideCustomToolBar();
-                    hideDrawer();
+                    disableNavDrawer();
+                    break;
+                case R.id.addStartUpFragment:
+                case R.id.startUpDetailsFragment:
+                case R.id.zoomImageFragment:
+                    hideCustomToolBar();
                     break;
                 default:
                     showCustomToolBar();
-                    showDrawer();
+                    enableNavDrawer();
             }
         });
     }
@@ -107,18 +113,22 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void hideCustomToolBar() {
-        toolBar.setVisibility(View.INVISIBLE);
+        toolBar.setVisibility(View.GONE);
     }
 
     private void showCustomToolBar() {
         toolBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideDrawer() {
-        drawer.setVisibility(View.INVISIBLE);
+    private void enableNavDrawer() {
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        mToggle.setDrawerIndicatorEnabled(true);
+        mToggle.syncState();
     }
 
-    private void showDrawer() {
-        drawer.setVisibility(View.VISIBLE);
+    private void disableNavDrawer() {
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mToggle.setDrawerIndicatorEnabled(false);
+        mToggle.syncState();
     }
 }
