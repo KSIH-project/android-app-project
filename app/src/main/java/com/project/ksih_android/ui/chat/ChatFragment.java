@@ -184,17 +184,14 @@ public class ChatFragment extends Fragment {
                             .into(viewHolder.messengerImageView);
                 }
 
-                viewHolder.messageImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ZoomFragment zoomFragment = new ZoomFragment();
-                            Bundle bundle = new Bundle();
-                            zoomFragment.setArguments(bundle);
-                            bundle.putString("chatImage", friendlyMessage.getImageUrl());
-                            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.messageRecyclerView, bundle);
+                viewHolder.messageImageView.setOnClickListener(v -> {
+                    ZoomFragment zoomFragment = new ZoomFragment();
+                        Bundle bundle = new Bundle();
+                        zoomFragment.setArguments(bundle);
+                        bundle.putString("chatImage", friendlyMessage.getImageUrl());
+                        Navigation.findNavController(getParentFragment().getView()).navigate(R.id.messageRecyclerView, bundle);
 
 
-                    }
                 });
             }
         };
