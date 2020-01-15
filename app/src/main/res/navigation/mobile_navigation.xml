@@ -5,12 +5,11 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/onBoardingFragment">
 
-
     <activity
         android:id="@+id/nav_signIn"
         android:name="com.project.ksih_android.ui.AuthActivity"
         android:label="Sign In"
-        tools:layout="@layout/fragment_login"/>
+        tools:layout="@layout/fragment_login" />
 
     <fragment
         android:id="@+id/navigation_project"
@@ -39,7 +38,7 @@
         android:id="@+id/nav_chats"
         android:name="com.project.ksih_android.ui.chat.ChatFragment"
         android:label="Chat"
-        tools:layout="@layout/fragment_chat"/>
+        tools:layout="@layout/fragment_chat" />
 
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -59,10 +58,9 @@
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/zoomFragment2"
+        android:id="@+id/zoomFragment"
         android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
         android:label="fragment_zoom"
         tools:layout="@layout/fragment_zoom" />
-
 
 </navigation>

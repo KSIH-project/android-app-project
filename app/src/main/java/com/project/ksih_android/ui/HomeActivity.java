@@ -78,12 +78,13 @@ public class HomeActivity extends AppCompatActivity {
         mNavController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             try {
                 String dest = getResources().getResourceName(destination.getId());
-                Timber.d("onDestinationChanged: " + dest);
+                Timber.d("onDestinationChanged: %s", dest);
             } catch (Resources.NotFoundException e) {
                 destination.getId();
             }
             switch (destination.getId()) {
                 case R.id.onBoardingFragment:
+                case R.id.zoomFragment:
                     hideCustomToolBar();
                     hideDrawer();
                     break;
