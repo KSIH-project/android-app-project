@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -274,6 +275,7 @@ public class ChatFragment extends Fragment {
 
 
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+        mFirebaseAdapter.notifyDataSetChanged();
 
         //initialize edittext logic
         mSendButton = root.findViewById(R.id.sendButton);
@@ -357,6 +359,19 @@ public class ChatFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mFirebaseAdapter.startListening();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+
+    @Override
     public void onStart() {
         super.onStart();
         currentUser = mAuth.getCurrentUser();
@@ -369,7 +384,6 @@ public class ChatFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        mFirebaseAdapter.startListening();
     }
 
     @Override
@@ -379,7 +393,6 @@ public class ChatFragment extends Fragment {
         connectivityReceiver = new ConnectivityReceiver();
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         getContext().registerReceiver(connectivityReceiver, intentFilter);
-        mFirebaseAdapter.startListening();
     }
 
     @Override
@@ -390,8 +403,9 @@ public class ChatFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
+        mFirebaseAdapter.stopListening();
     }
 
     @Override
