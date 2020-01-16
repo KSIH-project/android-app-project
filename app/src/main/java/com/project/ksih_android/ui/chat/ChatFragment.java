@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -103,6 +104,7 @@ public class ChatFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
+            Toast.makeText(getContext(), "SignIn to use chat", Toast.LENGTH_SHORT).show();
             Navigation.findNavController(root).navigate(R.id.nav_signIn);
         }else {
             mUserName = currentUser.getDisplayName();
@@ -137,19 +139,45 @@ public class ChatFragment extends Fragment {
             @Override
             public MessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+                mAuth = FirebaseAuth.getInstance();
                 return new MessageViewHolder(inflater.inflate(R.layout.item_chat_message, viewGroup, false));
+
             }
 
             @Override
             protected void onBindViewHolder(final MessageViewHolder viewHolder,
                                             int position,
                                             ChatMessage friendlyMessage) {
+                //logic for screen display
+                String sender_UID = mAuth.getCurrentUser().getUid();
+                String from_user_ID = friendlyMessage.getFrom();
+
                 loading.stop();
                 if (friendlyMessage.getText() != null) {
-                    viewHolder.messageTextView.setText(friendlyMessage.getText());
-                    viewHolder.messageTextView.setVisibility(TextView.VISIBLE);
-                    viewHolder.messageImageView.setVisibility(ImageView.GONE);
+                    viewHolder.receiverTextView.setVisibility(View.INVISIBLE);
+                    viewHolder.messengerImageView.setVisibility(View.INVISIBLE);
+                    viewHolder.messengerTextView.setVisibility(View.GONE);
 
+                    //when message are text, image views are gone
+                    viewHolder.messageImageView.setVisibility(View.GONE);
+                    viewHolder.receiverImageView.setVisibility(View.GONE);
+
+                    if (from_user_ID.equals(sender_UID)) {
+                        viewHolder.messageTextView.setText(friendlyMessage.getText());
+                        viewHolder.messengerTextView.setTextColor(Color.BLACK);
+                        viewHolder.messageTextView.setGravity(Gravity.START);
+                    }else {
+                        viewHolder.messageTextView.setVisibility(View.INVISIBLE);
+                        viewHolder.receiverTextView.setVisibility(View.VISIBLE);
+                        viewHolder.messengerImageView.setVisibility(View.VISIBLE);
+                        viewHolder.messengerTextView.setVisibility(View.VISIBLE);
+
+                        viewHolder.receiverTextView.setTextColor(Color.WHITE);
+                        viewHolder.receiverTextView.setGravity(Gravity.START);
+                        viewHolder.receiverTextView.setText(friendlyMessage.getText());
+                    }
+
+                    // when message type is image
                 } else if (friendlyMessage.getImageUrl() != null) {
                     String imageUrl = friendlyMessage.getImageUrl();
                     if (imageUrl.startsWith("gs://")) {
@@ -162,6 +190,7 @@ public class ChatFragment extends Fragment {
                                         Glide.with(viewHolder.messageImageView.getContext())
                                                 .load(downloadUrl)
                                                 .into(viewHolder.messageImageView);
+
                                     } else {
                                         Timber.d( "Getting download url was not successful."+ task.getException());
                                     }
@@ -171,19 +200,42 @@ public class ChatFragment extends Fragment {
                                 .load(friendlyMessage.getImageUrl())
                                 .into(viewHolder.messageImageView);
                     }
-                    viewHolder.messageImageView.setVisibility(ImageView.VISIBLE);
-                    viewHolder.messageTextView.setVisibility(TextView.GONE);
-                }
-                    viewHolder.messengerTextView.setText(friendlyMessage.getName());
-                if (friendlyMessage.getPhotoUrl() == null) {
-                    viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(getContext(),
-                            R.drawable.default_profile_image));
-                } else {
-                    Glide.with(getContext())
-                            .load(friendlyMessage.getPhotoUrl())
-                            .into(viewHolder.messengerImageView);
-                }
 
+                    //when mesg has image, text views are gone
+                    viewHolder.messageTextView.setVisibility(TextView.GONE);
+                    viewHolder.receiverTextView.setVisibility(View.GONE);
+
+                    if (from_user_ID.equals(sender_UID)){
+                        viewHolder.messengerImageView.setVisibility(View.INVISIBLE);
+                        viewHolder.receiverImageView.setVisibility(View.GONE);
+                        viewHolder.messengerTextView.setVisibility(View.GONE);
+
+                        viewHolder.messageImageView.setVisibility(ImageView.VISIBLE);
+
+
+                    }else {
+                        viewHolder.messengerImageView.setVisibility(View.VISIBLE);
+                        viewHolder.messageImageView.setVisibility(View.GONE);
+                        viewHolder.messengerTextView.setVisibility(View.VISIBLE);
+                        viewHolder.receiverImageView.setVisibility(View.VISIBLE);
+
+                        Glide.with(viewHolder.receiverImageView.getContext())
+                                .load(friendlyMessage.getImageUrl())
+                                .into(viewHolder.receiverImageView);
+
+                        viewHolder.messengerTextView.setText(friendlyMessage.getName());
+                        if (friendlyMessage.getPhotoUrl() == null) {
+                            viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(getContext(),
+                                    R.drawable.default_profile_image));
+                        } else {
+                            Glide.with(getContext())
+                                    .load(friendlyMessage.getPhotoUrl())
+                                    .into(viewHolder.messengerImageView);
+                        }
+                    }
+
+
+                }
                 viewHolder.messageImageView.setOnClickListener(v -> {
                     ZoomFragment zoomFragment = new ZoomFragment();
                         Bundle bundle = new Bundle();
@@ -239,45 +291,48 @@ public class ChatFragment extends Fragment {
             //send message with sender details
         mSendButton.setOnClickListener(view -> {
 
-            String user_uID = mAuth.getCurrentUser().getUid();
-            DatabaseReference firebaseDatabaseReference = FirebaseDatabase.getInstance().getReference()
-                    .child("users").child(user_uID);
-            firebaseDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (!mMessageEditText.getText().toString().equals("")) {
 
-                    String userName = dataSnapshot.child("user_name").getValue().toString();
-                    String userImage = dataSnapshot.child("user_image").getValue().toString();
+                String user_uID = mAuth.getCurrentUser().getUid();
+                DatabaseReference firebaseDatabaseReference = FirebaseDatabase.getInstance().getReference()
+                        .child("users").child(user_uID);
+                firebaseDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if (!userImage.equals("default image")){
-                        ChatMessage friendlyMessage = new
-                                ChatMessage(mMessageEditText.getText().toString(),
-                                userName,
-                                userImage,
-                                null /* no image */);
-                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
-                                .push().setValue(friendlyMessage);
-                        mMessageEditText.setText("");
+                        String userName = dataSnapshot.child("user_name").getValue().toString();
+                        String userImage = dataSnapshot.child("user_image").getValue().toString();
 
-                    }else {
-                        ChatMessage friendlyMessage = new
-                                ChatMessage(mMessageEditText.getText().toString(),
-                                userName,
-                                mPhotoUrl,
-                                null /* no image */);
-                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
-                                .push().setValue(friendlyMessage);
-                        mMessageEditText.setText("");
+                        if (!userImage.equals("default image")) {
+                            ChatMessage friendlyMessage = new
+                                    ChatMessage(mMessageEditText.getText().toString(),
+                                    userName,
+                                    userImage,
+                                    null /* no image */, user_uID);
+                            mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                                    .push().setValue(friendlyMessage);
+                            mMessageEditText.setText("");
+
+                        } else {
+                            ChatMessage friendlyMessage = new
+                                    ChatMessage(mMessageEditText.getText().toString(),
+                                    userName,
+                                    mPhotoUrl,
+                                    null /* no image */, user_uID);
+                            mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                                    .push().setValue(friendlyMessage);
+                            mMessageEditText.setText("");
+                        }
+
+
                     }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+                    }
+                });
+            }
 
         });
 
@@ -397,7 +452,7 @@ public class ChatFragment extends Fragment {
 
                             if (!userImage.equals("default image")){
                                 final Uri uri = data.getData();
-                                ChatMessage tempMessage = new ChatMessage(null, userName, userImage, "");
+                                ChatMessage tempMessage = new ChatMessage(null, userName, userImage, "", user_uID);
 
                                 mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
                                         .setValue(tempMessage, (databaseError, databaseReference) -> {
@@ -416,7 +471,7 @@ public class ChatFragment extends Fragment {
                                         });
                             }else {
                                 final Uri uri = data.getData();
-                                ChatMessage tempMessage = new ChatMessage(null, userName, mPhotoUrl, "");
+                                ChatMessage tempMessage = new ChatMessage(null, userName, mPhotoUrl, "", user_uID);
 
                                 mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
                                         .setValue(tempMessage, (databaseError, databaseReference) -> {
@@ -468,12 +523,12 @@ public class ChatFragment extends Fragment {
 
                                         if (!userImage.equals("default image")){
                                             ChatMessage chatMessage = new ChatMessage(
-                                                    null, userName, userImage, task1.getResult().toString());
+                                                    null, userName, userImage, task1.getResult().toString(), user_uID);
                                             mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
                                                     .setValue(chatMessage);
                                         }else {
                                             ChatMessage chatMessage = new ChatMessage(
-                                                    null, userName, mPhotoUrl, task1.getResult().toString());
+                                                    null, userName, mPhotoUrl, task1.getResult().toString(), user_uID);
                                             mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
                                                     .setValue(chatMessage);
                                         }

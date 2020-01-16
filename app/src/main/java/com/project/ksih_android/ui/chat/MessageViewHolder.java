@@ -14,8 +14,8 @@ import com.project.ksih_android.ui.zoom.ZoomFragment;
 
 class MessageViewHolder extends RecyclerView.ViewHolder {
 
-    TextView messageTextView;
-    ImageView messageImageView;
+    TextView messageTextView, receiverTextView;
+    RoundedImageView messageImageView, receiverImageView;
     TextView messengerTextView;
     RoundedImageView messengerImageView;
 
@@ -23,9 +23,16 @@ class MessageViewHolder extends RecyclerView.ViewHolder {
     public MessageViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        messageTextView = itemView.findViewById(R.id.messageTextView);
-        messageImageView = itemView.findViewById(R.id.messageImageView);
+        //sender message details
+        messageTextView = itemView.findViewById(R.id.senderMessageText);
+        messageImageView = itemView.findViewById(R.id.messageImageVsender);
+
+        //user views
         messengerTextView = itemView.findViewById(R.id.messengerTextView);
-        messengerImageView = itemView.findViewById(R.id.messengerImageView);
+        messengerImageView = itemView.findViewById(R.id.messageUserImage);
+
+        //receiver message details
+        receiverTextView = itemView.findViewById(R.id.receiverMessageText);
+        receiverImageView = itemView.findViewById(R.id.messageImageVreceiver);
     }
 }
