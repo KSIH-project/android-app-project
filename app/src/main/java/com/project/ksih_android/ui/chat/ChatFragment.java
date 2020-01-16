@@ -172,6 +172,7 @@ public class ChatFragment extends Fragment {
                         viewHolder.messengerImageView.setVisibility(View.VISIBLE);
                         viewHolder.messengerTextView.setVisibility(View.VISIBLE);
 
+                        viewHolder.messengerTextView.setText(friendlyMessage.getName());
                         viewHolder.receiverTextView.setTextColor(Color.WHITE);
                         viewHolder.receiverTextView.setGravity(Gravity.START);
                         viewHolder.receiverTextView.setText(friendlyMessage.getText());
@@ -244,6 +245,14 @@ public class ChatFragment extends Fragment {
                         Navigation.findNavController(getParentFragment().getView()).navigate(R.id.messageRecyclerView, bundle);
 
 
+                });
+
+                viewHolder.receiverImageView.setOnClickListener(v -> {
+                    ZoomFragment zoomFragment = new ZoomFragment();
+                    Bundle bundle = new Bundle();
+                    zoomFragment.setArguments(bundle);
+                    bundle.putString("chatImage", friendlyMessage.getImageUrl());
+                    Navigation.findNavController(getParentFragment().getView()).navigate(R.id.messageRecyclerView, bundle);
                 });
             }
         };

@@ -12,21 +12,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="38dp"
-        android:text="Sunday David" />
+        android:layout_marginStart="38dp" />
 
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/messageImageVreceiver"
         android:layout_width="170dp"
         android:layout_height="170dp"
+        android:layout_below="@id/messengerTextView"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="08dp"
+        android:layout_alignParentTop="false"
         android:layout_marginStart="51dp"
-        app:riv_corner_radius="15dp"
+        android:layout_marginTop="08dp"
+        android:scaleType="centerCrop"
         app:riv_border_width="0.5dip"
-        />
+        app:riv_corner_radius="15dp" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/messageUserImage"
@@ -49,9 +49,9 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="51dp"
         android:layout_marginTop="24dp"
+        android:autoLink="all"
         android:background="@drawable/single_message_text_background"
         android:padding="8dp"
-        android:text="From Receiver"
         android:textColor="@color/white" />
 
 
@@ -59,25 +59,25 @@
         android:id="@+id/senderMessageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="08dp"
         android:layout_marginEnd="1dp"
+        android:autoLink="all"
         android:background="@drawable/single_message_text_another_background"
         android:padding="8dp"
-        android:text="From Sender"
         android:textColor="@color/black" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/messageImageVsender"
-        android:layout_marginTop="08dp"
-        android:layout_marginEnd="1dp"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        app:riv_corner_radius="15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="08dp"
+        android:layout_marginEnd="1dp"
+        android:scaleType="centerCrop"
         app:riv_border_width="0.5dip"
-        />
+        app:riv_corner_radius="15dp" />
 
 </RelativeLayout>
