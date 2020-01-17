@@ -25,16 +25,17 @@ import com.project.ksih_android.ui.zoom.ZoomFragment;
 import com.project.ksih_android.utility.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
 public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context context;
-    private ArrayList<ChatMessage> chatMessage;
+    private List<ChatMessage> chatMessage;
     private FirebaseAuth mAuth;
 
-    public ListMessageAdapter(Context context, ArrayList<ChatMessage> chatMessage){
+    public ListMessageAdapter(Context context, List<ChatMessage> chatMessage){
         this.context = context;
         this.chatMessage = chatMessage;
     }

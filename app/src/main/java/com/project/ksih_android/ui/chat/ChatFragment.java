@@ -80,7 +80,7 @@ public class ChatFragment extends Fragment {
     //for message
     public static final int VIEW_TYPE_USER_MESSAGE = 0;
     public static final int VIEW_TYPE_FRIEND_MESSAGE = 1;
-    public ArrayList<ChatMessage> chatMessages;
+    public ArrayList<ChatMessage> chatMessages =new ArrayList<>();
 
     //firebase utils
     private FirebaseAuth mAuth;
@@ -104,8 +104,6 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_chat, container, false);
-
-        chatMessages = new ArrayList<>();
 
         //check and get current user data
         mAuth = FirebaseAuth.getInstance();
@@ -138,11 +136,11 @@ public class ChatFragment extends Fragment {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         if (dataSnapshot.getValue() != null){
+
                             ChatMessage chatMessage = dataSnapshot.getValue(ChatMessage.class);
                             chatMessages.add(chatMessage);
 
                             Timber.d(chatMessages.toString());
-
 
                             mFirebaseAdapter = new ListMessageAdapter(requireContext(), chatMessages);
                             mMessageRecyclerView.setAdapter(mFirebaseAdapter);
@@ -163,6 +161,7 @@ public class ChatFragment extends Fragment {
                                 }
                             });
                         }
+
                     }
 
                     @Override
