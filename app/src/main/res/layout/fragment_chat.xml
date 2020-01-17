@@ -26,8 +26,9 @@
             android:id="@+id/addMessageImageView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
             app:srcCompat="@drawable/ic_add_a_photo" />
 
         <EditText
