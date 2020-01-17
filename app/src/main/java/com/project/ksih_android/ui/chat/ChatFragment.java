@@ -127,64 +127,45 @@ public class ChatFragment extends Fragment {
         mLinearLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
         //get messages back
-        FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD).addChildEventListener(
-                new ChildEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+
+                    ChatMessage chatMessage = dataSnapshot1.getValue(ChatMessage.class);
+                    chatMessages.add(chatMessage);
+                }
+
+                Timber.d(chatMessages.toString());
+
+                mFirebaseAdapter = new ListMessageAdapter(requireContext(), chatMessages);
+                mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+                mFirebaseAdapter.notifyDataSetChanged();
+
+                mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                     @Override
-                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        if (dataSnapshot.getValue() != null){
-
-                            ChatMessage chatMessage = dataSnapshot.getValue(ChatMessage.class);
-                            chatMessages.add(chatMessage);
-
-                            Timber.d(chatMessages.toString());
-
-                            mFirebaseAdapter = new ListMessageAdapter(requireContext(), chatMessages);
-                            mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-                            mFirebaseAdapter.notifyDataSetChanged();
-
-                            mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                                @Override
-                                public void onItemRangeInserted(int positionStart, int itemCount) {
-                                    super.onItemRangeInserted(positionStart, itemCount);
-                                    int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-                                    int lastVisiblePosition =
-                                            mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-                                    if (lastVisiblePosition == -1 ||
-                                            (positionStart >= (friendlyMessageCount - 1) &&
-                                                    lastVisiblePosition == (positionStart - 1))) {
-                                        mMessageRecyclerView.scrollToPosition(positionStart);
-                                    }
-                                }
-                            });
+                    public void onItemRangeInserted(int positionStart, int itemCount) {
+                        super.onItemRangeInserted(positionStart, itemCount);
+                        int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+                        int lastVisiblePosition =
+                                mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+                        if (lastVisiblePosition == -1 ||
+                                (positionStart >= (friendlyMessageCount - 1) &&
+                                        lastVisiblePosition == (positionStart - 1))) {
+                            mMessageRecyclerView.scrollToPosition(positionStart);
                         }
-
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
                 });
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //initialize edittext logic
         mSendButton = root.findViewById(R.id.sendButton);
