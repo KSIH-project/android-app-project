@@ -9,14 +9,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,7 +35,6 @@ import com.google.firebase.storage.UploadTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.StartUpField;
-import com.project.ksih_android.databinding.FragmentAddStartUpBinding;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.io.ByteArrayOutputStream;
@@ -52,11 +52,12 @@ import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
  * It contains input fields that allow for the addition of start ups
  */
 
-public class AddStartUpFragment extends Fragment {
+public class AddStartUpFragment extends Fragment implements TextWatcher {
 
     private Bitmap mBitmap;
     private String imagePath = "";
     private StartUpField mField;
+    private StartupValidationField mValidationField;
 
     private MaterialToolbar addStartUpToolbar;
     private MaterialButton saveStartupButton;
@@ -71,6 +72,16 @@ public class AddStartUpFragment extends Fragment {
     private TextInputEditText twitterUrl;
     private TextInputEditText telephone;
     private TextInputEditText email;
+
+    private TextInputLayout startupNameLayout;
+    private TextInputLayout descriptionLayout;
+    private TextInputLayout founderLayout;
+    private TextInputLayout websiteLayout;
+    private TextInputLayout facebookLayout;
+    private TextInputLayout twitterLayout;
+    private TextInputLayout telephoneLayout;
+    private TextInputLayout emailLayout;
+
     private String imageUrl;
 
     @Override
@@ -78,6 +89,7 @@ public class AddStartUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         StartupViewModel viewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         mBitmap = null;
+        mValidationField = new StartupValidationField();
         return setUpBinding(viewModel, inflater, container);
     }
 
@@ -111,24 +123,42 @@ public class AddStartUpFragment extends Fragment {
     }
 
     private View setUpBinding(StartupViewModel viewModel, LayoutInflater inflater, ViewGroup container) {
-        FragmentAddStartUpBinding addStartUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_start_up, container, false);
-        addStartUpToolbar = addStartUpBinding.addStartupToolbar;
-        setUpToolbar();
-        saveStartupButton = addStartUpBinding.saveStartup;
-        progressBar = addStartUpBinding.startupProgressBar;
-        startupName = addStartUpBinding.startupName;
-        startupDescription = addStartUpBinding.description;
-        startupFounder = addStartUpBinding.founder;
-        startupCoFounder = addStartUpBinding.coFounder;
-        startupWebsite = addStartUpBinding.website;
-        facebookUrl = addStartUpBinding.facebookUrl;
-        twitterUrl = addStartUpBinding.twitterUrl;
-        telephone = addStartUpBinding.telephone;
-        email = addStartUpBinding.email;
-        galleryIcon = addStartUpBinding.galleryIcon;
-        addStartUpBinding.setAddStartUp(viewModel);
-        galleryIcon.setOnClickListener(view -> openGallery());
-        saveStartupButton.setOnClickListener(view -> {
+        View view = inflater.inflate(R.layout.fragment_add_start_up, container, false);
+        setUpToolbar(view);
+        saveStartupButton = view.findViewById(R.id.save_startup);
+        progressBar = view.findViewById(R.id.startup_progress_bar);
+        startupName = view.findViewById(R.id.startup_name);
+        startupDescription = view.findViewById(R.id.description);
+        startupFounder = view.findViewById(R.id.founder);
+        startupCoFounder = view.findViewById(R.id.co_founder);
+        startupWebsite = view.findViewById(R.id.website);
+        facebookUrl = view.findViewById(R.id.facebook_url);
+        twitterUrl = view.findViewById(R.id.twitter_url);
+        telephone = view.findViewById(R.id.telephone);
+        email = view.findViewById(R.id.email);
+        galleryIcon = view.findViewById(R.id.gallery_icon);
+
+        startupNameLayout = view.findViewById(R.id.layout_startup_name);
+        descriptionLayout = view.findViewById(R.id.layout_description);
+        founderLayout = view.findViewById(R.id.layout_founder);
+        emailLayout = view.findViewById(R.id.layout_email);
+        facebookLayout = view.findViewById(R.id.layout_facebook_url);
+        telephoneLayout = view.findViewById(R.id.layout_telephone);
+        twitterLayout = view.findViewById(R.id.layout_twitter_url);
+        websiteLayout = view.findViewById(R.id.layout_website);
+
+        startupName.addTextChangedListener(this);
+        startupDescription.addTextChangedListener(this);
+        startupFounder.addTextChangedListener(this);
+        startupWebsite.addTextChangedListener(this);
+        facebookUrl.addTextChangedListener(this);
+        twitterUrl.addTextChangedListener(this);
+        telephone.addTextChangedListener(this);
+        email.addTextChangedListener(this);
+
+        galleryIcon.setOnClickListener(v -> openGallery());
+
+        saveStartupButton.setOnClickListener(v -> {
             // New Entry
             if (mField == null) {
                 if (mBitmap != null) {
@@ -149,14 +179,15 @@ public class AddStartUpFragment extends Fragment {
             getStartUpDetails();
             Timber.d("mField: %s", mField.getId());
         }
-        return addStartUpBinding.getRoot();
+        return view;
     }
 
-    private void setUpToolbar() {
+    private void setUpToolbar(View view) {
+        addStartUpToolbar = view.findViewById(R.id.add_startup_toolbar);
         addStartUpToolbar.setTitle("Add Startup");
         addStartUpToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        addStartUpToolbar.setNavigationOnClickListener(view -> {
-            Navigation.findNavController(view).navigateUp();
+        addStartUpToolbar.setNavigationOnClickListener(v -> {
+            Navigation.findNavController(v).navigateUp();
             hideSoftKeyboard(requireActivity());
         });
     }
@@ -334,5 +365,36 @@ public class AddStartUpFragment extends Fragment {
 
     private void hideButton(MaterialButton button) {
         button.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        if (startupNameLayout.hasFocus()) {
+            mValidationField.validateStartupName(startupNameLayout, charSequence);
+        } else if (founderLayout.hasFocus()) {
+            mValidationField.validateFounderName(founderLayout, charSequence);
+        } else if (descriptionLayout.hasFocus()) {
+            mValidationField.validateDescription(descriptionLayout, charSequence);
+        } else if (emailLayout.hasFocus()) {
+            mValidationField.validateEmail(emailLayout, charSequence);
+        } else if (telephoneLayout.hasFocus()) {
+            mValidationField.validateTelephone(telephoneLayout, charSequence);
+        } else if (websiteLayout.hasFocus()) {
+            mValidationField.validateWebsite(websiteLayout, charSequence);
+        } else if (facebookLayout.hasFocus()) {
+            mValidationField.validateFacebookUrl(facebookLayout, charSequence);
+        } else if (twitterLayout.hasFocus()) {
+            mValidationField.validateTwitterUrl(twitterLayout, charSequence);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        saveStartupButton.setEnabled(mValidationField.buttonVisibility());
     }
 }

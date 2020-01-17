@@ -2,187 +2,86 @@ package com.project.ksih_android.ui.startup;
 
 import android.util.Patterns;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-import androidx.databinding.ObservableField;
-import androidx.databinding.library.baseAdapters.BR;
+import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * Created by SegunFrancis
  */
 
-public class StartupValidationField extends BaseObservable {
-    private String startupName;
-    private String startupDescription;
-    private String startupFounder;
-    private String startupEmail;
-    private String startupPhone;
-    private String startupWebsite;
-    private String startupFacebook;
-    private String startupTwitter;
-    public ObservableField<String> startupNameError = new ObservableField<>();
-    public ObservableField<String> startupDescriptionError = new ObservableField<>();
-    public ObservableField<String> startupFounderError = new ObservableField<>();
-    public ObservableField<String> startupEmailError = new ObservableField<>();
-    public ObservableField<String> startupPhoneError = new ObservableField<>();
-    public ObservableField<String> startupWebsiteError = new ObservableField<>();
-    public ObservableField<String> startupFacebookError = new ObservableField<>();
-    public ObservableField<String> startupTwitterError = new ObservableField<>();
+public class StartupValidationField {
 
-    public String getStartupName() {
-        return startupName;
-    }
+    private boolean startupName, founderName, email, telephone, description;
 
-    public void setStartupName(String startupName) {
-        this.startupName = startupName;
-        notifyPropertyChanged(BR.valid);
-    }
-
-    public String getStartupDescription() {
-        return startupDescription;
-    }
-
-    public void setStartupDescription(String startupDescription) {
-        this.startupDescription = startupDescription;
-        notifyPropertyChanged(BR.valid);
-    }
-
-    public String getStartupFounder() {
-        return startupFounder;
-    }
-
-    public void setStartupFounder(String startupFounder) {
-        this.startupFounder = startupFounder;
-        notifyPropertyChanged(BR.valid);
-    }
-
-    public String getStartupEmail() {
-        return startupEmail;
-    }
-
-    public void setStartupEmail(String startupEmail) {
-        this.startupEmail = startupEmail;
-        notifyPropertyChanged(BR.valid);
-    }
-
-    public String getStartupPhone() {
-        return startupPhone;
-    }
-
-    public void setStartupPhone(String startupPhone) {
-        this.startupPhone = startupPhone;
-        notifyPropertyChanged(BR.valid);
-    }
-
-    public String getStartupWebsite() {
-        return startupWebsite;
-    }
-
-    public void setStartupWebsite(String startupWebsite) {
-        this.startupWebsite = startupWebsite;
-        notifyPropertyChanged(BR.valid);
-    }
-
-    public String getStartupFacebook() {
-        return startupFacebook;
-    }
-
-    public void setStartupFacebook(String startupFacebook) {
-        this.startupFacebook = startupFacebook;
-        notifyPropertyChanged(BR.valid);
-    }
-
-    public String getStartupTwitter() {
-        return startupTwitter;
-    }
-
-    public void setStartupTwitter(String startupTwitter) {
-        this.startupTwitter = startupTwitter;
-        notifyPropertyChanged(BR.valid);
-    }
-
-    boolean isStartupNameValid() {
-        if (startupName != null && startupName.length() > 2) {
-            startupNameError.set(null);
-            return true;
+    void validateStartupName(TextInputLayout layout, CharSequence name) {
+        if (name != null && name.length() > 2) {
+            layout.setError(null);
+            this.startupName = true;
         } else {
-            startupNameError.set("Startup name is too short");
-            return false;
+            layout.setError("Startup name is too short");
         }
     }
 
-    boolean isStartupDescriptionValid() {
-        if (startupDescription != null && startupDescription.length() > 20) {
-            startupDescriptionError.set(null);
-            return true;
+    void validateFounderName(TextInputLayout layout, CharSequence name) {
+        if (name != null && name.length() > 2) {
+            layout.setError(null);
+            this.founderName = true;
         } else {
-            startupDescriptionError.set("Startup description is too short");
-            return false;
+            layout.setError("Founder name is too short");
         }
     }
 
-    boolean isStartupFounderValid() {
-        if (startupFounder != null && startupFounder.length() > 2) {
-            startupFounderError.set(null);
-            return true;
+    void validateEmail(TextInputLayout layout, CharSequence email) {
+        if (email != null && email.length() > 4 && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            layout.setError(null);
+            this.email = true;
         } else {
-            startupFounderError.set("Startup founder name is too short");
-            return false;
+            layout.setError("Invalid email address");
         }
     }
 
-    boolean isStartupEmailValid(boolean setMessage) {
-        if (startupEmail != null && startupEmail.length() > 5) {
-            if (startupEmail != null && Patterns.EMAIL_ADDRESS.matcher(startupEmail).matches()) {
-                startupEmailError.set(null);
-                return true;
-            } else {
-                if (setMessage)
-                    startupEmailError.set("Invalid email format");
-                return false;
-            }
-        }
-        if (setMessage) startupEmailError.set("Email is too short");
-        return false;
-    }
-
-    boolean isStartupPhoneValid() {
-        if (startupPhone.length() > 10 && Patterns.PHONE.matcher(startupPhone).matches()) {
-            startupPhoneError.set(null);
-            return true;
+    void validateTelephone(TextInputLayout layout, CharSequence phone) {
+        if (phone != null && Patterns.PHONE.matcher(phone).matches() && phone.length() > 10) {
+            layout.setError(null);
+            this.telephone = true;
         } else {
-            startupPhoneError.set("Invalid phone number");
-            return false;
+            layout.setError("Invalid phone number");
         }
     }
 
-    boolean isWebsiteValid() {
-        if (startupWebsite != null && Patterns.WEB_URL.matcher(startupWebsite).matches()) {
-            startupWebsiteError.set(null);
-            return true;
+    void validateDescription(TextInputLayout layout, CharSequence name) {
+        if (name != null && name.length() > 20) {
+            layout.setError(null);
+            this.description = true;
         } else {
-            startupWebsiteError.set("Invalid URL format");
-            return false;
+            layout.setError("Startup description is too short");
         }
     }
 
-    boolean isFacebookValid() {
-        if (startupFacebook != null && Patterns.WEB_URL.matcher(startupFacebook).matches()) {
-            startupFacebookError.set(null);
-            return true;
+    void validateWebsite(TextInputLayout layout, CharSequence website) {
+        if (website != null && website.length() > 4 && Patterns.WEB_URL.matcher(website).matches()) {
+            layout.setError(null);
         } else {
-            startupFacebookError.set("Invalid URL format");
-            return false;
+            layout.setError("Invalid website format");
         }
     }
 
-    boolean isTwitterValid() {
-        if (startupTwitter != null && Patterns.WEB_URL.matcher(startupTwitter).matches()) {
-            startupTwitterError.set(null);
-            return true;
+    void validateFacebookUrl(TextInputLayout layout, CharSequence url) {
+        if (url != null && url.length() > 5 && Patterns.WEB_URL.matcher(url).matches()) {
+            layout.setError(null);
         } else {
-            startupTwitterError.set("Invalid URL format");
-            return false;
+            layout.setError("Invalid url format");
         }
+    }
+
+    void validateTwitterUrl(TextInputLayout layout, CharSequence url) {
+        if (url != null && url.length() > 5 && Patterns.WEB_URL.matcher(url).matches()) {
+            layout.setError(null);
+        } else {
+            layout.setError("Invalid url format");
+        }
+    }
+
+    boolean buttonVisibility() {
+        return this.startupName && this.founderName && this.email && this.description && this.telephone;
     }
 }
