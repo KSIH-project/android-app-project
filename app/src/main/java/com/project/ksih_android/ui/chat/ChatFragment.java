@@ -141,7 +141,6 @@ public class ChatFragment extends Fragment {
                 }
 
                 Timber.d(chatMessages.toString());
-
                 mFirebaseAdapter = new ListMessageAdapter(requireContext(), chatMessages);
                 mMessageRecyclerView.setAdapter(mFirebaseAdapter);
                 mFirebaseAdapter.notifyDataSetChanged();

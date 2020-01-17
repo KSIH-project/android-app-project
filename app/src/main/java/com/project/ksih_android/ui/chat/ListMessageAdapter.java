@@ -59,6 +59,8 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         //for friend chat
         if (chatMessage.get(position).getText() != null){
             if (holder instanceof ItemMessageFriendHolder){
+                ((ItemMessageFriendHolder)holder).txtContent.setVisibility(View.VISIBLE);
+                ((ItemMessageFriendHolder)holder).messageImageView.setVisibility(View.GONE);
                 ((ItemMessageFriendHolder)holder).txtContent.setText(chatMessage.get(position).getText());
                 ((ItemMessageFriendHolder)holder).messengerTextView.setText(chatMessage.get(position).getName());
 
@@ -71,6 +73,8 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             .into(((ItemMessageFriendHolder)holder).messangerImageView);
                 }
             }else if (holder instanceof ItemMessageUserHolder){
+                ((ItemMessageUserHolder)holder).txtContent.setVisibility(View.VISIBLE);
+                ((ItemMessageUserHolder)holder).messageImageView.setVisibility(View.GONE);
                 ((ItemMessageUserHolder)holder).txtContent.setText(chatMessage.get(position).getText());
 
                 if (chatMessage.get(position).getPhotoUrl() == null){
@@ -177,6 +181,11 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemCount() {
         return chatMessage.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
