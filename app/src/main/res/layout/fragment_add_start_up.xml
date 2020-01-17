@@ -66,12 +66,16 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    app:error="@{addStartUp.field.error}"
                     android:hint="Startup Name">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/startup_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:text="@={addStartUp.field.texts}"
+                        app:onFocus="@{addStartUp.focusChangeText()}"
                         android:inputType="textPersonName|textCapWords" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,13 +83,16 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Description">
+                    android:hint="Description"
+                    app:error="@{addStartUp.field.error}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/description"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:inputType="textMultiLine|textCapSentences"
+                        android:text="@={addStartUp.field.texts}"
+                        app:onFocus="@{addStartUp.focusChangeText()}"
                         android:maxLines="5" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,12 +100,15 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:error="@{addStartUp.field.error}"
                     android:hint="Founder">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/founder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:text="@={addStartUp.field.texts}"
+                        app:onFocus="@{addStartUp.focusChangeText()}"
                         android:inputType="textPersonName|textCapWords" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,12 +155,15 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:error="@{addStartUp.field.error}"
                     android:hint="Website">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/website"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:text="@={addStartUp.field.url}"
+                        app:onFocus="@{addStartUp.focusChangeUrl()}"
                         android:inputType="textUri" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -158,12 +171,15 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:error="@{addStartUp.field.error}"
                     android:hint="Facebook">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/facebook_url"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:text="@={addStartUp.field.url}"
+                        app:onFocus="@{addStartUp.focusChangeUrl()}"
                         android:inputType="textUri" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -171,12 +187,15 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:error="@{addStartUp.field.error}"
                     android:hint="Twitter">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/twitter_url"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:text="@={addStartUp.field.url}"
+                        app:onFocus="@{addStartUp.focusChangeUrl()}"
                         android:inputType="textUri" />
                 </com.google.android.material.textfield.TextInputLayout>
 

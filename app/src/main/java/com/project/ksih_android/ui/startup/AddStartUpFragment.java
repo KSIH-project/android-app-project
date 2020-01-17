@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
 
@@ -74,8 +76,9 @@ public class AddStartUpFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        StartupViewModel viewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         mBitmap = null;
-        return setUpBinding(savedInstanceState, inflater, container);
+        return setUpBinding(viewModel, inflater, container);
     }
 
     @Override
@@ -107,8 +110,9 @@ public class AddStartUpFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private View setUpBinding(Bundle savedinstanceState, LayoutInflater inflater, ViewGroup container) {
+    private View setUpBinding(StartupViewModel viewModel, LayoutInflater inflater, ViewGroup container) {
         FragmentAddStartUpBinding addStartUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_start_up, container, false);
+        addStartUpBinding.getAddStartUp();
         addStartUpToolbar = addStartUpBinding.addStartupToolbar;
         setUpToolbar();
         saveStartupButton = addStartUpBinding.saveStartup;
@@ -123,6 +127,7 @@ public class AddStartUpFragment extends Fragment {
         telephone = addStartUpBinding.telephone;
         email = addStartUpBinding.email;
         galleryIcon = addStartUpBinding.galleryIcon;
+        addStartUpBinding.setAddStartUp(viewModel);
         galleryIcon.setOnClickListener(view -> openGallery());
         saveStartupButton.setOnClickListener(view -> {
             // New Entry

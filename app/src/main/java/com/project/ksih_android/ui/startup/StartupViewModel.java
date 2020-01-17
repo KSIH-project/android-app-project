@@ -1,8 +1,11 @@
 package com.project.ksih_android.ui.startup;
 
+import android.view.View;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -12,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -24,8 +28,10 @@ public class StartupViewModel extends ViewModel implements ValueEventListener {
     private Query ref;
     private MutableLiveData<List<StartUpField>> startupList = new MutableLiveData<>();
     private List<StartUpField> mList = new ArrayList<>();
+    private StartupValidationField mField;
 
     public StartupViewModel() {
+        mField = new StartupValidationField();
         ref = FirebaseDatabase.getInstance()
                 .getReference(STARTUP_FIREBASE_DATABASE_REFERENCE)
                 .orderByChild("startupName"); /* Sort start ups by name */
@@ -55,5 +61,45 @@ public class StartupViewModel extends ViewModel implements ValueEventListener {
 
     void removeListeners() {
         ref.removeEventListener(this);
+    }
+
+    public StartupValidationField getField() {
+        return mField;
+    }
+
+    public View.OnFocusChangeListener focusChangeUrl() {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TextInputEditText editText = (TextInputEditText) view;
+                if (editText.getText().toString().length() > 0 && !b) {
+                    mField.isUrlValid(true);
+                }
+            }
+        };
+    }
+
+    public View.OnFocusChangeListener focusChangeText() {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TextInputEditText editText = (TextInputEditText) view;
+                if (editText.getText().toString().length() > 0 && !b) {
+                    mField.isTextValid(true);
+                }
+            }
+        };
+    }
+
+    @BindingAdapter("onFocus")
+    public static void startUpBindFocusChange(TextInputEditText editText, View.OnFocusChangeListener onFocusChangeListener) {
+        if (editText.getOnFocusChangeListener() == null) {
+            editText.setOnFocusChangeListener(onFocusChangeListener);
+        }
+    }
+
+    @BindingAdapter("error")
+    public static void startUpSetError(TextInputLayout inputLayout, String errorMessage) {
+        inputLayout.setError(errorMessage);
     }
 }
