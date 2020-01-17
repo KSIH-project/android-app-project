@@ -119,15 +119,12 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             .into(((ItemMessageFriendHolder)holder).messangerImageView);
                 }
 
-                ((ItemMessageFriendHolder)holder).messageImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ZoomFragment zoomFragment = new ZoomFragment();
-                        Bundle args = new Bundle();
-                        args.putString("chatImage", ((ItemMessageFriendHolder)holder).messageImageView.toString());
-                        zoomFragment.setArguments(args);
-                        Navigation.findNavController(v).navigate(R.id.messageRecyclerView, args);
-                    }
+                ((ItemMessageFriendHolder)holder).messageImageView.setOnClickListener(v -> {
+                    ZoomFragment zoomFragment = new ZoomFragment();
+                    Bundle args = new Bundle();
+                    args.putString("chatImage", chatMessage.get(position).getImageUrl() );
+                    zoomFragment.setArguments(args);
+                    Navigation.findNavController(v).navigate(R.id.messageRecyclerView, args);
                 });
 
             }if (holder instanceof ItemMessageUserHolder){
@@ -168,7 +165,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((ItemMessageUserHolder)holder).messageImageView.setOnClickListener(v -> {
                     ZoomFragment zoomFragment = new ZoomFragment();
                     Bundle args = new Bundle();
-                    args.putString("chatImage", ((ItemMessageUserHolder)holder).messageImageView.toString());
+                    args.putString("chatImage", chatMessage.get(position).getImageUrl());
                     zoomFragment.setArguments(args);
                     Navigation.findNavController(v).navigate(R.id.messageRecyclerView, args);
                 });
