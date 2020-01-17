@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/messangerTextView"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="20dp"
         android:layout_toEndOf="@id/imageView3"
         android:autoLink="all"
@@ -47,16 +47,16 @@
         android:orientation="vertical">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:visibility="gone"
             android:id="@+id/messageFriendImage"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             app:riv_border_color="@color/colorPrimary"
-            app:riv_corner_radius="15dp"
             app:riv_border_width="1dp"
-            android:layout_marginStart="40dp"/>
+            app:riv_corner_radius="15dp" />
     </LinearLayout>
 
 </RelativeLayout>
