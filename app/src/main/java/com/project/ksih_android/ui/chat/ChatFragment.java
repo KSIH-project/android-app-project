@@ -124,6 +124,7 @@ public class ChatFragment extends Fragment {
 
         //initialLIZING LAYOUTS
         mLinearLayoutManager = new LinearLayoutManager(requireContext());
+        mLinearLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
@@ -132,6 +133,7 @@ public class ChatFragment extends Fragment {
         FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                chatMessages.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
 
                     ChatMessage chatMessage = dataSnapshot1.getValue(ChatMessage.class);
