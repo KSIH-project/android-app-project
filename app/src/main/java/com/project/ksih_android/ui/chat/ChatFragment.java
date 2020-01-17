@@ -19,11 +19,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,10 +54,12 @@ import com.project.ksih_android.ui.zoom.ZoomFragment;
 import com.project.ksih_android.utility.Constants;
 import com.victor.loading.rotate.RotateLoading;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
-import static com.project.ksih_android.utility.Constants.ANONYMOUS;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,11 +77,16 @@ public class ChatFragment extends Fragment {
     private ImageView mAddMessageImageView;
     LinearLayoutManager mLinearLayoutManager;
 
+    //for message
+    public static final int VIEW_TYPE_USER_MESSAGE = 0;
+    public static final int VIEW_TYPE_FRIEND_MESSAGE = 1;
+    public ArrayList<ChatMessage> chatMessages;
+
     //firebase utils
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebaseDatabaseReference;
     public FirebaseUser currentUser;
-    private FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder> mFirebaseAdapter;
+    private ListMessageAdapter  mFirebaseAdapter;
 
 
     public ChatFragment() {
@@ -100,6 +105,7 @@ public class ChatFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_chat, container, false);
 
+        chatMessages = new ArrayList<>();
 
         //check and get current user data
         mAuth = FirebaseAuth.getInstance();
@@ -123,159 +129,63 @@ public class ChatFragment extends Fragment {
         mLinearLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
 
+
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        SnapshotParser<ChatMessage> parser = snapshot -> {
-            ChatMessage chatMessage = snapshot.getValue(ChatMessage.class);
-            if (chatMessage != null){
-                chatMessage.setId(snapshot.getKey());
-            }
-            return chatMessage;
-        };
 
-        DatabaseReference messageRef = mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD);
-        FirebaseRecyclerOptions<ChatMessage> options = new FirebaseRecyclerOptions.Builder<ChatMessage>()
-                .setQuery(messageRef, parser)
-                .build();
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>(options) {
-            @Override
-            public MessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                mAuth = FirebaseAuth.getInstance();
-                return new MessageViewHolder(inflater.inflate(R.layout.item_chat_message, viewGroup, false));
+        //get messages back
+        FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD).addChildEventListener(
+                new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        if (dataSnapshot.getValue() != null){
+                            ChatMessage chatMessage = dataSnapshot.getValue(ChatMessage.class);
+                            chatMessages.add(chatMessage);
 
-            }
+                            Timber.d(chatMessages.toString());
 
-            @Override
-            protected void onBindViewHolder(final MessageViewHolder viewHolder,
-                                            int position,
-                                            ChatMessage friendlyMessage) {
-                //logic for screen display
-                String sender_UID = mAuth.getCurrentUser().getUid();
-                String from_user_ID = friendlyMessage.getFrom();
 
-                loading.stop();
-                if (friendlyMessage.getText() != null) {
-                    viewHolder.receiverTextView.setVisibility(View.INVISIBLE);
-                    viewHolder.messengerImageView.setVisibility(View.INVISIBLE);
-                    viewHolder.messengerTextView.setVisibility(View.GONE);
+                            mFirebaseAdapter = new ListMessageAdapter(requireContext(), chatMessages);
+                            mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+                            mFirebaseAdapter.notifyDataSetChanged();
 
-                    //when message are text, image views are gone
-                    viewHolder.messageImageView.setVisibility(View.GONE);
-                    viewHolder.receiverImageView.setVisibility(View.GONE);
-
-                    if (from_user_ID.equals(sender_UID)) {
-                        viewHolder.messageTextView.setText(friendlyMessage.getText());
-                        viewHolder.messengerTextView.setTextColor(Color.BLACK);
-                        viewHolder.messageTextView.setGravity(Gravity.START);
-                    }else {
-                        viewHolder.messageTextView.setVisibility(View.INVISIBLE);
-                        viewHolder.receiverTextView.setVisibility(View.VISIBLE);
-                        viewHolder.messengerImageView.setVisibility(View.VISIBLE);
-                        viewHolder.messengerTextView.setVisibility(View.VISIBLE);
-
-                        viewHolder.messengerTextView.setText(friendlyMessage.getName());
-                        viewHolder.receiverTextView.setTextColor(Color.WHITE);
-                        viewHolder.receiverTextView.setGravity(Gravity.START);
-                        viewHolder.receiverTextView.setText(friendlyMessage.getText());
-                    }
-
-                    // when message type is image
-                } else if (friendlyMessage.getImageUrl() != null) {
-                    String imageUrl = friendlyMessage.getImageUrl();
-                    if (imageUrl.startsWith("gs://")) {
-                        StorageReference storageReference = FirebaseStorage.getInstance()
-                                .getReferenceFromUrl(imageUrl);
-                        storageReference.getDownloadUrl().addOnCompleteListener(
-                                task -> {
-                                    if (task.isSuccessful()) {
-                                        String downloadUrl = task.getResult().toString();
-                                        Glide.with(viewHolder.messageImageView.getContext())
-                                                .load(downloadUrl)
-                                                .into(viewHolder.messageImageView);
-
-                                    } else {
-                                        Timber.d( "Getting download url was not successful."+ task.getException());
+                            mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                                @Override
+                                public void onItemRangeInserted(int positionStart, int itemCount) {
+                                    super.onItemRangeInserted(positionStart, itemCount);
+                                    int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+                                    int lastVisiblePosition =
+                                            mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+                                    if (lastVisiblePosition == -1 ||
+                                            (positionStart >= (friendlyMessageCount - 1) &&
+                                                    lastVisiblePosition == (positionStart - 1))) {
+                                        mMessageRecyclerView.scrollToPosition(positionStart);
                                     }
-                                });
-                    } else {
-                        Glide.with(viewHolder.messageImageView.getContext())
-                                .load(friendlyMessage.getImageUrl())
-                                .into(viewHolder.messageImageView);
-                    }
-
-                    //when mesg has image, text views are gone
-                    viewHolder.messageTextView.setVisibility(TextView.GONE);
-                    viewHolder.receiverTextView.setVisibility(View.GONE);
-
-                    if (from_user_ID.equals(sender_UID)){
-                        viewHolder.messengerImageView.setVisibility(View.INVISIBLE);
-                        viewHolder.receiverImageView.setVisibility(View.GONE);
-                        viewHolder.messengerTextView.setVisibility(View.GONE);
-
-                        viewHolder.messageImageView.setVisibility(ImageView.VISIBLE);
-
-
-                    }else {
-                        viewHolder.messengerImageView.setVisibility(View.VISIBLE);
-                        viewHolder.messageImageView.setVisibility(View.GONE);
-                        viewHolder.messengerTextView.setVisibility(View.VISIBLE);
-                        viewHolder.receiverImageView.setVisibility(View.VISIBLE);
-
-                        Glide.with(viewHolder.receiverImageView.getContext())
-                                .load(friendlyMessage.getImageUrl())
-                                .into(viewHolder.receiverImageView);
-
-                        viewHolder.messengerTextView.setText(friendlyMessage.getName());
-                        if (friendlyMessage.getPhotoUrl() == null) {
-                            viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(getContext(),
-                                    R.drawable.default_profile_image));
-                        } else {
-                            Glide.with(getContext())
-                                    .load(friendlyMessage.getPhotoUrl())
-                                    .into(viewHolder.messengerImageView);
+                                }
+                            });
                         }
                     }
 
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                }
-                viewHolder.messageImageView.setOnClickListener(v -> {
-                    ZoomFragment zoomFragment = new ZoomFragment();
-                        Bundle bundle = new Bundle();
-                        zoomFragment.setArguments(bundle);
-                        bundle.putString("chatImage", friendlyMessage.getImageUrl());
-                        Navigation.findNavController(getParentFragment().getView()).navigate(R.id.messageRecyclerView, bundle);
+                    }
 
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
                 });
 
-                viewHolder.receiverImageView.setOnClickListener(v -> {
-                    ZoomFragment zoomFragment = new ZoomFragment();
-                    Bundle bundle = new Bundle();
-                    zoomFragment.setArguments(bundle);
-                    bundle.putString("chatImage", friendlyMessage.getImageUrl());
-                    Navigation.findNavController(getParentFragment().getView()).navigate(R.id.messageRecyclerView, bundle);
-                });
-            }
-        };
-
-        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-                int lastVisiblePosition =
-                        mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-                if (lastVisiblePosition == -1 ||
-                        (positionStart >= (friendlyMessageCount - 1) &&
-                                lastVisiblePosition == (positionStart - 1))) {
-                    mMessageRecyclerView.scrollToPosition(positionStart);
-                }
-            }
-        });
-
-
-        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-        mFirebaseAdapter.notifyDataSetChanged();
 
         //initialize edittext logic
         mSendButton = root.findViewById(R.id.sendButton);
@@ -335,7 +245,6 @@ public class ChatFragment extends Fragment {
                             mMessageEditText.setText("");
                         }
 
-
                     }
 
                     @Override
@@ -357,19 +266,6 @@ public class ChatFragment extends Fragment {
 
         return root;
     }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mFirebaseAdapter.startListening();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-    }
-
 
     @Override
     public void onStart() {
@@ -402,11 +298,6 @@ public class ChatFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mFirebaseAdapter.stopListening();
-    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {

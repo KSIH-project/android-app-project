@@ -16,4 +16,5 @@ public class Constants {
     public static final int DEFAULT_MSG_LENTH_LIMIT = 10;
     public static final String ANONYMOUS = "anonymous";
     public static final String MESSAGE_SENT_EVENT = "message_sent";
+    public static String UID = "";
 }
