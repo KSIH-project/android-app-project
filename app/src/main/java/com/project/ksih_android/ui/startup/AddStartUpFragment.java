@@ -112,7 +112,6 @@ public class AddStartUpFragment extends Fragment {
 
     private View setUpBinding(StartupViewModel viewModel, LayoutInflater inflater, ViewGroup container) {
         FragmentAddStartUpBinding addStartUpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_start_up, container, false);
-        addStartUpBinding.getAddStartUp();
         addStartUpToolbar = addStartUpBinding.addStartupToolbar;
         setUpToolbar();
         saveStartupButton = addStartUpBinding.saveStartup;

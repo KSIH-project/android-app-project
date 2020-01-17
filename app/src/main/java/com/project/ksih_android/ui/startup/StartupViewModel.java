@@ -17,7 +17,9 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import timber.log.Timber;
 
@@ -67,25 +69,97 @@ public class StartupViewModel extends ViewModel implements ValueEventListener {
         return mField;
     }
 
-    public View.OnFocusChangeListener focusChangeUrl() {
+    public View.OnFocusChangeListener focusChangeStartupName() {
         return new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 TextInputEditText editText = (TextInputEditText) view;
                 if (editText.getText().toString().length() > 0 && !b) {
-                    mField.isUrlValid(true);
+                    mField.isStartupNameValid();
                 }
             }
         };
     }
 
-    public View.OnFocusChangeListener focusChangeText() {
+    public View.OnFocusChangeListener focusChangeStartupFounder() {
         return new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 TextInputEditText editText = (TextInputEditText) view;
                 if (editText.getText().toString().length() > 0 && !b) {
-                    mField.isTextValid(true);
+                    mField.isStartupFounderValid();
+                }
+            }
+        };
+    }
+
+    public View.OnFocusChangeListener focusChangeStartupDescription() {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TextInputEditText editText = (TextInputEditText) view;
+                if (editText.getText().toString().length() > 0 && !b) {
+                    mField.isStartupDescriptionValid();
+                }
+            }
+        };
+    }
+
+    public View.OnFocusChangeListener focusChangeStartupEmail() {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TextInputEditText editText = (TextInputEditText) view;
+                if (editText.getText().toString().length() > 0 && !b) {
+                    mField.isStartupEmailValid(true);
+                }
+            }
+        };
+    }
+
+    public View.OnFocusChangeListener focusChangeStartupPhone() {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TextInputEditText editText = (TextInputEditText) view;
+                if (editText.getText().toString().length() > 0 && !b) {
+                    mField.isStartupPhoneValid();
+                }
+            }
+        };
+    }
+
+    public View.OnFocusChangeListener focusChangeStartupWebsite() {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TextInputEditText editText = (TextInputEditText) view;
+                if (editText.getText().toString().length() > 0 && !b) {
+                    mField.isWebsiteValid();
+                }
+            }
+        };
+    }
+
+    public View.OnFocusChangeListener focusChangeStartupFacebook() {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TextInputEditText editText = (TextInputEditText) view;
+                if (editText.getText().toString().length() > 0 && !b) {
+                    mField.isFacebookValid();
+                }
+            }
+        };
+    }
+
+    public View.OnFocusChangeListener focusChangeStartupTwitter() {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                TextInputEditText editText = (TextInputEditText) view;
+                if (editText.getText().toString().length() > 0 && !b) {
+                    mField.isTwitterValid();
                 }
             }
         };
