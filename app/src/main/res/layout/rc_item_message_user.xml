@@ -36,7 +36,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignEnd="@id/textContentUser">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:visibility="gone"
