@@ -23,10 +23,8 @@ public class StartupViewModel extends ViewModel implements ValueEventListener {
     private Query ref;
     private MutableLiveData<List<StartUpField>> startupList = new MutableLiveData<>();
     private List<StartUpField> mList = new ArrayList<>();
-    private StartupValidationField mField;
 
     public StartupViewModel() {
-        mField = new StartupValidationField();
         ref = FirebaseDatabase.getInstance()
                 .getReference(STARTUP_FIREBASE_DATABASE_REFERENCE)
                 .orderByChild("startupName"); /* Sort start ups by name */
@@ -56,9 +54,5 @@ public class StartupViewModel extends ViewModel implements ValueEventListener {
 
     void removeListeners() {
         ref.removeEventListener(this);
-    }
-
-    public StartupValidationField getField() {
-        return mField;
     }
 }

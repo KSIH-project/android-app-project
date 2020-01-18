@@ -90,7 +90,7 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
         StartupViewModel viewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         mBitmap = null;
         mValidationField = new StartupValidationField();
-        return setUpBinding(viewModel, inflater, container);
+        return setUpBinding(inflater, container);
     }
 
     @Override
@@ -115,14 +115,14 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
                     Timber.d(e.getLocalizedMessage());
                 }
             } else {
-                Toast.makeText(requireActivity(), "No Image Selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "No Image Selected", Toast.LENGTH_SHORT).show();
             }
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private View setUpBinding(StartupViewModel viewModel, LayoutInflater inflater, ViewGroup container) {
+    private View setUpBinding(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_add_start_up, container, false);
         setUpToolbar(view);
         saveStartupButton = view.findViewById(R.id.save_startup);
@@ -157,16 +157,18 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
         email.addTextChangedListener(this);
 
         galleryIcon.setOnClickListener(v -> openGallery());
-
         saveStartupButton.setOnClickListener(v -> {
             // New Entry
             if (mField == null) {
-                if (mBitmap != null) {
+                if (mBitmap != null && mValidationField.isButtonEnabled()) {
                     startProgressBar(progressBar);
                     hideButton(saveStartupButton);
                     uploadNewImageToFirebaseStorage();
-                } else
-                    Toast.makeText(requireActivity(), "Select an image", Toast.LENGTH_SHORT).show();
+                } else if (mBitmap == null) {
+                    Toast.makeText(getParentFragment().getContext(), "Select an image", Toast.LENGTH_SHORT).show();
+                } else if (!mValidationField.isButtonEnabled()){
+                    Toast.makeText(getParentFragment().getContext(), "Fill required fields", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 // Update existing entry
                 startProgressBar(progressBar);
@@ -210,21 +212,21 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
             if (task.isSuccessful()) {
                 // Upload successful
                 // Get image download URL
-                task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task1 -> {
+                task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
                         imageUrl = task1.getResult().toString();
                         addStartUp();
                         Timber.d("Download URL: %s", imageUrl);
                     } else {
                         Timber.d("Download URL error: %s", task1.getException().getLocalizedMessage());
-                        Toast.makeText(requireContext(), task1.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getParentFragment().getContext(), task1.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         stopProgressBar(progressBar);
                         showButton(saveStartupButton);
                     }
                 });
             } else {
                 Timber.d("Image upload error: %s", task.getException().getLocalizedMessage());
-                Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 stopProgressBar(progressBar);
                 showButton(saveStartupButton);
             }
@@ -244,7 +246,7 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
                 if (task.isSuccessful()) {
                     // Upload successful
                     // Get image download URL
-                    task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task1 -> {
+                    task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(task1 -> {
                         if (task1.isSuccessful()) {
                             imageUrl = task1.getResult().toString();
                             editStartupDetails();
@@ -256,7 +258,7 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
                     });
                 } else {
                     Timber.d(task.getException().getLocalizedMessage());
-                    Toast.makeText(getActivity(), "Image upload error: %s" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Image upload error: %s" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     stopProgressBar(progressBar);
                 }
             });
@@ -276,14 +278,16 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
                 startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
                 facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
                 telephone.getText().toString(), email.getText().toString());
-        firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
+        firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                if (getView() != null) {
+                    Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                }
                 showButton(saveStartupButton);
                 stopProgressBar(progressBar);
-                Toast.makeText(requireContext(), "Startup added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Startup added", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(requireContext(), "Unable to add Startup", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Unable to add Startup", Toast.LENGTH_SHORT).show();
                 Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
                 showButton(saveStartupButton);
                 stopProgressBar(progressBar);
@@ -308,6 +312,7 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
     private void editStartupDetails() {
         DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference(STARTUP_FIREBASE_DATABASE_REFERENCE);
         String id = mField.getId();
+        saveStartupButton.setEnabled(true);
         if (imageUrl == null) {
             // Admin did not change the original photo
             StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
@@ -315,14 +320,16 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
                     startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
                     facebookUrl.getText().toString(), twitterUrl.getText().toString(), mField.getImageUrl(),
                     telephone.getText().toString(), email.getText().toString());
-            firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
+            firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     stopProgressBar(progressBar);
-                    Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                    if (getView() != null) {
+                        Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                    }
                     showButton(saveStartupButton);
-                    Toast.makeText(requireContext(), "Startup edited", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Startup edited", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
                     Timber.d("database Write Error: %s", task.getException().getLocalizedMessage());
                     stopProgressBar(progressBar);
                     showButton(saveStartupButton);
@@ -335,14 +342,16 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
                     startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
                     facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
                     telephone.getText().toString(), email.getText().toString());
-            firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(requireActivity(), task -> {
+            firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     stopProgressBar(progressBar);
-                    Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                    if (getView() != null) {
+                        Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                    }
                     showButton(saveStartupButton);
-                    Toast.makeText(requireContext(), "Startup edited", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Startup edited", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
                     Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
                     stopProgressBar(progressBar);
                     showButton(saveStartupButton);
@@ -367,6 +376,9 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
         button.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Implementation of the {@link TextWatcher} interface
+     */
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -395,6 +407,6 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        saveStartupButton.setEnabled(mValidationField.buttonVisibility());
+        saveStartupButton.setEnabled(mValidationField.isButtonEnabled());
     }
 }

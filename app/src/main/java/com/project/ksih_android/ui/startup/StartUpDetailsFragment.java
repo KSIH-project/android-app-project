@@ -32,6 +32,7 @@ import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
  * A simple {@link Fragment} subclass.
  * <p>
  * {@link StartUpDetailsFragment} displays details about a startup
+ * Start-ups can either be edited or deleted from here
  */
 
 public class StartUpDetailsFragment extends Fragment {
@@ -124,7 +125,7 @@ public class StartUpDetailsFragment extends Fragment {
             if (task.isSuccessful()) {
                 deleteImage(mField.getImageUrl());
             } else {
-                Toast.makeText(requireContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 stopProgressBar(progressBar);
             }
         });
@@ -141,10 +142,10 @@ public class StartUpDetailsFragment extends Fragment {
             if (task.isSuccessful()) {
                 Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
                 stopProgressBar(progressBar);
-                Toast.makeText(requireContext(), "Startup Removed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Startup Removed", Toast.LENGTH_SHORT).show();
             } else {
                 stopProgressBar(progressBar);
-                Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
