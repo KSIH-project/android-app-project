@@ -413,9 +413,9 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if (mField != null)
+        if (mField != null) // Editing already existing startup
             saveStartupButton.setEnabled(mValidationField.isButtonEnabledForEdit());
-        else
+        else // New startup
             saveStartupButton.setEnabled(mValidationField.isButtonEnabled());
     }
 }

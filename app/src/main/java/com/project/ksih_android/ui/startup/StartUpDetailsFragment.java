@@ -165,10 +165,20 @@ public class StartUpDetailsFragment extends Fragment {
         dialog.create().show();
     }
 
+    /**
+     * Method starts progress bar
+     *
+     * @param loading is the progress bar widget
+     */
     private void startProgressBar(RotateLoading loading) {
         loading.start();
     }
 
+    /**
+     * Method stops progress bar
+     *
+     * @param loading is the progress bar widget
+     */
     private void stopProgressBar(RotateLoading loading) {
         loading.stop();
     }
