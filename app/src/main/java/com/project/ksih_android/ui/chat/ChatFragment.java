@@ -28,6 +28,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,7 +78,7 @@ public class ChatFragment extends Fragment {
     private ImageView mSendButton;
     private RecyclerView mMessageRecyclerView;
     private RotateLoading loading;
-    private EditText mMessageEditText;
+    private AutoCompleteTextView mMessageEditText;
     private ImageView mAddMessageImageView;
     LinearLayoutManager mLinearLayoutManager;
 
@@ -243,7 +245,38 @@ public class ChatFragment extends Fragment {
             startActivityForResult(intent, Constants.REQUEST_IMAGE);
         });
 
+        displayChatUsers();
+
         return root;
+    }
+
+    private void displayChatUsers(){
+
+        final ArrayAdapter<String> autoComplete = new ArrayAdapter<>(getParentFragment().getContext(),
+                android.R.layout.simple_list_item_1);
+        FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot suggestionSnapshot : dataSnapshot.getChildren()){
+
+                            String suggestion = suggestionSnapshot.child("name").getValue(String.class);
+                            autoComplete.add(suggestion);
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+        mMessageEditText.setAdapter(autoComplete);
+        Timber.d(autoComplete.toString());
+
     }
 
     @Override
