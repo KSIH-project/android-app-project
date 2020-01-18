@@ -165,7 +165,6 @@ public class StartUpDetailsFragment extends Fragment {
         dialog.create().show();
     }
 
-
     private void startProgressBar(RotateLoading loading) {
         loading.start();
     }

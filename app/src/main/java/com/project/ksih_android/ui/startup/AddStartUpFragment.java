@@ -76,6 +76,7 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
     private TextInputLayout startupNameLayout;
     private TextInputLayout descriptionLayout;
     private TextInputLayout founderLayout;
+    private TextInputLayout coFounderLayout;
     private TextInputLayout websiteLayout;
     private TextInputLayout facebookLayout;
     private TextInputLayout twitterLayout;
@@ -143,6 +144,7 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
         startupNameLayout = view.findViewById(R.id.layout_startup_name);
         descriptionLayout = view.findViewById(R.id.layout_description);
         founderLayout = view.findViewById(R.id.layout_founder);
+        coFounderLayout = view.findViewById(R.id.layout_co_founder);
         emailLayout = view.findViewById(R.id.layout_email);
         facebookLayout = view.findViewById(R.id.layout_facebook_url);
         telephoneLayout = view.findViewById(R.id.layout_telephone);
@@ -404,6 +406,8 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
             mValidationField.validateFacebookUrl(facebookLayout, charSequence);
         } else if (twitterLayout.hasFocus()) {
             mValidationField.validateTwitterUrl(twitterLayout, charSequence);
+        } else if (coFounderLayout.hasFocus()) {
+            mValidationField.validateCoFounderName(coFounderLayout, charSequence);
         }
     }
 

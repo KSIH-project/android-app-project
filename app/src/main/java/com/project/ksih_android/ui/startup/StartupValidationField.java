@@ -44,6 +44,21 @@ class StartupValidationField {
     }
 
     /**
+     * Validates the input that the user enters as the startup founder name
+     *
+     * @param layout is the textInput layout. It's used in order to set the error message
+     * @param name   is the startup's co-founder's name(s) entered by the user
+     */
+    void validateCoFounderName(TextInputLayout layout, CharSequence name) {
+        if (name != null && name.length() > 4) {
+            layout.setError(null);
+            this.coFounder = true;
+        } else {
+            layout.setError("Co-Founder name is too short");
+        }
+    }
+
+    /**
      * Validates the input that the user enters as the startup email address
      *
      * @param layout is the textInput layout. It's used in order to set the error message
@@ -97,6 +112,7 @@ class StartupValidationField {
     void validateWebsite(TextInputLayout layout, CharSequence website) {
         if (website != null && website.length() > 4 && Patterns.WEB_URL.matcher(website).matches()) {
             layout.setError(null);
+            this.website = true;
         } else {
             layout.setError("Invalid website format");
         }
@@ -111,6 +127,7 @@ class StartupValidationField {
     void validateFacebookUrl(TextInputLayout layout, CharSequence url) {
         if (url != null && url.length() > 5 && Patterns.WEB_URL.matcher(url).matches()) {
             layout.setError(null);
+            this.facebookUrl = true;
         } else {
             layout.setError("Invalid url format");
         }
@@ -125,6 +142,7 @@ class StartupValidationField {
     void validateTwitterUrl(TextInputLayout layout, CharSequence url) {
         if (url != null && url.length() > 5 && Patterns.WEB_URL.matcher(url).matches()) {
             layout.setError(null);
+            this.twitterUrl = true;
         } else {
             layout.setError("Invalid url format");
         }
@@ -141,6 +159,7 @@ class StartupValidationField {
      * Returns a boolean that is true when at least one field has been filled or when an image has been selected
      */
     boolean isButtonEnabledForEdit() {
-        return this.startupName || this.founderName || this.email || this.description || this.telephone;
+        return this.startupName || this.founderName || this.email || this.description || this.telephone
+                || this.coFounder || this.website || this.facebookUrl || this.twitterUrl;
     }
 }
