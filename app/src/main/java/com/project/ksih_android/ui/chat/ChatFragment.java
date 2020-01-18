@@ -54,7 +54,10 @@ import com.project.ksih_android.ui.zoom.ZoomFragment;
 import com.project.ksih_android.utility.Constants;
 import com.victor.loading.rotate.RotateLoading;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import timber.log.Timber;
@@ -204,12 +207,18 @@ public class ChatFragment extends Fragment {
 
                                 String userName = dataSnapshot.child("user_name").getValue().toString();
 
+                                DateFormat dfDate = new SimpleDateFormat("yyyy/MM/dd");
+                                String date = dfDate.format(Calendar.getInstance().getTime());
+                                DateFormat dfTime = new SimpleDateFormat("HH:mm");
+                                String time = dfTime.format(Calendar.getInstance().getTime());
+                                String setTime = date + " " + time;
+
                                 if (!mMessageEditText.getText().toString().trim().isEmpty()) {
                                     ChatMessage friendlyMessage = new
                                             ChatMessage(mMessageEditText.getText().toString().trim(),
                                             userName,
                                             mPhotoUrl,
-                                            null /* no image */, user_uID);
+                                            null /* no image */, user_uID, setTime);
                                     mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
                                             .push().setValue(friendlyMessage);
                                     mMessageEditText.setText("");
@@ -334,7 +343,14 @@ public class ChatFragment extends Fragment {
 
                                     String userName = dataSnapshot.child("user_name").getValue().toString();
 
-                                    ChatMessage tempMessage = new ChatMessage(null, userName, mPhotoUrl, "", user_uID);
+                                    DateFormat dfDate = new SimpleDateFormat("yyyy/MM/dd");
+                                    String date = dfDate.format(Calendar.getInstance().getTime());
+                                    DateFormat dfTime = new SimpleDateFormat("HH:mm");
+                                    String time = dfTime.format(Calendar.getInstance().getTime());
+                                    String setTime = date + " " + time;
+
+                                    ChatMessage tempMessage = new ChatMessage(null, userName, mPhotoUrl,
+                                            "", user_uID, setTime);
 
                                     mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
                                             .setValue(tempMessage, (databaseError, databaseReference) -> {
@@ -382,8 +398,15 @@ public class ChatFragment extends Fragment {
 
                                                 String userName = dataSnapshot.child("user_name").getValue().toString();
 
+                                                DateFormat dfDate = new SimpleDateFormat("yyyy/MM/dd");
+                                                String date = dfDate.format(Calendar.getInstance().getTime());
+                                                DateFormat dfTime = new SimpleDateFormat("HH:mm");
+                                                String time = dfTime.format(Calendar.getInstance().getTime());
+                                                String setTime = date + " " + time;
+
                                                 ChatMessage chatMessage = new ChatMessage(
-                                                        null, userName, mPhotoUrl, task1.getResult().toString(), user_uID);
+                                                        null, userName, mPhotoUrl, task1.getResult().toString(),
+                                                        user_uID, setTime);
                                                 mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
                                                         .setValue(chatMessage);
                                             }

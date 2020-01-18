@@ -60,9 +60,12 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (chatMessage.get(position).getText() != null){
             if (holder instanceof ItemMessageFriendHolder){
                 ((ItemMessageFriendHolder)holder).txtContent.setVisibility(View.VISIBLE);
+                ((ItemMessageFriendHolder)holder).chatTimeFriend.setVisibility(View.VISIBLE);
                 ((ItemMessageFriendHolder)holder).messageImageView.setVisibility(View.GONE);
+                ((ItemMessageFriendHolder)holder).chatTimeFriendImage.setVisibility(View.GONE);
                 ((ItemMessageFriendHolder)holder).txtContent.setText(chatMessage.get(position).getText());
                 ((ItemMessageFriendHolder)holder).messengerTextView.setText(chatMessage.get(position).getName());
+                ((ItemMessageFriendHolder)holder).chatTimeFriend.setText(chatMessage.get(position).getTime());
 
                 if (chatMessage.get(position).getPhotoUrl() ==null){
                     ((ItemMessageFriendHolder)holder).messangerImageView.setImageDrawable(ContextCompat
@@ -74,8 +77,11 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             }else if (holder instanceof ItemMessageUserHolder){
                 ((ItemMessageUserHolder)holder).txtContent.setVisibility(View.VISIBLE);
+                ((ItemMessageUserHolder)holder).chatTimeUser.setVisibility(View.VISIBLE);
                 ((ItemMessageUserHolder)holder).messageImageView.setVisibility(View.GONE);
+                ((ItemMessageUserHolder)holder).chatTimeUserImage.setVisibility(View.GONE);
                 ((ItemMessageUserHolder)holder).txtContent.setText(chatMessage.get(position).getText());
+                ((ItemMessageUserHolder)holder).chatTimeUser.setText(chatMessage.get(position).getTime());
 
                 if (chatMessage.get(position).getPhotoUrl() == null){
                     ((ItemMessageUserHolder)holder).messengerImageView.setImageDrawable(ContextCompat
@@ -90,7 +96,11 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }else if (chatMessage.get(position).getImageUrl() != null){
             if (holder instanceof ItemMessageFriendHolder){
                 ((ItemMessageFriendHolder)holder).txtContent.setVisibility(View.INVISIBLE);
+                ((ItemMessageFriendHolder)holder).chatTimeFriend.setVisibility(View.INVISIBLE);
                 ((ItemMessageFriendHolder)holder).messageImageView.setVisibility(View.VISIBLE);
+                ((ItemMessageFriendHolder)holder).chatTimeFriendImage.setVisibility(View.VISIBLE);
+
+                ((ItemMessageFriendHolder)holder).chatTimeFriendImage.setText(chatMessage.get(position).getTime());
 
                 String imageUrl = chatMessage.get(position).getImageUrl();
                 if (imageUrl.startsWith("gs://")) {
@@ -133,7 +143,11 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             }if (holder instanceof ItemMessageUserHolder){
                 ((ItemMessageUserHolder)holder).txtContent.setVisibility(View.INVISIBLE);
+                ((ItemMessageUserHolder)holder).chatTimeUser.setVisibility(View.INVISIBLE);
                 ((ItemMessageUserHolder)holder).messageImageView.setVisibility(View.VISIBLE);
+                ((ItemMessageUserHolder)holder).chatTimeUserImage.setVisibility(View.VISIBLE);
+
+                ((ItemMessageUserHolder)holder).chatTimeUserImage.setText(chatMessage.get(position).getTime());
 
                 String imageUrl = chatMessage.get(position).getImageUrl();
                 if (imageUrl.startsWith("gs://")) {
@@ -201,6 +215,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView txtContent;
         RoundedImageView messageImageView;
         RoundedImageView messengerImageView;
+        TextView chatTimeUser, chatTimeUserImage;
 
 
         public ItemMessageUserHolder(@NonNull View itemView) {
@@ -209,6 +224,8 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             //sender message details
             messageImageView = itemView.findViewById(R.id.messageUserImage);
             messengerImageView = itemView.findViewById(R.id.messangerImageView);
+            chatTimeUser = itemView.findViewById(R.id.chat_time_user);
+            chatTimeUserImage = itemView.findViewById(R.id.chat_time_user_image);
             //receiver message details
             txtContent = itemView.findViewById(R.id.textContentUser);
         }
@@ -219,6 +236,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public RoundedImageView messageImageView;
         public RoundedImageView messangerImageView;
         public TextView messengerTextView;
+        public TextView chatTimeFriend, chatTimeFriendImage;
 
         public ItemMessageFriendHolder(View itemView) {
             super(itemView);
@@ -226,6 +244,8 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             messangerImageView = itemView.findViewById(R.id.imageView3);
             messageImageView = itemView.findViewById(R.id.messageFriendImage);
             messengerTextView = itemView.findViewById(R.id.messangerTextView);
+            chatTimeFriend = itemView.findViewById(R.id.chat_time_friend);
+            chatTimeFriendImage = itemView.findViewById(R.id.chat_time_friend_image);
         }
     }
 

@@ -8,15 +8,17 @@ public class ChatMessage {
     private String photoUrl;
     private String ImageUrl;
     private String from;
+    private String time;
 
     public ChatMessage(){}
 
-    public ChatMessage( String text, String name, String photoUrl, String imageUrl, String from) {
+    public ChatMessage( String text, String name, String photoUrl, String imageUrl, String from, String time) {
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
         ImageUrl = imageUrl;
         this.from = from;
+        this.time = time;
     }
 
     public String getId() {
@@ -65,5 +67,13 @@ public class ChatMessage {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
