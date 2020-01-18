@@ -37,7 +37,7 @@
         android:autoLink="all"
         android:background="@drawable/single_message_text_background"
         android:padding="10dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="18sp"
         android:textColor="@color/black" />
 
 
@@ -51,7 +51,7 @@
             android:id="@+id/chat_time_friend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:text="10:22"
             android:textStyle="bold"
             />
@@ -78,7 +78,7 @@
             android:id="@+id/chat_time_friend_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:text="10:22"
             android:textStyle="bold"
             android:layout_gravity="end"
