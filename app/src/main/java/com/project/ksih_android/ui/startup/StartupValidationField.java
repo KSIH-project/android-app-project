@@ -20,7 +20,9 @@ class StartupValidationField {
      * @param name   is the startup name entered by the user
      */
     void validateStartupName(TextInputLayout layout, CharSequence name) {
-        if (name != null && name.length() > 2) {
+        if (name.length() == 0) {
+            layout.setError(null);
+        } else if (name.length() > 2) {
             layout.setError(null);
             this.startupName = true;
         } else {
@@ -35,7 +37,9 @@ class StartupValidationField {
      * @param name   is the startup founder's name entered by the user
      */
     void validateFounderName(TextInputLayout layout, CharSequence name) {
-        if (name != null && name.length() > 4) {
+        if (name.length() == 0) {
+            layout.setError(null);
+        } else if (name.length() > 4) {
             layout.setError(null);
             this.founderName = true;
         } else {
@@ -50,7 +54,9 @@ class StartupValidationField {
      * @param name   is the startup's co-founder's name(s) entered by the user
      */
     void validateCoFounderName(TextInputLayout layout, CharSequence name) {
-        if (name != null && name.length() > 4) {
+        if (name.length() == 0) {
+            layout.setError(null);
+        } else if (name.length() > 4) {
             layout.setError(null);
             this.coFounder = true;
         } else {
@@ -65,7 +71,9 @@ class StartupValidationField {
      * @param email  is the startup email address entered by the user
      */
     void validateEmail(TextInputLayout layout, CharSequence email) {
-        if (email != null && email.length() > 4 && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.length() == 0) {
+            layout.setError(null);
+        } else if (email.length() > 4 && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             layout.setError(null);
             this.email = true;
         } else {
@@ -80,7 +88,9 @@ class StartupValidationField {
      * @param phone  is the startup phone number entered by the user
      */
     void validateTelephone(TextInputLayout layout, CharSequence phone) {
-        if (phone != null && Patterns.PHONE.matcher(phone).matches() && phone.length() > 10) {
+        if (phone.length() == 0) {
+            layout.setError(null);
+        } else if (Patterns.PHONE.matcher(phone).matches() && phone.length() > 10) {
             layout.setError(null);
             this.telephone = true;
         } else {
@@ -95,7 +105,9 @@ class StartupValidationField {
      * @param description is the startup description entered by the user
      */
     void validateDescription(TextInputLayout layout, CharSequence description) {
-        if (description != null && description.length() > 20) {
+        if (description.length() == 0) {
+            layout.setError(null);
+        } else if (description.length() > 20) {
             layout.setError(null);
             this.description = true;
         } else {
@@ -110,7 +122,9 @@ class StartupValidationField {
      * @param website is the startup's website entered by the user
      */
     void validateWebsite(TextInputLayout layout, CharSequence website) {
-        if (website != null && website.length() > 4 && Patterns.WEB_URL.matcher(website).matches()) {
+        if (website.length() == 0) {
+            layout.setError(null);
+        } else if (website.length() > 4 && Patterns.WEB_URL.matcher(website).matches()) {
             layout.setError(null);
             this.website = true;
         } else {
@@ -125,7 +139,9 @@ class StartupValidationField {
      * @param url    is the startup facebook url entered by the user
      */
     void validateFacebookUrl(TextInputLayout layout, CharSequence url) {
-        if (url != null && url.length() > 5 && Patterns.WEB_URL.matcher(url).matches()) {
+        if (url.length() == 0) {
+            layout.setError(null);
+        } else if (url.length() > 5 && Patterns.WEB_URL.matcher(url).matches()) {
             layout.setError(null);
             this.facebookUrl = true;
         } else {
@@ -140,7 +156,9 @@ class StartupValidationField {
      * @param url    is the startup twitter url entered by the user
      */
     void validateTwitterUrl(TextInputLayout layout, CharSequence url) {
-        if (url != null && url.length() > 5 && Patterns.WEB_URL.matcher(url).matches()) {
+        if (url.length() == 0) {
+            layout.setError(null);
+        } else if (url.length() > 5 && Patterns.WEB_URL.matcher(url).matches()) {
             layout.setError(null);
             this.twitterUrl = true;
         } else {
