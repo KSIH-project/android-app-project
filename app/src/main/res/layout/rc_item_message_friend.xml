@@ -44,6 +44,22 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignEnd="@id/textContentFriend"
+        android:layout_below="@id/textContentFriend">
+        <TextView
+            android:id="@+id/chat_time_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="10:22"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.makeramen.roundedimageview.RoundedImageView
