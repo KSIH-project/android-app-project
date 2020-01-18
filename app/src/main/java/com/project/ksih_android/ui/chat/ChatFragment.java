@@ -204,14 +204,16 @@ public class ChatFragment extends Fragment {
 
                                 String userName = dataSnapshot.child("user_name").getValue().toString();
 
-                                ChatMessage friendlyMessage = new
-                                        ChatMessage(mMessageEditText.getText().toString().trim(),
-                                        userName,
-                                        mPhotoUrl,
-                                        null /* no image */, user_uID);
-                                mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
-                                        .push().setValue(friendlyMessage);
-                                mMessageEditText.setText("");
+                                if (!mMessageEditText.getText().toString().trim().isEmpty()) {
+                                    ChatMessage friendlyMessage = new
+                                            ChatMessage(mMessageEditText.getText().toString().trim(),
+                                            userName,
+                                            mPhotoUrl,
+                                            null /* no image */, user_uID);
+                                    mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                                            .push().setValue(friendlyMessage);
+                                    mMessageEditText.setText("");
+                                }
 
                             }
 
