@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:background="@color/colorSecondary"
     android:orientation="vertical">
 
     <com.makeramen.roundedimageview.RoundedImageView
@@ -16,6 +17,8 @@
         android:id="@+id/profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/secondaryTextColor"
         android:paddingTop="8dp"
         android:text="Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -25,6 +28,8 @@
         android:id="@+id/profile_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/secondaryTextColor"
         android:paddingTop="8dp"
         android:text="Email"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
