@@ -192,7 +192,7 @@ public class ChatFragment extends Fragment {
             //send message with sender details
         mSendButton.setOnClickListener(view -> {
 
-            if (!mMessageEditText.getText().toString().equals("")) {
+            if (!mMessageEditText.getText().toString().trim().isEmpty()) {
                 String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
@@ -204,7 +204,7 @@ public class ChatFragment extends Fragment {
                                 String userName = dataSnapshot.child("user_name").getValue().toString();
 
                                 ChatMessage friendlyMessage = new
-                                        ChatMessage(mMessageEditText.getText().toString(),
+                                        ChatMessage(mMessageEditText.getText().toString().trim(),
                                         userName,
                                         mPhotoUrl,
                                         null /* no image */, user_uID);
@@ -356,7 +356,6 @@ public class ChatFragment extends Fragment {
 
                                 }
                             });
-
                 }
             }
         }
