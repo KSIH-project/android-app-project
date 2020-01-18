@@ -192,9 +192,10 @@ public class ChatFragment extends Fragment {
             //send message with sender details
         mSendButton.setOnClickListener(view -> {
 
-            if (!mMessageEditText.getText().toString().trim().isEmpty()) {
+            if (mMessageEditText.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getContext(), "write something", Toast.LENGTH_SHORT).show();
+            }else{
                 String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
                 FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
                         .addValueEventListener(new ValueEventListener() {
