@@ -113,7 +113,7 @@ public class ChatFragment extends Fragment {
             Toast.makeText(getContext(), "SignIn to use chat", Toast.LENGTH_SHORT).show();
             Navigation.findNavController(root).navigate(R.id.nav_signIn);
         }else {
-            currentUser = mAuth.getCurrentUser();
+            currentUser = FirebaseAuth.getInstance().getCurrentUser();
             mUserName = currentUser.getDisplayName();
             if (currentUser.getPhotoUrl() != null){
                 mPhotoUrl = currentUser.getPhotoUrl().toString();
@@ -132,7 +132,8 @@ public class ChatFragment extends Fragment {
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
         //get messages back
-        FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chatMessages.clear();
