@@ -105,10 +105,12 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
                         mBitmap = ImageDecoder.decodeBitmap(source);
                         // Load image using Glide
                         Glide.with(requireContext()).load(mBitmap).into(galleryIcon);
+                        saveStartupButton.setEnabled(true);
                     } else {
                         mBitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
                         // Load image using Glide
                         Glide.with(requireContext()).load(mBitmap).into(galleryIcon);
+                        saveStartupButton.setEnabled(true);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -166,7 +168,7 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
                     uploadNewImageToFirebaseStorage();
                 } else if (mBitmap == null) {
                     Toast.makeText(getParentFragment().getContext(), "Select an image", Toast.LENGTH_SHORT).show();
-                } else if (!mValidationField.isButtonEnabled()){
+                } else if (!mValidationField.isButtonEnabled()) {
                     Toast.makeText(getParentFragment().getContext(), "Fill required fields", Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -273,15 +275,15 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
     private void addStartUp() {
         DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference(STARTUP_FIREBASE_DATABASE_REFERENCE);
         String id = firebaseDatabase.push().getKey();
-        StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
-                startupDescription.getText().toString(), startupFounder.getText().toString(),
-                startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
-                facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
-                telephone.getText().toString(), email.getText().toString());
+        StartUpField startUpField = new StartUpField(id, startupName.getText().toString().trim(),
+                startupDescription.getText().toString().trim(), startupFounder.getText().toString().trim(),
+                startupCoFounder.getText().toString().trim(), startupWebsite.getText().toString().trim(),
+                facebookUrl.getText().toString().trim(), twitterUrl.getText().toString().trim(), imageUrl,
+                telephone.getText().toString().trim(), email.getText().toString().trim());
         firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (getView() != null) {
-                    Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                    Navigation.findNavController(requireView()).navigate(R.id.action_addStartUpFragment_to_navigation_startup);
                 }
                 showButton(saveStartupButton);
                 stopProgressBar(progressBar);
@@ -315,16 +317,16 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
         saveStartupButton.setEnabled(true);
         if (imageUrl == null) {
             // Admin did not change the original photo
-            StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
-                    startupDescription.getText().toString(), startupFounder.getText().toString(),
-                    startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
-                    facebookUrl.getText().toString(), twitterUrl.getText().toString(), mField.getImageUrl(),
-                    telephone.getText().toString(), email.getText().toString());
+            StartUpField startUpField = new StartUpField(id, startupName.getText().toString().trim(),
+                    startupDescription.getText().toString().trim(), startupFounder.getText().toString().trim(),
+                    startupCoFounder.getText().toString().trim(), startupWebsite.getText().toString().trim(),
+                    facebookUrl.getText().toString().trim(), twitterUrl.getText().toString().trim(), mField.getImageUrl().trim(),
+                    telephone.getText().toString().trim(), email.getText().toString().trim());
             firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     stopProgressBar(progressBar);
                     if (getView() != null) {
-                        Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                        Navigation.findNavController(requireView()).navigate(R.id.action_addStartUpFragment_to_navigation_startup);
                     }
                     showButton(saveStartupButton);
                     Toast.makeText(getParentFragment().getContext(), "Startup edited", Toast.LENGTH_SHORT).show();
@@ -337,16 +339,16 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
             });
         } else {
             // Admin changes the original photo
-            StartUpField startUpField = new StartUpField(id, startupName.getText().toString(),
-                    startupDescription.getText().toString(), startupFounder.getText().toString(),
-                    startupCoFounder.getText().toString(), startupWebsite.getText().toString(),
-                    facebookUrl.getText().toString(), twitterUrl.getText().toString(), imageUrl,
-                    telephone.getText().toString(), email.getText().toString());
+            StartUpField startUpField = new StartUpField(id, startupName.getText().toString().trim(),
+                    startupDescription.getText().toString().trim(), startupFounder.getText().toString().trim(),
+                    startupCoFounder.getText().toString().trim(), startupWebsite.getText().toString().trim(),
+                    facebookUrl.getText().toString().trim(), twitterUrl.getText().toString().trim(), imageUrl,
+                    telephone.getText().toString().trim(), email.getText().toString().trim());
             firebaseDatabase.child(id).setValue(startUpField).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     stopProgressBar(progressBar);
                     if (getView() != null) {
-                        Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                        Navigation.findNavController(requireView()).navigate(R.id.action_addStartUpFragment_to_navigation_startup);
                     }
                     showButton(saveStartupButton);
                     Toast.makeText(getParentFragment().getContext(), "Startup edited", Toast.LENGTH_SHORT).show();
@@ -407,6 +409,6 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        saveStartupButton.setEnabled(mValidationField.isButtonEnabled());
+        saveStartupButton.setEnabled(mValidationField.isButtonEnabledForEdit());
     }
 }

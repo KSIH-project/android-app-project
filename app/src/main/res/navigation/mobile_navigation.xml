@@ -74,7 +74,13 @@
         android:id="@+id/addStartUpFragment"
         android:name="com.project.ksih_android.ui.startup.AddStartUpFragment"
         android:label="Add Startup"
-        tools:layout="@layout/fragment_add_start_up" />
+        tools:layout="@layout/fragment_add_start_up" >
+        <action
+            android:id="@+id/action_addStartUpFragment_to_navigation_startup"
+            app:destination="@id/navigation_startup"
+            app:popUpTo="@+id/navigation_startup"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/startUpDetailsFragment"
@@ -91,5 +97,10 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_navigation_startup"
+            app:destination="@id/navigation_startup"
+            app:popUpTo="@+id/navigation_startup"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

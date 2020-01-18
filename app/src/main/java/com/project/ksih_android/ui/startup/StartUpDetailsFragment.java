@@ -140,7 +140,7 @@ public class StartUpDetailsFragment extends Fragment {
         StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
         ref.delete().addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful()) {
-                Navigation.findNavController(requireView()).navigate(R.id.navigation_startup);
+                Navigation.findNavController(requireView()).navigate(R.id.action_startUpDetailsFragment_to_navigation_startup);
                 stopProgressBar(progressBar);
                 Toast.makeText(getParentFragment().getContext(), "Startup Removed", Toast.LENGTH_SHORT).show();
             } else {

@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputLayout;
 class StartupValidationField {
 
     private boolean startupName, founderName, email, telephone, description;
+    private boolean coFounder, website, facebookUrl, twitterUrl;
 
     /**
      * Validates the input that the user enters as the startup name
@@ -34,7 +35,7 @@ class StartupValidationField {
      * @param name   is the startup founder's name entered by the user
      */
     void validateFounderName(TextInputLayout layout, CharSequence name) {
-        if (name != null && name.length() > 2) {
+        if (name != null && name.length() > 4) {
             layout.setError(null);
             this.founderName = true;
         } else {
@@ -134,5 +135,12 @@ class StartupValidationField {
      */
     boolean isButtonEnabled() {
         return this.startupName && this.founderName && this.email && this.description && this.telephone;
+    }
+
+    /**
+     * Returns a boolean that is true when at least one field has been filled or when an image has been selected
+     */
+    boolean isButtonEnabledForEdit() {
+        return this.startupName || this.founderName || this.email || this.description || this.telephone;
     }
 }
