@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1933C5</color>
-    <color name="colorPrimaryDark">#071A8F</color>
+
     <color name="colorAccent">#D81B60</color>
-    <color name="button_color">#8E2623</color>
+    <color name="colorPrimary">#1b6985</color>
+    <color name="colorPrimaryLight">#5497b5</color>
+    <color name="colorPrimaryDark">#003e58</color>
+    <color name="colorSecondary">#8e2623</color>
+    <color name="colorSecondaryLight">#c3554b</color>
+    <color name="colorSecondaryDark">#5b0000</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
+
+
     <color name="button_color_disabled">#966A69</color>
     <color name="dark_text_color">#111111</color>
     <color name="color_text_input_background">#C4C4C4</color>
     <color name="color_text_default">#000000</color>
     <color name="color_text_pressed">#888888</color>
     <color name="colorDivider">#AAAAAA</color>
-    <color name="black">#000000</color>
+    <color name="color_black">#000000</color>
 </resources>

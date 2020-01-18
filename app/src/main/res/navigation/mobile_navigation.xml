@@ -30,10 +30,18 @@
         tools:layout="@layout/fragment_startup">
         <action
             android:id="@+id/action_navigation_startup_to_startUpDetailsFragment"
-            app:destination="@id/startUpDetailsFragment" />
+            app:destination="@id/startUpDetailsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_navigation_startup_to_addStartUpFragment"
-            app:destination="@id/addStartUpFragment" />
+            app:destination="@id/addStartUpFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -78,6 +86,10 @@
         <action
             android:id="@+id/action_addStartUpFragment_to_navigation_startup"
             app:destination="@id/navigation_startup"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
             app:popUpTo="@+id/navigation_startup"
             app:popUpToInclusive="true" />
     </fragment>
@@ -89,7 +101,11 @@
         tools:layout="@layout/fragment_start_up_details">
         <action
             android:id="@+id/action_startUpDetailsFragment_to_addStartUpFragment"
-            app:destination="@id/addStartUpFragment" />
+            app:destination="@id/addStartUpFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_startUpDetailsFragment_to_zoomImageFragment"
             app:destination="@id/zoomFragment"

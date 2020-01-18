@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.project.ksih_android.R;
@@ -38,9 +37,9 @@ public class StartupFragment extends Fragment {
 
     private void setUpRecyclerView(FragmentStartupBinding startupBinding) {
         startupBinding.startUpRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        startupBinding.startUpRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         mStartupViewModel.getStartUps().observe(this, startUpFields -> {
             StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext());
+            startupBinding.startUpRecyclerView.setHasFixedSize(true);
             startupBinding.startUpRecyclerView.setAdapter(adapter);
             // Toggle empty list sign
             if (startUpFields.size() < 1) {

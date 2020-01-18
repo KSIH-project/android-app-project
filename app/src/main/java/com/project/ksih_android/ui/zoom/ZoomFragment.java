@@ -1,6 +1,5 @@
 package com.project.ksih_android.ui.zoom;
 
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;

@@ -48,6 +48,7 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
         Glide.with(mContext).load(field.getImageUrl()).into(holder.roundLogo);
         holder.startupName.setText(field.getStartupName());
         holder.startupDescription.setText(field.getStartupDescription());
+        holder.startupFounder.setText(field.getStartupFounder());
     }
 
     @Override
@@ -57,8 +58,7 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
 
     public class StartUpViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView roundLogo;
-        TextView startupName;
-        TextView startupDescription;
+        TextView startupName, startupDescription, startupFounder;
 
         public StartUpViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +66,7 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
             roundLogo = itemView.findViewById(R.id.startup_icon_image);
             startupName = itemView.findViewById(R.id.startup_name_item);
             startupDescription = itemView.findViewById(R.id.startup_description_item);
+            startupFounder = itemView.findViewById(R.id.startup_founder_item);
 
             itemView.setOnClickListener(view -> {
                 StartUpField field = mList.get(getAdapterPosition());
