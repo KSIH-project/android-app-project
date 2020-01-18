@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     private NavController mNavController;
     private Toolbar toolBar;
     private DrawerLayout drawer;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +47,11 @@ public class HomeActivity extends AppCompatActivity {
         NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navMenuView.addItemDecoration(new DividerItemDecoration(this));
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        mToggle = new ActionBarDrawerToggle(
                 this, drawer, toolBar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawer.addDrawerListener(mToggle);
+        mToggle.syncState();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_signIn, R.id.navigation_project, R.id.navigation_member,
@@ -84,18 +85,18 @@ public class HomeActivity extends AppCompatActivity {
         mNavController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             try {
                 String dest = getResources().getResourceName(destination.getId());
-                Timber.d("onDestinationChanged: " + dest);
+                Timber.d("onDestinationChanged: %s", dest);
             } catch (Resources.NotFoundException e) {
                 destination.getId();
             }
             switch (destination.getId()) {
                 case R.id.onBoardingFragment:
                     hideCustomToolBar();
-                    hideDrawer();
+                    disableNavDrawer();
                     break;
                 default:
                     showCustomToolBar();
-                    showDrawer();
+                    enableNavDrawer();
             }
         });
     }
@@ -112,19 +113,23 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void hideCustomToolBar() {
-        toolBar.setVisibility(View.INVISIBLE);
+        toolBar.setVisibility(View.GONE);
     }
 
     private void showCustomToolBar() {
         toolBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideDrawer() {
-        drawer.setVisibility(View.INVISIBLE);
+    private void enableNavDrawer() {
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        mToggle.setDrawerIndicatorEnabled(true);
+        mToggle.syncState();
     }
 
-    private void showDrawer() {
-        drawer.setVisibility(View.VISIBLE);
+    private void disableNavDrawer() {
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mToggle.setDrawerIndicatorEnabled(false);
+        mToggle.syncState();
     }
 
 
