@@ -109,12 +109,11 @@ public class ChatFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_chat, container, false);
 
         //check and get current user data
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             Toast.makeText(getContext(), "SignIn to use chat", Toast.LENGTH_SHORT).show();
             Navigation.findNavController(root).navigate(R.id.nav_signIn);
         }else {
+            currentUser = mAuth.getCurrentUser();
             mUserName = currentUser.getDisplayName();
             if (currentUser.getPhotoUrl() != null){
                 mPhotoUrl = currentUser.getPhotoUrl().toString();
@@ -249,6 +248,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             Toast.makeText(getContext(), "Login to use chat session", Toast.LENGTH_SHORT).show();
@@ -333,7 +333,7 @@ public class ChatFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 if (data != null){
 
-                    String user_uID = mAuth.getCurrentUser().getUid();
+                    String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     final Uri uri = data.getData();
 
                     FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
@@ -388,7 +388,7 @@ public class ChatFragment extends Fragment {
                         .addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()){
 
-                                String user_uID = mAuth.getCurrentUser().getUid();
+                                String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
                                 FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
