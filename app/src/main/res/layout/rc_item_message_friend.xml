@@ -73,6 +73,18 @@
             app:riv_border_color="@color/colorPrimary"
             app:riv_border_width="1dp"
             app:riv_corner_radius="15dp" />
+
+        <TextView
+            android:id="@+id/chat_time_friend_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="10:22"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
 </RelativeLayout>
