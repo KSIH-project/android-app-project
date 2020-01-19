@@ -1,6 +1,7 @@
 package com.project.ksih_android.ui.events;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +47,8 @@ public class EventFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        mFragmentEventBinding.recyclerEvents.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, true);
+        mFragmentEventBinding.recyclerEvents.setLayoutManager(layoutManager);
         eventViewModel.getEvents().observe(this, events -> {
             if (events.size() == 0) {
                 mFragmentEventBinding.imageViewIllustration.setVisibility(View.VISIBLE);

@@ -44,6 +44,7 @@ public class Events implements Parcelable {
         this.eventRSVP = eventRSVP;
         this.id = id;
         this.time = time;
+        this.date = date;
     }
 
     private Events(Parcel in) {

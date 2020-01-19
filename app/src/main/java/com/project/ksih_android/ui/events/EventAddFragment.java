@@ -1,9 +1,12 @@
 package com.project.ksih_android.ui.events;
 
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -41,6 +45,7 @@ import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
 
 import timber.log.Timber;
 
@@ -49,7 +54,7 @@ import timber.log.Timber;
  * A simple {@link Fragment} subclass.
  */
 public class EventAddFragment extends Fragment {
-
+    private DatePickerDialog.OnDateSetListener mDateDialog;
     private Events mEvents;
     private Bitmap mBitmap;
     private String imagePath = "";
@@ -78,7 +83,27 @@ public class EventAddFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_add, container, false);
         mBitmap = null;
         binding.imageViewAdd.setOnClickListener(view -> openGallery());
+        binding.textInputLayoutDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
 
+                DatePickerDialog pickerDialog = new DatePickerDialog(getParentFragment().getContext()
+                        , android.R.style.Theme_Material_Light_Dialog, mDateDialog,
+                        year, month, day);
+                pickerDialog.show();
+                selectDate();
+            }
+        });
+
+        mDateDialog = (view, year, month, dayOfMonth) -> {
+            month = month + 1;
+            String date = month + "/" + dayOfMonth + "/" + year;
+            binding.textInputLayoutDate.setText(date);
+        };
 
         binding.buttonAddEvents.setOnClickListener(v -> {
 
@@ -109,6 +134,11 @@ public class EventAddFragment extends Fragment {
         return binding.getRoot();
     }
 
+    private void selectDate() {
+
+
+    }
+
     private void getEventsDetails() {
 
         binding.textInputLayoutTittle.getEditText().setText(mEvents.getEventName());
@@ -118,7 +148,7 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutPhone.getEditText().setText(mEvents.getPhoneNumber());
         binding.textInputLayoutRsvp.getEditText().setText(mEvents.getEventRSVP());
         binding.textInputLayoutTime.getEditText().setText(mEvents.getTime());
-        binding.textInputLayoutDate.getEditText().setText(mEvents.getDate());
+        binding.textInputLayoutDate.setText(mEvents.getDate());
         Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageViewAdd);
     }
 
@@ -220,14 +250,14 @@ public class EventAddFragment extends Fragment {
             Events nEvents = new Events();
             nEvents.setImageUrl(mEvents.getImageUrl());
             nEvents.setId(id);
-            nEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString());
-            nEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString());
-            nEvents.setEventDescription(binding.textInputLayoutDesc.getEditText().getText().toString());
-            nEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString());
-            nEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString());
-            nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
-            nEvents.setDate(binding.textInputLayoutDate.getEditText().getText().toString());
-            nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString());
+            nEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString().trim());
+            nEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString().trim());
+            nEvents.setEventDescription(binding.textInputLayoutDesc.getEditText().getText().toString().trim());
+            nEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString().trim());
+            nEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString().trim());
+            nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString().trim());
+            nEvents.setDate(binding.textInputLayoutDate.getText().toString());
+            nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString().trim());
             if (id == null) {
                 addEvents();
                 Toast.makeText(getParentFragment().getContext(), "error detected", Toast.LENGTH_SHORT).show();
@@ -258,7 +288,7 @@ public class EventAddFragment extends Fragment {
             nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString());
             nEvents.setId(id);
             nEvents.setImageUrl(imageUrl);
-            nEvents.setDate(binding.textInputLayoutDate.getEditText().getText().toString());
+            nEvents.setDate(binding.textInputLayoutDate.getText().toString());
             nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString());
             databaseReference.child(id).setValue(nEvents).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -334,19 +364,19 @@ public class EventAddFragment extends Fragment {
         if (!hasText(binding.textInputLayoutDesc, error)) return false;
         if (!hasText(binding.textInputLayoutContactsEmail, error)) return false;
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
-        if (!hasText(binding.textInputLayoutDate, error)) return false;
+        if (binding.textInputLayoutDate == null) return false;
         if (!hasText(binding.textInputLayoutTime, error)) return false;
         return hasText(binding.textInputLayoutRsvp, error);
     }
 
     private void addEvents() {
         String id = databaseReference.push().getKey();
-        mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString(),
-                binding.textInputLayoutContactsEmail.getEditText().getText().toString(),
-                binding.textInputLayoutPhone.getEditText().getText().toString(),
-                binding.textInputLayoutDate.getEditText().getText().toString(), binding.textInputLayoutTime.getEditText().getText().toString(),
-                binding.textInputLayoutDesc.getEditText().getText().toString(), binding.textInputLayoutType.getEditText().getText().toString()
-                , binding.textInputLayoutRsvp.getEditText().getText().toString());
+        mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString().trim(),
+                binding.textInputLayoutContactsEmail.getEditText().getText().toString().trim(),
+                binding.textInputLayoutPhone.getEditText().getText().toString().trim(),
+                binding.textInputLayoutDate.getText().toString(), binding.textInputLayoutTime.getEditText().getText().toString().trim(),
+                binding.textInputLayoutDesc.getEditText().getText().toString().trim(), binding.textInputLayoutType.getEditText().getText().toString().trim()
+                , binding.textInputLayoutRsvp.getEditText().getText().toString().trim());
         databaseReference.child(id).setValue(mEvents).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 navigateToEventsListFragment(getParentFragment().getView());

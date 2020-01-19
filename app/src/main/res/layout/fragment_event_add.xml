@@ -127,27 +127,18 @@
                         android:maxLength="11" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <TextView
                     android:id="@+id/textInputLayout_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:padding="8dp"
+                    android:drawableStart="@drawable/ic_calendar_month"
+                    android:drawablePadding="8dp"
+                    android:hint="@string/select_a_date"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_phone"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_phone"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_phone">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_calendar_month"
-                        android:drawablePadding="16dp"
-                        android:maxLength="25"
-                        android:hint="Date"
-                        android:inputType="date">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_phone" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayout_time"
