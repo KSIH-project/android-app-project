@@ -100,6 +100,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((ItemMessageFriendHolder)holder).messageImageView.setVisibility(View.VISIBLE);
                 ((ItemMessageFriendHolder)holder).chatTimeFriendImage.setVisibility(View.VISIBLE);
 
+                ((ItemMessageFriendHolder)holder).messengerTextView.setText(chatMessage.get(position).getName());
                 ((ItemMessageFriendHolder)holder).chatTimeFriendImage.setText(chatMessage.get(position).getTime());
 
                 String imageUrl = chatMessage.get(position).getImageUrl();

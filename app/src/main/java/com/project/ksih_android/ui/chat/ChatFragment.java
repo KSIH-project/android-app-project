@@ -61,6 +61,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import timber.log.Timber;
 
@@ -92,6 +96,8 @@ public class ChatFragment extends Fragment {
     private DatabaseReference mFirebaseDatabaseReference;
     public FirebaseUser currentUser;
     private ListMessageAdapter  mFirebaseAdapter;
+    private ArrayList<String> newList;
+    private LinkedHashSet<String> linkedHashSet;
 
 
     public ChatFragment() {
@@ -252,8 +258,8 @@ public class ChatFragment extends Fragment {
 
     private void displayChatUsers(){
 
-        final ArrayAdapter<String> autoComplete = new ArrayAdapter<>(getParentFragment().getContext(),
-                android.R.layout.simple_list_item_1);
+        List<String> arrayList = new ArrayList<>();
+
         FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -262,7 +268,21 @@ public class ChatFragment extends Fragment {
                         for (DataSnapshot suggestionSnapshot : dataSnapshot.getChildren()){
 
                             String suggestion = suggestionSnapshot.child("name").getValue(String.class);
-                            autoComplete.add(suggestion);
+//
+//                           Set<String> set = new HashSet<String>(arrayList);
+                            newList = new ArrayList<>();
+//                            newList.add(suggestion);
+
+                            linkedHashSet = new LinkedHashSet<>();
+                            linkedHashSet.add(suggestion);
+                            newList.addAll(linkedHashSet);
+
+
+                            final ArrayAdapter<String> autoComplete = new ArrayAdapter<>(getParentFragment().getContext(),
+                                    android.R.layout.simple_list_item_1, newList);
+
+                            mMessageEditText.setAdapter(autoComplete);
+                            Timber.d(autoComplete.toString());
 
                         }
 
@@ -273,9 +293,6 @@ public class ChatFragment extends Fragment {
 
                     }
                 });
-
-        mMessageEditText.setAdapter(autoComplete);
-        Timber.d(autoComplete.toString());
 
     }
 
@@ -355,7 +372,6 @@ public class ChatFragment extends Fragment {
             }
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

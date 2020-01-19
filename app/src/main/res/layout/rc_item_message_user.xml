@@ -18,7 +18,7 @@
         android:src="@drawable/default_profile_image"
         app:riv_corner_radius="360dp" />
 
-    <TextView
+    <com.cooltechworks.views.WhatsAppTextView
         android:id="@+id/textContentUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
