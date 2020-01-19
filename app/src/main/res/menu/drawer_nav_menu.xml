@@ -7,7 +7,7 @@
         <!--            android:title="@string/title_project" />-->
         <item
             android:id="@+id/navigation_member"
-            android:icon="@drawable/ic_members_new"
+            android:icon="@drawable/ic_members"
             android:title="@string/title_members" />
         <item
             android:id="@+id/nav_signIn"
