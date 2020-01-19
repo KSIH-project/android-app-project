@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_event">
+    app:startDestination="@id/navigation_project">
 
     <activity
         android:id="@+id/nav_signIn"
@@ -71,9 +71,6 @@
         <action
             android:id="@+id/action_eventDetailsFragment_to_navigation_event"
             app:destination="@id/navigation_event" />
-        <action
-            android:id="@+id/action_eventDetailsFragment_to_zoomFragment"
-            app:destination="@id/zoomFragment" />
         <action
             android:id="@+id/action_eventDetailsFragment_to_eventAddFragment"
             app:destination="@id/eventAddFragment" />

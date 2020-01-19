@@ -6,7 +6,6 @@ import android.os.Bundle;
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
 
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import androidx.databinding.DataBindingUtil;
@@ -20,8 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -109,14 +106,11 @@ public class EventDetailsFragment extends Fragment {
 
     private void deleteImage(String imageUrl) {
         StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl);
-        reference.delete().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Image Successfully Removed", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                }
+        reference.delete().addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(requireContext(), "Image Successfully Removed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -133,7 +127,7 @@ public class EventDetailsFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("eventsImage", mEvents.getImageUrl());
         binding.imageEventsDetails.setOnClickListener(view ->
-                Navigation.findNavController(view).navigate(R.id.action_eventDetailsFragment_to_zoomFragment, bundle));
+                Navigation.findNavController(view).navigate(R.id.zoomFragment, bundle));
 
     }
 }
