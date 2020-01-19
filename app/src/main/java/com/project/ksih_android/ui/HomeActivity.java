@@ -105,6 +105,8 @@ public class HomeActivity extends AppCompatActivity {
     private void showDialog() {
         MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(HomeActivity.this);
         dialog.setMessage("Are you sure you want to exit?")
+                .setIcon(R.drawable.ksih_background)
+                .setTitle("Exit")
                 .setPositiveButton("YES", (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     System.exit(0);
