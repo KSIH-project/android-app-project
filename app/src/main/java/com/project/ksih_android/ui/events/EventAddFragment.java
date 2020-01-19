@@ -35,6 +35,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
 import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE_EVENTS_IMAGE;
+import static com.project.ksih_android.utility.Constants.SAVE_EVENTS_BUTTON_TEXT;
 import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 
 import org.jetbrains.annotations.NotNull;
@@ -86,18 +87,20 @@ public class EventAddFragment extends Fragment {
                 disableViews();
                 binding.progressBarEventsAddFragment.start();
                 binding.buttonAddEvents.setEnabled(false);
+                hideSoftKeyboard(requireActivity());
                 uploadImageToFireBaseStorage();
             } else if (validate() && getArguments() != null) {
                 binding.progressBarEventsAddFragment.start();
                 binding.buttonAddEvents.setEnabled(false);
 //                saveEvents();
+                hideSoftKeyboard(requireActivity());
                 uploadNewImageToFireBaseStorage();
             } else {
-                Toast.makeText(requireContext(), "Please Fill in the Required Fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Please Fill in the Required Fields", Toast.LENGTH_SHORT).show();
             }
         });
         if (getArguments() != null) {
-            binding.buttonAddEvents.setText("Save Events");
+            binding.buttonAddEvents.setText(SAVE_EVENTS_BUTTON_TEXT);
             mEvents = getArguments().getParcelable(EVENT_TO_EDIT);
             getEventsDetails();
         }
@@ -117,11 +120,6 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutTime.getEditText().setText(mEvents.getTime());
         binding.textInputLayoutDate.getEditText().setText(mEvents.getDate());
         Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageViewAdd);
-    }
-
-    private void saveEvents() {
-        saveImage();
-        hideSoftKeyboard(requireActivity());
     }
 
     private void disableViews() {
@@ -145,7 +143,6 @@ public class EventAddFragment extends Fragment {
             uploadNewImageToFireBaseStorage();
         }
     }
-
     private void uploadImageToFireBaseStorage() {
         if (mBitmap != null) {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -156,20 +153,28 @@ public class EventAddFragment extends Fragment {
             UploadTask task = storageReference.putBytes(data);
             task.addOnCompleteListener(task1 -> {
                 if (task1.isSuccessful()) {
-                    task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(requireActivity(), task2 -> {
+                    if (getView() != null) {
+                        navigateToEventsListFragment(requireView());
+                    }
+                    task1.getResult().getStorage().getDownloadUrl().addOnCompleteListener(getParentFragment().getActivity(), task2 -> {
                         if (task2.isSuccessful()) {
                             imageUrl = task2.getResult().toString();
                             addEvents();
+                        } else {
+                            Timber.d("Download URL error: %s", task2.getException().getLocalizedMessage());
+                            Toast.makeText(getParentFragment().getContext(), task2.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            binding.progressBarEventsAddFragment.stop();
+                            binding.buttonAddEvents.setEnabled(false);
                         }
                     });
                 } else {
-                    Toast.makeText(getActivity(), "Failed to add Events", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Failed to add Events", Toast.LENGTH_SHORT).show();
                     enableViews();
                 }
             });
 
         } else {
-            Toast.makeText(requireContext(), "Please Select An Image to upload", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getParentFragment().getContext(), "Please Select An Image to upload", Toast.LENGTH_SHORT).show();
             enableViews();
             binding.progressBarEventsAddFragment.stop();
         }
@@ -199,7 +204,7 @@ public class EventAddFragment extends Fragment {
                         }
                     });
                 } else {
-                    Toast.makeText(getActivity(), "Failed to add Events", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Failed to add Events", Toast.LENGTH_SHORT).show();
                     enableViews();
                 }
             });
@@ -225,16 +230,16 @@ public class EventAddFragment extends Fragment {
             nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString());
             if (id == null) {
                 addEvents();
-                Toast.makeText(requireContext(), "error detected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "error detected", Toast.LENGTH_SHORT).show();
             } else {
                 databaseReference.child(id).setValue(nEvents).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         binding.progressBarEventsAddFragment.stop();
                         binding.buttonAddEvents.setEnabled(true);
-                        navigateToEventsListFragment(binding.buttonAddEvents);
-                        Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
+                        navigateToEventsListFragment(getParentFragment().getView());
+                        Toast.makeText(getParentFragment().getContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getParentFragment().getContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
                         Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
                         binding.progressBarEventsAddFragment.stop();
                         binding.buttonAddEvents.setEnabled(true);
@@ -259,8 +264,8 @@ public class EventAddFragment extends Fragment {
                 if (task.isSuccessful()) {
                     binding.progressBarEventsAddFragment.stop();
                     binding.buttonAddEvents.setEnabled(true);
-                    navigateToEventsListFragment(requireView());
-                    Toast.makeText(requireContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
+                    navigateToEventsListFragment(getParentFragment().getView());
+                    Toast.makeText(getParentFragment().getContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
                     Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
@@ -276,7 +281,7 @@ public class EventAddFragment extends Fragment {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EVENTS_IMAGE) {
             Uri uri = data.getData();
             if (uri != null) {
-                Toast.makeText(requireContext(), "success uri", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "success uri", Toast.LENGTH_SHORT).show();
                 try {
                     imagePath = uri.getLastPathSegment();
                     if (Build.VERSION.SDK_INT >= 29) {
@@ -296,7 +301,7 @@ public class EventAddFragment extends Fragment {
                 }
 
             } else {
-                Toast.makeText(requireActivity(), "No Image Selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "No Image Selected", Toast.LENGTH_SHORT).show();
             }
             return;
         }
@@ -344,15 +349,15 @@ public class EventAddFragment extends Fragment {
                 , binding.textInputLayoutRsvp.getEditText().getText().toString());
         databaseReference.child(id).setValue(mEvents).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                navigateToEventsListFragment(binding.buttonAddEvents);
+                navigateToEventsListFragment(getParentFragment().getView());
                 binding.progressBarEventsAddFragment.stop();
-                Toast.makeText(requireContext(), "Events Added Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Events Added Successfully", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void navigateToEventsListFragment(View v) {
-        Navigation.findNavController(v).navigate(R.id.action_eventAddFragment_to_navigation_event);
+        Navigation.findNavController(v).navigate(R.id.navigation_event);
     }
 
     private void deleteImage(String fullUrl) {
@@ -365,9 +370,9 @@ public class EventAddFragment extends Fragment {
             StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
             ref.delete().addOnCompleteListener(requireActivity(), task -> {
                 if (task.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Old Photo Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Old Photo Deleted", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(requireContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getParentFragment().getContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

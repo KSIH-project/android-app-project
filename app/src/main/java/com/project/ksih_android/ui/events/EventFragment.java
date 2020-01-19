@@ -50,6 +50,7 @@ public class EventFragment extends Fragment {
                 mFragmentEventBinding.imageViewIllustration.setVisibility(View.VISIBLE);
             } else {
                 EventRecyclerAdapter adapter = new EventRecyclerAdapter(events, requireContext());
+                mFragmentEventBinding.recyclerEvents.setHasFixedSize(true);
                 mFragmentEventBinding.recyclerEvents.setAdapter(adapter);
                 mFragmentEventBinding.progressBar.stop();
             }
@@ -59,4 +60,9 @@ public class EventFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        eventViewModel.removeListeners();
+    }
 }

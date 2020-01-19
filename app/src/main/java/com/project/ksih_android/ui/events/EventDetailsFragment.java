@@ -59,6 +59,9 @@ public class EventDetailsFragment extends Fragment {
         binding.textEventEmailDetails.setText(mEvents.getEmail());
         binding.textEventsDescripDetails.setText(mEvents.getEventDescription());
         binding.textPhoneNumber.setText(mEvents.getPhoneNumber());
+        binding.textEventDate.setText(mEvents.getDate());
+        binding.textEventTime.setText(mEvents.getTime());
+        binding.textEventsLinkDetails.setText(mEvents.getEventRSVP());
         binding.textEventsTypeDetails.setText(mEvents.getEventType());
         Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageEventsDetails);
         setupToolBar(binding.eventsDetailsToolbar);

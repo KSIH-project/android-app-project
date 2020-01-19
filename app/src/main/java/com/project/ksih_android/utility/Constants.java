@@ -6,6 +6,7 @@ package com.project.ksih_android.utility;
 public class Constants {
     public static final String EVENTS_FIREBASE_PATH = "events";
     public static final String EVENT_TO_EDIT = "eventToEdit";
+    public static final String SAVE_EVENTS_BUTTON_TEXT = "Save Events";
     public static String EMAIL_KEY = "user_email";
     public static String PASSWORD_KEY = "user_password";
     public static String ON_BOARDING_KEY = "user_seen_onboarding_screen";
