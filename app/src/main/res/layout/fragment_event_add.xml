@@ -140,27 +140,18 @@
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_phone"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout_phone" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                <TextView
                     android:id="@+id/textInputLayout_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:padding="8dp"
+                    android:drawableStart="@drawable/ic_clock_outline"
+                    android:drawablePadding="16dp"
+                    android:hint="@string/choose_time"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_date"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_date">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_clock_outline"
-                        android:drawablePadding="16dp"
-                        android:hint="Time"
-                        android:maxLength="8"
-                        android:inputType="time">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_date" />
 
 
                 <com.google.android.material.textfield.TextInputLayout

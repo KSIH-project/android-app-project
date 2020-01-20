@@ -2,6 +2,7 @@ package com.project.ksih_android.ui.events;
 
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -17,11 +18,13 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +58,7 @@ import timber.log.Timber;
  */
 public class EventAddFragment extends Fragment {
     private DatePickerDialog.OnDateSetListener mDateDialog;
+    private TimePickerDialog.OnTimeSetListener mTimeDialogListner;
     private Events mEvents;
     private Bitmap mBitmap;
     private String imagePath = "";
@@ -83,25 +87,41 @@ public class EventAddFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_add, container, false);
         mBitmap = null;
         binding.imageViewAdd.setOnClickListener(view -> openGallery());
-        binding.textInputLayoutDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+        binding.textInputLayoutTime.setOnClickListener(v -> {
+            Calendar time = Calendar.getInstance();
+            int currentHour = time.get(Calendar.HOUR_OF_DAY);
+            int currentMinute = time.get(Calendar.MINUTE);
+            TimePickerDialog timeDialog = new TimePickerDialog(getParentFragment().getContext(),
+                    mTimeDialogListner,
+                    currentHour, currentMinute, false);
+            timeDialog.show();
+        });
+        mTimeDialogListner = (view, hourOfDay, minute) -> {
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar1.set(Calendar.MINUTE, minute);
+            CharSequence time = DateFormat.format("hh:mm a", calendar1);
+            binding.textInputLayoutTime.setText(time);
+        };
+        binding.textInputLayoutDate.setOnClickListener(v -> {
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog pickerDialog = new DatePickerDialog(getParentFragment().getContext()
-                        , android.R.style.Theme_Material_Light_Dialog, mDateDialog,
-                        year, month, day);
-                pickerDialog.show();
-                selectDate();
-            }
+            DatePickerDialog pickerDialog = new DatePickerDialog(getParentFragment().getContext()
+                    , mDateDialog,
+                    year, month, day);
+            pickerDialog.show();
         });
 
         mDateDialog = (view, year, month, dayOfMonth) -> {
-            month = month + 1;
-            String date = month + "/" + dayOfMonth + "/" + year;
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.set(Calendar.YEAR, year);
+            calendar1.set(Calendar.MONTH, month);
+            calendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            CharSequence date = DateFormat.format("MMM d, yyyy", calendar1);
             binding.textInputLayoutDate.setText(date);
         };
 
@@ -134,11 +154,6 @@ public class EventAddFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void selectDate() {
-
-
-    }
-
     private void getEventsDetails() {
 
         binding.textInputLayoutTittle.getEditText().setText(mEvents.getEventName());
@@ -147,7 +162,7 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutContactsEmail.getEditText().setText(mEvents.getEmail());
         binding.textInputLayoutPhone.getEditText().setText(mEvents.getPhoneNumber());
         binding.textInputLayoutRsvp.getEditText().setText(mEvents.getEventRSVP());
-        binding.textInputLayoutTime.getEditText().setText(mEvents.getTime());
+        binding.textInputLayoutTime.setText(mEvents.getTime());
         binding.textInputLayoutDate.setText(mEvents.getDate());
         Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageViewAdd);
     }
@@ -164,15 +179,6 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutTime.setEnabled(false);
     }
 
-    private void saveImage() {
-        if (mBitmap != null && mEvents.getImageUrl() != null) {
-            binding.progressBarEventsAddFragment.start();
-            disableViews();
-            uploadImageToFireBaseStorage();
-        } else if (mBitmap == null && mEvents.getImageUrl() != null) {
-            uploadNewImageToFireBaseStorage();
-        }
-    }
     private void uploadImageToFireBaseStorage() {
         if (mBitmap != null) {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -242,7 +248,6 @@ public class EventAddFragment extends Fragment {
     }
 
 
-
     private void editEvents() {
         String id = mEvents.getId();
         Timber.d("mField: %s", mEvents.getId());
@@ -257,7 +262,7 @@ public class EventAddFragment extends Fragment {
             nEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString().trim());
             nEvents.setEventRSVP(binding.textInputLayoutRsvp.getEditText().getText().toString().trim());
             nEvents.setDate(binding.textInputLayoutDate.getText().toString());
-            nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString().trim());
+            nEvents.setTime(binding.textInputLayoutTime.getText().toString());
             if (id == null) {
                 addEvents();
                 Toast.makeText(getParentFragment().getContext(), "error detected", Toast.LENGTH_SHORT).show();
@@ -289,7 +294,7 @@ public class EventAddFragment extends Fragment {
             nEvents.setId(id);
             nEvents.setImageUrl(imageUrl);
             nEvents.setDate(binding.textInputLayoutDate.getText().toString());
-            nEvents.setTime(binding.textInputLayoutTime.getEditText().getText().toString());
+            nEvents.setTime(binding.textInputLayoutTime.getText().toString());
             databaseReference.child(id).setValue(nEvents).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     binding.progressBarEventsAddFragment.stop();
@@ -365,7 +370,7 @@ public class EventAddFragment extends Fragment {
         if (!hasText(binding.textInputLayoutContactsEmail, error)) return false;
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
         if (binding.textInputLayoutDate == null) return false;
-        if (!hasText(binding.textInputLayoutTime, error)) return false;
+        if (binding.textInputLayoutTime == null) return false;
         return hasText(binding.textInputLayoutRsvp, error);
     }
 
@@ -374,7 +379,7 @@ public class EventAddFragment extends Fragment {
         mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString().trim(),
                 binding.textInputLayoutContactsEmail.getEditText().getText().toString().trim(),
                 binding.textInputLayoutPhone.getEditText().getText().toString().trim(),
-                binding.textInputLayoutDate.getText().toString(), binding.textInputLayoutTime.getEditText().getText().toString().trim(),
+                binding.textInputLayoutDate.getText().toString(), binding.textInputLayoutTime.getText().toString(),
                 binding.textInputLayoutDesc.getEditText().getText().toString().trim(), binding.textInputLayoutType.getEditText().getText().toString().trim()
                 , binding.textInputLayoutRsvp.getEditText().getText().toString().trim());
         databaseReference.child(id).setValue(mEvents).addOnCompleteListener(task -> {

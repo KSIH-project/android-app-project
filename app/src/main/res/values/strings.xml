@@ -36,4 +36,5 @@
     <string name="active_now">Active now</string>
     <string name="friendship_date">Friendship date -</string>
     <string name="select_a_date">Select a Date</string>
+    <string name="choose_time">Choose Time</string>
 </resources>
