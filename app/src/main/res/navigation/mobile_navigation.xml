@@ -70,5 +70,9 @@
         android:label="About KISH"
         tools:layout="@layout/fragment_about_ksih" />
 
-
+    <fragment
+        android:id="@+id/zoomFragment"
+        android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
+        android:label="fragment_zoom"
+        tools:layout="@layout/fragment_zoom" />
 </navigation>

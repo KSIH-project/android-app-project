@@ -18,15 +18,13 @@ import com.project.ksih_android.R;
  */
 public class SettingsFragment extends Fragment {
 
-    private TextView mTextViewAboutKsih;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        mTextViewAboutKsih = root.findViewById(R.id.text_about_ksih);
-        mTextViewAboutKsih.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_settings_to_aboutKsihFragment));
+        TextView textViewAboutKsih = root.findViewById(R.id.text_about_ksih);
+        textViewAboutKsih.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_settings_to_aboutKsihFragment));
 
         return root;
     }

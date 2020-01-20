@@ -29,15 +29,6 @@ import static com.project.ksih_android.utility.Constants.ABOUT_KSIH_FIREBASE_REF
 public class AboutKsihFragment extends Fragment {
     private FragmentAboutKsihBinding mFragmentAboutKsihBinding;
 
-    private String aboutKsih;
-    private DatabaseReference mDatabaseReferenceAboutKsih;
-
-
-    public AboutKsihFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,8 +37,8 @@ public class AboutKsihFragment extends Fragment {
         mFragmentAboutKsihBinding.progressBarAbout.start();
         mFragmentAboutKsihBinding.toolbarAboutKsih.setNavigationOnClickListener(v ->
                 Navigation.findNavController(v).navigateUp());
-        mDatabaseReferenceAboutKsih = FirebaseDatabase.getInstance().getReference("about_ksih/about_ksih");
-        mDatabaseReferenceAboutKsih.addValueEventListener(new ValueEventListener() {
+        DatabaseReference databaseReferenceAboutKsih = FirebaseDatabase.getInstance().getReference(ABOUT_KSIH_FIREBASE_REFERENCE);
+        databaseReferenceAboutKsih.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mFragmentAboutKsihBinding.textViewAboutKsih.setText(dataSnapshot.getValue(String.class));
@@ -59,8 +50,6 @@ public class AboutKsihFragment extends Fragment {
                 mFragmentAboutKsihBinding.progressBarAbout.stop();
             }
         });
-
         return mFragmentAboutKsihBinding.getRoot();
     }
-
 }
