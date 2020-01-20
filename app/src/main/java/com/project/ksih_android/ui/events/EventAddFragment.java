@@ -175,8 +175,6 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutRsvp.setEnabled(false);
         binding.textInputLayoutTittle.setEnabled(false);
         binding.textInputLayoutType.setEnabled(false);
-        binding.textInputLayoutDate.setEnabled(false);
-        binding.textInputLayoutTime.setEnabled(false);
     }
 
     private void uploadImageToFireBaseStorage() {
@@ -357,9 +355,6 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutRsvp.setEnabled(true);
         binding.textInputLayoutTittle.setEnabled(true);
         binding.textInputLayoutType.setEnabled(true);
-        binding.textInputLayoutDate.setEnabled(true);
-        binding.textInputLayoutTime.setEnabled(true);
-
     }
 
     private boolean validate() {
