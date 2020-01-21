@@ -41,8 +41,8 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUser = dataSnapshot.getValue(User.class);
                 view.setUser(mUser);
-                Timber.d("User data: %s", mUser.user_image);
-                Timber.d("User data: %s", mUser.user_email);
+                Timber.d("User data: %s", mUser.user_name);
+                Timber.d("User data: %s", mUser.user_mobile);
             }
 
             @Override

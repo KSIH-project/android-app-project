@@ -5,4 +5,5 @@
         android:id="@+id/profileFragment"
         android:title="Profile"
         app:showAsAction="never" />
+
 </menu>

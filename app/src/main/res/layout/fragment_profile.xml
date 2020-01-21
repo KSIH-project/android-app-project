@@ -43,9 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium"
+            android:text="@{user.user_firstName.length() != 0 ? user.user_firstName + ` ` + user.user_lastName : user.user_name}"
             android:textColor="@color/colorSecondaryDark"
             android:textSize="18sp"
-            android:text="@{user.user_firstName + ` ` + user.user_lastName}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"
@@ -57,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium"
+            android:text="@{user.user_stack}"
             android:textColor="@color/colorSecondaryDark"
             android:textSize="14sp"
-            android:text="@{user.user_profession}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_name"
@@ -76,7 +76,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_email"
@@ -85,6 +86,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="@{user.user_email.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -109,8 +111,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="16dp"
-                            android:text="@={user.user_email}"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="@{user.user_email}"
                             android:textColor="@color/colorSecondaryDark"
                             tools:text="francissegun12@gmail.com" />
                     </LinearLayout>
@@ -123,6 +125,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="@{user.user_mobile.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -146,9 +149,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@{user.user_mobile}"
                             android:layout_marginStart="16dp"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="@{user.user_mobile}"
                             android:textColor="@color/colorSecondaryDark"
                             tools:text="+234 981 2349 345" />
                     </LinearLayout>
@@ -161,6 +164,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="@{user.user_linkedInUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -184,9 +188,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@{user.user_linkedInUrl}"
                             android:layout_marginStart="16dp"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="@{user.user_linkedInUrl}"
                             android:textColor="@color/colorSecondaryDark"
                             tools:text="https://linkedin.com/sdg123vrg" />
                     </LinearLayout>
@@ -199,6 +203,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="@{user.user_githubUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -222,9 +227,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@{user.user_githubUrl}"
                             android:layout_marginStart="16dp"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="@{user.user_githubUrl}"
                             android:textColor="@color/colorSecondaryDark"
                             tools:text="https://github.com/JesilOT" />
                     </LinearLayout>
@@ -237,6 +242,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="@{user.user_mediumUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -261,8 +267,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="16dp"
-                            android:text="@{user.user_mediumUrl}"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="@{user.user_mediumUrl}"
                             android:textColor="@color/colorSecondaryDark"
                             tools:text="https://medium.com/@JesilOT" />
                     </LinearLayout>
@@ -275,6 +281,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="@{user.user_facebookUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -299,8 +306,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="16dp"
-                            android:text="@{user.user_facebookUrl}"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="@{user.user_facebookUrl}"
                             android:textColor="@color/colorSecondaryDark"
                             tools:text="https://facebook.com/Dablaze-UFC1" />
                     </LinearLayout>
@@ -313,6 +320,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:visibility="@{user.user_twitterUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -337,8 +345,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="16dp"
-                            android:text="@{user.user_twitterUrl}"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="@{user.user_twitterUrl}"
                             android:textColor="@color/colorSecondaryDark"
                             tools:text="https://twitter.com/android_blaze" />
                     </LinearLayout>
@@ -353,7 +361,6 @@
                     android:layout_marginBottom="16dp"
                     android:text="Edit"
                     android:textAppearance="@style/buttonTextStyle"
-                    app:backgroundTint="@color/colorSecondaryDark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardView_twitter" />
 
@@ -362,6 +369,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="user"

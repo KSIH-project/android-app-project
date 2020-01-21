@@ -59,7 +59,7 @@ public class ChatFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(getParentFragment().requireView()))
+        return NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(requireView()))
                 || super.onOptionsItemSelected(item);
     }
 }

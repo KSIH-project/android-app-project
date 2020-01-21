@@ -12,6 +12,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentRegisterBinding;
 import com.victor.loading.rotate.RotateLoading;
@@ -33,6 +37,7 @@ public class RegisterFragment extends Fragment {
     private FirebaseAuth mAuth;
     private RegistrationViewModel mViewModel;
     private FragmentRegisterBinding mRegisterBinding;
+    private DatabaseReference storeDefaultDatabaseReference;
 
     @Nullable
     @Override
@@ -58,7 +63,7 @@ public class RegisterFragment extends Fragment {
         return mRegisterBinding.getRoot();
     }
 
-    private void  setUpButtonClick() {
+    private void setUpButtonClick() {
         mViewModel.getButtonClick().observe(this, new Observer<RegistrationFields>() {
             @Override
             public void onChanged(RegistrationFields registrationFields) {
@@ -74,26 +79,52 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // Sign in success
-                    Timber.d("CreateUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    user.sendEmailVerification().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
-                                stopProgressBar(mRegisterBinding.progressBar);
-                                showButton(mRegisterBinding.buttonRegister);
-                                // TODO: Open email app option
-                                navigateToLoginFragment(mRegisterBinding.buttonRegister);
-                            } else {
-                                Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
-                                stopProgressBar(mRegisterBinding.progressBar);
-                                showButton(mRegisterBinding.buttonRegister);
-                                Timber.d("Sending Verification Failed: " + task.getException().getMessage());
-                            }
-                        }
-                    });
+                    //send default data
+                    String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+                    //get and link storage
+                    String current_userID = mAuth.getCurrentUser().getUid();
+                    String name = email.substring(0, email.lastIndexOf("@"));
+
+                    storeDefaultDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(current_userID);
+
+                    storeDefaultDatabaseReference.child("user_name").setValue(name);
+                    storeDefaultDatabaseReference.child("user_firstName").setValue("");
+                    storeDefaultDatabaseReference.child("user_lastName").setValue("");
+                    storeDefaultDatabaseReference.child("user_email").setValue(email);
+                    storeDefaultDatabaseReference.child("user_mobile").setValue("");
+                    storeDefaultDatabaseReference.child("user_gender").setValue("");
+                    storeDefaultDatabaseReference.child("user_stack").setValue("");
+                    storeDefaultDatabaseReference.child("user_linkedInUrl").setValue("");
+                    storeDefaultDatabaseReference.child("user_githubUrl").setValue("");
+                    storeDefaultDatabaseReference.child("user_facebookUrl").setValue("");
+                    storeDefaultDatabaseReference.child("user_twitterUrl").setValue("");
+                    storeDefaultDatabaseReference.child("user_mediumUrl").setValue("");
+                    storeDefaultDatabaseReference.child("created_at").setValue(ServerValue.TIMESTAMP);
+                    storeDefaultDatabaseReference.child("user_image").setValue("default image");
+                    storeDefaultDatabaseReference.child("device_token").setValue(deviceToken)
+                            .addOnCompleteListener(task1 -> {
+                                // Sign in success
+                                Timber.d("CreateUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                user.sendEmailVerification().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
+                                            stopProgressBar(mRegisterBinding.progressBar);
+                                            showButton(mRegisterBinding.buttonRegister);
+                                            // TODO: Open email app option
+                                            navigateToLoginFragment(mRegisterBinding.buttonRegister);
+                                        } else {
+                                            Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
+                                            stopProgressBar(mRegisterBinding.progressBar);
+                                            showButton(mRegisterBinding.buttonRegister);
+                                            Timber.d("Sending Verification Failed: " + task.getException().getMessage());
+                                        }
+                                    }
+                                });
+                            });
                 } else {
                     // Sign in fails
                     Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
