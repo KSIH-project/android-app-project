@@ -72,12 +72,20 @@
         <action
             android:id="@+id/action_appInfo_to_fragment_ksih_android_team"
             app:destination="@id/fragment_ksih_android_team" />
+        <action
+            android:id="@+id/action_appInfo_to_simpleFragment"
+            app:destination="@id/simpleFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment_ksih_android_team"
-        android:name="com.project.ksih_android.ui.appInfo.ksih_android_team"
+        android:name="com.project.ksih_android.ui.appInfo.KsihAndroidTeam"
         android:label="fragment_fragment_ksih_android_team"
         tools:layout="@layout/fragment_ksih_android_team" />
+    <fragment
+        android:id="@+id/simpleFragment"
+        android:name="com.project.ksih_android.SimpleFragment"
+        android:label="fragment_simple"
+        tools:layout="@layout/fragment_simple" />
 
 
 </navigation>

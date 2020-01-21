@@ -48,6 +48,8 @@ public class AppInfo extends Fragment {
 
         mFragmentAppInfoBinding.textViewByKsihAndroidTeam.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_appInfo_to_fragment_ksih_android_team));
 
+        mFragmentAppInfoBinding.ksihAppPro.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_appInfo_to_simpleFragment));
+
         return mFragmentAppInfoBinding.getRoot();
     }
 

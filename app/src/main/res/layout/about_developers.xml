@@ -25,7 +25,7 @@
             android:layout_height="wrap_content">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/roundedImageView"
+                android:id="@+id/roundedImageViewPerson"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
             </com.makeramen.roundedimageview.RoundedImageView>
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -49,19 +49,19 @@
                 app:fontFamily="@font/roboto_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/roundedImageView"
+                app:layout_constraintTop_toBottomOf="@+id/roundedImageViewPerson"
                 tools:text="Chukwuwa Uchenna" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textViewProfession"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textView"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="@+id/textViewName"
+                app:layout_constraintStart_toStartOf="@+id/textViewName"
+                app:layout_constraintTop_toBottomOf="@+id/textViewName"
                 tools:text="Android Developer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

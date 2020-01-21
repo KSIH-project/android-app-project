@@ -18,12 +18,12 @@ import com.project.ksih_android.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ksih_android_team extends Fragment {
+public class KsihAndroidTeam extends Fragment {
 
     MaterialToolbar mToolbar;
 
 
-    public ksih_android_team() {
+    public KsihAndroidTeam() {
         // Required empty public constructor
     }
 
