@@ -119,7 +119,7 @@ public class ChatFragment extends Fragment {
             Toast.makeText(getParentFragment().getContext(), "SignIn to use chat", Toast.LENGTH_SHORT).show();
 
             NavController controller = Navigation.findNavController(getParentFragment().getView());
-            controller.popBackStack(R.id.nav_chats, false);
+            controller.popBackStack(R.id.nav_chats, true);
             controller.navigate(R.id.nav_signIn);
         }else {
             currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -146,9 +146,11 @@ public class ChatFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chatMessages.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
-                    ChatMessage chatMessage = dataSnapshot1.getValue(ChatMessage.class);
-                    chatMessages.add(chatMessage);
+                        ChatMessage chatMessage = dataSnapshot1.getValue(ChatMessage.class);
+                        chatMessages.add(chatMessage);
+                    }
                 }
 
                 Timber.d(chatMessages.toString());

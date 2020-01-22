@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -205,7 +207,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        mAuth = FirebaseAuth.getInstance();
+       FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String senderID = mAuth.getCurrentUser().getUid();
         return chatMessage.get(position).getFrom().equals(senderID)
                 ? ChatFragment.VIEW_TYPE_USER_MESSAGE : ChatFragment.VIEW_TYPE_FRIEND_MESSAGE;
