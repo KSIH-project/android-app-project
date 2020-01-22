@@ -38,9 +38,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         LayoutInflater layoutInflater =
                 LayoutInflater.from(parent.getContext());
         binding = EventsItemsListBinding.inflate(layoutInflater, parent, false);
-
         return new EventRecyclerViewHolder(binding);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull EventRecyclerViewHolder holder, int position) {
@@ -60,6 +60,11 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         return mEvents != null ? mEvents.size() : 0;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     class EventRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         EventRecyclerViewHolder(@NonNull EventsItemsListBinding eventBinding) {
@@ -75,6 +80,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             binding.textEventsDescription.setText(nEvent.getEventDescription());
             binding.textEventsType.setText(nEvent.getEventType());
         }
+
     }
 
 }

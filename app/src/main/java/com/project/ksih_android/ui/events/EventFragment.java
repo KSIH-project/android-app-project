@@ -55,6 +55,8 @@ public class EventFragment extends Fragment {
             } else {
                 EventRecyclerAdapter adapter = new EventRecyclerAdapter(events, requireContext());
                 mFragmentEventBinding.recyclerEvents.setHasFixedSize(true);
+                adapter.setHasStableIds(true);
+                layoutManager.smoothScrollToPosition(mFragmentEventBinding.recyclerEvents, null, adapter.getItemCount());
                 mFragmentEventBinding.recyclerEvents.setAdapter(adapter);
                 mFragmentEventBinding.progressBar.stop();
             }

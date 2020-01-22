@@ -15,6 +15,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -387,7 +388,11 @@ public class EventAddFragment extends Fragment {
     }
 
     private void navigateToEventsListFragment(View v) {
-        Navigation.findNavController(v).navigate(R.id.navigation_event);
+        NavController navController = Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment);
+        if (navController.getCurrentDestination().getId() == R.id.eventAddFragment) {
+            Navigation.findNavController(v).navigate(R.id.action_eventAddFragment_to_navigation_event);
+        }
+
     }
 
     private void deleteImage(String fullUrl) {
