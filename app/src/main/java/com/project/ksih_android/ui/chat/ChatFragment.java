@@ -87,7 +87,6 @@ public class ChatFragment extends Fragment {
     private String mPhotoUrl;
     private ImageView mSendButton;
     private RecyclerView mMessageRecyclerView;
-    private RotateLoading loading;
     private AutoCompleteTextView mMessageEditText;
     private ImageView mAddMessageImageView;
     LinearLayoutManager mLinearLayoutManager;
@@ -138,7 +137,6 @@ public class ChatFragment extends Fragment {
 
 
         //setting views
-        loading = root.findViewById(R.id.loading);
         mMessageRecyclerView = root.findViewById(R.id.messageRecyclerView);
 
         //initialLIZING LAYOUTS

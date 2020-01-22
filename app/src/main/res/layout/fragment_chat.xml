@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,15 +13,29 @@
         android:layout_marginBottom="12dp"
         android:layout_above="@+id/linearLayout"/>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:background="#003e58"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/messageEditText"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/rectangle_edittext"
+            android:hint="Send message..."
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingStart="42dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/addMessageImageView"
@@ -28,42 +43,25 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:srcCompat="@drawable/ic_add_a_photo" />
-
-        <AutoCompleteTextView
-            android:id="@+id/messageEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="message"
-            android:inputType="textMultiLine|textCapSentences"
-            android:paddingStart="18dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="60dp"
-            android:paddingBottom="18dp" />
+            app:layout_constraintBottom_toBottomOf="@+id/messageEditText"
+            app:layout_constraintStart_toStartOf="@+id/messageEditText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_insert_photo_black_24dp" />
 
         <ImageView
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginStart="-58dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/messageEditText"
+            app:layout_constraintTop_toTopOf="@+id/messageEditText"
             app:srcCompat="@drawable/ic_send" />
 
-    </LinearLayout>
-
-    <com.victor.loading.rotate.RotateLoading
-        android:id="@+id/loading"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:loading_width="5dp"
-        app:loading_color="@color/button_color"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
