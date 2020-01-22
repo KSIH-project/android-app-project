@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -19,6 +20,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.User;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
+import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 import com.project.ksih_android.utility.DividerItemDecoration;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -83,6 +87,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Get user details from shared preference
         // There is no need to make another database call
+        SharedViewModel viewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
         SharedPreferencesStorage pref = new SharedPreferencesStorage(this);
         Glide.with(this)
                 .load(pref.getProfilePhotoUrl(PROFILE_PHOTO_KEY))
@@ -92,11 +97,26 @@ public class HomeActivity extends AppCompatActivity {
         profileName.setText(pref.getUserName(USERNAME_KEY));
         profileEmail.setText(pref.getUserEmail(EMAIL_KEY));
 
-        // Navigate user to profile screen when user clicks the nav header
-        imageView.setOnClickListener(view -> {
-            Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment).navigate(R.id.profileFragment);
-            drawer.closeDrawers();
-        });
+        // Read updated data from view model without changing device configuration state
+        viewModel.username.observe(this, s -> profileName.setText(s));
+        viewModel.userEmail.observe(this, s -> profileEmail.setText(s));
+        viewModel.userProfilePhotoUrl.observe(this, s -> Glide.with(HomeActivity.this)
+                .load(s)
+                .placeholder(R.drawable.ic_profile_photo)
+                .error(R.drawable.ic_profile_photo)
+                .into(imageView));
+
+            // Navigate user to profile screen when user clicks the nav header
+            imageView.setOnClickListener(view -> {
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment).navigate(R.id.profileFragment);
+                drawer.closeDrawers();
+                } else {
+                    Toast.makeText(this, "Sign in to view profile", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_signIn);
+                    drawer.closeDrawers();
+                }
+            });
     }
 
     @Override

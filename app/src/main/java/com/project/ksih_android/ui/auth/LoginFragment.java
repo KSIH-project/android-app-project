@@ -14,9 +14,17 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.ksih_android.R;
+import com.project.ksih_android.data.User;
 import com.project.ksih_android.databinding.FragmentLoginBinding;
+import com.project.ksih_android.storage.SharedPreferencesStorage;
 import com.project.ksih_android.ui.HomeActivity;
+import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 import com.victor.loading.rotate.RotateLoading;
 
 import androidx.annotation.NonNull;
@@ -28,6 +36,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
 
+import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
+import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_DATABASE_REFERENCE;
+import static com.project.ksih_android.utility.Constants.PROFILE_PHOTO_KEY;
+import static com.project.ksih_android.utility.Constants.USERNAME_KEY;
+
 /**
  * Created by SegunFrancis
  */
@@ -35,13 +48,18 @@ import timber.log.Timber;
 public class LoginFragment extends Fragment {
 
     private LoginViewModel mViewModel;
+    private SharedViewModel mSharedViewModel;
     private FirebaseAuth mAuth;
     private FragmentLoginBinding mLoginBinding;
+    private SharedPreferencesStorage mPref;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
+
+        mSharedViewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
+        mPref = new SharedPreferencesStorage(requireContext());
         return setUpBindings(savedInstanceState, inflater, container);
     }
 
@@ -92,9 +110,31 @@ public class LoginFragment extends Fragment {
                         Timber.d("UserNotVerified");
                     } else {
                         Timber.d("UserIsVerified");
+                        String uid = FirebaseAuth.getInstance().getUid();
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE).child(uid);
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                User user = dataSnapshot.getValue(User.class);
+                                // Update view model
+                                mSharedViewModel.username.setValue(user.user_name);
+                                mSharedViewModel.userEmail.setValue(user.user_email);
+                                mSharedViewModel.userProfilePhotoUrl.setValue(user.user_image);
+
+                                // Update shared preference
+                                mPref.setUserName(USERNAME_KEY, user.user_name);
+                                mPref.setUserEmail(EMAIL_KEY, user.user_email);
+                                mPref.setProfilePhotoUrl(PROFILE_PHOTO_KEY, user.user_image);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                         stopProgressBar(mLoginBinding.progressBar);
                         showButton(mLoginBinding.buttonSignIn);
-                        Toast.makeText(getActivity(), "Sing in successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
                         navigateToHomeActivity();
                     }
                 } else {

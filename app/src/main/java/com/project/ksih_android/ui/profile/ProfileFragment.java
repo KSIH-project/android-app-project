@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
 
@@ -37,11 +39,13 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.User;
 import com.project.ksih_android.databinding.FragmentProfileBinding;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
+import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 
 import java.io.ByteArrayOutputStream;
 
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
+import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_DATABASE_REFERENCE;
 import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_STORAGE_REFERENCE;
 import static com.project.ksih_android.utility.Constants.PROFILE_IMAGE_REQUEST_CODE;
 import static com.project.ksih_android.utility.Constants.PROFILE_PHOTO_KEY;
@@ -64,7 +68,7 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         String uid = FirebaseAuth.getInstance().getUid();
-        mRef = FirebaseDatabase.getInstance().getReference("users/" + uid);
+        mRef = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE).child(uid);
     }
 
     @Override
@@ -85,6 +89,7 @@ public class ProfileFragment extends Fragment {
                         .error(R.drawable.ic_error)
                         .into(mProfileBinding.userProfileImage);
                 // Add user details to shared preference
+                SharedViewModel viewModel = ViewModelProviders.of(getParentFragment().getActivity()).get(SharedViewModel.class);
                 SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
                 String username;
                 if (mUser.user_firstName.length() != 0) {
@@ -95,6 +100,11 @@ public class ProfileFragment extends Fragment {
                 pref.setUserName(USERNAME_KEY, username);
                 pref.setUserEmail(EMAIL_KEY, mUser.user_email);
                 pref.setProfilePhotoUrl(PROFILE_PHOTO_KEY, mUser.user_image);
+
+                // Add data to viewModel in order to get an immediate update of any change
+                viewModel.username.setValue(username);
+                viewModel.userEmail.setValue(mUser.user_email);
+                viewModel.userProfilePhotoUrl.setValue(mUser.user_image);
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("user_data", mUser);
