@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import timber.log.Timber;
 
 import android.view.LayoutInflater;
@@ -32,7 +33,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentProfileBinding view = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        FragmentProfileBinding profileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile,
+                container, false);
 
         String uid = FirebaseAuth.getInstance().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + uid);
@@ -40,9 +42,11 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUser = dataSnapshot.getValue(User.class);
-                view.setUser(mUser);
-                Timber.d("User data: %s", mUser.user_name);
-                Timber.d("User data: %s", mUser.user_mobile);
+                profileBinding.setUser(mUser);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user_data", mUser);
+                profileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
+                        .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
             }
 
             @Override
@@ -50,6 +54,10 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        return view.getRoot();
+        return profileBinding.getRoot();
+    }
+
+    public void uploadPhoto() {
+
     }
 }

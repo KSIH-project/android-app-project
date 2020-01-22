@@ -27,7 +27,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" >
+            app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/user_profile_image"
@@ -36,6 +36,16 @@
                 android:layout_gravity="center"
                 app:riv_corner_radius="100dp" />
         </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/edit_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:onClick="@{() -> profile.uploadPhoto()}"
+            app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+            app:srcCompat="@drawable/ic_edit_picture" />
 
         <TextView
             android:id="@+id/user_name"
@@ -86,6 +96,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_email.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -125,6 +138,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_mobile.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -164,6 +180,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_linkedInUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -203,6 +222,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_githubUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -242,6 +264,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_mediumUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -259,7 +284,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_linkedin_svg" />
+                            app:srcCompat="@drawable/ic_medium" />
 
                         <TextView
                             android:id="@+id/txt_medium"
@@ -281,6 +306,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_facebookUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -320,6 +348,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_twitterUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -353,6 +384,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/editProfile_button"
                     style="@style/buttonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -375,6 +407,10 @@
         <variable
             name="user"
             type="com.project.ksih_android.data.User" />
+
+        <variable
+            name="profile"
+            type="com.project.ksih_android.ui.profile.ProfileFragment" />
     </data>
 
 </layout>
