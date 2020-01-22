@@ -301,12 +301,12 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            Toast.makeText(getContext(), "Login to use chat session", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.nav_signIn);
-        }
+//        mAuth = FirebaseAuth.getInstance();
+//        currentUser = mAuth.getCurrentUser();
+//        if (currentUser == null) {
+//            Toast.makeText(getContext(), "Login to use chat session", Toast.LENGTH_SHORT).show();
+//            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.nav_signIn);
+//        }
     }
 
     @Override
