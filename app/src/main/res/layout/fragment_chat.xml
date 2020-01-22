@@ -20,7 +20,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:background="#003e58"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:padding="12dp">
 
