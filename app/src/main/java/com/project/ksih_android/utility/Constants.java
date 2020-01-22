@@ -10,4 +10,13 @@ public class Constants {
     public static String ON_BOARDING_KEY = "user_seen_onboarding_screen";
     public static String REMEMBER_ME = "user_checks_remember_me_checkbox";
     public static String SHARED_PREF_KEY = "KSIH-android-app";
+
+
+
+
+
+
+
+    public static int PROFILE_IMAGE_REQUEST_CODE = 1209;
+    public static String PROFILE_FIREBASE_STORAGE_REFERENCE = "images/user_profile/";
 }

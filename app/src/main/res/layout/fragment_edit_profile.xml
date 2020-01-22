@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.profile.EditProfileFragment">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -17,15 +17,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="First Name"
+            app:startIconDrawable="@drawable/ic_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstNameEditText"
                 style="@style/textInputEdittextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -35,9 +37,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Last Name"
+            app:startIconDrawable="@drawable/ic_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/firstNameTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/firstNameTextLayout"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastNameEditText"
@@ -53,9 +57,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Stack"
+            app:startIconDrawable="@drawable/ic_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lastNameTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/lastNameTextLayout"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/stackEditText"
@@ -71,9 +77,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Email"
+            app:startIconDrawable="@drawable/ic_email_svg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/stackTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/stackTextLayout"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
@@ -89,9 +97,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Phone Number"
+            app:startIconDrawable="@drawable/ic_phone_svg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/emailTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/emailTextLayout"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mobileEditText"
@@ -107,9 +117,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Github Profile"
+            app:startIconDrawable="@drawable/ic_github_svg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mobileTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/mobileTextLayout"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/githubEditText"
@@ -125,9 +137,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="LinkedIn Profile"
+            app:startIconDrawable="@drawable/ic_linkedin_svg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/githubTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/githubTextLayout"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/linkedInEditText"
@@ -143,9 +157,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Medium Profile"
+            app:startIconDrawable="@drawable/ic_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linkedInTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/linkedInTextLayout"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mediumEditText"
@@ -161,9 +177,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Facebook Profile"
+            app:startIconDrawable="@drawable/ic_facebook_svg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mediumTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/mediumTextLayout"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/facebookEditText"
@@ -182,7 +200,9 @@
             android:hint="Twitter Profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/facebookTextLayout">
+            app:layout_constraintTop_toBottomOf="@id/facebookTextLayout"
+            app:startIconDrawable="@drawable/ic_twitter_svg"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/twitterEditText"
