@@ -125,7 +125,6 @@ public class ChatFragment extends Fragment {
             }
         }
 
-
         //setting views
         mMessageRecyclerView = root.findViewById(R.id.messageRecyclerView);
 
@@ -254,6 +253,7 @@ public class ChatFragment extends Fragment {
 
         return root;
     }
+
 
     private void displayChatUsers(){
 
