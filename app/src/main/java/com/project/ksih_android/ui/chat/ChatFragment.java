@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -115,8 +116,11 @@ public class ChatFragment extends Fragment {
 
         //check and get current user data
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            Toast.makeText(getContext(), "SignIn to use chat", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(root).navigate(R.id.nav_signIn);
+            Toast.makeText(getParentFragment().getContext(), "SignIn to use chat", Toast.LENGTH_SHORT).show();
+
+            NavController controller = Navigation.findNavController(getParentFragment().getView());
+            controller.popBackStack(R.id.nav_chats, false);
+            controller.navigate(R.id.nav_signIn);
         }else {
             currentUser = FirebaseAuth.getInstance().getCurrentUser();
             mUserName = currentUser.getDisplayName();
