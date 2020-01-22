@@ -36,12 +36,16 @@ import com.google.firebase.storage.UploadTask;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.User;
 import com.project.ksih_android.databinding.FragmentProfileBinding;
+import com.project.ksih_android.storage.SharedPreferencesStorage;
 
 import java.io.ByteArrayOutputStream;
 
 import static android.app.Activity.RESULT_OK;
+import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
 import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_STORAGE_REFERENCE;
 import static com.project.ksih_android.utility.Constants.PROFILE_IMAGE_REQUEST_CODE;
+import static com.project.ksih_android.utility.Constants.PROFILE_PHOTO_KEY;
+import static com.project.ksih_android.utility.Constants.USERNAME_KEY;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,6 +84,18 @@ public class ProfileFragment extends Fragment {
                         .placeholder(R.drawable.ic_profile_photo)
                         .error(R.drawable.ic_error)
                         .into(mProfileBinding.userProfileImage);
+                // Add user details to shared preference
+                SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
+                String username;
+                if (mUser.user_firstName.length() != 0) {
+                    username = mUser.user_firstName + " " + mUser.user_lastName;
+                } else {
+                    username = mUser.user_name;
+                }
+                pref.setUserName(USERNAME_KEY, username);
+                pref.setUserEmail(EMAIL_KEY, mUser.user_email);
+                pref.setProfilePhotoUrl(PROFILE_PHOTO_KEY, mUser.user_image);
+
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("user_data", mUser);
                 mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)

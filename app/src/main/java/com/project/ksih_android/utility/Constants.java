@@ -17,6 +17,9 @@ public class Constants {
 
 
 
+    public static String USERNAME_KEY = "user_username";
+    public static String PROFILE_PHOTO_KEY = "user_profile_photo_url";
     public static int PROFILE_IMAGE_REQUEST_CODE = 1209;
     public static String PROFILE_FIREBASE_STORAGE_REFERENCE = "images/user_profile/";
+    public static String PROFILE_FIREBASE_DATABASE_REFERENCE = "users";
 }

@@ -3,13 +3,25 @@ package com.project.ksih_android.ui;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
+import com.project.ksih_android.data.User;
+import com.project.ksih_android.storage.SharedPreferencesStorage;
 import com.project.ksih_android.utility.DividerItemDecoration;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +32,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import timber.log.Timber;
+
+import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
+import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_DATABASE_REFERENCE;
+import static com.project.ksih_android.utility.Constants.PROFILE_PHOTO_KEY;
+import static com.project.ksih_android.utility.Constants.USERNAME_KEY;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -57,6 +74,29 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, mNavController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, mNavController);
         initDestinationListener();
+
+        // Inflate navigation view
+        View header = navigationView.getHeaderView(0);
+        RoundedImageView imageView = header.findViewById(R.id.profile_image);
+        TextView profileName = header.findViewById(R.id.profile_name);
+        TextView profileEmail = header.findViewById(R.id.profile_email);
+
+        // Get user details from shared preference
+        // There is no need to make another database call
+        SharedPreferencesStorage pref = new SharedPreferencesStorage(this);
+        Glide.with(this)
+                .load(pref.getProfilePhotoUrl(PROFILE_PHOTO_KEY))
+                .placeholder(R.drawable.ic_profile_photo)
+                .error(R.drawable.ic_profile_photo)
+                .into(imageView);
+        profileName.setText(pref.getUserName(USERNAME_KEY));
+        profileEmail.setText(pref.getUserEmail(EMAIL_KEY));
+
+        // Navigate user to profile screen when user clicks the nav header
+        imageView.setOnClickListener(view -> {
+            Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment).navigate(R.id.profileFragment);
+            drawer.closeDrawers();
+        });
     }
 
     @Override
