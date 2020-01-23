@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.appInfo.AppInfo">
+
+        <!-- TODO: Update blank fragment layout -->
+
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha=".8"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/rectangle_background_app_info" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha=".8"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+            app:layout_constraintEnd_toEndOf="@+id/imageView11"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/imageView11"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/image_app_info" />
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout_appInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_appInfo"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                app:navigationIcon="@drawable/ic_back_button"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="App Info" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <TextView
+            android:id="@+id/ksih_app_pro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="150dp"
+            android:text="@string/ksih_app_title"
+            android:textAlignment="center"
+            android:textColor="#FFFFFFFF"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="@+id/app_bar_layout_appInfo"
+            app:layout_constraintStart_toEndOf="@+id/imageView_ksih_hub"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_appInfo" />
+
+        <TextView
+            android:id="@+id/textView_app_version"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/app_version"
+            android:textAlignment="center"
+            android:textColor="#FFFFFFFF"
+            android:textSize="19sp"
+            app:layout_constraintEnd_toEndOf="@+id/ksih_app_pro"
+            app:layout_constraintStart_toStartOf="@+id/ksih_app_pro"
+            app:layout_constraintTop_toBottomOf="@+id/ksih_app_pro" />
+
+        <TextView
+            android:id="@+id/textView_by_ksih_android_team"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/by_ksih_android_team"
+            android:textAlignment="center"
+            android:textColor="@color/app_info_text_color_state"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView_app_version"
+            app:layout_constraintStart_toStartOf="@+id/textView_app_version"
+            app:layout_constraintTop_toBottomOf="@+id/textView_app_version" />
+
+        <ImageView
+            android:id="@+id/imageView_ksih_hub"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ksih_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_appInfo" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

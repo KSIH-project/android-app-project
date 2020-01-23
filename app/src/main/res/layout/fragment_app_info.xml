@@ -13,12 +13,38 @@
         <!-- TODO: Update blank fragment layout -->
 
 
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha=".8"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/rectangle_background_app_info" />
 
-            <com.google.android.material.appbar.AppBarLayout
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha=".8"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+            app:layout_constraintEnd_toEndOf="@+id/imageView11"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/imageView11"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/image_app_info" />
+
+        <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/app_bar_layout_appInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:background="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -27,26 +53,27 @@
                     android:id="@+id/toolbar_appInfo"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
+                    android:background="@android:color/transparent"
                     app:navigationIcon="@drawable/ic_back_button"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:title="App Info" />
             </com.google.android.material.appbar.AppBarLayout>
 
 
-            <TextView
-                android:id="@+id/ksih_app_pro"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="32dp"
-                android:text="@string/ksih_app_title"
-                android:textAlignment="center"
-                android:textSize="26sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_appInfo" />
+        <TextView
+            android:id="@+id/ksih_app_pro"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/ksih_app_title"
+            android:textAlignment="center"
+            android:textColor="#FFFFFFFF"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_appInfo" />
 
             <TextView
                 android:id="@+id/textView_app_version"
@@ -57,7 +84,7 @@
                 android:layout_marginEnd="32dp"
                 android:text="@string/app_version"
                 android:textAlignment="center"
-                android:textColor="#79000000"
+                android:textColor="#FFFFFFFF"
                 android:textSize="19sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,8 +108,9 @@
             <ImageView
                 android:id="@+id/imageView_ksih_hub"
                 android:layout_width="0dp"
-                android:layout_height="230dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="32dp"
+                android:scaleType="fitCenter"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="32dp"
                 android:src="@drawable/ksih_background"
@@ -98,6 +126,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="32dp"
                 android:text="@string/about_developers"
+                android:textColor="#FFFFFFFF"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -107,7 +136,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </layout>
