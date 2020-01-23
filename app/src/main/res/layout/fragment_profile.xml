@@ -37,6 +37,7 @@
                 android:scaleType="centerCrop" />
         </com.google.android.material.card.MaterialCardView>
 
+<!--
         <ImageView
             android:id="@+id/edit_image"
             android:layout_width="wrap_content"
@@ -47,6 +48,7 @@
             app:layout_constraintStart_toEndOf="@+id/materialCardView"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"
             app:srcCompat="@drawable/ic_edit_picture" />
+-->
 
         <TextView
             android:id="@+id/user_name"
