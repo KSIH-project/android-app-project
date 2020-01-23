@@ -1,99 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.card.MaterialCardView
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:id="@+id/layout1"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end"
     android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    app:cardCornerRadius="8dp"
-    android:backgroundTint="@color/colorPrimaryLight"
-    app:cardElevation="8dp">
+    android:layout_marginBottom="5dp">
 
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/messangerImageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/default_profile_image"
+        app:riv_corner_radius="360dp" />
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/layout1"
-        android:layout_width="match_parent"
+    <com.cooltechworks.views.WhatsAppTextView
+        android:id="@+id/textContentUser"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@id/messangerImageView"
+        android:autoLink="all"
+        android:background="@drawable/single_message_text_another_background"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/color_black" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignEnd="@id/textContentUser"
+        android:layout_below="@id/textContentUser">
+        <TextView
+            android:id="@+id/chat_time_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="10:22"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignEnd="@id/textContentUser">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/messangerImageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            android:src="@drawable/default_profile_image"
-            app:riv_corner_radius="360dp" />
+            android:visibility="gone"
+            android:id="@+id/messageUserImage"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:scaleType="centerCrop"
+            app:riv_border_color="@color/colorPrimary"
+            app:riv_corner_radius="15dp"
+            app:riv_border_width="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"/>
 
-        <com.cooltechworks.views.WhatsAppTextView
-            android:id="@+id/textContentUser"
+        <TextView
+            android:id="@+id/chat_time_user_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toStartOf="@id/messangerImageView"
-            android:autoLink="all"
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textColor="@color/color_black" />
+            android:textSize="10sp"
+            android:text="10:22"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            />
+    </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignEnd="@id/textContentUser"
-            android:layout_below="@id/textContentUser">
-            <TextView
-                android:id="@+id/chat_time_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="10:22"
-                android:textStyle="bold"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignEnd="@id/textContentUser">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:visibility="gone"
-                android:id="@+id/messageUserImage"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
-                android:scaleType="centerCrop"
-                app:riv_border_color="@color/colorPrimary"
-                app:riv_corner_radius="15dp"
-                app:riv_border_width="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="4dp"/>
-
-            <TextView
-                android:id="@+id/chat_time_user_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="10:22"
-                android:textStyle="bold"
-                android:layout_gravity="end"
-                android:layout_marginTop="4dp"
-                android:visibility="gone"
-                />
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</RelativeLayout>
