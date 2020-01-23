@@ -58,7 +58,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
 
-        mSharedViewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
+        mSharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         mPref = new SharedPreferencesStorage(requireContext());
         return setUpBindings(savedInstanceState, inflater, container);
     }
@@ -141,7 +141,7 @@ public class LoginFragment extends Fragment {
                     stopProgressBar(mLoginBinding.progressBar);
                     showButton(mLoginBinding.buttonSignIn);
                     Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    Timber.d("SignInError: " + task.getException().getMessage());
+                    Timber.d("SignInError: %s", task.getException().getMessage());
                 }
             }
         });

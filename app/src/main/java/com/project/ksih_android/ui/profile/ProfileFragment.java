@@ -86,10 +86,10 @@ public class ProfileFragment extends Fragment {
                 Glide.with(requireContext())
                         .load(mUser.user_image)
                         .placeholder(R.drawable.ic_profile_photo)
-                        .error(R.drawable.ic_error)
+                        .error(R.drawable.ic_profile_photo)
                         .into(mProfileBinding.userProfileImage);
                 // Add user details to shared preference
-                SharedViewModel viewModel = ViewModelProviders.of(getParentFragment().getActivity()).get(SharedViewModel.class);
+                SharedViewModel viewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
                 SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
                 String username;
                 if (mUser.user_firstName.length() != 0) {
@@ -177,7 +177,7 @@ public class ProfileFragment extends Fragment {
                         Glide.with(requireContext())
                                 .load(mBitmap)
                                 .placeholder(R.drawable.ic_profile_photo)
-                                .error(R.drawable.ic_error)
+                                .error(R.drawable.ic_profile_photo)
                                 .into(mProfileBinding.userProfileImage);
                         uploadPhoto();
                     } else {
@@ -186,7 +186,7 @@ public class ProfileFragment extends Fragment {
                         Glide.with(requireContext())
                                 .load(mBitmap)
                                 .placeholder(R.drawable.ic_profile_photo)
-                                .error(R.drawable.ic_error)
+                                .error(R.drawable.ic_profile_photo)
                                 .into(mProfileBinding.userProfileImage);
                         uploadPhoto();
                     }
