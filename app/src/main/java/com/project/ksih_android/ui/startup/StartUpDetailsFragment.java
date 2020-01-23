@@ -2,6 +2,7 @@ package com.project.ksih_android.ui.startup;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -21,6 +22,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.StartUpField;
+import com.project.ksih_android.databinding.FragmentStartUpDetailsBinding;
 import com.victor.loading.rotate.RotateLoading;
 
 import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_DETAILS_KEY;
@@ -38,42 +40,35 @@ import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
 public class StartUpDetailsFragment extends Fragment {
 
     private StartUpField mField;
-    private RotateLoading progressBar;
+    private FragmentStartUpDetailsBinding mDetailsBinding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_start_up_details, container, false);
+        mDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_start_up_details, container, false);
 
-        mField = (StartUpField) getArguments().getSerializable(STARTUP_DETAILS_BUNDLE_KEY);
-        MaterialToolbar startUpDetailsToolbar = root.findViewById(R.id.startup_details_toolbar);
-        ImageView startupLogo = root.findViewById(R.id.startup_detail_logo);
-        TextView startupDescriptionET = root.findViewById(R.id.startupDescriptionET);
-        TextView startupFounderET = root.findViewById(R.id.startupFounderET);
-        TextView startupCoFounderET = root.findViewById(R.id.startupCoFounderET);
-        TextView startupTelephoneET = root.findViewById(R.id.startupTelephoneET);
-        TextView startupEmailET = root.findViewById(R.id.startupEmailET);
-        TextView startupWebsiteET = root.findViewById(R.id.startupWebsiteET);
-        TextView facebookET = root.findViewById(R.id.facebookET);
-        TextView twitterET = root.findViewById(R.id.twitterET);
-        progressBar = root.findViewById(R.id.startup_details_progress_bar);
+        if (getArguments() != null) {
+            mField = (StartUpField) getArguments().getSerializable(STARTUP_DETAILS_BUNDLE_KEY);
+            mDetailsBinding.setStartupFields(mField);
+        }
 
-        Glide.with(requireContext()).load(mField.getImageUrl()).into(startupLogo);
-        startupDescriptionET.setText(mField.getStartupDescription());
+        Glide.with(requireContext()).load(mField.getImageUrl()).into(mDetailsBinding.startupDetailLogo);
+
+        /*startupDescriptionET.setText(mField.getStartupDescription());
         startupFounderET.setText(mField.getStartupFounder());
         startupCoFounderET.setText(mField.getStartupCoFounder());
         startupTelephoneET.setText(mField.getTelephone());
         startupEmailET.setText(mField.getEmail());
         startupWebsiteET.setText(mField.getStartupWebsite());
         facebookET.setText(mField.getFacebookUrl());
-        twitterET.setText(mField.getTwitterUrl());
+        twitterET.setText(mField.getTwitterUrl());*/
 
         // On Click of imageView, display a larger image that supports zooming
-        initImageClick(startupLogo);
+        initImageClick(mDetailsBinding.startupDetailLogo);
 
-        setupToolbar(startUpDetailsToolbar);
-        return root;
+        setupToolbar(mDetailsBinding.startupDetailsToolbar);
+        return mDetailsBinding.getRoot();
     }
 
     /**
@@ -126,7 +121,7 @@ public class StartUpDetailsFragment extends Fragment {
                 deleteImage(mField.getImageUrl());
             } else {
                 Toast.makeText(getParentFragment().getContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                stopProgressBar(progressBar);
+                stopProgressBar(mDetailsBinding.startupDetailsProgressBar);
             }
         });
     }
@@ -141,10 +136,10 @@ public class StartUpDetailsFragment extends Fragment {
         ref.delete().addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful()) {
                 Navigation.findNavController(requireView()).navigate(R.id.action_startUpDetailsFragment_to_navigation_startup);
-                stopProgressBar(progressBar);
+                stopProgressBar(mDetailsBinding.startupDetailsProgressBar);
                 Toast.makeText(getParentFragment().getContext(), "Startup Removed", Toast.LENGTH_SHORT).show();
             } else {
-                stopProgressBar(progressBar);
+                stopProgressBar(mDetailsBinding.startupDetailsProgressBar);
                 Toast.makeText(getParentFragment().getContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -157,7 +152,7 @@ public class StartUpDetailsFragment extends Fragment {
         MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(requireContext());
         dialog.setMessage("Are you sure you want to delete this Startup?")
                 .setPositiveButton("YES", (dialogInterface, i) -> {
-                    startProgressBar(progressBar);
+                    startProgressBar(mDetailsBinding.startupDetailsProgressBar);
                     deleteStartup(mField.getId());
                     dialogInterface.dismiss();
                 })
