@@ -71,7 +71,11 @@
         tools:layout="@layout/fragment_app_info" >
         <action
             android:id="@+id/action_appInfo_to_fragment_ksih_android_team"
-            app:destination="@id/fragment_ksih_android_team" />
+            app:destination="@id/fragment_ksih_android_team"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_appInfo_to_simpleFragment"
             app:destination="@id/simpleFragment" />

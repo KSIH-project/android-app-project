@@ -4,20 +4,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.database.DatabaseReference;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 
-import java.util.ArrayList;
 
 public class AboutDevelopersAdapter extends RecyclerView.Adapter<AboutDevelopersAdapter.AboutDevelopersViewHolder> {
 
-    ArrayList<AboutDevelopersData> mDevelopersAdapters;
-    private DatabaseReference mDatabaseReference;
+    private List<AboutDevelopersData> mDevelopersDataList;
+
+    public AboutDevelopersAdapter(List<AboutDevelopersData> developersDataList) {
+        mDevelopersDataList = developersDataList;
+    }
+
+
 
     @NonNull
     @Override
@@ -29,14 +31,14 @@ public class AboutDevelopersAdapter extends RecyclerView.Adapter<AboutDevelopers
 
     @Override
     public void onBindViewHolder(@NonNull AboutDevelopersViewHolder holder, int position) {
-        AboutDevelopersData data = mDevelopersAdapters.get(position);
+        AboutDevelopersData data = mDevelopersDataList.get(position);
         holder.bind(data);
 
     }
 
     @Override
     public int getItemCount() {
-        return mDevelopersAdapters.size();
+        return mDevelopersDataList.size();
     }
 
     public class AboutDevelopersViewHolder extends RecyclerView.ViewHolder {
@@ -49,7 +51,7 @@ public class AboutDevelopersAdapter extends RecyclerView.Adapter<AboutDevelopers
 
             mRoundedImageViewPerson = itemView.findViewById(R.id.roundedImageViewPerson);
             mTextViewName = itemView.findViewById(R.id.textViewName);
-            mTextViewProfession = mTextViewProfession.findViewById(R.id.textViewProfession);
+            mTextViewProfession = itemView.findViewById(R.id.textViewProfession);
         }
 
         public void bind(AboutDevelopersData data) {

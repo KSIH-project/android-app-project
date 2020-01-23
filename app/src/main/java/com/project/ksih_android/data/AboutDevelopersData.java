@@ -12,6 +12,10 @@ public class AboutDevelopersData {
     private String linkedinProfile;
     private String meduimProfile;
 
+    public AboutDevelopersData(){
+
+    }
+
     public AboutDevelopersData(String textName, String textProfession, String email, String phoneNumber, String facebookProfile, String twitterProfile, String githubProfile, String linkedinProfile, String meduimProfile) {
         this.textName = textName;
         this.textProfession = textProfession;

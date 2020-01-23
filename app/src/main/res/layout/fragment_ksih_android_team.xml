@@ -29,7 +29,19 @@
             app:title="About Developers" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.victor.loading.rotate.RotateLoading
+        android:id="@+id/progress_bar_about_developers"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:loading_color="@color/button_color_background"
+        app:loading_width="6dp" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Recycler_developer_data"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
