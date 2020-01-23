@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editPhotoFragment"
+            app:destination="@id/editPhotoFragment" />
     </fragment>
 
     <fragment
@@ -80,4 +83,13 @@
         android:name="com.project.ksih_android.ui.profile.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
+    <dialog
+        android:id="@+id/editPhotoFragment"
+        android:name="com.project.ksih_android.ui.profile.EditPhotoDialogFragment"
+        android:label="fragment_edit_photo"
+        tools:layout="@layout/fragment_edit_photo" >
+        <action
+            android:id="@+id/action_editPhotoFragment_to_zoomFragment"
+            app:destination="@id/zoomFragment" />
+    </dialog>
 </navigation>

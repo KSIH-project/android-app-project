@@ -110,6 +110,13 @@ public class ProfileFragment extends Fragment {
                 bundle.putSerializable("user_data", mUser);
                 mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
                         .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
+
+
+                mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("photo_url", mUser.user_image);
+                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_editPhotoFragment, bundle1);
+                });
             }
 
             @Override
@@ -117,50 +124,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        mProfileBinding.editImage.setOnClickListener(view -> openGallery());
         return mProfileBinding.getRoot();
-    }
-
-    public void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, PROFILE_IMAGE_REQUEST_CODE);
-    }
-
-    private void uploadPhoto() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
-        byte[] data = outputStream.toByteArray();
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference(PROFILE_FIREBASE_STORAGE_REFERENCE + imagePath);
-        Timber.d("Image Path: %s", imagePath);
-        UploadTask uploadTask = storageReference.putBytes(data);
-        uploadTask.addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                // Upload successful
-                // Get image download URL
-                task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(task1 -> {
-                    if (task1.isSuccessful()) {
-                        imageUrl = task1.getResult().toString();
-                        mRef.child("user_image").setValue(imageUrl).addOnCompleteListener(task2 -> {
-                            if (task2.isSuccessful()) {
-                                Toast.makeText(getParentFragment().getContext(), "Image Saved", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getParentFragment().getContext(), "Unable to save image", Toast.LENGTH_SHORT).show();
-                                Timber.d("Image Upload Error: %s", task2.getException().getLocalizedMessage());
-                            }
-                        });
-                        Timber.d("Download URL: %s", imageUrl);
-                    } else {
-                        Timber.d("Download URL error: %s", task1.getException().getLocalizedMessage());
-                        Toast.makeText(getParentFragment().getContext(), task1.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                Timber.d("Image upload error: %s", task.getException().getLocalizedMessage());
-                Toast.makeText(getParentFragment().getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -179,7 +143,6 @@ public class ProfileFragment extends Fragment {
                                 .placeholder(R.drawable.ic_profile_photo)
                                 .error(R.drawable.ic_profile_photo)
                                 .into(mProfileBinding.userProfileImage);
-                        uploadPhoto();
                     } else {
                         mBitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
                         // Load image using Glide
@@ -188,7 +151,6 @@ public class ProfileFragment extends Fragment {
                                 .placeholder(R.drawable.ic_profile_photo)
                                 .error(R.drawable.ic_profile_photo)
                                 .into(mProfileBinding.userProfileImage);
-                        uploadPhoto();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

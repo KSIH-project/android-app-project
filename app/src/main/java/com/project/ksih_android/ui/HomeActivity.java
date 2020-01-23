@@ -150,6 +150,7 @@ public class HomeActivity extends AppCompatActivity {
                     disableNavDrawer();
                     break;
                 case R.id.profileFragment:
+                case R.id.zoomFragment:
                     hideCustomToolBar();
                     break;
                 default:
