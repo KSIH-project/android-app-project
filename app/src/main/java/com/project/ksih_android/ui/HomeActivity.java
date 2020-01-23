@@ -12,6 +12,7 @@ import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.utility.DividerItemDecoration;
+import com.project.ksih_android.utility.Methods;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,15 +55,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow((getCurrentFocus()).getWindowToken(), 0);
+              Methods.hideSoftKeyboard(HomeActivity.this);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow((getCurrentFocus()).getWindowToken(), 0);
+                Methods.hideSoftKeyboard(HomeActivity.this);
             }
         };
         drawer.addDrawerListener(mToggle);
