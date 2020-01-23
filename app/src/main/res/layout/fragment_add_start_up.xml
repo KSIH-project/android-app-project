@@ -51,133 +51,152 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_image_add"
+                android:layout_marginBottom="16dp"
                 app:riv_corner_radius="8dp"
                 tools:ignore="VectorDrawableCompat" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_startup_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Startup Name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/startup_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_description"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="textMultiLine|textCapSentences"
                     android:maxLines="5"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_founder"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Founder">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/founder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="textPersonName|textCapWords"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_co_founder"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Co-founder">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/co_founder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_telephone"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Telephone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/telephone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="phone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_website"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Website">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/website"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="textUri"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_facebook_url"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Facebook">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/facebook_url"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="textUri" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_twitter_url"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Twitter">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/twitter_url"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/textInputEdittextStyle"
                     android:inputType="textUri" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,9 +207,11 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/save_startup"
                     style="@style/buttonStyle"
+                    android:textAppearance="@style/buttonTextStyle"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
                     android:text="Save" />
 
                 <com.victor.loading.rotate.RotateLoading
