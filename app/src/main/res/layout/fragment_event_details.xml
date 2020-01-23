@@ -51,40 +51,7 @@
                 android:layout_marginTop="16dp"
                 tools:context=".ui.events.EventDetailsFragment">
 
-                <TextView
-                    android:id="@+id/text_event_tittle_details"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:gravity="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Dev c Training with Andela" />
 
-                <TextView
-                    android:id="@+id/text_events_type_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="Android"
-                    app:layout_constraintEnd_toEndOf="@+id/text_event_tittle_details"
-                    app:layout_constraintTop_toBottomOf="@+id/text_event_tittle_details" />
-
-                <TextView
-                    android:id="@+id/text_events_descrip_details"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/roboto_medium"
-                    app:layout_constraintEnd_toEndOf="@+id/text_event_tittle_details"
-                    app:layout_constraintStart_toStartOf="@+id/text_event_tittle_details"
-                    app:layout_constraintTop_toBottomOf="@+id/text_events_type_details"
-                    tools:text="This is an event that allows us to go and go and go and go" />
 
                 <TextView
                     android:id="@+id/text_event_date"
@@ -100,18 +67,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_events_descrip_details"
                     tools:text="Dev c Training with Andela" />
 
-                <TextView
-                    android:id="@+id/text_event_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/roboto_medium"
 
-                    android:gravity="center"
-                    app:layout_constraintEnd_toEndOf="@+id/text_phone_number"
-                    app:layout_constraintStart_toStartOf="@+id/text_phone_number"
-                    app:layout_constraintTop_toBottomOf="@+id/text_event_date"
-                    tools:text="Dev c Training with Andela" />
 
                 <TextView
                     android:id="@+id/text_events_link_details"
@@ -119,12 +75,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:autoLink="all"
-                    android:textColorLink="@color/secondaryDarkColor"
                     android:fontFamily="@font/roboto_medium"
-                    app:layout_constraintHorizontal_bias="1.0"
                     android:textAlignment="center"
+                    android:textColorLink="@color/secondaryDarkColor"
                     app:layout_constraintEnd_toEndOf="@+id/text_event_tittle_details"
-                    app:layout_constraintStart_toStartOf="@+id/text_event_tittle_details"
                     app:layout_constraintTop_toBottomOf="@+id/text_event_time"
                     tools:text="www.google.com" />
 
@@ -159,6 +113,97 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_event_email_details">
 
                 </TextView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/text_events_descrip_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="This is an event that allows us to go and go and go and go" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView"
+                    app:layout_constraintStart_toStartOf="@+id/cardView"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text_events_type_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="Android"
+                            android:textAlignment="viewStart"
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="@id/cardView_date"
+                    app:layout_constraintStart_toStartOf="@id/cardView_date"
+                    app:layout_constraintTop_toBottomOf="@id/cardView_date">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text_event_time"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/roboto_medium"
+
+                            android:gravity="center"
+                            app:layout_constraintEnd_toEndOf="@+id/text_phone_number"
+                            app:layout_constraintStart_toStartOf="@+id/text_phone_number"
+                            app:layout_constraintTop_toBottomOf="@+id/text_event_date"
+                            tools:text="Dev c Training with Andela" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

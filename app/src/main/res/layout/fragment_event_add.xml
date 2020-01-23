@@ -50,7 +50,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_calendar_month"
+                        android:drawableStart="@drawable/ic_name"
                         android:drawablePadding="16dp"
                         android:maxLength="25"
                         android:hint="Title of Event" />
@@ -86,6 +86,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_description"
+                        android:drawablePadding="8dp"
                         android:hint="Description of event" />
                 </com.google.android.material.textfield.TextInputLayout>
 
