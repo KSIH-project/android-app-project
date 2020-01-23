@@ -5,9 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.ImageDecoder;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,8 +22,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -45,10 +41,13 @@ import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE_EVENTS_IMAGE;
 import static com.project.ksih_android.utility.Constants.SAVE_EVENTS_BUTTON_TEXT;
 import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
+import static com.project.ksih_android.utility.Methods.isUrlValid;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 
 import timber.log.Timber;
@@ -360,6 +359,7 @@ public class EventAddFragment extends Fragment {
 
     private boolean validate() {
         String error = getString(R.string.event_error_message);
+
         if (!hasText(binding.textInputLayoutTittle, error)) return false;
         if (!hasText(binding.textInputLayoutType, error)) return false;
         if (!hasText(binding.textInputLayoutDesc, error)) return false;
@@ -367,6 +367,7 @@ public class EventAddFragment extends Fragment {
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
         if (binding.textInputLayoutDate == null) return false;
         if (binding.textInputLayoutTime == null) return false;
+        isUrlValid(binding.textInputLayoutRsvp.getEditText().getText().toString().trim());
         return hasText(binding.textInputLayoutRsvp, error);
     }
 
