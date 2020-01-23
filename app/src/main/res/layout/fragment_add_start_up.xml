@@ -67,9 +67,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/startup_name"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textInputEdittextStyle"
                     android:inputType="textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,11 +85,11 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/description"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/textInputEdittextStyle"
                     android:inputType="textMultiLine|textCapSentences"
-                    android:maxLines="5"/>
+                    android:maxLines="5" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -104,10 +104,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/founder"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textInputEdittextStyle"
-                    android:inputType="textPersonName|textCapWords"/>
+                    android:inputType="textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -122,9 +122,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/co_founder"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textInputEdittextStyle"
                     android:inputType="textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -140,10 +140,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/telephone"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textInputEdittextStyle"
-                    android:inputType="phone"/>
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -158,10 +158,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textInputEdittextStyle"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -176,10 +176,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/website"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textInputEdittextStyle"
-                    android:inputType="textUri"/>
+                    android:inputType="textUri" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -194,9 +194,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/facebook_url"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textInputEdittextStyle"
                     android:inputType="textUri" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -212,9 +212,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/twitter_url"
+                    style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textInputEdittextStyle"
                     android:inputType="textUri" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -225,12 +225,12 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/save_startup"
                     style="@style/buttonStyle"
-                    android:textAppearance="@style/buttonTextStyle"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
-                    android:text="Save" />
+                    android:text="Save"
+                    android:textAppearance="@style/buttonTextStyle" />
 
                 <com.victor.loading.rotate.RotateLoading
                     android:id="@+id/startup_progress_bar"
