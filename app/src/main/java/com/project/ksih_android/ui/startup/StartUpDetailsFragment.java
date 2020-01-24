@@ -1,5 +1,7 @@
 package com.project.ksih_android.ui.startup;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -111,7 +113,8 @@ public class StartUpDetailsFragment extends Fragment {
             if (task.isSuccessful()) {
                 deleteImage(mField.getImageUrl());
             } else {
-                Toast.makeText(getParentFragment().getContext(), "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Error: " + task.getException()
+                        .getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 stopProgressBar(mDetailsBinding.startupDetailsProgressBar);
             }
         });
@@ -131,7 +134,8 @@ public class StartUpDetailsFragment extends Fragment {
                 Toast.makeText(getParentFragment().getContext(), "Startup Removed", Toast.LENGTH_SHORT).show();
             } else {
                 stopProgressBar(mDetailsBinding.startupDetailsProgressBar);
-                Toast.makeText(getParentFragment().getContext(), "Image Delete Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Image Delete Error: " + task.getException()
+                        .getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

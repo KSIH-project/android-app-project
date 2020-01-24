@@ -1,7 +1,10 @@
 package com.project.ksih_android.data;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.view.View;
+import android.widget.Toast;
 
 import java.io.Serializable;
 
@@ -138,10 +141,42 @@ public class StartUpField extends BaseObservable implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public void dialNumber() {
+    public void dialIntent(Context context) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_DIAL);
-        Uri uri = Uri.parse("tel:" + telephone);
+        Uri uri = Uri.parse("tel:" + getTelephone());
         intent.setData(uri);
+        context.startActivity(intent);
+    }
+
+    public void emailIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SENDTO);
+        intent.setData(Uri.fromParts("mailto", getEmail(), null));
+        context.startActivity(Intent.createChooser(intent, "Select Email App"));
+    }
+
+    public void facebookIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        if (getFacebookUrl().startsWith("http") || getFacebookUrl().startsWith("https")) {
+            intent.setData(Uri.parse(getFacebookUrl()));
+        } else {
+            String formattedUrl = "http://" + getFacebookUrl();
+            intent.setData(Uri.parse(formattedUrl));
+        }
+        context.startActivity(intent);
+    }
+
+    public void twitterIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        if (getTwitterUrl().startsWith("http") || getTwitterUrl().startsWith("https")) {
+            intent.setData(Uri.parse(getTwitterUrl()));
+        } else {
+            String formattedUrl = "http://" + getTwitterUrl();
+            intent.setData(Uri.parse(formattedUrl));
+        }
+        context.startActivity(intent);
     }
 }

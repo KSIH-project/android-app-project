@@ -6,10 +6,12 @@
     <data>
 
         <import type="android.view.View" />
+        <import type="android.content.Context" />
 
         <variable
             name="startupFields"
             type="com.project.ksih_android.data.StartUpField" />
+
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -164,6 +166,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="@{() -> startupFields.dialIntent(context)}"
                 android:visibility="@{startupFields.telephone.length() != 0 ? View.VISIBLE : View.GONE}"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
@@ -207,11 +210,12 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="@{() -> startupFields.emailIntent(context)}"
                 android:visibility="@{startupFields.email.length() != 0 ? View.VISIBLE : View.GONE}"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
-                <LinearLayout
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -294,6 +298,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="@{startupFields.facebookUrl.length() != 0 ? View.VISIBLE : View.GONE}"
+                android:onClick="@{() -> startupFields.facebookIntent(context)}"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
@@ -337,6 +342,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="@{startupFields.twitterUrl.length() != 0 ? View.VISIBLE : View.GONE}"
+                android:onClick="@{() -> startupFields.twitterIntent(context)}"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
