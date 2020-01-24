@@ -1,5 +1,8 @@
 package com.project.ksih_android.data;
 
+import android.content.Intent;
+import android.net.Uri;
+
 import java.io.Serializable;
 
 import androidx.annotation.Nullable;
@@ -133,5 +136,12 @@ public class StartUpField extends BaseObservable implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void dialNumber() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_DIAL);
+        Uri uri = Uri.parse("tel:" + telephone);
+        intent.setData(uri);
     }
 }

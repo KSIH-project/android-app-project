@@ -52,17 +52,8 @@ public class StartUpDetailsFragment extends Fragment {
             mField = (StartUpField) getArguments().getSerializable(STARTUP_DETAILS_BUNDLE_KEY);
             mDetailsBinding.setStartupFields(mField);
         }
-
+        // Load startup image
         Glide.with(requireContext()).load(mField.getImageUrl()).into(mDetailsBinding.startupDetailLogo);
-
-        /*startupDescriptionET.setText(mField.getStartupDescription());
-        startupFounderET.setText(mField.getStartupFounder());
-        startupCoFounderET.setText(mField.getStartupCoFounder());
-        startupTelephoneET.setText(mField.getTelephone());
-        startupEmailET.setText(mField.getEmail());
-        startupWebsiteET.setText(mField.getStartupWebsite());
-        facebookET.setText(mField.getFacebookUrl());
-        twitterET.setText(mField.getTwitterUrl());*/
 
         // On Click of imageView, display a larger image that supports zooming
         initImageClick(mDetailsBinding.startupDetailLogo);
