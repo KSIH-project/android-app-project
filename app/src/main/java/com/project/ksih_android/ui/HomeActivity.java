@@ -1,11 +1,10 @@
 package com.project.ksih_android.ui;
 
-import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
@@ -42,6 +41,15 @@ public class HomeActivity extends AppCompatActivity {
         drawer = findViewById(R.id.drawer_layout);
         toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
+
+
+        //get intent for notification
+        String value = getIntent().getStringExtra("visitUserId");
+        if (value != null){
+            Navigation.findNavController(drawer).navigate(R.id.nav_chats);
+        }
+
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         NavigationView navigationView = findViewById(R.id.nav_drawer);

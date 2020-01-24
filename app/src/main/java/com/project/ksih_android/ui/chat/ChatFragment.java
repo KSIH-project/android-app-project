@@ -53,6 +53,12 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.ChatMessage;
 import com.project.ksih_android.ui.zoom.ZoomFragment;
 import com.project.ksih_android.utility.Constants;
+import com.project.ksih_android.utility.notification.APIService;
+import com.project.ksih_android.utility.notification.Client;
+import com.project.ksih_android.utility.notification.Data;
+import com.project.ksih_android.utility.notification.MyResponse;
+import com.project.ksih_android.utility.notification.Sender;
+import com.project.ksih_android.utility.notification.Token;
 import com.victor.loading.rotate.RotateLoading;
 
 
@@ -63,6 +69,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -83,6 +93,9 @@ public class ChatFragment extends Fragment {
     LinearLayoutManager mLinearLayoutManager;
 
 
+    //Notification
+    APIService apiService;
+    boolean notify = false;
 
     //for message
     public static final int VIEW_TYPE_USER_MESSAGE = 0;
@@ -106,6 +119,10 @@ public class ChatFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+
+//        //get intent for notification
+//       getArguments().getString("visitUserId");
     }
 
     @Override
@@ -128,6 +145,10 @@ public class ChatFragment extends Fragment {
                 mPhotoUrl = currentUser.getPhotoUrl().toString();
             }
         }
+
+
+        //receice notification service
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         //setting views
         mMessageRecyclerView = root.findViewById(R.id.messageRecyclerView);
@@ -205,6 +226,8 @@ public class ChatFragment extends Fragment {
             //send message with sender details
         mSendButton.setOnClickListener(view -> {
 
+            //notification
+            notify = true;
 
             if (mMessageEditText.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getContext(), "write something", Toast.LENGTH_SHORT).show();
@@ -234,6 +257,12 @@ public class ChatFragment extends Fragment {
                                             .push().setValue(friendlyMessage);
                                     mMessageEditText.setText("");
 
+                                    //notification
+                                    if (notify) {
+                                        sendNotification(user_uID, userName, mMessageEditText.getText().toString().trim());
+                                    }
+
+                                    notify = false;
                                 }
 
                             }
@@ -255,11 +284,65 @@ public class ChatFragment extends Fragment {
             startActivityForResult(intent, Constants.REQUEST_IMAGE);
         });
 
-        displayChatUsers();
+//        displayChatUsers();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
         return root;
     }
 
+
+    //notification
+    private void updateToken(String token){
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(fUser.getUid()).setValue(token1);
+    }
+
+    //notification
+    private void sendNotification(String receiver, String userName, String message){
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(receiver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    Data data = new Data(firebaseUser.getUid(), "", userName +"\n" + message,
+                            "New Message", "");
+
+                    Sender sender = new Sender(data, token.getToken());
+
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if (response.code() == 200){
+                                        if (response.body().success != 1){
+                                            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void displayChatUsers(){
 
