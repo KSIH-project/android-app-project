@@ -94,7 +94,7 @@
             android:id="@+id/action_nav_settings_to_aboutKsihFragment"
             app:destination="@id/aboutKsihFragment"
             app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out" />
+            app:exitAnim="@anim/fade_out"/>
 
     <fragment
         android:id="@+id/aboutKsihFragment"
