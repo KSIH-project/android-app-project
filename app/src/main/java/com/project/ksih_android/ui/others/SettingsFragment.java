@@ -57,7 +57,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void dialogQuestion(){
-        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity());
+        MaterialAlertDialogBuilder materialAlertDialogBuilder  = new MaterialAlertDialogBuilder(getActivity());
         materialAlertDialogBuilder.setTitle("Sign out!");
         materialAlertDialogBuilder.setIcon(R.drawable.ksih_background);
         materialAlertDialogBuilder.setMessage("Are you sure you want to Sign out?");
