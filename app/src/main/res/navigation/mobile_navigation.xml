@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/navigation_project">
 
 
     <activity
@@ -90,6 +90,22 @@
         android:name="com.project.ksih_android.SimpleFragment"
         android:label="fragment_simple"
         tools:layout="@layout/fragment_simple" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_nav_settings_to_aboutKsihFragment"
+            app:destination="@id/aboutKsihFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutKsihFragment"
+        android:name="com.project.ksih_android.ui.others.AboutKsihFragment"
+        android:label="About KISH"
+        tools:layout="@layout/fragment_about_ksih" />
 
-
+    <fragment
+        android:id="@+id/zoomFragment"
+        android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
+        android:label="fragment_zoom"
+        tools:layout="@layout/fragment_zoom" />
 </navigation>

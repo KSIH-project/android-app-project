@@ -17,4 +17,7 @@
     <string name="by_ksih_android_team">By KSIH android team</string>
     <string name="app_version">v1.0</string>
     <string name="ksih_app_title">KSIH App </string>
+    <string name="title_about_ksih">About KSIH</string>
+    <string name="about_the_ken_saro_wiwa_innovation_hub">ABOUT THE KEN SARO WIWA INNOVATION HUB</string>
+
 </resources>

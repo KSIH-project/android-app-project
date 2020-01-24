@@ -30,6 +30,9 @@ public class SettingsFragment extends Fragment {
 
         mTextView.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_settings_to_appInfo));
 
+        TextView textViewAboutKsih = root.findViewById(R.id.text_about_ksih);
+        textViewAboutKsih.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_settings_to_aboutKsihFragment));
+
         return root;
     }
 }
