@@ -52,6 +52,7 @@ public class Methods {
                     URL url1 = new URL(url);
                     HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
                     int status = connection.getResponseCode();
+                    Timber.d("response: %d", status);
                     if (HttpURLConnection.HTTP_OK == status) {
 
                         Timber.d("response: %d", status);
@@ -59,6 +60,7 @@ public class Methods {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Timber.d("catch: %s", e.getLocalizedMessage());
                 }
                 return false;
             }

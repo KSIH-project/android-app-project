@@ -367,7 +367,8 @@ public class EventAddFragment extends Fragment {
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
         if (binding.textInputLayoutDate == null) return false;
         if (binding.textInputLayoutTime == null) return false;
-        isUrlValid(binding.textInputLayoutRsvp.getEditText().getText().toString().trim());
+        if (isUrlValid(binding.textInputLayoutRsvp.getEditText().getText().toString().trim()))
+            return false;
         return hasText(binding.textInputLayoutRsvp, error);
     }
 

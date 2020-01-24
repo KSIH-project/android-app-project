@@ -52,7 +52,6 @@ public class EventDetailsFragment extends Fragment {
 
         mEvents = getArguments().getParcelable(EVENTS_ITEM_KEY);
 
-        binding.textEventTittleDetails.setText(mEvents.getEventName());
         binding.textEventEmailDetails.setText(mEvents.getEmail());
         binding.textEventsDescripDetails.setText(mEvents.getEventDescription());
         binding.textPhoneNumber.setText(mEvents.getPhoneNumber());
