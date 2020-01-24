@@ -90,13 +90,12 @@
         android:name="com.project.ksih_android.SimpleFragment"
         android:label="fragment_simple"
         tools:layout="@layout/fragment_simple" />
-        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_nav_settings_to_aboutKsihFragment"
             app:destination="@id/aboutKsihFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out" />
-    </fragment>
+
     <fragment
         android:id="@+id/aboutKsihFragment"
         android:name="com.project.ksih_android.ui.others.AboutKsihFragment"
