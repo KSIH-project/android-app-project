@@ -61,10 +61,7 @@ public class EventFragment extends Fragment {
                 mFragmentEventBinding.recyclerEvents.setAdapter(adapter);
                 mFragmentEventBinding.progressBar.stop();
             }
-
-
         });
-
     }
 
     @Override
