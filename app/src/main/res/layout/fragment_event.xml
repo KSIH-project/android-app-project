@@ -14,6 +14,10 @@
         android:id="@+id/recycler_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/events_items_list" />
 
     <com.victor.loading.rotate.RotateLoading
@@ -42,6 +46,17 @@
         app:srcCompat="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/text_events_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="No Events Added"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_illustration"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_illustration"
+        app:layout_constraintStart_toStartOf="@+id/imageView_illustration" />
 
     <ImageView
         android:id="@+id/imageView_illustration"

@@ -38,11 +38,10 @@
                     android:id="@+id/textInputLayout_tittle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
                     android:layout_marginTop="24dp"
-                    android:layout_marginEnd="32dp"
                     style="@style/textInputLayoutStyle"
-                    android:padding="8dp"
+                    app:startIconDrawable="@drawable/ic_name"
+                    app:startIconTint="@color/colorSecondary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView_add">
@@ -50,9 +49,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_name"
-                        android:drawablePadding="16dp"
-                        android:maxLength="25"
+                        style="@style/textInputEdittextStyle"
                         android:hint="Title of Event" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +58,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:padding="8dp"
+                    app:startIconDrawable="@drawable/ic_map_marker"
+                    app:startIconTint="@color/colorSecondary"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout_tittle">
@@ -69,9 +67,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_map_marker"
-                        android:drawablePadding="8dp"
-                        android:hint="Event Location" />
+                        style="@style/textInputEdittextStyle"
+                        android:hint="Event Venue" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -79,6 +76,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    app:startIconDrawable="@drawable/ic_description"
+                    app:startIconTint="@color/colorSecondary"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout_type">
@@ -86,8 +85,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_description"
-                        android:drawablePadding="8dp"
+                        style="@style/textInputEdittextStyle"
+                        android:maxLines="5"
                         android:hint="Description of event" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,7 +95,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:padding="8dp"
+                    app:startIconDrawable="@drawable/ic_at"
+                    app:startIconTint="@color/colorSecondary"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout_desc">
@@ -104,8 +104,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_at"
-                        android:drawablePadding="16dp"
+                        style="@style/textInputEdittextStyle"
                         android:hint="Contacts email" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,8 +112,9 @@
                     android:id="@+id/textInputLayout_phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/ic_phone"
+                    app:startIconTint="@color/colorSecondary"
                     android:layout_marginTop="16dp"
-                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout_contactsEmail">
@@ -122,9 +122,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_phone"
                         android:hint="Contacts Phone"
-                        android:drawablePadding="16dp"
+                        style="@style/textInputEdittextStyle"
                         android:inputType="phone"
                         android:maxLength="11" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -134,9 +133,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:padding="8dp"
+                    style="@style/textInputEdittextStyle"
                     android:drawableStart="@drawable/ic_calendar_month"
                     android:drawablePadding="8dp"
+                    android:padding="16dp"
                     android:hint="@string/select_a_date"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_phone"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_phone"
@@ -147,10 +147,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:padding="8dp"
+                    style="@style/textInputEdittextStyle"
                     android:drawableStart="@drawable/ic_clock_outline"
                     android:drawablePadding="16dp"
                     android:hint="@string/choose_time"
+                    android:padding="16dp"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_date"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout_date" />
@@ -161,7 +162,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:padding="8dp"
+                    app:startIconDrawable="@drawable/ic_web"
+                    app:startIconTint="@color/colorSecondary"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout_time">
@@ -169,9 +171,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_web"
-                        android:drawablePadding="16dp"
                         android:inputType="textWebEditText"
+                        style="@style/textInputEdittextStyle"
                         android:hint="RSVP link" />
                 </com.google.android.material.textfield.TextInputLayout>
 

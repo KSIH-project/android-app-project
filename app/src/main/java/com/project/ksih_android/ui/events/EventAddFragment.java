@@ -1,6 +1,5 @@
 package com.project.ksih_android.ui.events;
 
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -51,8 +50,6 @@ import java.net.URL;
 import java.util.Calendar;
 
 import timber.log.Timber;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -71,15 +68,12 @@ public class EventAddFragment extends Fragment {
 
         String text = editText.getEditText().getText().toString().trim();
         editText.setError(null);
-
-        // length 0 means there is no text
         if (text.length() == 0) {
             editText.setError(error_message);
             return false;
         }
         return true;
     }
-
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,13 +102,11 @@ public class EventAddFragment extends Fragment {
             int year = cal.get(Calendar.YEAR);
             int month = cal.get(Calendar.MONTH);
             int day = cal.get(Calendar.DAY_OF_MONTH);
-
             DatePickerDialog pickerDialog = new DatePickerDialog(getParentFragment().getContext()
                     , mDateDialog,
                     year, month, day);
             pickerDialog.show();
         });
-
         mDateDialog = (view, year, month, dayOfMonth) -> {
             Calendar calendar1 = Calendar.getInstance();
             calendar1.set(Calendar.YEAR, year);
@@ -124,7 +116,6 @@ public class EventAddFragment extends Fragment {
             CharSequence date = DateFormat.format("MMM d, yyyy", calendar1);
             binding.textInputLayoutDate.setText(date);
         };
-
         binding.buttonAddEvents.setOnClickListener(v -> {
 
 
@@ -137,7 +128,6 @@ public class EventAddFragment extends Fragment {
             } else if (validate() && getArguments() != null) {
                 binding.progressBarEventsAddFragment.start();
                 binding.buttonAddEvents.setEnabled(false);
-//                saveEvents();
                 hideSoftKeyboard(requireActivity());
                 uploadNewImageToFireBaseStorage();
             } else {
@@ -149,11 +139,8 @@ public class EventAddFragment extends Fragment {
             mEvents = getArguments().getParcelable(EVENT_TO_EDIT);
             getEventsDetails();
         }
-
-
         return binding.getRoot();
     }
-
     private void getEventsDetails() {
 
         binding.textInputLayoutTittle.getEditText().setText(mEvents.getEventName());
@@ -166,7 +153,6 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutDate.setText(mEvents.getDate());
         Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageViewAdd);
     }
-
     private void disableViews() {
         binding.buttonAddEvents.setEnabled(false);
         binding.textInputLayoutContactsEmail.setEnabled(false);
@@ -176,7 +162,6 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutTittle.setEnabled(false);
         binding.textInputLayoutType.setEnabled(false);
     }
-
     private void uploadImageToFireBaseStorage() {
         if (mBitmap != null) {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -206,24 +191,17 @@ public class EventAddFragment extends Fragment {
                     enableViews();
                 }
             });
-
         } else {
             Toast.makeText(getParentFragment().getContext(), "Please Select An Image to upload", Toast.LENGTH_SHORT).show();
             enableViews();
             binding.progressBarEventsAddFragment.stop();
         }
-
-
     }
-
     private void uploadNewImageToFireBaseStorage() {
         if (mBitmap == null) {
             editEvents();
         } else {
-
-
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
             byte[] data = outputStream.toByteArray();
             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -244,8 +222,6 @@ public class EventAddFragment extends Fragment {
             });
         }
     }
-
-
     private void editEvents() {
         String id = mEvents.getId();
         Timber.d("mField: %s", mEvents.getId());
@@ -279,7 +255,6 @@ public class EventAddFragment extends Fragment {
                     }
                 });
             }
-
         } else {
             deleteImage(mEvents.getImageUrl());
             Events nEvents = new Events();
@@ -308,7 +283,6 @@ public class EventAddFragment extends Fragment {
             });
         }
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EVENTS_IMAGE) {
@@ -320,19 +294,16 @@ public class EventAddFragment extends Fragment {
                     if (Build.VERSION.SDK_INT >= 29) {
                         ImageDecoder.Source source = ImageDecoder.createSource(requireActivity().getContentResolver(), uri);
                         mBitmap = ImageDecoder.decodeBitmap(source);
-
                         Glide.with(requireContext()).load(uri).into(binding.imageViewAdd);
                     } else {
                         mBitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
                         // Load image using Glide
                         Glide.with(requireContext()).load(mBitmap).into(binding.imageViewAdd);
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     Timber.d(e.getLocalizedMessage());
                 }
-
             } else {
                 Toast.makeText(getParentFragment().getContext(), "No Image Selected", Toast.LENGTH_SHORT).show();
             }
@@ -340,13 +311,11 @@ public class EventAddFragment extends Fragment {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_CODE_EVENTS_IMAGE);
     }
-
     private void enableViews() {
         binding.buttonAddEvents.setEnabled(true);
         binding.textInputLayoutContactsEmail.setEnabled(true);
@@ -356,10 +325,8 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutTittle.setEnabled(true);
         binding.textInputLayoutType.setEnabled(true);
     }
-
     private boolean validate() {
         String error = getString(R.string.event_error_message);
-
         if (!hasText(binding.textInputLayoutTittle, error)) return false;
         if (!hasText(binding.textInputLayoutType, error)) return false;
         if (!hasText(binding.textInputLayoutDesc, error)) return false;
@@ -371,7 +338,6 @@ public class EventAddFragment extends Fragment {
             return false;
         return hasText(binding.textInputLayoutRsvp, error);
     }
-
     private void addEvents() {
         String id = databaseReference.push().getKey();
         mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString().trim(),
@@ -388,7 +354,6 @@ public class EventAddFragment extends Fragment {
             }
         });
     }
-
     private void navigateToEventsListFragment(View v) {
         NavController navController = Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment);
         if (navController.getCurrentDestination().getId() == R.id.eventAddFragment) {
@@ -402,8 +367,6 @@ public class EventAddFragment extends Fragment {
             Throwable e = new Throwable();
             Log.d("full url is null", "deleteImage: ", e.getCause());
         } else {
-
-
             StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
             ref.delete().addOnCompleteListener(requireActivity(), task -> {
                 if (task.isSuccessful()) {
@@ -413,6 +376,5 @@ public class EventAddFragment extends Fragment {
                 }
             });
         }
-
     }
 }

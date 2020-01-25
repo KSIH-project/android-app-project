@@ -52,6 +52,7 @@ public class EventFragment extends Fragment {
         eventViewModel.getEvents().observe(this, events -> {
             if (events.size() == 0) {
                 mFragmentEventBinding.imageViewIllustration.setVisibility(View.VISIBLE);
+                mFragmentEventBinding.textEventsNo.setVisibility(View.VISIBLE);
             } else {
                 EventRecyclerAdapter adapter = new EventRecyclerAdapter(events, requireContext());
                 mFragmentEventBinding.recyclerEvents.setHasFixedSize(true);
