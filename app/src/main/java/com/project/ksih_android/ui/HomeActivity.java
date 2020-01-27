@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         mToggle.syncState();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_signIn, R.id.navigation_project, R.id.navigation_member,
+                R.id.loginFragment, R.id.navigation_project, R.id.navigation_member,
                 R.id.navigation_startup, R.id.navigation_event, R.id.nav_chats, R.id.nav_settings, R.id.ksih_rules)
                 .setDrawerLayout(drawer)
                 .build();

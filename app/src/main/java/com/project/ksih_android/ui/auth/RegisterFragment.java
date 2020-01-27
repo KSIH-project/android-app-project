@@ -47,12 +47,12 @@ public class RegisterFragment extends Fragment {
         if (savedInstanceState == null) {
             mViewModel.init();
         }
-        mRegisterBinding.signUpToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        /*mRegisterBinding.signUpToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requireActivity().onBackPressed();
             }
-        });
+        });*/
         mRegisterBinding.setRegisterModel(mViewModel);
         setUpButtonClick();
         return mRegisterBinding.getRoot();
