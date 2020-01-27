@@ -95,6 +95,7 @@ public class RegisterFragment extends Fragment {
                     storeDefaultDatabaseReference.child("user_gender").setValue("");
                     storeDefaultDatabaseReference.child("user_profession").setValue("");
                     storeDefaultDatabaseReference.child("created_at").setValue(ServerValue.TIMESTAMP);
+                    storeDefaultDatabaseReference.child("user_UID").setValue(current_userID);
                     storeDefaultDatabaseReference.child("user_image").setValue("default image");
                     storeDefaultDatabaseReference.child("device_token").setValue(deviceToken)
                             .addOnCompleteListener(task1 -> {

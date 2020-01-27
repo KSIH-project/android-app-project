@@ -51,6 +51,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.ChatMessage;
+import com.project.ksih_android.data.User;
 import com.project.ksih_android.ui.zoom.ZoomFragment;
 import com.project.ksih_android.utility.Constants;
 import com.project.ksih_android.utility.notification.APIService;
@@ -108,6 +109,7 @@ public class ChatFragment extends Fragment {
     public FirebaseUser currentUser;
     private ListMessageAdapter  mFirebaseAdapter;
     private ArrayList<String> newList;
+    private ArrayList<String> UsersID;
     private LinkedHashSet<String> linkedHashSet;
 
 
@@ -257,12 +259,37 @@ public class ChatFragment extends Fragment {
                                             .push().setValue(friendlyMessage);
                                     mMessageEditText.setText("");
 
-                                    //notification
-                                    if (notify) {
-                                        sendNotification(user_uID, userName, mMessageEditText.getText().toString().trim());
-                                    }
 
-                                    notify = false;
+
+
+            FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                String userID = snapshot.child("user_UID").getValue(String.class);
+
+                                // add all users ID to an array
+                                UsersID = new ArrayList<>();
+                                UsersID.add(userID);
+                            }
+
+                            //notification
+                            if (notify && UsersID.toString() != user_uID) {
+                                sendNotification(UsersID.toString(), userName, mMessageEditText.getText().toString().trim());
+                            }
+
+                            notify = false;
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    }) ;
+
                                 }
 
                             }

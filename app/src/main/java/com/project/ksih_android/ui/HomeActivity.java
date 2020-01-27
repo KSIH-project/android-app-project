@@ -43,13 +43,6 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolBar);
 
 
-        //get intent for notification
-        String value = getIntent().getStringExtra("visitUserId");
-        if (value != null){
-            Navigation.findNavController(drawer).navigate(R.id.nav_chats);
-        }
-
-
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         NavigationView navigationView = findViewById(R.id.nav_drawer);
