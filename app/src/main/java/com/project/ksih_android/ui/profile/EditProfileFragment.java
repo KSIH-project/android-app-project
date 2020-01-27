@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
 import android.view.LayoutInflater;
@@ -24,10 +25,14 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FragmentEditProfileBinding profileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_profile, container, false);
-        User user = (User) getArguments().getSerializable("user_data");
-        Timber.d(user.user_email);
-        Timber.d(user.user_linkedInUrl);
-        Timber.d(user.user_mobile);
+        EditProfileViewModel viewModel = ViewModelProviders.of(getActivity()).get(EditProfileViewModel.class);
+        User user = null;
+        if (getArguments() != null) {
+            user = (User) getArguments().getSerializable("user_data");
+            viewModel.preChangedData.setValue(user);
+        }
+        profileBinding.setEditUser(user);
+        viewModel.postChangedData.setValue(profileBinding.getEditUser());
         return profileBinding.getRoot();
     }
 }

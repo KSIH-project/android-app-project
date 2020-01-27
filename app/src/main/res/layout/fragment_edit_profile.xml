@@ -8,6 +8,10 @@
         <variable
             name="editUser"
             type="com.project.ksih_android.data.User" />
+
+        <variable
+            name="changesModel"
+            type="com.project.ksih_android.ui.profile.EditProfileViewModel" />
     </data>
 
     <ScrollView
@@ -38,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="@{editUser.user_firstName}"/>
+                    android:text="@={editUser.user_firstName}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -59,7 +63,8 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:text="@={editUser.user_lastName}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -80,7 +85,8 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapWords" />
+                    android:inputType="textCapWords"
+                    android:text="@={editUser.user_stack}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,7 +107,8 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:text="@={editUser.user_email}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -122,7 +129,8 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:text="@={editUser.user_mobile}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -143,7 +151,8 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri" />
+                    android:inputType="textUri"
+                    android:text="@={editUser.user_githubUrl}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -164,7 +173,8 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri" />
+                    android:inputType="textUri"
+                    android:text="@={editUser.user_linkedInUrl}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -185,7 +195,8 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri" />
+                    android:inputType="textUri"
+                    android:text="@={editUser.user_mediumUrl}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -206,7 +217,8 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri" />
+                    android:inputType="textUri"
+                    android:text="@={editUser.user_facebookUrl}" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -228,16 +240,19 @@
                     style="@style/textInputEdittextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri" />
+                    android:inputType="textUri"
+                    android:text="@={editUser.user_twitterUrl}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_profile_button"
                 style="@style/buttonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="Save"
+                android:enabled="@{changesModel.hasChangesBeenMade()}"
                 android:textAppearance="@style/buttonTextStyle"
                 app:layout_constraintEnd_toEndOf="@+id/twitterTextLayout"
                 app:layout_constraintTop_toBottomOf="@id/twitterTextLayout" />
