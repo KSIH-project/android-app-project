@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:text="10:22"
+            android:textAlignment="viewEnd"
             android:textStyle="bold"
             />
     </LinearLayout>
