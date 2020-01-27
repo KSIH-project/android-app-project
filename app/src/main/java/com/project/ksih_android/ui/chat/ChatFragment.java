@@ -259,28 +259,42 @@ public class ChatFragment extends Fragment {
                                             .push().setValue(friendlyMessage);
                                     mMessageEditText.setText("");
 
-
-
-
-            FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
+                                    final String[] userID = new String[1];
+            FirebaseDatabase.getInstance().getReference().child("users")
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                String userID = snapshot.child("user_UID").getValue(String.class);
 
+                                userID[0] = snapshot.child("user_UID").getValue(String.class);
                                 // add all users ID to an array
                                 UsersID = new ArrayList<>();
-                                UsersID.add(userID);
+                                UsersID.add(userID[0]);
+
+                                for(int i=0; i<userID.length; i++){
+
+                                    String list = userID[i];
+                                    Timber.d("list item" +list);
+
+                                    if (notify){
+                                        userID[0] = snapshot.child("user_UID").getValue(String.class);
+
+                                        sendNotification(userID[0], userName, mMessageEditText.getText().toString().trim());
+                                        Timber.d( "chatUID string" + userID[0]);
+                                    }
+                                }
+
+
+
+//                                //notification
+//                                if (notify) {
+//
+//
+//                                }
+//
+//                                notify = false;
                             }
 
-                            //notification
-                            if (notify && UsersID.toString() != user_uID) {
-                                sendNotification(UsersID.toString(), userName, mMessageEditText.getText().toString().trim());
-                            }
-
-                            notify = false;
 
                         }
 
@@ -332,11 +346,10 @@ public class ChatFragment extends Fragment {
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiver);
+        Query query = tokens.orderByKey().equalTo(String.valueOf(receiver));
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
                     Data data = new Data(firebaseUser.getUid(), "", userName +"\n" + message,
