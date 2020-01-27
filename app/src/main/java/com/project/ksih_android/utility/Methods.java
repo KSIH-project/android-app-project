@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import timber.log.Timber;
@@ -42,32 +43,4 @@ public class Methods {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
-    public static boolean isUrlValid(String url) {
-        AsyncTask<String, Void, Boolean> task = new AsyncTask<String, Void, Boolean>() {
-
-            @Override
-            protected Boolean doInBackground(String... strings) {
-                try {
-                    URL url1 = new URL(url);
-                    HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
-                    int status = connection.getResponseCode();
-                    Timber.d("response: %d", status);
-                    if (HttpURLConnection.HTTP_OK == status) {
-
-                        Timber.d("response: %d", status);
-                        return true;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Timber.d("catch: %s", e.getLocalizedMessage());
-                }
-                return false;
-            }
-        };
-        task.execute();
-        return false;
-    }
-
 }
-

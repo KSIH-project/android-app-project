@@ -33,6 +33,8 @@ import com.google.firebase.storage.UploadTask;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventAddBinding;
+import com.project.ksih_android.utility.UrlChecker;
+
 
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
@@ -40,13 +42,10 @@ import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE_EVENTS_IMAGE;
 import static com.project.ksih_android.utility.Constants.SAVE_EVENTS_BUTTON_TEXT;
 import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
-import static com.project.ksih_android.utility.Methods.isUrlValid;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Calendar;
 
 import timber.log.Timber;
@@ -333,10 +332,22 @@ public class EventAddFragment extends Fragment {
         if (!hasText(binding.textInputLayoutContactsEmail, error)) return false;
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
         if (binding.textInputLayoutDate == null) return false;
-        if (binding.textInputLayoutTime == null) return false;
-        if (isUrlValid(binding.textInputLayoutRsvp.getEditText().getText().toString().trim()))
-            return false;
-        return hasText(binding.textInputLayoutRsvp, error);
+        return (binding.textInputLayoutTime == null);
+    }
+
+    private boolean isUrl() {
+        final boolean[] isUrlEnabled = new boolean[1];
+        StringBuilder url = new StringBuilder();
+        url.append(binding.textInputLayoutRsvp.getEditText().getText().toString().trim());
+        String fullUrl = url.toString();
+        UrlChecker checker = new UrlChecker(fullUrl) {
+            @Override
+            protected void onPostExecute(Boolean result) {
+                if (result) isUrlEnabled[0] = true;
+            }
+        };
+        checker.execute();
+        return isUrlEnabled[0];
     }
     private void addEvents() {
         String id = databaseReference.push().getKey();
