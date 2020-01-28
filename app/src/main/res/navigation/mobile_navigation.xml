@@ -57,11 +57,6 @@
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <activity
-        android:id="@+id/nav_signIn"
-        android:name="com.project.ksih_android.ui.AuthActivity"
-        android:label="Sign In"
-        tools:layout="@layout/fragment_login"/>
 
     <fragment
         android:id="@+id/navigation_project"
