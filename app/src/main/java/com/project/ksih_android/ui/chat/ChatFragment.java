@@ -293,9 +293,8 @@ public class ChatFragment extends Fragment {
 
                                                         userID[0] = snapshot.child("user_UID").getValue(String.class);
                                                         // add all users ID to an array
-//                                UsersID = new ArrayList<>();
-//                                UsersID.add(userID[0]);
-
+                        //                                UsersID = new ArrayList<>();
+                        //                                UsersID.add(userID[0]);
 
                                                         for(int i=0; i<userID.length; i++){
 
