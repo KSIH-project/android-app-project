@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,27 +32,30 @@ import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_DATABA
 
 public class MemberFragment extends Fragment {
 
-  //  private MemberViewModel mMemberViewModel;
+    //  private MemberViewModel mMemberViewModel;
 
     DatabaseReference mDatabaseReference;
     RecyclerView mRecyclerView;
-    List<User> mUserDataClass;
-
+    private List<User> newList = new ArrayList<User>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_member, container, false);
         mRecyclerView = root.findViewById(R.id.recyclerView_Members);
-        String uid = FirebaseAuth.getInstance().getUid();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE).child(uid);
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE);
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUserDataClass = new ArrayList<>();
-                for (DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    User user = dataSnapshot.getValue(User.class);
+                ArrayList<User> mUserDataClass = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
                     mUserDataClass.add(user);
                 }
-                setUpRecyclerView();
+                //setUpRecyclerView();
+                newList = mUserDataClass;
+                MemberViewAdapter memberViewAdapter = new MemberViewAdapter(mUserDataClass, getParentFragment().getContext());
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getParentFragment().getContext(), 2));
+                mRecyclerView.setAdapter(memberViewAdapter);
             }
 
             @Override
@@ -64,10 +68,10 @@ public class MemberFragment extends Fragment {
         return root;
     }
 
-    private void setUpRecyclerView(){
-        GridLayoutManager layoutManager = new GridLayoutManager(getParentFragment().getContext(),2 );
+    /*private void setUpRecyclerView() {
+        GridLayoutManager layoutManager = new GridLayoutManager(getParentFragment().getContext(), 2);
         MemberViewAdapter memberViewAdapter = new MemberViewAdapter(mUserDataClass, getParentFragment().getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(memberViewAdapter);
-    }
+    }*/
 }
