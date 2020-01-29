@@ -45,6 +45,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
@@ -67,6 +68,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -226,6 +228,29 @@ public class ChatFragment extends Fragment {
         });
 
             //send message with sender details
+                sendMessage();
+
+        mAddMessageImageView = root.findViewById(R.id.addMessageImageView);
+        imageMessage();
+
+//        displayChatUsers();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
+        return root;
+    }
+
+    private void imageMessage(){
+        mAddMessageImageView.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            startActivityForResult(intent, Constants.REQUEST_IMAGE);
+        });
+    }
+
+    private void sendMessage(){
+
         mSendButton.setOnClickListener(view -> {
 
             //notification
@@ -260,49 +285,44 @@ public class ChatFragment extends Fragment {
                                     mMessageEditText.setText("");
 
                                     final String[] userID = new String[1];
-            FirebaseDatabase.getInstance().getReference().child("users")
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                    FirebaseDatabase.getInstance().getReference().child("users")
+                                            .addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-                                userID[0] = snapshot.child("user_UID").getValue(String.class);
-                                // add all users ID to an array
-                                UsersID = new ArrayList<>();
-                                UsersID.add(userID[0]);
-
-                                for(int i=0; i<userID.length; i++){
-
-                                    String list = userID[i];
-                                    Timber.d("list item" +list);
-
-                                    if (notify){
-                                        userID[0] = snapshot.child("user_UID").getValue(String.class);
-
-                                        sendNotification(userID[0], userName, mMessageEditText.getText().toString().trim());
-                                        Timber.d( "chatUID string" + userID[0]);
-                                    }
-                                }
+                                                        userID[0] = snapshot.child("user_UID").getValue(String.class);
+                                                        // add all users ID to an array
+//                                UsersID = new ArrayList<>();
+//                                UsersID.add(userID[0]);
 
 
+                                                        for(int i=0; i<userID.length; i++){
 
-//                                //notification
-//                                if (notify) {
-//
-//
-//                                }
-//
-//                                notify = false;
-                            }
+                                                            String list = userID[i];
+                                                            Timber.d("list item" +list);
 
 
-                        }
+                                                            if (notify){
+                                                                    userID[0] = snapshot.child("user_UID").getValue(String.class);
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                    sendNotification(userID[0], userName, mMessageEditText.getText().toString().trim());
+                        //                                        Timber.d( "chatUID string" + userID[0]);
 
-                        }
-                    }) ;
+                                                            }
+                                                        }
+
+
+                                                    }
+
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            }) ;
 
                                 }
 
@@ -316,20 +336,6 @@ public class ChatFragment extends Fragment {
             }
 
         });
-
-        mAddMessageImageView = root.findViewById(R.id.addMessageImageView);
-        mAddMessageImageView.setOnClickListener(view -> {
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("image/*");
-            startActivityForResult(intent, Constants.REQUEST_IMAGE);
-        });
-
-//        displayChatUsers();
-        if (FirebaseAuth.getInstance().getCurrentUser() != null)
-        updateToken(FirebaseInstanceId.getInstance().getToken());
-
-        return root;
     }
 
 
@@ -352,7 +358,7 @@ public class ChatFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(firebaseUser.getUid(), "", userName +"\n" + message,
+                    Data data = new Data(firebaseUser.getUid(), R.drawable.ksih_background, userName +"\n" + message,
                             "New Message", "");
 
                     Sender sender = new Sender(data, token.getToken());
@@ -424,12 +430,6 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        mAuth = FirebaseAuth.getInstance();
-//        currentUser = mAuth.getCurrentUser();
-//        if (currentUser == null) {
-//            Toast.makeText(getContext(), "Login to use chat session", Toast.LENGTH_SHORT).show();
-//            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.nav_signIn);
-//        }
     }
 
     @Override
