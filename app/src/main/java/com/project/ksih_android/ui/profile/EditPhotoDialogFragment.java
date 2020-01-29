@@ -57,12 +57,6 @@ public class EditPhotoDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_edit_photo, null);
         builder.setView(view);
-        builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                openGallery();
-            }
-        });
         String photoUrl = null;
         if (getArguments() != null) {
             photoUrl = getArguments().getString("photo_url");
@@ -79,67 +73,5 @@ public class EditPhotoDialogFragment extends DialogFragment {
             Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_editPhotoFragment_to_zoomFragment, bundle);
         });
         return builder.create();
-    }
-
-    public void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, PROFILE_IMAGE_REQUEST_CODE);
-    }
-
-    private void uploadPhoto() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
-        byte[] data = outputStream.toByteArray();
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference(PROFILE_FIREBASE_STORAGE_REFERENCE + imagePath);
-        Timber.d("Image Path: %s", imagePath);
-        UploadTask uploadTask = storageReference.putBytes(data);
-        uploadTask.addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                // Upload successful
-                // Get image download URL
-                task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(task1 -> {
-                    if (task1.isSuccessful()) {
-                        imageUrl = task1.getResult().toString();
-                        mRef.child("user_image").setValue(imageUrl).addOnCompleteListener(task2 -> {
-                            if (task2.isSuccessful()) {
-                                Toast.makeText(getParentFragment().getContext(), "Image Saved", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getParentFragment().getContext(), "Unable to save image", Toast.LENGTH_SHORT).show();
-                                Timber.d("Image Upload Error: %s", task2.getException().getLocalizedMessage());
-                            }
-                        });
-                        Timber.d("Download URL: %s", imageUrl);
-                    } else {
-                        Timber.d("Download URL error: %s", task1.getException().getLocalizedMessage());
-                        Toast.makeText(getParentFragment().getContext(), task1.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                Timber.d("Image upload error: %s", task.getException().getLocalizedMessage());
-                Toast.makeText(getParentFragment().getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK && requestCode == PROFILE_IMAGE_REQUEST_CODE) {
-            Uri imageUri = data.getData();
-            if (imageUri != null) {
-                try {
-                    imagePath = imageUri.getLastPathSegment();
-                    uploadPhoto();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Timber.d(e.getLocalizedMessage());
-                }
-            } else {
-                Toast.makeText(getParentFragment().getContext(), "No Image Selected", Toast.LENGTH_SHORT).show();
-            }
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }

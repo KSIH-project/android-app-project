@@ -15,27 +15,43 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ksih_background"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_profile_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            app:cardCornerRadius="38dp"
-            app:cardElevation="8dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2">
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:riv_border_color="@color/colorDivider"
+            app:riv_border_width="2dp"
+            app:riv_corner_radius="38dp"
+            tools:src="@drawable/ic_profile_photo" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/user_profile_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop" />
-        </com.google.android.material.card.MaterialCardView>
+        <com.victor.loading.rotate.RotateLoading
+            android:id="@+id/profile_photo_progress_bar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:loading_color="@color/button_color_background"
+            app:loading_width="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/user_profile_image"
+            app:layout_constraintEnd_toEndOf="@id/user_profile_image"
+            app:layout_constraintStart_toStartOf="@id/user_profile_image"
+            app:layout_constraintTop_toTopOf="@id/user_profile_image" />
+
+        <ImageView
+            android:id="@+id/editProfilePhoto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/user_profile_image"
+            app:layout_constraintEnd_toEndOf="@+id/user_profile_image"
+            app:srcCompat="@drawable/ic_edit_photo" />
 
         <TextView
             android:id="@+id/user_name"
@@ -48,7 +64,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
             tools:text="Uchenna Okoro" />
 
         <TextView
@@ -65,6 +81,7 @@
             app:layout_constraintTop_toBottomOf="@+id/user_name"
             tools:text="Software Engineer" />
 
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="00dp"
@@ -79,47 +96,18 @@
                 android:layout_height="match_parent"
                 android:animateLayoutChanges="true">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView_email"
-                    android:layout_width="match_parent"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/editProfile_button"
+                    style="@style/buttonStyle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:visibility="@{user.user_email.length() == 0 ? View.GONE : View.VISIBLE}"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Edit"
+                    android:textAppearance="@style/buttonTextStyle"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_email_svg" />
-
-                        <TextView
-                            android:id="@+id/txt_email"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="@{user.user_email}"
-                            android:textColor="@color/colorSecondaryDark"
-                            tools:text="francissegun12@gmail.com" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    app:layout_constraintTop_toBottomOf="@id/cardView_twitter" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_phone_number"
@@ -128,9 +116,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_mobile.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -170,9 +158,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_linkedInUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -212,9 +200,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_githubUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -254,9 +242,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_mediumUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -296,9 +284,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_facebookUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -338,9 +326,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
                     android:visibility="@{user.user_twitterUrl.length() == 0 ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -373,21 +361,51 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/editProfile_button"
-                    style="@style/buttonStyle"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_email"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="Edit"
-                    android:textAppearance="@style/buttonTextStyle"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="@{user.user_email.length() == 0 ? View.GONE : View.VISIBLE}"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardView_twitter" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_email_svg" />
+
+                        <TextView
+                            android:id="@+id/txt_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="@{user.user_email}"
+                            android:textColor="@color/colorSecondaryDark"
+                            tools:text="francissegun12@gmail.com" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>

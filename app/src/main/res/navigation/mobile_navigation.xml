@@ -120,8 +120,8 @@
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_editPhotoFragment"
-            app:destination="@id/editPhotoFragment" />
+            android:id="@+id/action_profileFragment_to_zoomFragment"
+            app:destination="@id/zoomFragment" />
     </fragment>
 
     <fragment
