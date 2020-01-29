@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:navigationIcon="@drawable/ic_back_button"
+                app:navigationIcon="@drawable/ic_arrow_back"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:title="@string/title_about_ksih" />
         </com.google.android.material.appbar.AppBarLayout>
@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:loading_color="@color/button_color_background"
-            app:loading_width="5dp" />
+            app:loading_width="6dp" />
 
         <ScrollView
             android:layout_width="0dp"
@@ -53,7 +53,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/imageView11"
@@ -61,8 +61,8 @@
                     android:layout_height="wrap_content"
                     android:alpha=".9"
                     android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toTopOf="@+id/text"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/about_ksih_backdround" />
@@ -74,12 +74,15 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:autoLink="web"
                     android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/colorPrimaryDark"
                     android:textDirection="firstStrongRtl"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text" />
 
@@ -93,12 +96,13 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/about_the_ken_saro_wiwa_innovation_hub"
                     android:textAlignment="center"
+                    android:textColor="@color/Black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/imageView11"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView11" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>

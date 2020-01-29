@@ -1,8 +1,6 @@
 package com.project.ksih_android.ui.others;
 
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,7 +21,7 @@ import com.project.ksih_android.R;
  */
 public class SettingsFragment extends Fragment {
 
-     TextView mTextViewAppinfo, textViewAboutKsih, mTextViewSignOut;
+     private TextView mTextViewAppinfo, textViewAboutKsih, mTextViewSignOut;
      private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
 
     @Override
@@ -39,9 +37,7 @@ public class SettingsFragment extends Fragment {
         textViewAboutKsih.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_settings_to_aboutKsihFragment));
 
         mTextViewSignOut = root.findViewById(R.id.text_signout);
-        mTextViewSignOut.setOnClickListener(v -> {
-            dialogQuestion();
-        });
+        mTextViewSignOut.setOnClickListener(v -> dialogQuestion());
 
         return root;
     }
@@ -49,7 +45,7 @@ public class SettingsFragment extends Fragment {
     private void userSignOut(){
         if (mFirebaseAuth.getCurrentUser() != null){
             mFirebaseAuth.signOut();
-            Toast.makeText(getActivity(), "Signout Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "SignOut Successfully", Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(getActivity(), "Please Sign in!", Toast.LENGTH_SHORT).show();
@@ -62,7 +58,7 @@ public class SettingsFragment extends Fragment {
         materialAlertDialogBuilder.setIcon(R.drawable.ksih_background);
         materialAlertDialogBuilder.setMessage("Are you sure you want to Sign out?");
 
-        materialAlertDialogBuilder.setPositiveButton("Yes", (dialog, which) -> {userSignOut();});
+        materialAlertDialogBuilder.setPositiveButton("Yes", (dialog, which) -> userSignOut());
         materialAlertDialogBuilder.setNegativeButton("No", (dialog, which) -> {});
 
         materialAlertDialogBuilder.create().show();

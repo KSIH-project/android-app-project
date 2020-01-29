@@ -1,7 +1,7 @@
 package com.project.ksih_android.data;
 
 public class AboutDevelopersData {
-    private int developersImageUri;
+    private String developersImageUri;
     private String textName;
     private String textProfession;
     private String email;
@@ -28,11 +28,11 @@ public class AboutDevelopersData {
         this.meduimProfile = meduimProfile;
     }
 
-    public int getDevelopersImageUri() {
+    public String getDevelopersImageUri() {
         return developersImageUri;
     }
 
-    public void setDevelopersImageUri(int developersImageUri) {
+    public void setDevelopersImageUri(String developersImageUri) {
         this.developersImageUri = developersImageUri;
     }
 

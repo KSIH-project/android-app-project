@@ -72,29 +72,23 @@
         <action
             android:id="@+id/action_appInfo_to_fragment_ksih_android_team"
             app:destination="@id/fragment_ksih_android_team"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_pop_exit_anim"
-            app:popEnterAnim="@anim/nav_default_enter_anim"
-            app:popExitAnim="@anim/nav_default_exit_anim" />
-        <action
-            android:id="@+id/action_appInfo_to_simpleFragment"
-            app:destination="@id/simpleFragment" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/fragment_ksih_android_team"
         android:name="com.project.ksih_android.ui.appInfo.KsihAndroidTeam"
         android:label="fragment_fragment_ksih_android_team"
         tools:layout="@layout/fragment_ksih_android_team" />
-    <fragment
-        android:id="@+id/simpleFragment"
-        android:name="com.project.ksih_android.SimpleFragment"
-        android:label="fragment_simple"
-        tools:layout="@layout/fragment_simple" />
-        <action
-            android:id="@+id/action_nav_settings_to_aboutKsihFragment"
-            app:destination="@id/aboutKsihFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"/>
+    <action
+        android:id="@+id/action_nav_settings_to_aboutKsihFragment"
+        app:destination="@id/aboutKsihFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
 
     <fragment
         android:id="@+id/aboutKsihFragment"

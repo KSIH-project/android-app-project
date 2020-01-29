@@ -86,7 +86,7 @@ public class KsihAndroidTeam extends Fragment {
 
     private void setupRecyclerView() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getParentFragment().getContext(),2);
-        AboutDevelopersAdapter mAda = new AboutDevelopersAdapter(mList);
+        AboutDevelopersAdapter mAda = new AboutDevelopersAdapter(mList, getParentFragment().getContext());
         Timber.d( "setupRecyclerView: %s", mList.toString());
         mRecyclerViewAboutDevelopers.setAdapter(mAda);
         mRecyclerViewAboutDevelopers.setLayoutManager(gridLayoutManager);

@@ -1,5 +1,6 @@
 package com.project.ksih_android.data;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,16 +8,20 @@ import android.widget.TextView;
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 
 
 public class AboutDevelopersAdapter extends RecyclerView.Adapter<AboutDevelopersAdapter.AboutDevelopersViewHolder> {
 
+    private Context mContextAboutDevelopers;
     private List<AboutDevelopersData> mDevelopersDataList;
 
-    public AboutDevelopersAdapter(List<AboutDevelopersData> developersDataList) {
+    public AboutDevelopersAdapter(List<AboutDevelopersData> developersDataList, Context context) {
         mDevelopersDataList = developersDataList;
+        mContextAboutDevelopers = context.getApplicationContext();
     }
 
 
@@ -55,7 +60,9 @@ public class AboutDevelopersAdapter extends RecyclerView.Adapter<AboutDevelopers
         }
 
         public void bind(AboutDevelopersData data) {
-            mRoundedImageViewPerson.setImageResource(data.getDevelopersImageUri());
+            Glide.with(mContextAboutDevelopers)
+                    .load(data.getDevelopersImageUri())
+                    .into(mRoundedImageViewPerson);
             mTextViewName.setText(data.getTextName());
             mTextViewProfession.setText(data.getTextProfession());
         }
