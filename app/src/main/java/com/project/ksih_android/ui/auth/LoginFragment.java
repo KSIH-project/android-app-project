@@ -1,6 +1,5 @@
 package com.project.ksih_android.ui.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.User;
 import com.project.ksih_android.databinding.FragmentLoginBinding;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
-import com.project.ksih_android.ui.HomeActivity;
 import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 import com.victor.loading.rotate.RotateLoading;
 
@@ -158,7 +156,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void navigateToHomeActivity() {
-        startActivity(new Intent(requireActivity(), HomeActivity.class));
+        if (Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).getCurrentDestination().getId() == R.id.loginFragment) {
+            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_navigation_project);
+        }
     }
 
     private void navigateToRegisterFragment(TextView textView) {

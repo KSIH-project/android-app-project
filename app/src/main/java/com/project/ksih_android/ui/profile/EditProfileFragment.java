@@ -26,6 +26,7 @@ public class EditProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         FragmentEditProfileBinding profileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_profile, container, false);
         EditProfileViewModel viewModel = ViewModelProviders.of(getActivity()).get(EditProfileViewModel.class);
+        viewModel.init();
         User user = null;
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("user_data");

@@ -37,19 +37,6 @@
                 android:scaleType="centerCrop" />
         </com.google.android.material.card.MaterialCardView>
 
-<!--
-        <ImageView
-            android:id="@+id/edit_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            app:layout_constraintStart_toEndOf="@+id/materialCardView"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-            app:srcCompat="@drawable/ic_edit_picture" />
--->
-
         <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
@@ -410,10 +397,6 @@
         <variable
             name="user"
             type="com.project.ksih_android.data.User" />
-
-        <variable
-            name="profile"
-            type="com.project.ksih_android.ui.profile.ProfileFragment" />
     </data>
 
 </layout>

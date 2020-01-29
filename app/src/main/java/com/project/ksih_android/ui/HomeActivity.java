@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         mToggle.syncState();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_signIn, R.id.navigation_project, R.id.navigation_member,
+                R.id.loginFragment, R.id.navigation_project, R.id.navigation_member,
                 R.id.navigation_startup, R.id.navigation_event, R.id.nav_chats, R.id.nav_settings, R.id.ksih_rules)
                 .setDrawerLayout(drawer)
                 .build();
@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity {
                 drawer.closeDrawers();
             } else {
                 Toast.makeText(this, "Sign in to view profile", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_signIn);
+                Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment).navigate(R.id.loginFragment);
                 drawer.closeDrawers();
             }
         });
@@ -146,7 +146,12 @@ public class HomeActivity extends AppCompatActivity {
             }
             switch (destination.getId()) {
                 case R.id.onBoardingFragment:
+                case R.id.editPhotoFragment:
                     hideCustomToolBar();
+                    disableNavDrawer();
+                    break;
+                case R.id.forgotPasswordFragment:
+                case R.id.registerFragment:
                     disableNavDrawer();
                     break;
                 case R.id.profileFragment:

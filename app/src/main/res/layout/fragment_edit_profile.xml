@@ -64,7 +64,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="@={editUser.user_lastName}" />
+                    android:text="@={editUser.user_lastName}"
+                    app:onFocus="@{changesModel.onFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -86,7 +87,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
-                    android:text="@={editUser.user_stack}" />
+                    android:text="@={editUser.user_stack}"
+                    app:onFocus="@{changesModel.onFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -108,7 +110,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:text="@={editUser.user_email}" />
+                    android:text="@={editUser.user_email}"
+                    app:onFocus="@{changesModel.onFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -174,7 +177,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textUri"
-                    android:text="@={editUser.user_linkedInUrl}" />
+                    android:text="@={editUser.user_linkedInUrl}"
+                    app:onFocus="@{changesModel.onFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -196,7 +200,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textUri"
-                    android:text="@={editUser.user_mediumUrl}" />
+                    android:text="@={editUser.user_mediumUrl}"
+                    app:onFocus="@{changesModel.onFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -218,7 +223,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textUri"
-                    android:text="@={editUser.user_facebookUrl}" />
+                    android:text="@={editUser.user_facebookUrl}"
+                    app:onFocus="@{changesModel.onFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -252,7 +258,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="Save"
-                android:enabled="@{changesModel.hasChangesBeenMade()}"
+                android:enabled="@{changesModel.hasChangesBeenMade}"
                 android:textAppearance="@style/buttonTextStyle"
                 app:layout_constraintEnd_toEndOf="@+id/twitterTextLayout"
                 app:layout_constraintTop_toBottomOf="@id/twitterTextLayout" />
