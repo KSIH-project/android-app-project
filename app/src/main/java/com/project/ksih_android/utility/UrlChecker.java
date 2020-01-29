@@ -7,7 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class UrlChecker extends AsyncTask<String, Void, Boolean> {
+public class UrlChecker extends AsyncTask<String, Boolean, Boolean> {
 
     public UrlChecker(String murl) {
 
