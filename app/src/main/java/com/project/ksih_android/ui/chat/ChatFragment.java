@@ -59,7 +59,14 @@ public class ChatFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(requireView()))
-                || super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.profileFragment) {
+            navigateToProfileFragment(getParentFragment().getView());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void navigateToProfileFragment(View view) {
+        Navigation.findNavController(view).navigate(R.id.action_nav_chats_to_profileFragment);
     }
 }

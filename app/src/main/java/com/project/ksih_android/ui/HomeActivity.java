@@ -11,26 +11,17 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
-import com.project.ksih_android.data.User;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
 import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 import com.project.ksih_android.utility.DividerItemDecoration;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -39,7 +30,6 @@ import androidx.navigation.ui.NavigationUI;
 import timber.log.Timber;
 
 import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
-import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_DATABASE_REFERENCE;
 import static com.project.ksih_android.utility.Constants.PROFILE_PHOTO_KEY;
 import static com.project.ksih_android.utility.Constants.USERNAME_KEY;
 
@@ -152,6 +142,7 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.forgotPasswordFragment:
                 case R.id.registerFragment:
+                case R.id.editProfileFragment:
                     disableNavDrawer();
                     break;
                 case R.id.profileFragment:

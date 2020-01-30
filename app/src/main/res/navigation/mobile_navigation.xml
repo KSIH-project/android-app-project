@@ -85,7 +85,13 @@
         android:id="@+id/nav_chats"
         android:name="com.project.ksih_android.ui.chat.ChatFragment"
         android:label="Chat"
-        tools:layout="@layout/fragment_chat"/>
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/action_nav_chats_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@+id/navigation_project"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -118,17 +124,27 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            app:destination="@id/editProfileFragment"
+            app:popUpTo="@+id/profileFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_profileFragment_to_zoomFragment"
-            app:destination="@id/zoomFragment" />
+            app:destination="@id/zoomFragment"
+            app:popUpTo="@+id/profileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.project.ksih_android.ui.profile.EditProfileFragment"
         android:label="Edit Profile"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@+id/editProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <dialog
         android:id="@+id/editPhotoFragment"
         android:name="com.project.ksih_android.ui.profile.EditPhotoDialogFragment"

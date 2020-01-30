@@ -1,8 +1,6 @@
 package com.project.ksih_android.ui.profile;
 
-import android.text.TextUtils;
 import android.view.View;
-
 import com.google.android.material.textfield.TextInputEditText;
 import com.project.ksih_android.data.User;
 
@@ -11,6 +9,7 @@ import java.util.List;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import timber.log.Timber;
 
 /**
  * Created by SegunFrancis
@@ -36,9 +35,15 @@ public class EditProfileViewModel extends ViewModel {
 
         onFocusChanged = (view, focused) -> {
             TextInputEditText et = (TextInputEditText) view;
-            if (TextUtils.equals(et.getText(), mUserList.get(0).user_firstName))
+            if (et.getText().equals(mUserList.get(0).user_firstName)) {
                 hasChangesBeenMade.setValue(true);
-            else hasChangesBeenMade.setValue(true);
+                Timber.d("EditText Value: %s", et.getText());
+                Timber.d("Object Value: %s", mUserList.get(0).user_firstName);
+            } else {
+                hasChangesBeenMade.setValue(true);
+                Timber.d("EditText Value: %s", et.getText());
+                Timber.d("Object Value: %s", mUserList.get(0).user_firstName);
+            }
         };
     }
 

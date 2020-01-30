@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +38,10 @@ import com.project.ksih_android.data.User;
 import com.project.ksih_android.databinding.FragmentProfileBinding;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
 import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
+import com.victor.loading.rotate.RotateLoading;
 
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 
@@ -53,6 +57,7 @@ import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class ProfileFragment extends Fragment {
 
     private User mUser;
@@ -71,30 +76,35 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile,
                 container, false);
-
+        hideEditButton(mProfileBinding.editProfileButton);
+        startProgressBar(mProfileBinding.profileProgressBar);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUser = dataSnapshot.getValue(User.class);
                 mProfileBinding.setUser(mUser);
                 // Load user profile Image
-                Glide.with(requireContext())
+                Glide.with(getParentFragment().getContext())
                         .load(mUser.user_image)
                         .placeholder(R.drawable.ic_profile_photo)
                         .error(R.drawable.ic_profile_photo)
                         .into(mProfileBinding.userProfileImage);
                 // Add user details to shared preference
-                SharedViewModel viewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+                SharedViewModel viewModel = ViewModelProviders.of(getParentFragment()).get(SharedViewModel.class);
                 SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
                 String username;
                 if (mUser.user_firstName.length() != 0) {
                     username = mUser.user_firstName + " " + mUser.user_lastName;
+                    showEditButton(mProfileBinding.editProfileButton);
+                    stopProgressBar(mProfileBinding.profileProgressBar);
                 } else {
                     username = mUser.user_name;
+                    showEditButton(mProfileBinding.editProfileButton);
+                    stopProgressBar(mProfileBinding.profileProgressBar);
                 }
                 pref.setUserName(USERNAME_KEY, username);
                 pref.setUserEmail(EMAIL_KEY, mUser.user_email);
@@ -110,7 +120,6 @@ public class ProfileFragment extends Fragment {
                 mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
                         .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
 
-
                 mProfileBinding.userProfileImage.setOnClickListener(view -> {
                     Bundle bundle1 = new Bundle();
                     bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, mUser.user_image);
@@ -120,17 +129,16 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                stopProgressBar(mProfileBinding.profileProgressBar);
+                Timber.d("DatabaseError: %s", databaseError.getDetails());
             }
         });
-        mProfileBinding.editProfilePhoto.setOnClickListener(view -> {
-            openGallery();
-        });
+        mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
         return mProfileBinding.getRoot();
     }
 
 
-    public void openGallery() {
+    private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, PROFILE_IMAGE_REQUEST_CODE);
@@ -216,5 +224,21 @@ public class ProfileFragment extends Fragment {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void showEditButton(MaterialButton button) {
+        button.setVisibility(View.VISIBLE);
+    }
+
+    private void hideEditButton(MaterialButton button) {
+        button.setVisibility(View.GONE);
+    }
+
+    private void startProgressBar(RotateLoading loading) {
+        loading.start();
+    }
+
+    private void stopProgressBar(RotateLoading loading) {
+        loading.stop();
     }
 }
