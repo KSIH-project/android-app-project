@@ -67,6 +67,9 @@ dependencies {
     // Progress Bar
     implementation 'com.victor:lib:1.0.4'
 
+    // Chrome custom tab
+    implementation 'com.android.support:customtabs:29.0.2'
+
     // Firebase
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.3.1'

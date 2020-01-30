@@ -32,6 +32,7 @@ import com.project.ksih_android.databinding.FragmentEventDetailsBinding;
 
 
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
+import static com.project.ksih_android.utility.Methods.loadUrlWithChromeTab;
 
 /**
  * Created by ChukwuwaUchenna
@@ -61,6 +62,12 @@ public class EventDetailsFragment extends Fragment {
         binding.textEventsTypeDetails.setText(mEvents.getEventType());
         Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageEventsDetails);
         setupToolBar(binding.eventsDetailsToolbar);
+        binding.textEventsLinkDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                loadUrlWithChromeTab(mEvents.getEventRSVP(),requireActivity());
+            }
+        });
 
         return binding.getRoot();
     }

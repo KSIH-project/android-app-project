@@ -50,6 +50,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         style="@style/textInputEdittextStyle"
+                        android:inputType="textPersonName"
                         android:hint="Title of Event" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,6 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         style="@style/textInputEdittextStyle"
+                        android:maxLines="2"
                         android:hint="Event Venue" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,6 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/textInputEdittextStyle"
+                        android:inputType="textEmailAddress"
                         android:hint="Contacts email" />
                 </com.google.android.material.textfield.TextInputLayout>
 
