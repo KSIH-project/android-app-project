@@ -254,6 +254,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="@{() -> startupFields.websiteIntent(context)}"
                 android:visibility="@{startupFields.startupWebsite.length() != 0 ? View.VISIBLE : View.GONE}"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">

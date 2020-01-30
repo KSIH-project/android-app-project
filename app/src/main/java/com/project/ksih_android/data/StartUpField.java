@@ -13,6 +13,8 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
 
+import static com.project.ksih_android.utility.Methods.loadUrlWithChromeTab;
+
 /**
  * Created by SegunFrancis
  */
@@ -154,6 +156,10 @@ public class StartUpField extends BaseObservable implements Serializable {
         intent.setAction(Intent.ACTION_SENDTO);
         intent.setData(Uri.fromParts("mailto", getEmail(), null));
         context.startActivity(Intent.createChooser(intent, "Select Email App"));
+    }
+
+    public void websiteIntent(Context context) {
+        loadUrlWithChromeTab(getStartupWebsite(), context);
     }
 
     public void facebookIntent(Context context) {

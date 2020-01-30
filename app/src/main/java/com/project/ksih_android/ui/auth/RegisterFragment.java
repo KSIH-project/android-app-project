@@ -47,12 +47,6 @@ public class RegisterFragment extends Fragment {
         if (savedInstanceState == null) {
             mViewModel.init();
         }
-        mRegisterBinding.signUpToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requireActivity().onBackPressed();
-            }
-        });
         mRegisterBinding.setRegisterModel(mViewModel);
         setUpButtonClick();
         return mRegisterBinding.getRoot();
@@ -90,7 +84,7 @@ public class RegisterFragment extends Fragment {
                                 Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
                                 stopProgressBar(mRegisterBinding.progressBar);
                                 showButton(mRegisterBinding.buttonRegister);
-                                Timber.d("Sending Verification Failed: " + task.getException().getMessage());
+                                Timber.d("Sending Verification Failed: %s", task.getException().getMessage());
                             }
                         }
                     });
@@ -99,14 +93,14 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     stopProgressBar(mRegisterBinding.progressBar);
                     showButton(mRegisterBinding.buttonRegister);
-                    Timber.d("CreateUserWithEmail:failure \n" + task.getException().getMessage());
+                    Timber.d("CreateUserWithEmail:failure %s", task.getException().getMessage());
                 }
             }
         });
     }
 
     private void navigateToLoginFragment(View v) {
-        Navigation.findNavController(v).navigate(R.id.loginFragment);
+        Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_loginFragment);
     }
 
     private void startProgressBar(RotateLoading loading) {
