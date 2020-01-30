@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.User;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -36,12 +37,15 @@ public class MemberFragment extends Fragment {
 
     DatabaseReference mDatabaseReference;
     RecyclerView mRecyclerView;
+    RotateLoading mRotateLoadingMembers;
     private List<User> newList = new ArrayList<User>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_member, container, false);
         mRecyclerView = root.findViewById(R.id.recyclerView_Members);
+        mRotateLoadingMembers = root.findViewById(R.id.progress_bar_members);
 
+        mRotateLoadingMembers.start();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE);
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -56,6 +60,7 @@ public class MemberFragment extends Fragment {
                 MemberViewAdapter memberViewAdapter = new MemberViewAdapter(mUserDataClass, getParentFragment().getContext());
                 mRecyclerView.setLayoutManager(new GridLayoutManager(getParentFragment().getContext(), 2));
                 mRecyclerView.setAdapter(memberViewAdapter);
+                mRotateLoadingMembers.stop();
             }
 
             @Override

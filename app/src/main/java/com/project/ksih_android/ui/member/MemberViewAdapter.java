@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.card.MaterialCardView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.User;
@@ -68,13 +66,14 @@ public class MemberViewAdapter extends RecyclerView.Adapter<MemberViewAdapter.Me
             mRoundedImageViewMemberUser = itemView.findViewById(R.id.members_photo);
             mTextViewMemberName = itemView.findViewById(R.id.members_name);
             mTextViewMemberStack = itemView.findViewById(R.id.members_stack);
+
         }
 
         public void bind(User data) {
            Glide.with(mContext)
                    .load(data.user_image)
                    .into(mRoundedImageViewMemberUser);
-            mTextViewMemberName.setText(data.user_firstName + data.user_lastName);
+            mTextViewMemberName.setText(data.user_firstName + " " + data.user_lastName);
             mTextViewMemberStack.setText(data.user_stack);
         }
     }
