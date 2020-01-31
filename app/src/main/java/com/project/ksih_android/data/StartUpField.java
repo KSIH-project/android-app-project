@@ -159,7 +159,15 @@ public class StartUpField extends BaseObservable implements Serializable {
     }
 
     public void websiteIntent(Context context) {
-        loadUrlWithChromeTab(getStartupWebsite(), context);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        if (getFacebookUrl().startsWith("http") || getStartupWebsite().startsWith("https")) {
+            intent.setData(Uri.parse(getStartupWebsite()));
+        } else {
+            String formattedUrl = "http://" + getStartupWebsite();
+            intent.setData(Uri.parse(formattedUrl));
+        }
+        context.startActivity(intent);
     }
 
     public void facebookIntent(Context context) {

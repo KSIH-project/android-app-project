@@ -1,7 +1,5 @@
 package com.project.ksih_android.ui.startup;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -12,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +23,8 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.StartUpField;
 import com.project.ksih_android.databinding.FragmentStartUpDetailsBinding;
 import com.victor.loading.rotate.RotateLoading;
+
+import org.jetbrains.annotations.NotNull;
 
 import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_DETAILS_KEY;
 import static com.project.ksih_android.utility.Constants.STARTUP_DETAILS_BUNDLE_KEY;
@@ -45,7 +44,7 @@ public class StartUpDetailsFragment extends Fragment {
     private FragmentStartUpDetailsBinding mDetailsBinding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_start_up_details, container, false);
