@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 
-
 public class AboutDevelopersAdapter extends RecyclerView.Adapter<AboutDevelopersAdapter.AboutDevelopersViewHolder> {
 
     private Context mContextAboutDevelopers;
@@ -24,21 +23,17 @@ public class AboutDevelopersAdapter extends RecyclerView.Adapter<AboutDevelopers
         mContextAboutDevelopers = context.getApplicationContext();
     }
 
-
-
     @NonNull
     @Override
     public AboutDevelopersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.about_developers, parent, false);
         return new AboutDevelopersViewHolder(view);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull AboutDevelopersViewHolder holder, int position) {
         AboutDevelopersData data = mDevelopersDataList.get(position);
         holder.bind(data);
-
     }
 
     @Override

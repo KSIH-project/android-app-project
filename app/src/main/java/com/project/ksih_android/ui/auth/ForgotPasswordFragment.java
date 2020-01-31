@@ -43,7 +43,7 @@ public class ForgotPasswordFragment extends Fragment {
 
     private View setUpBindings(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container) {
         mForgotPasswordBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_forgot_password, container, false);
-        onBackPressed(mForgotPasswordBinding.forgotPasswordToolbar);
+        //onBackPressed(mForgotPasswordBinding.forgotPasswordToolbar);
         mViewModel = ViewModelProviders.of(this).get(ForgotPasswordViewModel.class);
         if (savedInstanceState == null) {
             mViewModel.init();
@@ -82,7 +82,7 @@ public class ForgotPasswordFragment extends Fragment {
                     Toast.makeText(requireContext(), "Check your email for password reset link", Toast.LENGTH_SHORT).show();
                     stopProgressBar(mForgotPasswordBinding.progressBar);
                     showButton(mForgotPasswordBinding.buttonResetPassword);
-                    navigateToLoginFragment(mForgotPasswordBinding.forgotPasswordToolbar);
+                    navigateToLoginFragment(mForgotPasswordBinding.buttonResetPassword);
                 } else {
                     Toast.makeText(requireContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     stopProgressBar(mForgotPasswordBinding.progressBar);
@@ -94,7 +94,7 @@ public class ForgotPasswordFragment extends Fragment {
     }
 
     private void navigateToLoginFragment(View v) {
-        Navigation.findNavController(v).navigate(R.id.loginFragment);
+        Navigation.findNavController(v).navigate(R.id.action_forgotPasswordFragment_to_loginFragment);
     }
 
     private void startProgressBar(RotateLoading loading) {
