@@ -144,4 +144,6 @@
             name="login"
             type="com.project.ksih_android.ui.auth.LoginViewModel" />
     </data>
+
+
 </layout>
