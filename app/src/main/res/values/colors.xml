@@ -21,4 +21,5 @@
     <color name="app_info_blue">#7587EE</color>
     <color name="color_black">#000000</color>
     <color name="Black">#201E1E</color>
+    <color name="icon_tint">#8B0000</color>
 </resources>
