@@ -12,7 +12,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.StartUpField;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -28,10 +27,10 @@ import static com.project.ksih_android.utility.Constants.STARTUP_DETAILS_BUNDLE_
 
 public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpViewHolder> {
 
-    private List<StartUpField> mList = new ArrayList<>();
+    private List<StartUpField> mList;
     private Context mContext;
 
-    public StartUpAdapter(List<StartUpField> list, Context context) {
+    StartUpAdapter(List<StartUpField> list, Context context) {
         mList = list;
         mContext = context.getApplicationContext();
     }
@@ -56,11 +55,11 @@ public class StartUpAdapter extends RecyclerView.Adapter<StartUpAdapter.StartUpV
         return mList.size();
     }
 
-    public class StartUpViewHolder extends RecyclerView.ViewHolder {
+    class StartUpViewHolder extends RecyclerView.ViewHolder {
         RoundedImageView roundLogo;
         TextView startupName, startupDescription, startupFounder;
 
-        public StartUpViewHolder(@NonNull View itemView) {
+        StartUpViewHolder(@NonNull View itemView) {
             super(itemView);
 
             roundLogo = itemView.findViewById(R.id.startup_icon_image);

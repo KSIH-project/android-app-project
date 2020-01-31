@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
 
@@ -88,7 +87,6 @@ public class AddStartUpFragment extends Fragment implements TextWatcher {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        StartupViewModel viewModel = ViewModelProviders.of(this).get(StartupViewModel.class);
         mBitmap = null;
         mValidationField = new StartupValidationField();
         return setUpBinding(inflater, container);

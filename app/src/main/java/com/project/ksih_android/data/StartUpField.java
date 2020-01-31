@@ -3,23 +3,16 @@ package com.project.ksih_android.data;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.view.View;
-import android.widget.Toast;
 
 import java.io.Serializable;
 
 import androidx.annotation.Nullable;
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-import androidx.databinding.library.baseAdapters.BR;
-
-import static com.project.ksih_android.utility.Methods.loadUrlWithChromeTab;
 
 /**
  * Created by SegunFrancis
  */
 
-public class StartUpField extends BaseObservable implements Serializable {
+public class StartUpField implements Serializable {
     private String id;
     private String startupName;
     private String startupDescription;
@@ -103,6 +96,7 @@ public class StartUpField extends BaseObservable implements Serializable {
         this.startupFounder = startupFounder;
     }
 
+    @Nullable
     public String getStartupCoFounder() {
         return startupCoFounder;
     }
@@ -111,6 +105,7 @@ public class StartUpField extends BaseObservable implements Serializable {
         this.startupCoFounder = startupCoFounder;
     }
 
+    @Nullable
     public String getStartupWebsite() {
         return startupWebsite;
     }
@@ -119,6 +114,7 @@ public class StartUpField extends BaseObservable implements Serializable {
         this.startupWebsite = startupWebsite;
     }
 
+    @Nullable
     public String getFacebookUrl() {
         return facebookUrl;
     }
@@ -127,6 +123,7 @@ public class StartUpField extends BaseObservable implements Serializable {
         this.facebookUrl = facebookUrl;
     }
 
+    @Nullable
     public String getTwitterUrl() {
         return twitterUrl;
     }
