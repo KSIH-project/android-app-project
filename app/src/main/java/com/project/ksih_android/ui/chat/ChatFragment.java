@@ -120,7 +120,7 @@ public class ChatFragment extends Fragment {
 
             NavController controller = Navigation.findNavController(getParentFragment().getView());
             controller.popBackStack(R.id.nav_chats, true);
-            controller.navigate(R.id.nav_signIn);
+            controller.navigate(R.id.loginFragment);
         }else {
             currentUser = FirebaseAuth.getInstance().getCurrentUser();
             mUserName = currentUser.getDisplayName();

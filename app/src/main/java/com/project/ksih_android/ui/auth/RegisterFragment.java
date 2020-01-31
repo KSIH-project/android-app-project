@@ -74,26 +74,6 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // Sign in success
-                    Timber.d("CreateUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    user.sendEmailVerification().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
-                                stopProgressBar(mRegisterBinding.progressBar);
-                                showButton(mRegisterBinding.buttonRegister);
-                                // TODO: Open email app option
-                                navigateToLoginFragment(mRegisterBinding.buttonRegister);
-                            } else {
-                                Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
-                                stopProgressBar(mRegisterBinding.progressBar);
-                                showButton(mRegisterBinding.buttonRegister);
-                                Timber.d("Sending Verification Failed: %s", task.getException().getMessage());
-                            }
-                        }
-                    });
                     //send default data
                     String deviceToken = FirebaseInstanceId.getInstance().getToken();
 
@@ -140,7 +120,7 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     stopProgressBar(mRegisterBinding.progressBar);
                     showButton(mRegisterBinding.buttonRegister);
-                    Timber.d("CreateUserWithEmail:failure %s", task.getException().getMessage());
+                    Timber.d("CreateUserWithEmail:failure \n" + task.getException().getMessage());
                 }
             }
         });
