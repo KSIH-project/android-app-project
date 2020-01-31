@@ -30,8 +30,8 @@
 
         <com.victor.loading.rotate.RotateLoading
             android:id="@+id/progress_bar_about"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:loading_color="@color/button_color_background"
-            app:loading_width="6dp" />
+            app:loading_width="4dp" />
 
         <ScrollView
             android:layout_width="0dp"
