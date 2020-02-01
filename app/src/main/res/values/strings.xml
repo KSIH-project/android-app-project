@@ -13,4 +13,7 @@
     <string name="events">Events</string>
     <string name="navigation_drawer_open">Drawer open</string>
     <string name="navigation_drawer_close">Drawer close</string>
+    <string name="onboard_app_name">Ken Saro-Wiwa Innovation hub Mobile App</string>
+    <string name="ken_quote">Whether I live or die is immaterial. It is enough to know that there are people who commit time, money and energy to fight this one evil among so many others predominating worldwide. If they do not succeed today, they will succeed tomorrow.</string>
+    <string name="ken_saro_wiwa">Ken \nSaro-wiwa</string>
 </resources>
