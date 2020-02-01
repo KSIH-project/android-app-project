@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="5dp"
-        android:src="@drawable/default_profile_image"
+        app:srcCompat="@drawable/ic_profile_photo"
         app:riv_corner_radius="360dp" />
 
     <com.cooltechworks.views.WhatsAppTextView

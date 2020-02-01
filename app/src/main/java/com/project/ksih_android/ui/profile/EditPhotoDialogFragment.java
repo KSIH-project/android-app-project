@@ -70,7 +70,7 @@ public class EditPhotoDialogFragment extends DialogFragment {
         view.setOnClickListener(view1 -> {
             Bundle bundle = new Bundle();
             bundle.putString(ZOOM_IMAGE_GENERAL_KEY, finalPhotoUrl);
-            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_editPhotoFragment_to_zoomFragment, bundle);
+            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_editPhotoFragment_to_messageRecyclerView, bundle);
         });
         return builder.create();
     }

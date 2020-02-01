@@ -73,7 +73,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 if (chatMessage.get(position).getPhotoUrl() ==null){
                     ((ItemMessageFriendHolder)holder).messangerImageView.setImageDrawable(ContextCompat
-                            .getDrawable(context, R.drawable.default_profile_image));
+                            .getDrawable(context, R.drawable.ic_profile_photo));
                 }else {
                     Glide.with(context)
                             .load(chatMessage.get(position).getPhotoUrl())
@@ -89,7 +89,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 if (chatMessage.get(position).getPhotoUrl() == null){
                     ((ItemMessageUserHolder)holder).messengerImageView.setImageDrawable(ContextCompat
-                    .getDrawable(context, R.drawable.default_profile_image));
+                    .getDrawable(context, R.drawable.ic_profile_photo));
                 }else {
                     Glide.with(context)
                             .load(chatMessage.get(position).getPhotoUrl())
@@ -131,7 +131,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 if (chatMessage.get(position).getPhotoUrl() ==null){
                     ((ItemMessageFriendHolder)holder).messangerImageView.setImageDrawable(ContextCompat
-                            .getDrawable(context, R.drawable.default_profile_image));
+                            .getDrawable(context, R.drawable.ic_profile_photo));
                 }else {
                     Glide.with(context)
                             .load(chatMessage.get(position).getPhotoUrl())
@@ -141,9 +141,17 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((ItemMessageFriendHolder)holder).messageImageView.setOnClickListener(v -> {
                     ZoomFragment zoomFragment = new ZoomFragment();
                     Bundle args = new Bundle();
-                    args.putString("chatImage", chatMessage.get(position).getImageUrl() );
+                    args.putString(Constants.ZOOM_IMAGE_GENERAL_KEY, chatMessage.get(position).getImageUrl() );
                     zoomFragment.setArguments(args);
                     Navigation.findNavController(v).navigate(R.id.messageRecyclerView, args);
+                });
+
+                ((ItemMessageFriendHolder)holder).messangerImageView.setOnClickListener(v -> {
+                    ZoomFragment zoomFragment = new ZoomFragment();
+                    Bundle args = new Bundle();
+                    args.putString("photo_url", chatMessage.get(position).getPhotoUrl() );
+                    zoomFragment.setArguments(args);
+                    Navigation.findNavController(v).navigate(R.id.editPhotoFragment, args);
                 });
 
             }if (holder instanceof ItemMessageUserHolder){
@@ -178,7 +186,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 if (chatMessage.get(position).getPhotoUrl() == null){
                     ((ItemMessageUserHolder)holder).messengerImageView.setImageDrawable(ContextCompat
-                            .getDrawable(context, R.drawable.default_profile_image));
+                            .getDrawable(context, R.drawable.ic_profile_photo));
                 }else {
                     Glide.with(context)
                             .load(chatMessage.get(position).getPhotoUrl())
@@ -188,7 +196,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((ItemMessageUserHolder)holder).messageImageView.setOnClickListener(v -> {
                     ZoomFragment zoomFragment = new ZoomFragment();
                     Bundle args = new Bundle();
-                    args.putString("chatImage", chatMessage.get(position).getImageUrl());
+                    args.putString(Constants.ZOOM_IMAGE_GENERAL_KEY, chatMessage.get(position).getImageUrl());
                     zoomFragment.setArguments(args);
                     Navigation.findNavController(v).navigate(R.id.messageRecyclerView, args);
                 });

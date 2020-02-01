@@ -170,7 +170,6 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportActionBar().hide();
                     break;
                 case R.id.profileFragment:
-                case R.id.zoomFragment:
                     hideCustomToolBar();
                     break;
                 default:

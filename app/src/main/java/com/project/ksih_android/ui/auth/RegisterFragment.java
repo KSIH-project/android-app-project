@@ -140,53 +140,12 @@ public class RegisterFragment extends Fragment {
                             }
                         }
                     });
-                    //send default data
-                    String deviceToken = FirebaseInstanceId.getInstance().getToken();
-
-                    //get and link storage
-                    String current_userID = mAuth.getCurrentUser().getUid();
-                    String name = email.substring(0, email.lastIndexOf("@"));
-
-                    storeDefaultDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(current_userID);
-
-                    storeDefaultDatabaseReference.child("user_name").setValue(name);
-                    storeDefaultDatabaseReference.child("user_mobile").setValue("");
-                    storeDefaultDatabaseReference.child("user_email").setValue(email);
-                    storeDefaultDatabaseReference.child("user_gender").setValue("");
-                    storeDefaultDatabaseReference.child("user_profession").setValue("");
-                    storeDefaultDatabaseReference.child("created_at").setValue(ServerValue.TIMESTAMP);
-                    storeDefaultDatabaseReference.child("user_image").setValue("default image");
-                    storeDefaultDatabaseReference.child("device_token").setValue(deviceToken)
-                            .addOnCompleteListener(task1 -> {
-                                // Sign in success
-                                Timber.d("CreateUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                user.sendEmailVerification().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task1) {
-                                        if (task1.isSuccessful()) {
-                                            Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
-                                            stopProgressBar(mRegisterBinding.progressBar);
-                                            showButton(mRegisterBinding.buttonRegister);
-                                            // TODO: Open email app option
-                                            navigateToLoginFragment(mRegisterBinding.buttonRegister);
-                                        } else {
-                                            Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
-                                            stopProgressBar(mRegisterBinding.progressBar);
-                                            showButton(mRegisterBinding.buttonRegister);
-                                            Timber.d("Sending Verification Failed: %s", task1.getException().getMessage());
-                                        }
-                                    }
-                                });
-                            });
-
-
                 } else {
                     // Sign in fails
                     Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     stopProgressBar(mRegisterBinding.progressBar);
                     showButton(mRegisterBinding.buttonRegister);
-                    Timber.d("CreateUserWithEmail:failure \n" + task.getException().getMessage());
+                    Timber.d("CreateUserWithEmail:failure %s", task.getException().getMessage());
                 }
             }
         });

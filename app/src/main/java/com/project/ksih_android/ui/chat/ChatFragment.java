@@ -217,6 +217,7 @@ public class ChatFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                 String userName = dataSnapshot.child("user_name").getValue().toString();
+                                String userPic = dataSnapshot.child("user_image").getValue().toString();
 
                                 DateFormat dfDate = new SimpleDateFormat("yyyy/MM/dd");
                                 String date = dfDate.format(Calendar.getInstance().getTime());
@@ -224,16 +225,35 @@ public class ChatFragment extends Fragment {
                                 String time = dfTime.format(Calendar.getInstance().getTime());
                                 String setTime = date + " " + time;
 
-                                if (!mMessageEditText.getText().toString().trim().isEmpty()) {
-                                    ChatMessage friendlyMessage = new
-                                            ChatMessage(mMessageEditText.getText().toString().trim(),
-                                            userName,
-                                            mPhotoUrl,
-                                            null /* no image */, user_uID, setTime);
-                                    mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
-                                            .push().setValue(friendlyMessage);
-                                    mMessageEditText.setText("");
+                                //checking profile image and sending chat
+                                if (userPic.equals("default image")){
+                                    if (!mMessageEditText.getText().toString().trim().isEmpty()) {
+                                        ChatMessage friendlyMessage = new
+                                                ChatMessage(mMessageEditText.getText().toString().trim(),
+                                                userName,
+                                                mPhotoUrl,
+                                                null /* no image */, user_uID, setTime);
+                                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                                                .push().setValue(friendlyMessage);
+                                        mMessageEditText.setText("");
 
+                                    }
+
+                                }
+
+                                else {
+
+                                    if (!mMessageEditText.getText().toString().trim().isEmpty()) {
+                                        ChatMessage friendlyMessage = new
+                                                ChatMessage(mMessageEditText.getText().toString().trim(),
+                                                userName,
+                                                userPic,
+                                                null /* no image */, user_uID, setTime);
+                                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                                                .push().setValue(friendlyMessage);
+                                        mMessageEditText.setText("");
+
+                                    }
                                 }
 
                             }
@@ -255,7 +275,7 @@ public class ChatFragment extends Fragment {
             startActivityForResult(intent, Constants.REQUEST_IMAGE);
         });
 
-        displayChatUsers();
+//        displayChatUsers();
 
         return root;
     }
@@ -301,12 +321,6 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        mAuth = FirebaseAuth.getInstance();
-//        currentUser = mAuth.getCurrentUser();
-//        if (currentUser == null) {
-//            Toast.makeText(getContext(), "Login to use chat session", Toast.LENGTH_SHORT).show();
-//            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.nav_signIn);
-//        }
     }
 
     @Override
@@ -340,13 +354,16 @@ public class ChatFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.profile_settings:
-                break;
+        if (item.getItemId() == R.id.profileFragment) {
+            navigateToProfileFragment(getParentFragment().getView());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void navigateToProfileFragment(View view) {
+        Navigation.findNavController(view).navigate(R.id.action_nav_chats_to_profileFragment);
+    }
 
     public class ConnectivityReceiver extends BroadcastReceiver {
 
@@ -394,6 +411,8 @@ public class ChatFragment extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                     String userName = dataSnapshot.child("user_name").getValue().toString();
+                                    String userPic = dataSnapshot.child("user_image").getValue().toString();
+
 
                                     DateFormat dfDate = new SimpleDateFormat("yyyy/MM/dd");
                                     String date = dfDate.format(Calendar.getInstance().getTime());
@@ -401,24 +420,47 @@ public class ChatFragment extends Fragment {
                                     String time = dfTime.format(Calendar.getInstance().getTime());
                                     String setTime = date + " " + time;
 
-                                    ChatMessage tempMessage = new ChatMessage(null, userName, mPhotoUrl,
-                                            "", user_uID, setTime);
+                                    if (userPic.equals("default image")) {
 
-                                    mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
-                                            .setValue(tempMessage, (databaseError, databaseReference) -> {
-                                                if (databaseError == null){
-                                                    String key = databaseReference.getKey();
-                                                    StorageReference storageReference = FirebaseStorage.getInstance()
-                                                            .getReference("images/chat_image/")
-                                                            .child(key)
-                                                            .child(uri.getLastPathSegment());
+                                        ChatMessage tempMessage = new ChatMessage(null, userName, mPhotoUrl,
+                                                "", user_uID, setTime);
 
-                                                    putImageInStorage(storageReference, uri, key);
+                                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
+                                                .setValue(tempMessage, (databaseError, databaseReference) -> {
+                                                    if (databaseError == null) {
+                                                        String key = databaseReference.getKey();
+                                                        StorageReference storageReference = FirebaseStorage.getInstance()
+                                                                .getReference("images/chat_image/")
+                                                                .child(key)
+                                                                .child(uri.getLastPathSegment());
 
-                                                }else {
-                                                    Timber.d("unable to write to %s", databaseError.toException());
-                                                }
-                                            });
+                                                        putImageInStorage(storageReference, uri, key);
+
+                                                    } else {
+                                                        Timber.d("unable to write to %s", databaseError.toException());
+                                                    }
+                                                });
+                                    }else {
+
+                                        ChatMessage tempMessage = new ChatMessage(null, userName, userPic,
+                                                "", user_uID, setTime);
+
+                                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).push()
+                                                .setValue(tempMessage, (databaseError, databaseReference) -> {
+                                                    if (databaseError == null) {
+                                                        String key = databaseReference.getKey();
+                                                        StorageReference storageReference = FirebaseStorage.getInstance()
+                                                                .getReference("images/chat_image/")
+                                                                .child(key)
+                                                                .child(uri.getLastPathSegment());
+
+                                                        putImageInStorage(storageReference, uri, key);
+
+                                                    } else {
+                                                        Timber.d("unable to write to %s", databaseError.toException());
+                                                    }
+                                                });
+                                    }
 
                                 }
 
@@ -449,6 +491,7 @@ public class ChatFragment extends Fragment {
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                                 String userName = dataSnapshot.child("user_name").getValue().toString();
+                                                String userPic = dataSnapshot.child("user_image").getValue().toString();
 
                                                 DateFormat dfDate = new SimpleDateFormat("yyyy/MM/dd");
                                                 String date = dfDate.format(Calendar.getInstance().getTime());
@@ -456,11 +499,19 @@ public class ChatFragment extends Fragment {
                                                 String time = dfTime.format(Calendar.getInstance().getTime());
                                                 String setTime = date + " " + time;
 
-                                                ChatMessage chatMessage = new ChatMessage(
-                                                        null, userName, mPhotoUrl, task1.getResult().toString(),
-                                                        user_uID, setTime);
-                                                mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
-                                                        .setValue(chatMessage);
+                                                if (userPic.equals("default image")) {
+                                                    ChatMessage chatMessage = new ChatMessage(
+                                                            null, userName, mPhotoUrl, task1.getResult().toString(),
+                                                            user_uID, setTime);
+                                                    mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
+                                                            .setValue(chatMessage);
+                                                }else {
+                                                    ChatMessage chatMessage = new ChatMessage(
+                                                            null, userName, userPic, task1.getResult().toString(),
+                                                            user_uID, setTime);
+                                                    mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD).child(key)
+                                                            .setValue(chatMessage);
+                                                }
                                             }
 
                                             @Override

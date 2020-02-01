@@ -123,7 +123,7 @@ public class ProfileFragment extends Fragment {
                 mProfileBinding.userProfileImage.setOnClickListener(view -> {
                     Bundle bundle1 = new Bundle();
                     bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, mUser.user_image);
-                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_zoomFragment, bundle1);
+                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
                 });
             }
 
