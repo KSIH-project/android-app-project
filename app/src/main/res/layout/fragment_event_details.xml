@@ -271,7 +271,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/roboto"
-                            android:textColor="@color/colorPrimaryLight"
+                            android:autoLink="web"
+                            android:textColorLink="@color/colorPrimaryLight"
                             tools:text="WWW.twitter.com" />
 
 

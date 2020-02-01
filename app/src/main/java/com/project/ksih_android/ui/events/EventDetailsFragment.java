@@ -1,6 +1,10 @@
 package com.project.ksih_android.ui.events;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
@@ -62,12 +66,7 @@ public class EventDetailsFragment extends Fragment {
         binding.textEventsTypeDetails.setText(mEvents.getEventType());
         Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageEventsDetails);
         setupToolBar(binding.eventsDetailsToolbar);
-        binding.textEventsLinkDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                loadUrlWithChromeTab(mEvents.getEventRSVP(),requireActivity());
-            }
-        });
+
 
         return binding.getRoot();
     }

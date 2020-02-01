@@ -63,16 +63,7 @@ public class EventAddFragment extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(EVENTS_FIREBASE_PATH);
 
 
-    private static boolean hasText(TextInputLayout editText, String error_message) {
 
-        String text = editText.getEditText().getText().toString().trim();
-        editText.setError(null);
-        if (text.length() == 0) {
-            editText.setError(error_message);
-            return false;
-        }
-        return true;
-    }
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -160,6 +151,17 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutRsvp.setEnabled(false);
         binding.textInputLayoutTittle.setEnabled(false);
         binding.textInputLayoutType.setEnabled(false);
+    }
+
+    private static boolean hasText(TextInputLayout editText, String error_message) {
+
+        String text = editText.getEditText().getText().toString().trim();
+        editText.setError(null);
+        if (text.length() == 0) {
+            editText.setError(error_message);
+            return false;
+        }
+        return true;
     }
     private void uploadImageToFireBaseStorage() {
         if (mBitmap != null) {
