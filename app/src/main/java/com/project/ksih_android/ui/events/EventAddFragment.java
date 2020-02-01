@@ -289,7 +289,7 @@ public class EventAddFragment extends Fragment {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EVENTS_IMAGE) {
             Uri uri = data.getData();
             if (uri != null) {
-                Toast.makeText(getParentFragment().getContext(), "success uri", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getParentFragment().getContext(), "Image Selected", Toast.LENGTH_SHORT).show();
                 try {
                     imagePath = uri.getLastPathSegment();
                     if (Build.VERSION.SDK_INT >= 29) {
