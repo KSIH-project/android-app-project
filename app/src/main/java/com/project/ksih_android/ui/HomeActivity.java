@@ -90,6 +90,7 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.eventAddFragment:
                 case R.id.eventDetailsFragment:
+                case R.id.zoomFragment:
                     hideCustomToolBar();
                     disableNavDrawer();
                 case R.id.forgotPasswordFragment:

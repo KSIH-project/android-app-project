@@ -36,6 +36,7 @@ import com.project.ksih_android.databinding.FragmentEventDetailsBinding;
 
 
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
+import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
 import static com.project.ksih_android.utility.Methods.loadUrlWithChromeTab;
 
 /**
@@ -130,7 +131,7 @@ public class EventDetailsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Bundle bundle = new Bundle();
-        bundle.putString("eventsImage", mEvents.getImageUrl());
+        bundle.putString(ZOOM_IMAGE_GENERAL_KEY, mEvents.getImageUrl());
         binding.imageEventsDetails.setOnClickListener(view ->
                 Navigation.findNavController(view).navigate(R.id.zoomFragment, bundle));
 
