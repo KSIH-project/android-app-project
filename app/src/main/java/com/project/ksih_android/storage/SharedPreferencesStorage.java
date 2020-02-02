@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.project.ksih_android.data.Events;
-import com.project.ksih_android.ui.startup.StartUpField;
 import com.project.ksih_android.utility.Constants;
 
 /**
@@ -60,31 +59,4 @@ public class SharedPreferencesStorage {
         return mPreferences.getBoolean(key, false);
     }
 
-    public void setStartupField(String key, StartUpField startupField) {
-        SharedPreferences.Editor pref = mPreferences.edit();
-        Gson gson = new Gson();
-        String field = gson.toJson(startupField);
-        pref.putString(key, field);
-        pref.apply();
-    }
-
-    public void setEvent(String key, Events events) {
-        SharedPreferences.Editor pref = mPreferences.edit();
-        Gson gson = new Gson();
-        String field = gson.toJson(events);
-        pref.putString(key, field);
-        pref.apply();
-    }
-
-    public Events getEvents(String key) {
-        Gson gson = new Gson();
-        String field = mPreferences.getString(key, "");
-        return gson.fromJson(field, Events.class);
-    }
-
-    public StartUpField getStartUpField(String key) {
-        Gson gson = new Gson();
-        String field = mPreferences.getString(key, "");
-        return gson.fromJson(field, StartUpField.class);
-    }
 }

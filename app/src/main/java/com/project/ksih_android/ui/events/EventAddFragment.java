@@ -336,14 +336,6 @@ public class EventAddFragment extends Fragment {
         if (binding.textInputLayoutDate == null) return false;
         return (binding.textInputLayoutTime == null);
     }
-
-    //    public boolean isUrl() {
-//        String url = binding.textInputLayoutRsvp.getEditText().getText().toString()
-//                .trim();
-//        UrlChecker urlChecker = new UrlChecker(url);
-//        urlChecker.execute();
-//        return true;
-//    }
     private void addEvents() {
         String id = databaseReference.push().getKey();
         mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString().trim(),

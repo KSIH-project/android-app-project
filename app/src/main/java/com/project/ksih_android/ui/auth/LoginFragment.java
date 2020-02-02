@@ -1,6 +1,5 @@
 package com.project.ksih_android.ui.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentLoginBinding;
-import com.project.ksih_android.ui.HomeActivity;
 import com.victor.loading.rotate.RotateLoading;
 
 import androidx.annotation.NonNull;
@@ -94,7 +92,7 @@ public class LoginFragment extends Fragment {
                         Timber.d("UserIsVerified");
                         stopProgressBar(mLoginBinding.progressBar);
                         showButton(mLoginBinding.buttonSignIn);
-                        Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Sing in successful", Toast.LENGTH_SHORT).show();
                         navigateToHomeActivity();
                     }
                 } else {
@@ -118,7 +116,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void navigateToHomeActivity() {
-        startActivity(new Intent(requireActivity(), HomeActivity.class));
+        if (Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).getCurrentDestination().getId() == R.id.loginFragment) {
+            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_navigation_project);
+        }
     }
 
     private void navigateToRegisterFragment(TextView textView) {

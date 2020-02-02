@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         mToggle.syncState();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_signIn, R.id.navigation_project, R.id.navigation_member,
+                R.id.loginFragment, R.id.navigation_project, R.id.navigation_member,
                 R.id.navigation_startup, R.id.navigation_event, R.id.nav_chats, R.id.nav_settings, R.id.ksih_rules)
                 .setDrawerLayout(drawer)
                 .build();
@@ -61,8 +61,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(mNavController, drawer);
+        return mNavController.navigateUp() || super.onSupportNavigateUp();
     }
 
     @Override
@@ -85,14 +84,16 @@ public class HomeActivity extends AppCompatActivity {
                 destination.getId();
             }
             switch (destination.getId()) {
-                case R.id.eventAddFragment:
-                case R.id.eventDetailsFragment:
-                case R.id.zoomFragment:
-                  hideCustomToolBar();
-                   disableNavDrawer();
-                    break;
                 case R.id.onBoardingFragment:
                     hideCustomToolBar();
+                    disableNavDrawer();
+                    break;
+                case R.id.eventAddFragment:
+                case R.id.eventDetailsFragment:
+                    hideCustomToolBar();
+                    disableNavDrawer();
+                case R.id.forgotPasswordFragment:
+                case R.id.registerFragment:
                     disableNavDrawer();
                     break;
                 default:
@@ -105,8 +106,6 @@ public class HomeActivity extends AppCompatActivity {
     private void showDialog() {
         MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(HomeActivity.this);
         dialog.setMessage("Are you sure you want to exit?")
-                .setIcon(R.drawable.ksih_background)
-                .setTitle("Exit")
                 .setPositiveButton("YES", (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     System.exit(0);

@@ -5,11 +5,58 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/navigation_project">
 
-    <activity
-        android:id="@+id/nav_signIn"
-        android:name="com.project.ksih_android.ui.AuthActivity"
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.project.ksih_android.ui.auth.LoginFragment"
         android:label="Sign In"
-        tools:layout="@layout/fragment_login"/>
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_loginFragment_to_navigation_project"
+            app:destination="@id/navigation_project"
+            app:popUpTo="@+id/navigation_project"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.project.ksih_android.ui.auth.RegisterFragment"
+        android:label="Sign Up"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.project.ksih_android.ui.auth.ForgotPasswordFragment"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forgot_password">
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_project"
@@ -24,20 +71,61 @@
         tools:layout="@layout/fragment_member" />
 
     <fragment
+        android:id="@+id/navigation_startup"
+        android:name="com.project.ksih_android.ui.startup.StartupFragment"
+        android:label="@string/title_startups"
+        tools:layout="@layout/fragment_startup" />
+
+    <fragment
         android:id="@+id/navigation_event"
         android:name="com.project.ksih_android.ui.events.EventFragment"
         android:label="@string/events"
         tools:layout="@layout/fragment_event">
         <action
-            android:id="@+id/action_navigation_event_to_eventAddFragment"
-            app:destination="@id/eventAddFragment" />
-        <action
             android:id="@+id/action_navigation_event_to_eventDetailsFragment"
-            app:destination="@id/eventDetailsFragment" />
+            app:destination="@id/eventDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/navigation_event" />
+        <action
+            android:id="@+id/action_navigation_event_to_eventAddFragment"
+            app:destination="@id/eventAddFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/navigation_event"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.project.ksih_android.ui.events.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details">
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_navigation_event"
+            app:destination="@id/navigation_event"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/navigation_event"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_eventAddFragment"
+            app:destination="@id/eventAddFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/eventDetailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/nav_chats"
-        android:name="com.project.ksih_android.ui.chat.chatFragment.ChatFragment"
+        android:name="com.project.ksih_android.ui.chat.ChatFragment"
         android:label="Chat"
         tools:layout="@layout/fragment_chat" />
 
@@ -53,37 +141,29 @@
         android:label="KSIH Rules"
         tools:layout="@layout/fragment_ksihrules" />
 
-
     <fragment
-        android:id="@+id/eventAddFragment"
-        android:name="com.project.ksih_android.ui.events.EventAddFragment"
-        android:label="Add Events"
-        tools:layout="@layout/fragment_event_add">
-
-        <action
-            android:id="@+id/action_eventAddFragment_to_navigation_event"
-            app:destination="@id/navigation_event"
-            app:popUpTo="@+id/navigation_event"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/eventDetailsFragment"
-        android:name="com.project.ksih_android.ui.events.EventDetailsFragment"
-        android:label="fragment_event_details"
-        tools:layout="@layout/fragment_event_details">
-        <action
-            android:id="@+id/action_eventDetailsFragment_to_navigation_event"
-            app:destination="@id/navigation_event"
-            app:popUpTo="@+id/navigation_event"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_eventDetailsFragment_to_eventAddFragment"
-            app:destination="@id/eventAddFragment" />
-    </fragment>
+        android:id="@+id/nav_settings"
+        android:name="com.project.ksih_android.ui.others.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/zoomFragment"
         android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
         android:label="fragment_zoom"
         tools:layout="@layout/fragment_zoom" />
-
+    <fragment
+        android:id="@+id/eventAddFragment"
+        android:name="com.project.ksih_android.ui.events.EventAddFragment"
+        android:label="fragment_event_add"
+        tools:layout="@layout/fragment_event_add">
+        <action
+            android:id="@+id/action_eventAddFragment_to_navigation_event"
+            app:destination="@id/navigation_event"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/navigation_event"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

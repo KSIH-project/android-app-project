@@ -4,6 +4,7 @@ package com.project.ksih_android.utility;
  * Created by SegunFrancis
  */
 public class Constants {
+    public static String ZOOM_IMAGE_GENERAL_KEY = "everyone_should_use_this_general_key_for_zoom_image";
     public static final String EVENTS_FIREBASE_PATH = "events";
     public static final String EVENT_TO_EDIT = "eventToEdit";
     public static final String SAVE_EVENTS_BUTTON_TEXT = "Save Events";

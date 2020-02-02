@@ -60,6 +60,7 @@ public class RegistrationFields extends BaseObservable {
         valid = isConfirmPasswordValid(false) && valid;
         return valid;
     }
+
     public boolean isEmailValid(boolean setMessage) {
         if (email != null && email.length() > 5) {
             int indexOfAt = email.indexOf("@");

@@ -4,69 +4,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.events.EventFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/events_items_list" />
+        tools:context=".ui.events.EventFragment">
 
-    <com.victor.loading.rotate.RotateLoading
-        android:id="@+id/progressBar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.546"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.435"
-        app:loading_color="@color/colorSecondaryDark"
-        app:loading_width="5dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/events_items_list" />
 
-    </com.victor.loading.rotate.RotateLoading>
+        <com.victor.loading.rotate.RotateLoading
+            android:id="@+id/progressBar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.546"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.435"
+            app:loading_color="@color/colorSecondaryDark"
+            app:loading_width="5dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        </com.victor.loading.rotate.RotateLoading>
 
-        android:layout_marginBottom="30dp"
-        android:focusable="true"
-        app:srcCompat="@drawable/ic_add_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
 
-    <TextView
-        android:id="@+id/text_events_no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="No Events Added"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/imageView_illustration"
-        app:layout_constraintEnd_toEndOf="@+id/imageView_illustration"
-        app:layout_constraintStart_toStartOf="@+id/imageView_illustration" />
+            android:layout_marginBottom="30dp"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_add_black_24dp" />
 
-    <ImageView
-        android:id="@+id/imageView_illustration"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_undraw_events_2p66" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/text_events_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="No Events Added"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/imageView_illustration"
+            app:layout_constraintEnd_toEndOf="@+id/imageView_illustration"
+            app:layout_constraintStart_toStartOf="@+id/imageView_illustration" />
+
+        <ImageView
+            android:id="@+id/imageView_illustration"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_undraw_events_2p66" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -15,7 +15,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.26999998"
             app:layout_constraintVertical_chainStyle="spread" />
 
@@ -46,23 +46,23 @@
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <!--        <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/sign_up_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxHeight="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-                app:title="Sign In"
-                app:titleTextAppearance="@style/toolBarTextAppearance" />
-        </com.google.android.material.appbar.AppBarLayout>
+                    <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/sign_up_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxHeight="?attr/actionBarSize"
+                        app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
+                        app:title="Sign In"
+                        app:titleTextAppearance="@style/toolBarTextAppearance" />
+                </com.google.android.material.appbar.AppBarLayout>-->
 
 
         <com.google.android.material.button.MaterialButton
@@ -144,4 +144,6 @@
             name="login"
             type="com.project.ksih_android.ui.auth.LoginViewModel" />
     </data>
+
+
 </layout>
