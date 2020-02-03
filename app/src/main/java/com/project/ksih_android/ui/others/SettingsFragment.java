@@ -37,18 +37,20 @@ public class SettingsFragment extends Fragment {
         textViewAboutKsih.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_settings_to_aboutKsihFragment));
 
         mTextViewSignOut = root.findViewById(R.id.text_signout);
-        mTextViewSignOut.setOnClickListener(v -> dialogQuestion());
-
+        mTextViewSignOut.setOnClickListener(v -> {
+            if (mFirebaseAuth.getCurrentUser() != null){
+                dialogQuestion();
+                mFirebaseAuth.signOut();
+                Toast.makeText(getActivity(), "SignOut Successfully", Toast.LENGTH_SHORT).show();
+            }else
+                Toast.makeText(getActivity(), "Please Sign in!", Toast.LENGTH_SHORT).show();
+        });
         return root;
     }
 
     private void userSignOut(){
         if (mFirebaseAuth.getCurrentUser() != null){
             mFirebaseAuth.signOut();
-            Toast.makeText(getActivity(), "SignOut Successfully", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(getActivity(), "Please Sign in!", Toast.LENGTH_SHORT).show();
         }
     }
 
