@@ -85,58 +85,103 @@ public class ProfileFragment extends Fragment {
 
         hideEditButton(mProfileBinding.editProfileButton);
         startProgressBar(mProfileBinding.profileProgressBar);
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUser = dataSnapshot.getValue(User.class);
-                mProfileBinding.setUser(mUser);
-                // Load user profile Image
-                Glide.with(getParentFragment().getContext())
-                        .load(mUser.user_image)
-                        .placeholder(R.drawable.ic_profile_photo)
-                        .error(R.drawable.ic_profile_photo)
-                        .into(mProfileBinding.userProfileImage);
-                // Add user details to shared preference
-                SharedViewModel viewModel = ViewModelProviders.of(getParentFragment()).get(SharedViewModel.class);
-                SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
-                String username;
-                if (mUser.user_firstName.length() != 0) {
-                    username = mUser.user_firstName + " " + mUser.user_lastName;
-                    showEditButton(mProfileBinding.editProfileButton);
-                    stopProgressBar(mProfileBinding.profileProgressBar);
-                } else {
-                    username = mUser.user_name;
-                    showEditButton(mProfileBinding.editProfileButton);
-                    stopProgressBar(mProfileBinding.profileProgressBar);
+
+        if (getArguments() == null) {
+            mRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    mUser = dataSnapshot.getValue(User.class);
+                    mProfileBinding.setUser(mUser);
+                    // Load user profile Image
+                    Glide.with(getParentFragment().getContext())
+                            .load(mUser.user_image)
+                            .placeholder(R.drawable.ic_profile_photo)
+                            .error(R.drawable.ic_profile_photo)
+                            .into(mProfileBinding.userProfileImage);
+                    // Add user details to shared preference
+                    SharedViewModel viewModel = ViewModelProviders.of(getParentFragment()).get(SharedViewModel.class);
+                    SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
+                    String username;
+                    if (mUser.user_firstName.length() != 0) {
+                        username = mUser.user_firstName + " " + mUser.user_lastName;
+                        showEditButton(mProfileBinding.editProfileButton);
+                        stopProgressBar(mProfileBinding.profileProgressBar);
+                    } else {
+                        username = mUser.user_name;
+                        showEditButton(mProfileBinding.editProfileButton);
+                        stopProgressBar(mProfileBinding.profileProgressBar);
+                    }
+                    pref.setUserName(USERNAME_KEY, username);
+                    pref.setUserEmail(EMAIL_KEY, mUser.user_email);
+                    pref.setProfilePhotoUrl(PROFILE_PHOTO_KEY, mUser.user_image);
+
+                    // Add data to viewModel in order to get an immediate update of any change
+                    viewModel.username.setValue(username);
+                    viewModel.userEmail.setValue(mUser.user_email);
+                    viewModel.userProfilePhotoUrl.setValue(mUser.user_image);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user_data", mUser);
+                    mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
+                            .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
+
+                    mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, mUser.user_image);
+                        Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
+                    });
                 }
-                pref.setUserName(USERNAME_KEY, username);
-                pref.setUserEmail(EMAIL_KEY, mUser.user_email);
-                pref.setProfilePhotoUrl(PROFILE_PHOTO_KEY, mUser.user_image);
 
-                // Add data to viewModel in order to get an immediate update of any change
-                viewModel.username.setValue(username);
-                viewModel.userEmail.setValue(mUser.user_email);
-                viewModel.userProfilePhotoUrl.setValue(mUser.user_image);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user_data", mUser);
-                mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
-                        .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
-
-                mProfileBinding.userProfileImage.setOnClickListener(view -> {
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, mUser.user_image);
-                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    stopProgressBar(mProfileBinding.profileProgressBar);
+                    Timber.d("DatabaseError: %s", databaseError.getDetails());
+                }
+            });
+            mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
+        }else {
+            mUser = (User) getArguments().getSerializable(
+                    "UserData");
+            mProfileBinding.setUser(mUser);
+            // Load user profile Image
+            Glide.with(requireContext())
+                    .load(mUser.user_image)
+                    .placeholder(R.drawable.ic_profile_photo)
+                    .error(R.drawable.ic_profile_photo)
+                    .into(mProfileBinding.userProfileImage);
+            // Add user details to shared preference
+            SharedViewModel viewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+            SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
+            String username;
+            if (mUser.user_firstName.length() != 0) {
+                username = mUser.user_firstName + " " + mUser.user_lastName;
                 stopProgressBar(mProfileBinding.profileProgressBar);
-                Timber.d("DatabaseError: %s", databaseError.getDetails());
+            } else {
+                username = mUser.user_name;
+                stopProgressBar(mProfileBinding.profileProgressBar);
             }
-        });
-        mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
+            pref.setUserName(USERNAME_KEY, username);
+            pref.setUserEmail(EMAIL_KEY, mUser.user_email);
+            pref.setProfilePhotoUrl(PROFILE_PHOTO_KEY, mUser.user_image);
+
+            // Add data to viewModel in order to get an immediate update of any change
+            viewModel.username.setValue(username);
+            viewModel.userEmail.setValue(mUser.user_email);
+            viewModel.userProfilePhotoUrl.setValue(mUser.user_image);
+
+
+            mProfileBinding.editProfileButton.setVisibility(View.INVISIBLE);
+
+
+            mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                Bundle bundle1 = new Bundle();
+                bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, mUser.user_image);
+                Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
+            });
+
+            mProfileBinding.editProfilePhoto.setVisibility(View.INVISIBLE);
+        }
+
         return mProfileBinding.getRoot();
     }
 

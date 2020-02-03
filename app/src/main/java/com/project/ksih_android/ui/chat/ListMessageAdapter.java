@@ -21,6 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -35,11 +40,16 @@ import java.util.List;
 
 import timber.log.Timber;
 
+import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_DATABASE_REFERENCE;
+
 public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context context;
     private List<ChatMessage> chatMessage;
     private FirebaseAuth mAuth;
+    private List<User> mUserList;
+    private DatabaseReference mRef;
+    private User mUser;
 
     public ListMessageAdapter(Context context, List<ChatMessage> chatMessage){
         this.context = context;
@@ -154,6 +164,29 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     args.putString("photo_url", chatMessage.get(position).getPhotoUrl() );
                     zoomFragment.setArguments(args);
                     Navigation.findNavController(v).navigate(R.id.editPhotoFragment, args);
+                });
+
+
+                ((ItemMessageFriendHolder) holder).messengerTextView.setOnClickListener(v -> {
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                        String uid = FirebaseAuth.getInstance().getUid();
+                        mRef = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE).child(uid);
+                        mRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                User user = dataSnapshot.getValue(User.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("UserData", user);
+                                Navigation.findNavController(v).navigate(R.id.profileFragment, bundle);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
                 });
 
 

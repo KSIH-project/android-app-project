@@ -226,12 +226,12 @@ public class ChatFragment extends Fragment {
                                 String setTime = date + " " + time;
 
                                 //checking profile image and sending chat
-                                if (userPic.equals("default image")){
+                                if (!userPic.equals("default image")){
                                     if (!mMessageEditText.getText().toString().trim().isEmpty()) {
                                         ChatMessage friendlyMessage = new
                                                 ChatMessage(mMessageEditText.getText().toString().trim(),
                                                 userName,
-                                                mPhotoUrl,
+                                                userPic,
                                                 null /* no image */, user_uID, setTime);
                                         mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
                                                 .push().setValue(friendlyMessage);
@@ -239,15 +239,13 @@ public class ChatFragment extends Fragment {
 
                                     }
 
-                                }
-
-                                else {
+                                }else {
 
                                     if (!mMessageEditText.getText().toString().trim().isEmpty()) {
                                         ChatMessage friendlyMessage = new
                                                 ChatMessage(mMessageEditText.getText().toString().trim(),
                                                 userName,
-                                                userPic,
+                                                mPhotoUrl,
                                                 null /* no image */, user_uID, setTime);
                                         mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
                                                 .push().setValue(friendlyMessage);

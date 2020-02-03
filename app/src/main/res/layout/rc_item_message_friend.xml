@@ -25,7 +25,9 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         app:srcCompat="@drawable/ic_profile_photo"
-        app:riv_corner_radius="300dp" />
+        app:riv_corner_radius="120dp"
+        app:riv_oval="true"
+        android:scaleType="centerCrop"/>
 
     <com.cooltechworks.views.WhatsAppTextView
         android:id="@+id/textContentFriend"

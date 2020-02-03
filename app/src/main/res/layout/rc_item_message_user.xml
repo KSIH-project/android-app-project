@@ -17,8 +17,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="5dp"
+        android:scaleType="centerCrop"
         app:srcCompat="@drawable/ic_profile_photo"
-        app:riv_corner_radius="360dp" />
+        app:riv_corner_radius="120dp"
+        app:riv_border_width="1dp"
+        app:riv_border_color="@color/colorPrimaryLight"
+        app:riv_oval="true"/>
 
     <com.cooltechworks.views.WhatsAppTextView
         android:id="@+id/textContentUser"
