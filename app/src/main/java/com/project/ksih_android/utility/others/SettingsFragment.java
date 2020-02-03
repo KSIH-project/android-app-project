@@ -1,4 +1,4 @@
-package com.project.ksih_android.others;
+package com.project.ksih_android.utility.others;
 
 
 import android.os.Bundle;

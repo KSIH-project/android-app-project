@@ -108,13 +108,14 @@ public class EventAddFragment extends Fragment {
         binding.buttonAddEvents.setOnClickListener(v -> {
 
 
-            if (validate() && mEvents == null) {
+            if (!validate() && mEvents == null) {
                 disableViews();
                 binding.progressBarEventsAddFragment.start();
                 binding.buttonAddEvents.setEnabled(false);
                 hideSoftKeyboard(requireActivity());
                 uploadImageToFireBaseStorage();
-            } else if (validate() && getArguments() != null) {
+            } else if (!validate() && getArguments() != null) {
+                disableViews();
                 binding.progressBarEventsAddFragment.start();
                 binding.buttonAddEvents.setEnabled(false);
                 hideSoftKeyboard(requireActivity());
@@ -188,6 +189,7 @@ public class EventAddFragment extends Fragment {
                     });
                 } else {
                     Toast.makeText(getParentFragment().getContext(), "Failed to add Events", Toast.LENGTH_SHORT).show();
+                    binding.progressBarEventsAddFragment.stop();
                     enableViews();
                 }
             });
@@ -217,6 +219,7 @@ public class EventAddFragment extends Fragment {
                     });
                 } else {
                     Toast.makeText(getParentFragment().getContext(), "Failed to add Events", Toast.LENGTH_SHORT).show();
+                    binding.progressBarEventsAddFragment.stop();
                     enableViews();
                 }
             });
@@ -333,7 +336,8 @@ public class EventAddFragment extends Fragment {
         if (!hasText(binding.textInputLayoutContactsEmail, error)) return false;
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
         if (binding.textInputLayoutDate == null) return false;
-        return (binding.textInputLayoutTime == null);
+        if (binding.textInputLayoutTime == null) return false;
+        return false;
     }
     private void addEvents() {
         String id = databaseReference.push().getKey();
