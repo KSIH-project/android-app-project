@@ -33,7 +33,6 @@ import com.google.firebase.storage.UploadTask;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventAddBinding;
-import com.project.ksih_android.utility.UrlChecker;
 
 
 import static android.app.Activity.RESULT_OK;
