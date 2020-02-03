@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
                         username = mUser.user_firstName + " " + mUser.user_lastName;
                     } else {
                         username = mUser.user_name;
-                    }
+                    } 
                     pref.setUserName(USERNAME_KEY, username);
                     pref.setUserEmail(EMAIL_KEY, mUser.user_email);
                     pref.setProfilePhotoUrl(PROFILE_PHOTO_KEY, mUser.user_image);
