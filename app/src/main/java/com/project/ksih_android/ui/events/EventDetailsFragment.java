@@ -1,27 +1,17 @@
 package com.project.ksih_android.ui.events;
 
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
+
 import android.os.Bundle;
-
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
-
-
 import androidx.annotation.Nullable;
-
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -34,10 +24,10 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventDetailsBinding;
 
-
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
+import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
 import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
-import static com.project.ksih_android.utility.Methods.loadUrlWithChromeTab;
+
 
 /**
  * Created by ChukwuwaUchenna
@@ -123,7 +113,7 @@ public class EventDetailsFragment extends Fragment {
 
     private void editEvent() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("eventToEdit", mEvents);
+        bundle.putParcelable(EVENT_TO_EDIT, mEvents);
         Navigation.findNavController(requireView()).navigate(R.id.action_eventDetailsFragment_to_eventAddFragment, bundle);
     }
 
