@@ -58,20 +58,22 @@ public class EditPhotoDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_edit_photo, null);
         builder.setView(view);
         String photoUrl = null;
-        if (getArguments() != null) {
+            if (getArguments() != null)
             photoUrl = getArguments().getString("photo_url");
-        }
+
         ImageView imageView = view.findViewById(R.id.profile_imageView);
         Glide.with(view.getContext())
                 .load(photoUrl)
                 .error(R.drawable.ic_profile_photo)
                 .into(imageView);
+
         String finalPhotoUrl = photoUrl;
-        view.setOnClickListener(view1 -> {
+        imageView.setOnClickListener(view1 -> {
             Bundle bundle = new Bundle();
-            bundle.putString(ZOOM_IMAGE_GENERAL_KEY, finalPhotoUrl);
+            bundle.putString(ZOOM_IMAGE_GENERAL_KEY, getArguments().getString("photo_url"));
             Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_editPhotoFragment_to_messageRecyclerView, bundle);
         });
+
         return builder.create();
     }
 }

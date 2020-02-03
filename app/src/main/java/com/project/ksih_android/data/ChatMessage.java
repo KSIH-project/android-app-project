@@ -9,6 +9,7 @@ public class ChatMessage {
     private String ImageUrl;
     private String from;
     private String time;
+    private User users;
 
     public ChatMessage(){}
 
@@ -75,5 +76,13 @@ public class ChatMessage {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public User getUsers() {
+        return users;
+    }
+
+    public void setUsers(User users) {
+        this.users = users;
     }
 }

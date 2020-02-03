@@ -71,8 +71,10 @@ public class ProfileFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String uid = FirebaseAuth.getInstance().getUid();
-        mRef = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE).child(uid);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            String uid = FirebaseAuth.getInstance().getUid();
+            mRef = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE).child(uid);
+        }
     }
 
     @Override
@@ -80,6 +82,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile,
                 container, false);
+
         hideEditButton(mProfileBinding.editProfileButton);
         startProgressBar(mProfileBinding.profileProgressBar);
         mRef.addValueEventListener(new ValueEventListener() {

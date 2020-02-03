@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,6 +26,7 @@ import com.google.firebase.storage.StorageReference;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.ChatMessage;
+import com.project.ksih_android.data.User;
 import com.project.ksih_android.ui.zoom.ZoomFragment;
 import com.project.ksih_android.utility.Constants;
 
@@ -153,6 +155,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     zoomFragment.setArguments(args);
                     Navigation.findNavController(v).navigate(R.id.editPhotoFragment, args);
                 });
+
 
             }if (holder instanceof ItemMessageUserHolder){
                 ((ItemMessageUserHolder)holder).txtContent.setVisibility(View.INVISIBLE);
