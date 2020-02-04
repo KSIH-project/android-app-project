@@ -1,10 +1,6 @@
 package com.project.ksih_android.ui.auth;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +15,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentLoginBinding;
-import com.project.ksih_android.ui.HomeActivity;
 import com.victor.loading.rotate.RotateLoading;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 import timber.log.Timber;
 
 /**
@@ -45,7 +35,6 @@ public class LoginFragment extends Fragment {
     private LoginViewModel mViewModel;
     private FirebaseAuth mAuth;
     private FragmentLoginBinding mLoginBinding;
-
 
     @Nullable
     @Override
@@ -88,30 +77,32 @@ public class LoginFragment extends Fragment {
 
     private void signInUser(final String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        Timber.d("Log in successful");
-                        if (!isUserVerified(mAuth.getCurrentUser())) {
-                            Toast.makeText(getActivity(), "Your Email has not been verified", Toast.LENGTH_SHORT).show();
-                            stopProgressBar(mLoginBinding.progressBar);
-                            showButton(mLoginBinding.buttonSignIn);
-                            logout();
-                            Timber.d("UserNotVerified");
-                        } else {
-                            Timber.d("UserIsVerified");
-                            stopProgressBar(mLoginBinding.progressBar);
-                            showButton(mLoginBinding.buttonSignIn);
-                            Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
-                            navigateToHomeActivity();
-                            isFirstTimeLogin();
-                        }
-                    } else {
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Timber.d("Log in successful");
+                    if (!isUserVerified(mAuth.getCurrentUser())) {
+                        Toast.makeText(getActivity(), "Your Email has not been verified", Toast.LENGTH_SHORT).show();
                         stopProgressBar(mLoginBinding.progressBar);
                         showButton(mLoginBinding.buttonSignIn);
-                        Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                        Timber.d("SignInError: " + task.getException().getMessage());
+                        logout();
+                        Timber.d("UserNotVerified");
+                    } else {
+                        Timber.d("UserIsVerified");
+                        stopProgressBar(mLoginBinding.progressBar);
+                        showButton(mLoginBinding.buttonSignIn);
+                        Toast.makeText(getActivity(), "Sing in successful", Toast.LENGTH_SHORT).show();
+                        navigateToHomeActivity();
                     }
-                });
+                } else {
+                    stopProgressBar(mLoginBinding.progressBar);
+                    showButton(mLoginBinding.buttonSignIn);
+                    Toast.makeText(getActivity(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Timber.d("SignInError: %s", task.getException().getMessage());
+                }
+            }
+        });
     }
 
     private boolean isUserVerified(FirebaseUser user) {
@@ -125,14 +116,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void navigateToHomeActivity() {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                startActivity(new Intent(requireActivity(), HomeActivity.class));
-            }
-        }, 8000);
-
-
+        if (Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).getCurrentDestination().getId() == R.id.loginFragment) {
+            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_navigation_project);
+        }
     }
 
     private void navigateToRegisterFragment(TextView textView) {
@@ -167,37 +153,5 @@ public class LoginFragment extends Fragment {
 
     private void hideButton(MaterialButton button) {
         button.setVisibility(View.INVISIBLE);
-    }
-
-    public void isFirstTimeLogin() {
-
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean firstTimeLogin = preferences.getBoolean("First Login", true);
-
-        if (firstTimeLogin) {
-
-            AlertDialog.Builder messageBuilder = new AlertDialog.Builder(getActivity());
-            messageBuilder.setMessage(getString(R.string.first_time_welcoming_message));
-
-            messageBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferences.Editor messageEditor = preferences.edit();
-                    messageEditor.putBoolean("First Login", false);
-                    messageEditor.commit();
-                    dialog.dismiss();
-
-                }
-            });
-
-            messageBuilder.setIcon(R.drawable.ksih_background);
-            messageBuilder.setTitle(" ");
-            AlertDialog alertDialogKsih = messageBuilder.create();
-            alertDialogKsih.show();
-
-
-        }
-
-
     }
 }
