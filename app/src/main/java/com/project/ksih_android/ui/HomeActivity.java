@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
@@ -12,7 +13,6 @@ import com.project.ksih_android.utility.DividerItemDecoration;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -24,7 +24,7 @@ import timber.log.Timber;
 public class HomeActivity extends AppCompatActivity {
 
     private NavController mNavController;
-    private Toolbar toolBar;
+    private MaterialToolbar toolBar;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle mToggle;
 
@@ -85,17 +85,20 @@ public class HomeActivity extends AppCompatActivity {
             }
             switch (destination.getId()) {
                 case R.id.onBoardingFragment:
-                    hideCustomToolBar();
-                    disableNavDrawer();
-                    break;
-                case R.id.eventAddFragment:
-                case R.id.eventDetailsFragment:
                 case R.id.zoomFragment:
                     hideCustomToolBar();
                     disableNavDrawer();
+                    break;
                 case R.id.forgotPasswordFragment:
                 case R.id.registerFragment:
                     disableNavDrawer();
+                    break;
+                case R.id.addStartUpFragment:
+                case R.id.startUpDetailsFragment:
+                case R.id.appInfo:
+                case R.id.fragment_ksih_android_team:
+                case R.id.aboutKsihFragment:
+                    hideCustomToolBar();
                     break;
                 default:
                     showCustomToolBar();

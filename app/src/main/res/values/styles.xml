@@ -5,9 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorSecondaryLight</item>
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert
-        </item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <!-- Custom theme. -->
@@ -15,9 +13,8 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorSecondaryDark</item>
     </style>
-
 
     <!-- Toolbar text style -->
     <style name="toolBarTextAppearance">
@@ -59,31 +56,8 @@
 
     <!-- TextInputEdittext Style -->
     <style name="textInputEdittextStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
-        <item name="android:background">@color/dark_gray</item>
+        <item name="android:background">@color/color_text_input_background</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">13sp</item>
-    </style>
-
-    <style name="textHeader">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:textColor">@color/colorSecondary</item>
-    </style>
-
-    <style name="textBody">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:fontFamily">@font/roboto</item>
-    </style>
-
-    <style name="eventCardDetails">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="cardElevation">4dp</item>
-        <item name="contentPadding">8dp</item>
-        <item name="cardCornerRadius">8dp</item>
     </style>
 </resources>
