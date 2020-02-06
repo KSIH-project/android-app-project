@@ -91,6 +91,16 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             .load(chatMessage.get(position).getPhotoUrl())
                             .into(((ItemMessageFriendHolder)holder).messangerImageView);
                 }
+
+                ((ItemMessageFriendHolder)holder).messangerImageView.setOnClickListener(v -> {
+                    ZoomFragment zoomFragment = new ZoomFragment();
+                    Bundle args = new Bundle();
+                    args.putString("photo_url", chatMessage.get(position).getPhotoUrl() );
+                    zoomFragment.setArguments(args);
+                    Navigation.findNavController(v).navigate(R.id.editPhotoFragment, args);
+                });
+
+
             }else if (holder instanceof ItemMessageUserHolder){
                 ((ItemMessageUserHolder)holder).txtContent.setVisibility(View.VISIBLE);
                 ((ItemMessageUserHolder)holder).chatTimeUser.setVisibility(View.VISIBLE);
@@ -107,7 +117,6 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             .load(chatMessage.get(position).getPhotoUrl())
                             .into(((ItemMessageUserHolder)holder).messengerImageView);
                 }
-
             }
         }else if (chatMessage.get(position).getImageUrl() != null){
             if (holder instanceof ItemMessageFriendHolder){
@@ -164,29 +173,6 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     args.putString("photo_url", chatMessage.get(position).getPhotoUrl() );
                     zoomFragment.setArguments(args);
                     Navigation.findNavController(v).navigate(R.id.editPhotoFragment, args);
-                });
-
-
-                ((ItemMessageFriendHolder) holder).messengerTextView.setOnClickListener(v -> {
-                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                        String uid = FirebaseAuth.getInstance().getUid();
-                        mRef = FirebaseDatabase.getInstance().getReference(PROFILE_FIREBASE_DATABASE_REFERENCE).child(uid);
-                        mRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                User user = dataSnapshot.getValue(User.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("UserData", user);
-                                Navigation.findNavController(v).navigate(R.id.profileFragment, bundle);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-                    }
                 });
 
 
