@@ -1,7 +1,10 @@
 package com.project.ksih_android.ui;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import com.project.ksih_android.utility.DividerItemDecoration;
 import com.project.ksih_android.utility.Methods;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -48,8 +52,10 @@ public class HomeActivity extends AppCompatActivity {
         drawer = findViewById(R.id.drawer_layout);
         toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        // isFirstTimeLogin();
         NavigationView navigationView = findViewById(R.id.nav_drawer);
         NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navMenuView.addItemDecoration(new DividerItemDecoration(this));
@@ -205,4 +211,8 @@ public class HomeActivity extends AppCompatActivity {
         mToggle.setDrawerIndicatorEnabled(false);
         mToggle.syncState();
     }
+
+
+
+
 }

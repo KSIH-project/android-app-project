@@ -37,4 +37,8 @@
     <string name="profile_settings">My Profile</string>
     <string name="active_now">Active now</string>
     <string name="friendship_date">Friendship date -</string>
+    <string name="kish_rules_text">KSIH Rules</string>
+    <string name="first_time_welcoming_message">
+        Welcome to Ken Saro-Wiwa Innovation hub mobile appilication, Check out our Events, Startups, Members, and Project we have in our hub, we hope you have a great time with us, please Register with us and enjoy more fun.
+    </string>
 </resources>
