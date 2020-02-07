@@ -15,4 +15,10 @@ public class Constants {
 
 
     public static String KSIH_RULES_FIREBASE_REFERENCE = "ksih_rules/ksih_rules";
+    public static String ABOUT_KSIH_FIREBASE_REFERENCE = "about_ksih/about_ksih";
+    public static int REQUEST_CODE = 1208;
+    public static String EDIT_STARTUP_DETAILS_KEY = "edit_startup_details";
+    public static String STARTUP_DETAILS_BUNDLE_KEY = "startup_details";
+    public static String STARTUP_FIREBASE_STORAGE_REFERENCE = "images/startup_logo/";
+    public static String STARTUP_FIREBASE_DATABASE_REFERENCE = "startups";
 }
