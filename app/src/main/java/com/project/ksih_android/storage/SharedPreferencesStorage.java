@@ -19,12 +19,6 @@ public class SharedPreferencesStorage {
         mPreferences = context.getSharedPreferences(Constants.SHARED_PREF_KEY, Context.MODE_PRIVATE);
     }
 
-    public void setUserName(String key, String value) {
-        SharedPreferences.Editor pref = mPreferences.edit();
-        pref.putString(key, value);
-        pref.apply();
-    }
-
     public void setUserPassword(String key, String value) {
         SharedPreferences.Editor pref = mPreferences.edit();
         pref.putString(key, value);
@@ -47,7 +41,11 @@ public class SharedPreferencesStorage {
         return mPreferences.getString(key, "");
     }
 
-    public String getUserPassword(String key) {
+    public String getUserEmail(String key) {
+        return mPreferences.getString(key, "");
+    }
+
+    public String getProfilePhotoUrl(String key) {
         return mPreferences.getString(key, "");
     }
 
@@ -57,6 +55,25 @@ public class SharedPreferencesStorage {
 
     public boolean isRememberMeChecked(String key) {
         return mPreferences.getBoolean(key, false);
+    }
+
+
+    public void setUserName(String key, String username) {
+        SharedPreferences.Editor pref = mPreferences.edit();
+        pref.putString(key, username);
+        pref.apply();
+    }
+
+    public void setUserEmail(String key, String email) {
+        SharedPreferences.Editor pref = mPreferences.edit();
+        pref.putString(key, email);
+        pref.apply();
+    }
+
+    public void setProfilePhotoUrl(String key, String photoUrl) {
+        SharedPreferences.Editor pref = mPreferences.edit();
+        pref.putString(key, photoUrl);
+        pref.apply();
     }
 
     public void setStartupField(String key, StartUpField startupField) {

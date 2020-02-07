@@ -20,4 +20,21 @@
     <string name="title_about_ksih">About KSIH</string>
     <string name="about_the_ken_saro_wiwa_innovation_hub">ABOUT THE KEN SARO WIWA INNOVATION HUB</string>
 
+    <string name="clear_history">Clear History</string>
+
+    //for chat
+    <string-array name="spinerViewPeople">
+        <item>Default</item>
+        <item>Name</item>
+        <item>Date</item>
+    </string-array>
+
+    <string name="profile">Profile</string>
+    <string name="friends">Friends</string>
+    <string name="all_peoples">Peoples</string>
+    <string name="all_friends">Friends</string>
+    <string name="menu_search">Search</string>
+    <string name="profile_settings">My Profile</string>
+    <string name="active_now">Active now</string>
+    <string name="friendship_date">Friendship date -</string>
 </resources>
