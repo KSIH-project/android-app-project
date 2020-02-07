@@ -74,7 +74,22 @@
         android:id="@+id/navigation_startup"
         android:name="com.project.ksih_android.ui.startup.StartupFragment"
         android:label="@string/title_startups"
-        tools:layout="@layout/fragment_startup" />
+        tools:layout="@layout/fragment_startup">
+        <action
+            android:id="@+id/action_navigation_startup_to_startUpDetailsFragment"
+            app:destination="@id/startUpDetailsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_navigation_startup_to_addStartUpFragment"
+            app:destination="@id/addStartUpFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_event"
@@ -110,13 +125,48 @@
         android:id="@+id/nav_settings"
         android:name="com.project.ksih_android.ui.others.SettingsFragment"
         android:label="Settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_appInfo"
+            app:destination="@id/appInfo"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/appInfo"
+        android:name="com.project.ksih_android.ui.appInfo.AppInfo"
+        android:label="fragment_app_info"
+        tools:layout="@layout/fragment_app_info" >
+        <action
+            android:id="@+id/action_appInfo_to_fragment_ksih_android_team"
+            app:destination="@id/fragment_ksih_android_team"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_ksih_android_team"
+        android:name="com.project.ksih_android.ui.appInfo.KsihAndroidTeam"
+        android:label="fragment_fragment_ksih_android_team"
+        tools:layout="@layout/fragment_ksih_android_team" />
+    <action
+        android:id="@+id/action_nav_settings_to_aboutKsihFragment"
+        app:destination="@id/aboutKsihFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out" />
+
+    <fragment
+        android:id="@+id/aboutKsihFragment"
+        android:name="com.project.ksih_android.ui.others.AboutKsihFragment"
+        android:label="About KISH"
+        tools:layout="@layout/fragment_about_ksih" />
 
     <fragment
         android:id="@+id/zoomFragment"
         android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
-        android:label=""
-        tools:layout="@layout/fragment_zoom"/>
+        android:label="fragment_zoom"
+        tools:layout="@layout/fragment_zoom" />
 
     <fragment
         android:id="@+id/profileFragment"
@@ -127,12 +177,27 @@
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment"
             app:popUpTo="@+id/profileFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_profileFragment_to_messageRecyclerView"
             app:destination="@id/zoomFragment"
             app:popUpTo="@+id/profileFragment"
             app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/addStartUpFragment"
+        android:name="com.project.ksih_android.ui.startup.AddStartUpFragment"
+        android:label="Add Startup"
+        tools:layout="@layout/fragment_add_start_up" >
+        <action
+            android:id="@+id/action_addStartUpFragment_to_navigation_startup"
+            app:destination="@id/navigation_startup"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@+id/navigation_startup"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -155,4 +220,29 @@
             android:id="@+id/action_editPhotoFragment_to_messageRecyclerView"
             app:destination="@id/zoomFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/startUpDetailsFragment"
+        android:name="com.project.ksih_android.ui.startup.StartUpDetailsFragment"
+        android:label="fragment_start_up_details"
+        tools:layout="@layout/fragment_start_up_details">
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_addStartUpFragment"
+            app:destination="@id/addStartUpFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_zoomImageFragment"
+            app:destination="@id/zoomFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_navigation_startup"
+            app:destination="@id/navigation_startup"
+            app:popUpTo="@+id/navigation_startup"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

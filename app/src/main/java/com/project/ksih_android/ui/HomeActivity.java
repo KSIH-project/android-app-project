@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
@@ -20,7 +21,6 @@ import com.project.ksih_android.utility.Methods;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
@@ -28,7 +28,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import timber.log.Timber;
 
 import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
@@ -38,7 +37,7 @@ import static com.project.ksih_android.utility.Constants.USERNAME_KEY;
 public class HomeActivity extends AppCompatActivity {
 
     private NavController mNavController;
-    private Toolbar toolBar;
+    private MaterialToolbar toolBar;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle mToggle;
 
@@ -152,6 +151,7 @@ public class HomeActivity extends AppCompatActivity {
             switch (destination.getId()) {
                 case R.id.onBoardingFragment:
                 case R.id.editPhotoFragment:
+                case R.id.zoomFragment:
                     hideCustomToolBar();
                     disableNavDrawer();
                     break;
@@ -160,11 +160,12 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.editProfileFragment:
                     disableNavDrawer();
                     break;
-                case R.id.zoomFragment:
-                    hideCustomToolBar();
-                    getSupportActionBar().hide();
-                    break;
                 case R.id.profileFragment:
+                case R.id.addStartUpFragment:
+                case R.id.startUpDetailsFragment:
+                case R.id.appInfo:
+                case R.id.fragment_ksih_android_team:
+                case R.id.aboutKsihFragment:
                     hideCustomToolBar();
                     break;
                 default:

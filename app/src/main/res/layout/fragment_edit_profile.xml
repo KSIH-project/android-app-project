@@ -92,29 +92,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailTextLayout"
-                style="@style/textInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Email"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/stackTextLayout"
-                app:startIconDrawable="@drawable/ic_email_svg"
-                app:startIconTint="@color/colorPrimary">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailEditText"
-                    style="@style/textInputEdittextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:text="@={editUser.user_email}"
-                    app:onFocus="@{changesModel.onFocusChanged}" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mobileTextLayout"
                 style="@style/textInputLayoutStyle"
                 android:layout_width="match_parent"
@@ -123,7 +100,7 @@
                 android:hint="Phone Number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/emailTextLayout"
+                app:layout_constraintTop_toBottomOf="@id/stackTextLayout"
                 app:startIconDrawable="@drawable/ic_phone_svg"
                 app:startIconTint="@color/colorPrimary">
 
