@@ -1,31 +1,20 @@
 package com.project.ksih_android.ui.chat;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.core.content.ContextCompat;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -35,12 +24,9 @@ import com.project.ksih_android.data.User;
 import com.project.ksih_android.ui.zoom.ZoomFragment;
 import com.project.ksih_android.utility.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
-
-import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_DATABASE_REFERENCE;
 
 public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -164,7 +150,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     Bundle args = new Bundle();
                     args.putString(Constants.ZOOM_IMAGE_GENERAL_KEY, chatMessage.get(position).getImageUrl() );
                     zoomFragment.setArguments(args);
-                    Navigation.findNavController(v).navigate(R.id.messageRecyclerView, args);
+                    Navigation.findNavController(v).navigate(R.id.zoomFragment, args);
                 });
 
                 ((ItemMessageFriendHolder)holder).messangerImageView.setOnClickListener(v -> {
@@ -220,7 +206,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     Bundle args = new Bundle();
                     args.putString(Constants.ZOOM_IMAGE_GENERAL_KEY, chatMessage.get(position).getImageUrl());
                     zoomFragment.setArguments(args);
-                    Navigation.findNavController(v).navigate(R.id.messageRecyclerView, args);
+                    Navigation.findNavController(v).navigate(R.id.zoomFragment, args);
                 });
             }
         }

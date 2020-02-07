@@ -1,11 +1,8 @@
 package com.project.ksih_android.ui;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +28,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import java.util.Objects;
 
 import timber.log.Timber;
 
@@ -165,7 +160,7 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.editProfileFragment:
                     disableNavDrawer();
                     break;
-                case R.id.messageRecyclerView:
+                case R.id.zoomFragment:
                     hideCustomToolBar();
                     getSupportActionBar().hide();
                     break;

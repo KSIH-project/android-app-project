@@ -113,7 +113,7 @@
         tools:layout="@layout/fragment_settings" />
 
     <fragment
-        android:id="@+id/messageRecyclerView"
+        android:id="@+id/zoomFragment"
         android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
         android:label=""
         tools:layout="@layout/fragment_zoom"/>
@@ -130,9 +130,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_profileFragment_to_messageRecyclerView"
-            app:destination="@id/messageRecyclerView"
+            app:destination="@id/zoomFragment"
             app:popUpTo="@+id/profileFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -153,6 +153,6 @@
         tools:layout="@layout/fragment_edit_photo" >
         <action
             android:id="@+id/action_editPhotoFragment_to_messageRecyclerView"
-            app:destination="@id/messageRecyclerView" />
+            app:destination="@id/zoomFragment" />
     </dialog>
 </navigation>
