@@ -3,15 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.appInfo.AppInfo">
-
-        <!-- TODO: Update blank fragment layout -->
-
 
         <ImageView
             android:id="@+id/imageView11"
@@ -57,7 +52,6 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:title="App Info" />
             </com.google.android.material.appbar.AppBarLayout>
-
 
         <TextView
             android:id="@+id/ksih_app_pro"
@@ -133,9 +127,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_ksih_hub" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>
