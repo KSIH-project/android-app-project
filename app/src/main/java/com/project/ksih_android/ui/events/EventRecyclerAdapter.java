@@ -78,7 +78,6 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             binding.textEventsTime.setText(nEvent.getTime());
             binding.textEventsTittle.setText(nEvent.getEventName());
             binding.textEventsDescription.setText(nEvent.getEventDescription());
-            binding.textEventsType.setText(nEvent.getEventType());
         }
 
     }
