@@ -18,6 +18,13 @@
     <string name="app_version">v1.0</string>
     <string name="ksih_app_title">KSIH App </string>
     <string name="title_about_ksih">About KSIH</string>
+    <string name="select_a_date">Select a Date</string>
+    <string name="choose_time">Choose Time</string>
     <string name="about_the_ken_saro_wiwa_innovation_hub">ABOUT THE KEN SARO WIWA INNOVATION HUB</string>
+
+    //alert dialog message
+    <string name="event_delete_alert_message">Do you want to delete this event?</string>
+    // event text field validation error
+    <string name="event_error_message">Please fill in the field</string>
 
 </resources>

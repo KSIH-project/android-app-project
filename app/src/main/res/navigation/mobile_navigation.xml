@@ -91,7 +91,6 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@+id/navigation_event" />
     </fragment>
-</fragment>
 
     <fragment
         android:id="@+id/navigation_startup"
@@ -112,7 +111,7 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
-        </fragment>
+    </fragment>
     <fragment
         android:id="@+id/eventDetailsFragment"
         android:name="com.project.ksih_android.ui.events.EventDetailsFragment"
@@ -230,6 +229,31 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@+id/navigation_event"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/startUpDetailsFragment"
+        android:name="com.project.ksih_android.ui.startup.StartUpDetailsFragment"
+        android:label="fragment_start_up_details"
+        tools:layout="@layout/fragment_start_up_details">
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_addStartUpFragment"
+            app:destination="@id/addStartUpFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_zoomImageFragment"
+            app:destination="@id/zoomFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_startUpDetailsFragment_to_navigation_startup"
+            app:destination="@id/navigation_startup"
+            app:popUpTo="@+id/navigation_startup"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>
