@@ -22,16 +22,14 @@
 
         <com.victor.loading.rotate.RotateLoading
             android:id="@+id/progressBar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.546"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.435"
             app:loading_color="@color/colorSecondaryDark"
-            app:loading_width="5dp">
+            app:loading_width="4dp">
 
         </com.victor.loading.rotate.RotateLoading>
 

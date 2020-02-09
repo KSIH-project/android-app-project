@@ -188,6 +188,7 @@ public class EventAddFragment extends Fragment {
                         }
                     });
                 } else {
+                    Timber.d("Event save error: %s", task1.getException().getLocalizedMessage());
                     Toast.makeText(getParentFragment().getContext(), "Failed to add Events", Toast.LENGTH_SHORT).show();
                     binding.progressBarEventsAddFragment.stop();
                     enableViews();
@@ -251,7 +252,7 @@ public class EventAddFragment extends Fragment {
                         navigateToEventsListFragment(getParentFragment().getView());
                         Toast.makeText(getParentFragment().getContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getParentFragment().getContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getParentFragment().getContext(), "Unable to edit Event", Toast.LENGTH_SHORT).show();
                         Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
                         binding.progressBarEventsAddFragment.stop();
                         binding.buttonAddEvents.setEnabled(true);
@@ -278,7 +279,7 @@ public class EventAddFragment extends Fragment {
                     navigateToEventsListFragment(getParentFragment().getView());
                     Toast.makeText(getParentFragment().getContext(), "Event Edited Successfully", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(requireContext(), "Unable to edit Startup", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Unable to edit Event", Toast.LENGTH_SHORT).show();
                     Timber.d("Database Write Error: %s", task.getException().getLocalizedMessage());
                     binding.progressBarEventsAddFragment.stop();
                     binding.buttonAddEvents.setEnabled(true);
