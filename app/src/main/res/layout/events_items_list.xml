@@ -37,6 +37,21 @@
                     tools:text="Description" />
 
                 <TextView
+                    android:id="@+id/text_events_type"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/text_events_description"
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_time"
+                    tools:text="Android" />
+
+                <TextView
                     android:id="@+id/text_events_date"
                     style=""
                     android:layout_width="wrap_content"
@@ -67,7 +82,7 @@
                     android:layout_width="84dp"
                     android:layout_height="84dp"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="12dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ksih_background"
