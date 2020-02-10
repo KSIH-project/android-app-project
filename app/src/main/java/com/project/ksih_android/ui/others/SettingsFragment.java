@@ -24,6 +24,7 @@ public class SettingsFragment extends Fragment {
 
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
