@@ -298,8 +298,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:visibility="@{startupFields.facebookUrl.length() != 0 ? View.VISIBLE : View.GONE}"
                 android:onClick="@{() -> startupFields.facebookIntent(context)}"
+                android:visibility="@{startupFields.facebookUrl.length() != 0 ? View.VISIBLE : View.GONE}"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
@@ -342,8 +342,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:visibility="@{startupFields.twitterUrl.length() != 0 ? View.VISIBLE : View.GONE}"
                 android:onClick="@{() -> startupFields.twitterIntent(context)}"
+                android:visibility="@{startupFields.twitterUrl.length() != 0 ? View.VISIBLE : View.GONE}"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
