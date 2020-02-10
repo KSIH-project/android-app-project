@@ -251,4 +251,5 @@
         android:name="com.project.ksih_android.ui.others.PolicyFragment"
         android:label="Policies"
         tools:layout="@layout/fragment_policy" />
+
 </navigation>
