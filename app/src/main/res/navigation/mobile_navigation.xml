@@ -245,4 +245,10 @@
             app:popUpTo="@+id/navigation_startup"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/privacy_policies"
+        android:name="com.project.ksih_android.ui.others.PolicyFragment"
+        android:label="Policies"
+        tools:layout="@layout/fragment_policy" />
 </navigation>

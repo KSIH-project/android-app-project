@@ -52,9 +52,7 @@ public class SettingsFragment extends Fragment {
         });
 
         TextView textViewPrivacy = root.findViewById(R.id.privacy_policies);
-        textViewPrivacy.setOnClickListener(v -> {
-
-        });
+        textViewPrivacy.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.privacy_policies));
 
         return root;
     }
