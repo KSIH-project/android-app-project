@@ -13,19 +13,21 @@
      android:layout_height="wrap_content"
      android:text="Please Send an Email to"
      android:layout_marginTop="8dp"
-     android:fontFamily="@font/roboto_medium"
-     android:textColor="@color/colorPrimary"
      android:textSize="18sp"
      android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/email_sent"
-        android:text="sundaydavid989@gmail.com"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textStyle="italic"
-        android:textSize="16sp"/>
+        android:text="ginowinel@gmail.com"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/num"
@@ -33,19 +35,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/roboto_medium"
-        android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/call_now"
-        android:text="07060764670"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textStyle="italic"
+        android:layout_marginBottom="8dp"
+        android:text="+2348073336523"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/colorPrimary"
         android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:textStyle="italic" />
 
 </LinearLayout>
