@@ -150,12 +150,47 @@
                             tools:text="This is an event that allows us to go and go and go and go" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView_time"
+                    android:id="@+id/cardView_event_type"
                     style="@style/eventCardDetails"
                     app:layout_constraintEnd_toEndOf="@id/cardView_desc"
                     app:layout_constraintStart_toStartOf="@id/cardView_desc"
-                    app:layout_constraintTop_toBottomOf="@id/cardView_location">
+                    app:layout_constraintTop_toBottomOf="@id/cardView_desc">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/event_type_tittle"
+                            style="@style/textHeader"
+                            android:fontFamily="@font/roboto"
+                            android:text="Event Type"
+                            android:textColor="@color/colorSecondary"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:id="@+id/text_events_type_details"
+                            style="@style/textBody"
+                            android:fontFamily="@font/roboto"
+                            android:text="Android"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/event_type_tittle" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_time"
+                    style="@style/eventCardDetails"
+                    app:layout_constraintEnd_toEndOf="@id/cardView_event_type"
+                    app:layout_constraintStart_toStartOf="@id/cardView_event_type"
+                    app:layout_constraintTop_toBottomOf="@id/cardView_event_type">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -186,7 +221,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_phone"
                     style="@style/eventCardDetails"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView_time"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView_date"
                     app:layout_constraintStart_toStartOf="@+id/cardView_date"
                     app:layout_constraintTop_toBottomOf="@+id/cardView_date">
 
@@ -213,36 +248,6 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView_location"
-                    style="@style/eventCardDetails"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView_date"
-                    app:layout_constraintStart_toStartOf="@+id/cardView_date"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView_desc">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/textHeader"
-                            android:fontFamily="@font/roboto"
-                            android:text="@string/event_location" />
-
-                        <TextView
-                            android:id="@+id/text_event_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:autoLink="map"
-                            android:fontFamily="@font/roboto"
-                            android:textColorLink="@color/colorPrimaryLight"
-                            tools:text="10 ken nnamdi street independence layout enugu" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView_rsvp"
                     style="@style/eventCardDetails"
                     android:layout_marginBottom="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"

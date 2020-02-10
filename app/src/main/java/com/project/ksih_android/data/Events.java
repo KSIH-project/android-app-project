@@ -10,7 +10,7 @@ public class Events implements Parcelable {
     private String email;
     private String phoneNumber;
     private String eventDescription;
-    private String eventLocation;
+    private String eventType;
     private String eventRSVP;
     private String imageUrl = "";
     private String date;
@@ -33,14 +33,14 @@ public class Events implements Parcelable {
         }
     };
 
-    public Events(String id, String imageUrl, String eventName, String eventLocation, String email, String phoneNumber, String date,
-                  String time, String eventDescription, String eventRSVP) {
+    public Events(String id, String imageUrl, String eventName, String email, String phoneNumber, String date,
+                  String time, String eventDescription, String eventType, String eventRSVP) {
         this.imageUrl = imageUrl;
         this.eventName = eventName;
         this.email = email;
-        this.eventLocation = eventLocation;
         this.phoneNumber = phoneNumber;
         this.eventDescription = eventDescription;
+        this.eventType = eventType;
         this.eventRSVP = eventRSVP;
         this.id = id;
         this.time = time;
@@ -54,9 +54,9 @@ public class Events implements Parcelable {
         email = in.readString();
         phoneNumber = in.readString();
         eventDescription = in.readString();
+        eventType = in.readString();
         eventRSVP = in.readString();
         date = in.readString();
-        eventLocation = in.readString();
         time = in.readString();
     }
 
@@ -90,14 +90,6 @@ public class Events implements Parcelable {
         return imageUrl;
     }
 
-    public String getEventLocation() {
-        return eventLocation;
-    }
-
-    public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
-    }
-
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
@@ -116,6 +108,14 @@ public class Events implements Parcelable {
 
     public void setEventDescription(String eventDescription) {
         this.eventDescription = eventDescription;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
     }
 
     public String getEventRSVP() {
@@ -157,6 +157,7 @@ public class Events implements Parcelable {
         dest.writeString(email);
         dest.writeString(phoneNumber);
         dest.writeString(eventDescription);
+        dest.writeString(eventType);
         dest.writeString(eventRSVP);
         dest.writeString(date);
         dest.writeString(time);

@@ -24,8 +24,6 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventDetailsBinding;
 
-import org.jetbrains.annotations.NotNull;
-
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
 import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
 import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
@@ -41,62 +39,27 @@ public class EventDetailsFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_details, container, false);
-        displayDetails();
+
+        mEvents = getArguments().getParcelable(EVENTS_ITEM_KEY);
+
+        binding.textEventEmailDetails.setText(mEvents.getEmail());
+        binding.textEventsDescripDetails.setText(mEvents.getEventDescription());
+        binding.textPhoneNumber.setText(mEvents.getPhoneNumber());
+        binding.textEventDate.setText(mEvents.getDate());
+        binding.textEventTime.setText(mEvents.getTime());
+        binding.textEventsLinkDetails.setText(mEvents.getEventRSVP());
+        binding.textEventsTypeDetails.setText(mEvents.getEventType());
+        Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageEventsDetails);
         setupToolBar(binding.eventsDetailsToolbar);
 
 
         return binding.getRoot();
-    }
-
-    private void displayDetails() {
-
-        assert getArguments() != null;
-        mEvents = getArguments().getParcelable(EVENTS_ITEM_KEY);
-
-        assert mEvents != null;
-        if (mEvents.getEmail() == null) {
-            binding.cardViewEmail.setVisibility(View.GONE);
-        } else {
-            binding.textEventEmailDetails.setText(mEvents.getEmail());
-        }
-        if (mEvents.getEventDescription() == null) {
-            binding.cardViewDesc.setVisibility(View.GONE);
-        } else {
-            binding.textEventsDescripDetails.setText(mEvents.getEventDescription());
-        }
-        if (mEvents.getPhoneNumber() == null) {
-            binding.cardViewPhone.setVisibility(View.GONE);
-        } else {
-            binding.textPhoneNumber.setText(mEvents.getPhoneNumber());
-        }
-        if (mEvents.getDate() == null) {
-            binding.cardViewDate.setVisibility(View.GONE);
-        } else {
-            binding.textEventDate.setText(mEvents.getDate());
-        }
-        if (mEvents.getTime() == null) {
-            binding.cardViewTime.setVisibility(View.GONE);
-        } else {
-            binding.textEventTime.setText(mEvents.getTime());
-        }
-        if (mEvents.getEventLocation() == null) {
-            binding.cardViewLocation.setVisibility(View.GONE);
-        } else {
-            binding.textEventLocation.setText(mEvents.getEventLocation());
-        }
-        if (mEvents.getEventRSVP() == null) {
-            binding.cardViewRsvp.setVisibility(View.GONE);
-        } else {
-            binding.textEventsLinkDetails.setText(mEvents.getEventRSVP());
-        }
-
-        Glide.with(requireContext()).load(mEvents.getImageUrl()).into(binding.imageEventsDetails);
     }
 
     private void setupToolBar(MaterialToolbar eventsDetailsToolbar) {

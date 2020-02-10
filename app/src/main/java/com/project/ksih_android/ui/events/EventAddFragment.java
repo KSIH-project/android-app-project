@@ -135,7 +135,7 @@ public class EventAddFragment extends Fragment {
     private void getEventsDetails() {
 
         binding.textInputLayoutTittle.getEditText().setText(mEvents.getEventName());
-        binding.textInputLayoutLocation.getEditText().setText(mEvents.getEventLocation());
+        binding.textInputLayoutType.getEditText().setText(mEvents.getEventType());
         binding.textInputLayoutDesc.getEditText().setText(mEvents.getEventDescription());
         binding.textInputLayoutContactsEmail.getEditText().setText(mEvents.getEmail());
         binding.textInputLayoutPhone.getEditText().setText(mEvents.getPhoneNumber());
@@ -151,7 +151,7 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutPhone.setEnabled(false);
         binding.textInputLayoutRsvp.setEnabled(false);
         binding.textInputLayoutTittle.setEnabled(false);
-        binding.textInputLayoutLocation.setEnabled(false);
+        binding.textInputLayoutType.setEnabled(false);
     }
 
     private static boolean hasText(TextInputLayout editText, String error_message) {
@@ -235,7 +235,7 @@ public class EventAddFragment extends Fragment {
             nEvents.setImageUrl(mEvents.getImageUrl());
             nEvents.setId(id);
             nEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString().trim());
-            nEvents.setEventLocation(binding.textInputLayoutLocation.getEditText().getText().toString().trim());
+            nEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString().trim());
             nEvents.setEventDescription(binding.textInputLayoutDesc.getEditText().getText().toString().trim());
             nEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString().trim());
             nEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString().trim());
@@ -264,7 +264,7 @@ public class EventAddFragment extends Fragment {
             deleteImage(mEvents.getImageUrl());
             Events nEvents = new Events();
             nEvents.setEventName(binding.textInputLayoutTittle.getEditText().getText().toString());
-            nEvents.setEventLocation(binding.textInputLayoutLocation.getEditText().getText().toString());
+            nEvents.setEventType(binding.textInputLayoutType.getEditText().getText().toString());
             nEvents.setEventDescription(binding.textInputLayoutDesc.getEditText().getText().toString());
             nEvents.setEmail(binding.textInputLayoutContactsEmail.getEditText().getText().toString());
             nEvents.setPhoneNumber(binding.textInputLayoutPhone.getEditText().getText().toString());
@@ -328,12 +328,12 @@ public class EventAddFragment extends Fragment {
         binding.textInputLayoutPhone.setEnabled(true);
         binding.textInputLayoutRsvp.setEnabled(true);
         binding.textInputLayoutTittle.setEnabled(true);
-        binding.textInputLayoutLocation.setEnabled(true);
+        binding.textInputLayoutType.setEnabled(true);
     }
     private boolean validate() {
         String error = getString(R.string.event_error_message);
         if (!hasText(binding.textInputLayoutTittle, error)) return false;
-        if (!hasText(binding.textInputLayoutLocation, error)) return false;
+        if (!hasText(binding.textInputLayoutType, error)) return false;
         if (!hasText(binding.textInputLayoutDesc, error)) return false;
         if (!hasText(binding.textInputLayoutContactsEmail, error)) return false;
         if (!hasText(binding.textInputLayoutPhone, error)) return false;
@@ -343,11 +343,11 @@ public class EventAddFragment extends Fragment {
     }
     private void addEvents() {
         String id = databaseReference.push().getKey();
-        mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString().trim(), binding.textInputLayoutLocation.getEditText().getText().toString().trim(),
+        mEvents = new Events(id, imageUrl, binding.textInputLayoutTittle.getEditText().getText().toString().trim(),
                 binding.textInputLayoutContactsEmail.getEditText().getText().toString().trim(),
                 binding.textInputLayoutPhone.getEditText().getText().toString().trim(),
                 binding.textInputLayoutDate.getText().toString(), binding.textInputLayoutTime.getText().toString(),
-                binding.textInputLayoutDesc.getEditText().getText().toString().trim()
+                binding.textInputLayoutDesc.getEditText().getText().toString().trim(), binding.textInputLayoutType.getEditText().getText().toString().trim()
                 , binding.textInputLayoutRsvp.getEditText().getText().toString().trim());
         databaseReference.child(id).setValue(mEvents).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -368,7 +368,7 @@ public class EventAddFragment extends Fragment {
     private void deleteImage(String fullUrl) {
         if (fullUrl.contains("")) {
             Throwable e = new Throwable();
-            Timber.d(e.getCause());
+            Log.d("full url is null", "deleteImage: ", e.getCause());
         } else {
             StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(fullUrl);
             ref.delete().addOnCompleteListener(requireActivity(), task -> {
