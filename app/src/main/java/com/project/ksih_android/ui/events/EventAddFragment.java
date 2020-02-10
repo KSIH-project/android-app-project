@@ -33,6 +33,7 @@ import com.google.firebase.storage.UploadTask;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventAddBinding;
+import com.project.ksih_android.utility.Constants;
 
 
 import static android.app.Activity.RESULT_OK;
@@ -169,7 +170,7 @@ public class EventAddFragment extends Fragment {
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
             byte[] data = outputStream.toByteArray();
             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-            StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
+            StorageReference storageReference = firebaseStorage.getInstance().getReference(Constants.EVENTS_IMAGE_PATH + imagePath);
             UploadTask task = storageReference.putBytes(data);
             task.addOnCompleteListener(task1 -> {
                 if (task1.isSuccessful()) {
@@ -208,7 +209,7 @@ public class EventAddFragment extends Fragment {
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
             byte[] data = outputStream.toByteArray();
             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-            StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
+            StorageReference storageReference = firebaseStorage.getInstance().getReference(Constants.EVENTS_IMAGE_PATH + imagePath);
             UploadTask task = storageReference.putBytes(data);
             task.addOnCompleteListener(task1 -> {
                 if (task1.isSuccessful()) {
