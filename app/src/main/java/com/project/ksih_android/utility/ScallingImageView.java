@@ -21,17 +21,21 @@ public class ScallingImageView extends AppCompatImageView implements
         GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener {
 
-    // Image States
-    static final int NONE = 0;
-    static final int DRAG = 1;
-    static final int ZOOM = 2;
     private static final String TAG = "ScalingImageView";
+
+
+
     //shared constructing
     Context mContext;
     ScaleGestureDetector mScaleDetector;
     GestureDetector mGestureDetector;
     Matrix mMatrix;
     float[] mMatrixValues;
+
+    // Image States
+    static final int NONE = 0;
+    static final int DRAG = 1;
+    static final int ZOOM = 2;
     int mode = NONE;
 
     // Scales
@@ -76,7 +80,50 @@ public class ScallingImageView extends AppCompatImageView implements
         setOnTouchListener(this);
     }
 
-    public void fitToScreen() {
+
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+
+        @Override
+        public boolean onScaleBegin(ScaleGestureDetector detector) {
+            mode = ZOOM;
+            return true;
+        }
+
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            Timber.d("Scale%s", detector.getScaleFactor());
+            float mScaleFactor = detector.getScaleFactor();
+            float prevScale = mSaveScale;
+            mSaveScale *= mScaleFactor;
+            if (mSaveScale > mMaxScale) {
+                mSaveScale = mMaxScale;
+                mScaleFactor = mMaxScale / prevScale;
+            } else if (mSaveScale < mMinScale) {
+                mSaveScale = mMinScale;
+                mScaleFactor = mMinScale / prevScale;
+            }
+
+            if (origWidth * mSaveScale <= viewWidth
+                    || origHeight * mSaveScale <= viewHeight){
+                Timber.d( "onScale: VIEW CENTERED FOCUS");
+                mMatrix.postScale(mScaleFactor, mScaleFactor, viewWidth / 2,
+                        viewHeight / 2);
+            }
+
+            else{
+                Timber.d( "onScale: DETECTOR FOCUS");
+                mMatrix.postScale(mScaleFactor, mScaleFactor,
+                        detector.getFocusX(), detector.getFocusY());
+            }
+
+            fixTranslation();
+            return true;
+        }
+    }
+
+
+    public void fitToScreen(){
         mSaveScale = 1;
 
         float scale;
@@ -102,8 +149,6 @@ public class ScallingImageView extends AppCompatImageView implements
         redundantYSpace /= (float) 2;
         redundantXSpace /= (float) 2;
 
-        Timber.d("fitToScreen: redundantXSpace: %s", redundantXSpace);
-        Timber.d("fitToScreen: redundantYSpace: %s", redundantYSpace);
         Timber.d( "fitToScreen: redundantXSpace: %s", redundantXSpace);
         Timber.d( "fitToScreen: redundantYSpace: %s", redundantYSpace);
 
@@ -132,20 +177,21 @@ public class ScallingImageView extends AppCompatImageView implements
         if (contentSize <= viewSize) { // case: NOT ZOOMED
             minTrans = 0;
             maxTrans = viewSize - contentSize;
-        } else { //CASE: ZOOMED
+        }
+        else { //CASE: ZOOMED
             minTrans = viewSize - contentSize;
             maxTrans = 0;
         }
 
         if (trans < minTrans) { // negative x or y translation (down or to the right)
-            Timber.d("getFixTranslation: minTrans: " + minTrans + ", trans: " + trans);
-            Timber.d("getFixTranslation: return: %s", (-trans + minTrans));
+            Timber.d( "getFixTranslation: minTrans: " + minTrans + ", trans: " + trans);
+            Timber.d( "getFixTranslation: return: %s", (-trans + minTrans));
             return -trans + minTrans;
         }
 
         if (trans > maxTrans) { // positive x or y translation (up or to the left)
-            Timber.d("getFixTranslation: maxTrans: " + maxTrans + ", trans: " + trans);
-            Timber.d("getFixTranslation: return: %s", (-trans + maxTrans));
+            Timber.d( "getFixTranslation: maxTrans: " + maxTrans + ", trans: " + trans);
+            Timber.d( "getFixTranslation: return: %s", (-trans + maxTrans));
             return -trans + maxTrans;
         }
 
@@ -172,6 +218,10 @@ public class ScallingImageView extends AppCompatImageView implements
         }
 
     }
+
+    /*
+        Ontouch
+     */
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -268,43 +318,5 @@ public class ScallingImageView extends AppCompatImageView implements
     @Override
     public boolean onDoubleTapEvent(MotionEvent motionEvent) {
         return false;
-    }
-
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-
-        @Override
-        public boolean onScaleBegin(ScaleGestureDetector detector) {
-            mode = ZOOM;
-            return true;
-        }
-
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            Timber.d("Scale%s", detector.getScaleFactor());
-            float mScaleFactor = detector.getScaleFactor();
-            float prevScale = mSaveScale;
-            mSaveScale *= mScaleFactor;
-            if (mSaveScale > mMaxScale) {
-                mSaveScale = mMaxScale;
-                mScaleFactor = mMaxScale / prevScale;
-            } else if (mSaveScale < mMinScale) {
-                mSaveScale = mMinScale;
-                mScaleFactor = mMinScale / prevScale;
-            }
-
-            if (origWidth * mSaveScale <= viewWidth
-                    || origHeight * mSaveScale <= viewHeight) {
-                Timber.d("onScale: VIEW CENTERED FOCUS");
-                mMatrix.postScale(mScaleFactor, mScaleFactor, viewWidth / 2,
-                        viewHeight / 2);
-            } else {
-                Timber.d("onScale: DETECTOR FOCUS");
-                mMatrix.postScale(mScaleFactor, mScaleFactor,
-                        detector.getFocusX(), detector.getFocusY());
-            }
-
-            fixTranslation();
-            return true;
-        }
     }
 }
