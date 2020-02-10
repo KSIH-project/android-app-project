@@ -16,7 +16,7 @@
                 android:width="1dp"
                 android:color="@color/colorSecondaryLight" />
             <solid
-                android:color="@color/white"/>
+                android:color="@color/secondaryTextColor"/>
 
         </shape>
     </item>

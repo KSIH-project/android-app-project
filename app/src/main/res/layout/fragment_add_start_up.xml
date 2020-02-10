@@ -48,10 +48,10 @@
                 android:layout_width="92dp"
                 android:layout_height="92dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_image_add"
-                android:layout_marginBottom="16dp"
                 app:riv_corner_radius="8dp"
                 tools:ignore="VectorDrawableCompat" />
 

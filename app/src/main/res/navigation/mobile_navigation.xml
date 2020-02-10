@@ -140,7 +140,13 @@
         android:id="@+id/nav_chats"
         android:name="com.project.ksih_android.ui.chat.ChatFragment"
         android:label="Chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/action_nav_chats_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@+id/navigation_project"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -164,6 +170,15 @@
             app:destination="@id/appInfo"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_nav_settings_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@+id/nav_settings"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/appInfo"
@@ -202,6 +217,22 @@
         tools:layout="@layout/fragment_zoom" />
 
     <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.project.ksih_android.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:popUpTo="@+id/profileFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_profileFragment_to_messageRecyclerView"
+            app:destination="@id/zoomFragment"
+            app:popUpTo="@+id/profileFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
         android:id="@+id/addStartUpFragment"
         android:name="com.project.ksih_android.ui.startup.AddStartUpFragment"
         android:label="Add Startup"
@@ -216,6 +247,27 @@
             app:popUpTo="@+id/navigation_startup"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.project.ksih_android.ui.profile.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@+id/editProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/editPhotoFragment"
+        android:name="com.project.ksih_android.ui.profile.EditPhotoDialogFragment"
+        android:label="fragment_edit_photo"
+        tools:layout="@layout/fragment_edit_photo" >
+        <action
+            android:id="@+id/action_editPhotoFragment_to_messageRecyclerView"
+            app:destination="@id/zoomFragment" />
+    </dialog>
     <fragment
         android:id="@+id/eventAddFragment"
         android:name="com.project.ksih_android.ui.events.EventAddFragment"
@@ -256,4 +308,11 @@
             app:popUpTo="@+id/navigation_startup"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/privacy_policies"
+        android:name="com.project.ksih_android.ui.others.PolicyFragment"
+        android:label="Policies"
+        tools:layout="@layout/fragment_policy" />
+
 </navigation>
