@@ -17,7 +17,6 @@ import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,7 @@ import com.project.ksih_android.databinding.FragmentEventAddBinding;
 
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
+import static com.project.ksih_android.utility.Constants.EVENT_FIREBASE_STORAGE_REFRENCE_PATH;
 import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
 import static com.project.ksih_android.utility.Constants.REQUEST_CODE_EVENTS_IMAGE;
 import static com.project.ksih_android.utility.Constants.SAVE_EVENTS_BUTTON_TEXT;
@@ -169,7 +169,7 @@ public class EventAddFragment extends Fragment {
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
             byte[] data = outputStream.toByteArray();
             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-            StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
+            StorageReference storageReference = firebaseStorage.getInstance().getReference(EVENT_FIREBASE_STORAGE_REFRENCE_PATH + imagePath);
             UploadTask task = storageReference.putBytes(data);
             task.addOnCompleteListener(task1 -> {
                 if (task1.isSuccessful()) {
@@ -208,7 +208,7 @@ public class EventAddFragment extends Fragment {
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream);
             byte[] data = outputStream.toByteArray();
             FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-            StorageReference storageReference = firebaseStorage.getInstance().getReference("images/events_flyers/" + imagePath);
+            StorageReference storageReference = firebaseStorage.getInstance().getReference(EVENT_FIREBASE_STORAGE_REFRENCE_PATH + imagePath);
             UploadTask task = storageReference.putBytes(data);
             task.addOnCompleteListener(task1 -> {
                 if (task1.isSuccessful()) {
