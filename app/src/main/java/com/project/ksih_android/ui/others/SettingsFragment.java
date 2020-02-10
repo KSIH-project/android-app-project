@@ -19,6 +19,8 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
 import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 
+import org.w3c.dom.Text;
+
 import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
 import static com.project.ksih_android.utility.Constants.PROFILE_PHOTO_KEY;
 import static com.project.ksih_android.utility.Constants.USERNAME_KEY;
@@ -49,6 +51,15 @@ public class SettingsFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "Please Sign in!", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        TextView textViewPrivacy = root.findViewById(R.id.privacy_policies);
+        textViewPrivacy.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.privacy_policies));
+
+        TextView textHelp = root.findViewById(R.id.help);
+        textHelp.setOnClickListener(v -> {
+            HelpDialogFragment helpDialogFragment = new HelpDialogFragment();
+            helpDialogFragment.show(getFragmentManager(), "help");
         });
 
         return root;

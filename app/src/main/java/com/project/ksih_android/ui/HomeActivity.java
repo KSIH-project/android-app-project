@@ -172,6 +172,7 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.appInfo:
                 case R.id.fragment_ksih_android_team:
                 case R.id.aboutKsihFragment:
+                case R.id.privacy_policies:
                     hideCustomToolBar();
                     break;
                 default:
