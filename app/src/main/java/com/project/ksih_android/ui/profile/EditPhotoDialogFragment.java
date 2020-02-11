@@ -53,12 +53,15 @@ public class EditPhotoDialogFragment extends DialogFragment {
 
         imageView.setOnClickListener(view1 -> {
             Bundle bundle = new Bundle();
-            bundle.putString(ZOOM_IMAGE_GENERAL_KEY, getArguments().getString("photo_url"));
-            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_editPhotoFragment_to_messageRecyclerView, bundle);
+            mUser = (User) getArguments().getSerializable("photo_url");
+            bundle.putString(ZOOM_IMAGE_GENERAL_KEY, mUser.user_image);
+            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment)
+                    .navigate(R.id.action_editPhotoFragment_to_messageRecyclerView, bundle);
         });
         Bundle memberInfoBundle = new Bundle();
         memberInfoBundle.putSerializable("members_bundle", getArguments().getSerializable("photo_url"));
-        imageViewInfo.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_editPhotoFragment_to_profileFragment, memberInfoBundle));
+        imageViewInfo.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_editPhotoFragment_to_profileFragment, memberInfoBundle));
         imageViewPhone.setOnClickListener(v1 -> dialIntent(requireContext(), mUser.user_mobile));
         return builder.create();
     }
