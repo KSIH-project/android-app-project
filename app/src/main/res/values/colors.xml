@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#1b6985</color>
+    <color name="colorPrimaryLight">#5497b5</color>
+    <color name="colorPrimaryDark">#003e58</color>
+    <color name="colorSecondary">#8e2623</color>
+    <color name="colorSecondaryLight">#c3554b</color>
+    <color name="colorSecondaryDark">#5b0000</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
+
+
+    <color name="button_color_disabled">#966A69</color>
+    <color name="dark_text_color">#111111</color>
+    <color name="color_text_input_background">#C4C4C4</color>
+    <color name="color_text_default">#000000</color>
+    <color name="color_text_pressed">#888888</color>
+    <color name="colorDivider">#AAAAAA</color>
+    <color name="app_info_blue">#7587EE</color>
+    <color name="color_black">#000000</color>
+    <color name="chat_bubble_color">#60A540</color>
+    <color name="Black">#201E1E</color>
+    <color name="icon_tint">#8B0000</color>
+
+
+
+    <color name="colorMainText">#212121</color>
+    <color name="colorSubText">#757575</color>
+</resources>
