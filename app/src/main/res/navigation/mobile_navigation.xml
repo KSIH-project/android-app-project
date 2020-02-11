@@ -122,6 +122,9 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_appInfo_to_simpleFragment"
+            app:destination="@id/simpleFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment_ksih_android_team"
@@ -145,4 +148,9 @@
         android:name="com.project.ksih_android.ui.zoom.ZoomFragment"
         android:label="fragment_zoom"
         tools:layout="@layout/fragment_zoom" />
+    <fragment
+        android:id="@+id/simpleFragment"
+        android:name="com.project.ksih_android.SimpleFragment"
+        android:label="fragment_simple"
+        tools:layout="@layout/fragment_simple" />
 </navigation>

@@ -16,7 +16,7 @@ public class AboutDevelopersData {
 
     }
 
-    public AboutDevelopersData(String textName, String textProfession, String email, String phoneNumber, String facebookProfile, String twitterProfile, String githubProfile, String linkedinProfile, String meduimProfile) {
+    public AboutDevelopersData(String textName, String textProfession, String email, String phoneNumber, String facebookProfile, String twitterProfile, String githubProfile, String linkedinProfile, String meduimProfile, String developersImageUri) {
         this.textName = textName;
         this.textProfession = textProfession;
         this.email = email;
@@ -26,6 +26,7 @@ public class AboutDevelopersData {
         this.githubProfile = githubProfile;
         this.linkedinProfile = linkedinProfile;
         this.meduimProfile = meduimProfile;
+        this.developersImageUri = developersImageUri;
     }
 
     public String getDevelopersImageUri() {
