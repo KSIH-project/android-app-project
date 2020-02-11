@@ -74,7 +74,7 @@ public class StartUpDetailsFragment extends Fragment {
         startupLogo.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString(ZOOM_IMAGE_GENERAL_KEY, mField.getImageUrl());
-            Navigation.findNavController(view).navigate(R.id.zoomFragment, bundle);
+            Navigation.findNavController(view).navigate(R.id.action_startUpDetailsFragment_to_zoomImageFragment, bundle);
         });
     }
 
