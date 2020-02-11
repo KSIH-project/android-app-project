@@ -68,7 +68,16 @@
         android:id="@+id/navigation_member"
         android:name="com.project.ksih_android.ui.member.MemberFragment"
         android:label="@string/title_members"
-        tools:layout="@layout/fragment_member" />
+        tools:layout="@layout/fragment_member" >
+        <action
+            android:id="@+id/action_navigation_member_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@+id/navigation_member" />
+        <action
+            android:id="@+id/action_navigation_member_to_editPhotoFragment"
+            app:destination="@id/editPhotoFragment"
+            app:popUpTo="@+id/navigation_member" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_startup"
@@ -228,6 +237,11 @@
         <action
             android:id="@+id/action_editPhotoFragment_to_messageRecyclerView"
             app:destination="@id/zoomFragment" />
+        <action
+            android:id="@+id/action_editPhotoFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@+id/editPhotoFragment"
+            app:popUpToInclusive="true" />
     </dialog>
     <fragment
         android:id="@+id/startUpDetailsFragment"
