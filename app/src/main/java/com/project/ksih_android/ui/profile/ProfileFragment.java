@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
                     mUser = dataSnapshot.getValue(User.class);
                     mProfileBinding.setUser(mUser);
                     // Load user profile Image
-                    Glide.with(getParentFragment().getContext())
+                    Glide.with(getParentFragment().getActivity())
                             .load(mUser.user_image)
                             .placeholder(R.drawable.ic_profile_photo)
                             .error(R.drawable.ic_profile_photo)
