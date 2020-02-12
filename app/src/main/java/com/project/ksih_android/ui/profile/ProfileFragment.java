@@ -1,6 +1,5 @@
 package com.project.ksih_android.ui.profile;
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
@@ -20,6 +19,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -39,7 +39,6 @@ import com.project.ksih_android.databinding.FragmentProfileBinding;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
 import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 import com.victor.loading.rotate.RotateLoading;
-
 
 import org.jetbrains.annotations.NotNull;
 
@@ -139,6 +138,47 @@ public class ProfileFragment extends Fragment {
                 }
             });
             mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
+        } else { // Argument is not null
+            User user = (User) getArguments().getSerializable("members_bundle");
+            if (FirebaseAuth.getInstance().getUid().equals(user.user_id)) {
+                // Edit Profile
+                mProfileBinding.setUser(user);
+                // Load user image
+                Glide.with(getParentFragment().getContext())
+                        .load(user.user_image)
+                        .placeholder(R.drawable.ic_profile_photo)
+                        .error(R.drawable.ic_profile_photo)
+                        .into(mProfileBinding.userProfileImage);
+                stopProgressBar(mProfileBinding.profileProgressBar);
+                showEditButton(mProfileBinding.editProfileButton);
+                showEditPhotoButton(mProfileBinding.editProfilePhoto);
+                mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user_data", user);
+                mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
+                        .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
+                mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
+                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
+                });
+            } else {
+                // Different user's profile
+                mProfileBinding.setUser(user);
+                // Load user image
+                Glide.with(getParentFragment().getContext())
+                        .load(user.user_image)
+                        .placeholder(R.drawable.ic_profile_photo)
+                        .error(R.drawable.ic_profile_photo)
+                        .into(mProfileBinding.userProfileImage);
+                stopProgressBar(mProfileBinding.profileProgressBar);
+                hideEditPhotoButton(mProfileBinding.editProfilePhoto);
+                mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
+                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
+                });
+            }
         }
 
         return mProfileBinding.getRoot();
@@ -238,7 +278,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void hideEditButton(MaterialButton button) {
-        button.setVisibility(View.GONE);
+        button.setVisibility(View.INVISIBLE);
     }
 
     private void startProgressBar(RotateLoading loading) {
@@ -247,5 +287,13 @@ public class ProfileFragment extends Fragment {
 
     private void stopProgressBar(RotateLoading loading) {
         loading.stop();
+    }
+
+    private void hideEditPhotoButton(ImageView view) {
+        view.setVisibility(View.GONE);
+    }
+
+    private void showEditPhotoButton(ImageView view) {
+        view.setVisibility(View.VISIBLE);
     }
 }

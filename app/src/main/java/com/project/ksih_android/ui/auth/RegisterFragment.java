@@ -89,39 +89,39 @@ public class RegisterFragment extends Fragment {
                 storeDefaultDatabaseReference.child("user_mediumUrl").setValue("");
                 storeDefaultDatabaseReference.child("created_at").setValue(ServerValue.TIMESTAMP);
                 storeDefaultDatabaseReference.child("user_image").setValue("default image");
-                storeDefaultDatabaseReference.child("device_token").setValue(deviceToken)
+                storeDefaultDatabaseReference.child("device_token").setValue(deviceToken);
+                storeDefaultDatabaseReference.child("user_id").setValue(current_userID)
                         .addOnCompleteListener(task1 -> {
                             // Sign in success
                             Timber.d("CreateUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            user.sendEmailVerification().addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
-                                        stopProgressBar(mRegisterBinding.progressBar);
-                                        showButton(mRegisterBinding.buttonRegister);
-                                        navigateToLoginFragment(mRegisterBinding.buttonRegister);
-                                    } else {
-                                        Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
-                                        stopProgressBar(mRegisterBinding.progressBar);
-                                        showButton(mRegisterBinding.buttonRegister);
-                                        Timber.d("Sending Verification Failed: %s", task.getException().getMessage());
-                                    }
+                            user.sendEmailVerification().addOnCompleteListener(task2 -> {
+                                if (task2.isSuccessful()) {
+                                    Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
+                                    stopProgressBar(mRegisterBinding.progressBar);
+                                    showButton(mRegisterBinding.buttonRegister);
+                                    navigateToLoginFragment(mRegisterBinding.buttonRegister);
+                                    logout();
+                                } else {
+                                    Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
+                                    stopProgressBar(mRegisterBinding.progressBar);
+                                    showButton(mRegisterBinding.buttonRegister);
+                                    Timber.d("Sending Verification Failed: %s", task2.getException().getMessage());
                                 }
                             });
                         });
                 // Sign in success
                 Timber.d("CreateUserWithEmail:success");
                 FirebaseUser user = mAuth.getCurrentUser();
-                user.sendEmailVerification().addOnCompleteListener(requireActivity(), task12 -> {
+                user.sendEmailVerification().addOnCompleteListener(task12 -> {
                     if (task12.isSuccessful()) {
                         Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
                         stopProgressBar(mRegisterBinding.progressBar);
                         showButton(mRegisterBinding.buttonRegister);
                         navigateToLoginFragment(mRegisterBinding.buttonRegister);
                     } else {
-                        Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Couldn't send verification mail. " + task12.getException().getMessage(),
+                                Toast.LENGTH_SHORT).show();
                         stopProgressBar(mRegisterBinding.progressBar);
                         showButton(mRegisterBinding.buttonRegister);
                         Timber.d("Sending Verification Failed: %s", task12.getException().getMessage());
@@ -135,6 +135,12 @@ public class RegisterFragment extends Fragment {
                 Timber.d("CreateUserWithEmail:failure %s", task.getException().getMessage());
             }
         });
+    }
+
+    private void logout() {
+        if (mAuth.getCurrentUser() != null) {
+            mAuth.signOut();
+        }
     }
 
     private void navigateToLoginFragment(View v) {
