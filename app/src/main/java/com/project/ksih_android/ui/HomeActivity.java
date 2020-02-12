@@ -158,6 +158,8 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.onBoardingFragment:
                 case R.id.editPhotoFragment:
                 case R.id.zoomFragment:
+                case R.id.eventAddFragment:
+                case R.id.eventDetailsFragment:
                     hideCustomToolBar();
                     disableNavDrawer();
                     break;

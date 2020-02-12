@@ -93,13 +93,13 @@ public class ProfileFragment extends Fragment {
                     mUser = dataSnapshot.getValue(User.class);
                     mProfileBinding.setUser(mUser);
                     // Load user profile Image
-                    Glide.with(getParentFragment().getContext())
+                    Glide.with(getParentFragment().getActivity())
                             .load(mUser.user_image)
                             .placeholder(R.drawable.ic_profile_photo)
                             .error(R.drawable.ic_profile_photo)
                             .into(mProfileBinding.userProfileImage);
                     // Add user details to shared preference
-                    SharedViewModel viewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+                    SharedViewModel viewModel = ViewModelProviders.of(getParentFragment().getActivity()).get(SharedViewModel.class);
                     SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
                     String username;
                     if (mUser.user_firstName.length() != 0) {
