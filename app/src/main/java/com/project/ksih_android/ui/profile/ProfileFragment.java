@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
                             .error(R.drawable.ic_profile_photo)
                             .into(mProfileBinding.userProfileImage);
                     // Add user details to shared preference
-                    SharedViewModel viewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+                    SharedViewModel viewModel = ViewModelProviders.of(getParentFragment().getActivity()).get(SharedViewModel.class);
                     SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
                     String username;
                     if (mUser.user_firstName.length() != 0) {
@@ -140,20 +140,45 @@ public class ProfileFragment extends Fragment {
             mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
         } else { // Argument is not null
             User user = (User) getArguments().getSerializable("members_bundle");
-            mProfileBinding.setUser(user);
-            // Load user image
-            Glide.with(getParentFragment().getContext())
-                    .load(user.user_image)
-                    .placeholder(R.drawable.ic_profile_photo)
-                    .error(R.drawable.ic_profile_photo)
-                    .into(mProfileBinding.userProfileImage);
-            stopProgressBar(mProfileBinding.profileProgressBar);
-            hideEditPhotoButton(mProfileBinding.editProfilePhoto);
-            mProfileBinding.userProfileImage.setOnClickListener(view -> {
-                Bundle bundle1 = new Bundle();
-                bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
-                Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
-            });
+            if (FirebaseAuth.getInstance().getUid().equals(user.user_id)) {
+                // Edit Profile
+                mProfileBinding.setUser(user);
+                // Load user image
+                Glide.with(getParentFragment().getContext())
+                        .load(user.user_image)
+                        .placeholder(R.drawable.ic_profile_photo)
+                        .error(R.drawable.ic_profile_photo)
+                        .into(mProfileBinding.userProfileImage);
+                stopProgressBar(mProfileBinding.profileProgressBar);
+                showEditButton(mProfileBinding.editProfileButton);
+                showEditPhotoButton(mProfileBinding.editProfilePhoto);
+                mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user_data", user);
+                mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
+                        .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
+                mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
+                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
+                });
+            } else {
+                // Different user's profile
+                mProfileBinding.setUser(user);
+                // Load user image
+                Glide.with(getParentFragment().getContext())
+                        .load(user.user_image)
+                        .placeholder(R.drawable.ic_profile_photo)
+                        .error(R.drawable.ic_profile_photo)
+                        .into(mProfileBinding.userProfileImage);
+                stopProgressBar(mProfileBinding.profileProgressBar);
+                hideEditPhotoButton(mProfileBinding.editProfilePhoto);
+                mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
+                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
+                });
+            }
         }
 
         return mProfileBinding.getRoot();
@@ -266,5 +291,9 @@ public class ProfileFragment extends Fragment {
 
     private void hideEditPhotoButton(ImageView view) {
         view.setVisibility(View.GONE);
+    }
+
+    private void showEditPhotoButton(ImageView view) {
+        view.setVisibility(View.VISIBLE);
     }
 }

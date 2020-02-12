@@ -226,7 +226,7 @@
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment"
-            app:popUpTo="@+id/editProfileFragment"
+            app:popUpTo="@+id/profileFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <dialog
