@@ -254,7 +254,6 @@ public class ChatFragment extends Fragment {
         return root;
     }
 
-
     private void displayChatUsers(){
 
         FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD)
