@@ -57,6 +57,8 @@
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:text="10:22"
+            android:layout_gravity="end"
+            android:layout_marginStart="4dp"
             android:textAlignment="viewEnd"
             android:textStyle="bold"
             />

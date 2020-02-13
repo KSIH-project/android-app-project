@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,7 +54,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
+
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -113,11 +117,24 @@ public class ChatFragment extends Fragment {
             controller.popBackStack(R.id.nav_chats, true);
             controller.navigate(R.id.loginFragment);
         }else {
-            currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            mUserName = currentUser.getDisplayName();
-            if (currentUser.getPhotoUrl() != null){
-                mPhotoUrl = currentUser.getPhotoUrl().toString();
-            }
+            String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseDatabase.getInstance().getReference().child("users")
+                    .child(user_uID).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String userPic = dataSnapshot.child("user_image").getValue().toString();
+                            String userName = dataSnapshot.child("user_name").getValue().toString();
+
+                            mPhotoUrl = userPic;
+                            mUserName = userName;
+                            Timber.d("photo" + mPhotoUrl);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
         }
 
         //setting views
@@ -133,44 +150,45 @@ public class ChatFragment extends Fragment {
         //get messages back
         FirebaseDatabase.getInstance().getReference().child(Constants.MESSAGES_CHILD)
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                chatMessages.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-
-                        ChatMessage chatMessage = dataSnapshot1.getValue(ChatMessage.class);
-                        chatMessages.add(chatMessage);
-                    }
-                }
-
-                Timber.d(chatMessages.toString());
-                mFirebaseAdapter = new ListMessageAdapter(getContext(), chatMessages);
-                mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-                mFirebaseAdapter.notifyDataSetChanged();
-
-                mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                     @Override
-                    public void onItemRangeInserted(int positionStart, int itemCount) {
-                        super.onItemRangeInserted(positionStart, itemCount);
-                        int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-                        int lastVisiblePosition =
-                                mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-                        if (lastVisiblePosition == -1 ||
-                                (positionStart >= (friendlyMessageCount - 1) &&
-                                        lastVisiblePosition == (positionStart - 1))) {
-                            mMessageRecyclerView.scrollToPosition(positionStart);
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        chatMessages.clear();
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+
+                                ChatMessage chatMessage = dataSnapshot1.getValue(ChatMessage.class);
+                                chatMessage.getPhotoUrl().replaceAll("", mPhotoUrl);
+                                chatMessages.add(chatMessage);
+                            }
                         }
+
+                        Timber.d(chatMessages.toString());
+                        mFirebaseAdapter = new ListMessageAdapter(getContext(), chatMessages);
+                        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+                        mFirebaseAdapter.notifyDataSetChanged();
+
+                        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                            @Override
+                            public void onItemRangeInserted(int positionStart, int itemCount) {
+                                super.onItemRangeInserted(positionStart, itemCount);
+                                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+                                int lastVisiblePosition =
+                                        mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+                                if (lastVisiblePosition == -1 ||
+                                        (positionStart >= (friendlyMessageCount - 1) &&
+                                                lastVisiblePosition == (positionStart - 1))) {
+                                    mMessageRecyclerView.scrollToPosition(positionStart);
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
         //initialize edittext logic
         mSendButton = root.findViewById(R.id.sendButton);
         mMessageEditText = root.findViewById(R.id.messageEditText);
@@ -196,62 +214,29 @@ public class ChatFragment extends Fragment {
             //send message with sender details
         mSendButton.setOnClickListener(view -> {
 
-
             if (mMessageEditText.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getContext(), "write something", Toast.LENGTH_SHORT).show();
             }else{
+
                 String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DateFormat dfDate = new SimpleDateFormat("yyyy/MM/dd");
+                String date = dfDate.format(Calendar.getInstance().getTime());
+                DateFormat dfTime = new SimpleDateFormat("HH:mm");
+                String time = dfTime.format(Calendar.getInstance().getTime());
+                String setTime = date + " " + time;
 
-                FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
-                        .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //checking profile image and sending chat
+                if (!mMessageEditText.getText().toString().trim().isEmpty()) {
+                    ChatMessage friendlyMessage = new
+                            ChatMessage(mMessageEditText.getText().toString().trim(),
+                            mUserName,
+                            mPhotoUrl,
+                            null /* no image */, user_uID, setTime);
+                    mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
+                            .push().setValue(friendlyMessage);
+                    mMessageEditText.setText("");
 
-                                String userName = dataSnapshot.child("user_name").getValue().toString();
-                                String userPic = dataSnapshot.child("user_image").getValue().toString();
-
-                                DateFormat dfDate = new SimpleDateFormat("yyyy/MM/dd");
-                                String date = dfDate.format(Calendar.getInstance().getTime());
-                                DateFormat dfTime = new SimpleDateFormat("HH:mm");
-                                String time = dfTime.format(Calendar.getInstance().getTime());
-                                String setTime = date + " " + time;
-
-                                //checking profile image and sending chat
-                                if (!userPic.equals("default image")){
-                                    if (!mMessageEditText.getText().toString().trim().isEmpty()) {
-                                        ChatMessage friendlyMessage = new
-                                                ChatMessage(mMessageEditText.getText().toString().trim(),
-                                                userName,
-                                                userPic,
-                                                null /* no image */, user_uID, setTime);
-                                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
-                                                .push().setValue(friendlyMessage);
-                                        mMessageEditText.setText("");
-
-                                    }
-
-                                }else {
-
-                                    if (!mMessageEditText.getText().toString().trim().isEmpty()) {
-                                        ChatMessage friendlyMessage = new
-                                                ChatMessage(mMessageEditText.getText().toString().trim(),
-                                                userName,
-                                                mPhotoUrl,
-                                                null /* no image */, user_uID, setTime);
-                                        mFirebaseDatabaseReference.child(Constants.MESSAGES_CHILD)
-                                                .push().setValue(friendlyMessage);
-                                        mMessageEditText.setText("");
-
-                                    }
-                                }
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                }
             }
 
         });

@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment {
                             .error(R.drawable.ic_profile_photo)
                             .into(mProfileBinding.userProfileImage);
                     // Add user details to shared preference
-                    SharedViewModel viewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+                    SharedViewModel viewModel = ViewModelProviders.of(getParentFragment().getActivity()).get(SharedViewModel.class);
                     SharedPreferencesStorage pref = new SharedPreferencesStorage(getParentFragment().getContext());
                     String username;
                     if (mUser.user_firstName.length() != 0) {
