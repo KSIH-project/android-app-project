@@ -113,7 +113,7 @@ public class OnBoardingFragment extends Fragment {
         mPrevButton.setOnClickListener(View -> mOnBoardingViewPager.setCurrentItem
                 (mOnBoardingViewPager.getCurrentItem() - 1, true));
 
-        nextButton.setOnClickListener(View -> {
+        mNextButton.setOnClickListener(View -> {
             if (mOnBoardingViewPager.getCurrentItem() < 2)
                 mOnBoardingViewPager.setCurrentItem(mOnBoardingViewPager.getCurrentItem() + 1, true);
             else {
@@ -138,18 +138,18 @@ public class OnBoardingFragment extends Fragment {
 
                     case 0:
                         hideButton(mPrevButton);
-                        nextButton.setText(R.string.next_onboarding_text);
+                        mNextButton.setText(R.string.next_onboarding_text);
                         indicatorSelector(true, false, false);
                         break;
                     case 1:
                         showButton(mPrevButton);
-                        showButton(nextButton);
-                        nextButton.setText(R.string.next_onboarding_text);
+                        showButton(mNextButton);
+                        mNextButton.setText(R.string.next_onboarding_text);
                         indicatorSelector(false, true, false);
                         break;
                     case 2:
                         showButton(mPrevButton);
-                        nextButton.setText(R.string.start_onboarding_text);
+                        mNextButton.setText(R.string.start_onboarding_text);
                         indicatorSelector(false, false, true);
                         break;
                 }
