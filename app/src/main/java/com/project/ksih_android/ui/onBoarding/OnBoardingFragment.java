@@ -1,24 +1,19 @@
 package com.project.ksih_android.ui.onBoarding;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.google.android.material.button.MaterialButton;
 import com.project.ksih_android.R;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
-import com.project.ksih_android.ui.HomeActivity;
 import com.project.ksih_android.utility.Constants;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -37,7 +32,6 @@ public class OnBoardingFragment extends Fragment {
     private OnBoardingViewModel mOnBoardingViewModel;
     private SharedPreferencesStorage mStorage;
     private NavController mNavController;
-    //activity
     private ImageView mIndicator1;
     private ImageView mIndicator2;
     private ImageView mIndicator3;
@@ -77,7 +71,7 @@ public class OnBoardingFragment extends Fragment {
                     break;
                 case NOT_SEEN_ON_BOARDING_SCREEN:
                     // Display OnBoarding Screen
-                    notSeenOnboarding();
+                    notSeenOnBoarding();
 
                     break;
             }
@@ -86,23 +80,23 @@ public class OnBoardingFragment extends Fragment {
 
     }
     //Populating onBoarding screen
-    public void notSeenOnboarding () {
+    private void notSeenOnBoarding() {
         List<OnboardingModel> modelList = new ArrayList<>();
 
-        OnboardingModel onboardingModel_one = new OnboardingModel(R.drawable.ksih,
+        OnboardingModel onBoardingModel_one = new OnboardingModel(R.drawable.ksih,
                 getResources().getString(R.string.on_boarding_text_title1)
                 , getResources().getString(R.string.on_boarding_text_description1));
-        modelList.add(onboardingModel_one);
+        modelList.add(onBoardingModel_one);
 
-        OnboardingModel onboardingModel_two = new OnboardingModel(R.drawable.connect,
+        OnboardingModel onBoardingModel_two = new OnboardingModel(R.drawable.connect,
                 getResources().getString(R.string.on_boarding_text_title2),
                 getResources().getString(R.string.on_boarding_text_description2));
-        modelList.add(onboardingModel_two);
+        modelList.add(onBoardingModel_two);
 
-        OnboardingModel onboardingModel_three = new OnboardingModel(R.drawable.inform,
+        OnboardingModel onBoardingModel_three = new OnboardingModel(R.drawable.inform,
                 getResources().getString(R.string.on_boarding_text_title3),
                 getResources().getString(R.string.on_boarding_text_description3));
-        modelList.add(onboardingModel_three);
+        modelList.add(onBoardingModel_three);
 
 
         OnBoardingScreenAdapter adapter = new OnBoardingScreenAdapter(modelList);
@@ -116,13 +110,10 @@ public class OnBoardingFragment extends Fragment {
             if (mOnBoardingViewPager.getCurrentItem() < 2)
                 mOnBoardingViewPager.setCurrentItem(mOnBoardingViewPager.getCurrentItem() + 1, true);
             else {
-                mNextButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mOnBoardingViewModel.seenOnBoardingScreen(true);
-                        mStorage.setSeenOnBoardingScreen(Constants.ON_BOARDING_KEY, true);
-                        mNavController.navigate(R.id.navigation_project);
-                    }
+                mNextButton.setOnClickListener(view -> {
+                    mOnBoardingViewModel.seenOnBoardingScreen(true);
+                    mStorage.setSeenOnBoardingScreen(Constants.ON_BOARDING_KEY, true);
+                    mNavController.navigate(R.id.navigation_project);
                 });
             }
         });

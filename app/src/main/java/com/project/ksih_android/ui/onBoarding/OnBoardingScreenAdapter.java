@@ -15,10 +15,10 @@ import java.util.List;
 
 public class OnBoardingScreenAdapter extends RecyclerView.Adapter<OnBoardingScreenAdapter.OnBoardingScreenViewHolder> {
 
-    private List<OnboardingModel> mOnboardingModelList;
+    private List<OnboardingModel> mOnBoardingModelList;
 
     public OnBoardingScreenAdapter(List<OnboardingModel> list) {
-        mOnboardingModelList = list;
+        mOnBoardingModelList = list;
     }
 
 
@@ -32,15 +32,15 @@ public class OnBoardingScreenAdapter extends RecyclerView.Adapter<OnBoardingScre
     @Override
     public void onBindViewHolder(@NonNull OnBoardingScreenViewHolder holder, int position) {
 
-        holder.onBoardingImageView.setImageResource(mOnboardingModelList.get(position).onBoardingImage);
-        holder.onBoardingTextTitle.setText(mOnboardingModelList.get(position).onBoardingTextTitle);
-        holder.getOnBoardingTextDescription.setText(mOnboardingModelList.get(position).onBoardingTextDescription);
+        holder.onBoardingImageView.setImageResource(mOnBoardingModelList.get(position).onBoardingImage);
+        holder.onBoardingTextTitle.setText(mOnBoardingModelList.get(position).onBoardingTextTitle);
+        holder.getOnBoardingTextDescription.setText(mOnBoardingModelList.get(position).onBoardingTextDescription);
 
     }
 
     @Override
     public int getItemCount() {
-        return mOnboardingModelList.size();
+        return mOnBoardingModelList.size();
     }
 
     class OnBoardingScreenViewHolder extends RecyclerView.ViewHolder {
