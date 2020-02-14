@@ -1,4 +1,4 @@
-package com.project.ksih_android.adapter;
+package com.project.ksih_android.ui.onBoarding;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.ksih_android.R;
-import com.project.ksih_android.model.OnboardingModel;
 
 import java.util.List;
 

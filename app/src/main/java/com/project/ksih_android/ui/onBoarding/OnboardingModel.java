@@ -1,4 +1,4 @@
-package com.project.ksih_android.model;
+package com.project.ksih_android.ui.onBoarding;
 
 public class OnboardingModel {
 
