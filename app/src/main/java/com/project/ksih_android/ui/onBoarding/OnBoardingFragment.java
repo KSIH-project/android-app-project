@@ -35,7 +35,6 @@ import timber.log.Timber;
 public class OnBoardingFragment extends Fragment {
 
     private OnBoardingViewModel mOnBoardingViewModel;
-    private MaterialButton nextButton;
     private SharedPreferencesStorage mStorage;
     private NavController mNavController;
     //activity
@@ -117,7 +116,7 @@ public class OnBoardingFragment extends Fragment {
             if (mOnBoardingViewPager.getCurrentItem() < 2)
                 mOnBoardingViewPager.setCurrentItem(mOnBoardingViewPager.getCurrentItem() + 1, true);
             else {
-                nextButton.setOnClickListener(new View.OnClickListener() {
+                mNextButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         mOnBoardingViewModel.seenOnBoardingScreen(true);
