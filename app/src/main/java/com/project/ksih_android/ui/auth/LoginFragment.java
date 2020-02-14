@@ -67,7 +67,16 @@ public class LoginFragment extends Fragment {
         navigateToForgotPasswordFragment(forgotPasswordText);
     }
 
-    private View setUpBindings(Bundle savedInstanceState,LayoutInflater inflater, ViewGroup container) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.navigation_project);
+            Toast.makeText(getParentFragment().getContext(), "You are already signed In", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private View setUpBindings(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container) {
         mLoginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         if (savedInstanceState == null) {

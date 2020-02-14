@@ -196,7 +196,6 @@ public class ChatFragment extends Fragment {
             //send message with sender details
         mSendButton.setOnClickListener(view -> {
 
-
             if (mMessageEditText.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getContext(), "write something", Toast.LENGTH_SHORT).show();
             }else{
