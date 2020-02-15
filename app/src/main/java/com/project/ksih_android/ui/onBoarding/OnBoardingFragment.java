@@ -110,11 +110,9 @@ public class OnBoardingFragment extends Fragment {
             if (mOnBoardingViewPager.getCurrentItem() < 2)
                 mOnBoardingViewPager.setCurrentItem(mOnBoardingViewPager.getCurrentItem() + 1, true);
             else {
-                mNextButton.setOnClickListener(view -> {
+                mNavController.navigate(R.id.navigation_project);
                     mOnBoardingViewModel.seenOnBoardingScreen(true);
                     mStorage.setSeenOnBoardingScreen(Constants.ON_BOARDING_KEY, true);
-                    mNavController.navigate(R.id.navigation_project);
-                });
             }
         });
 
