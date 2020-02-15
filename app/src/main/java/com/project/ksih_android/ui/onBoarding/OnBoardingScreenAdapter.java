@@ -32,9 +32,13 @@ public class OnBoardingScreenAdapter extends RecyclerView.Adapter<OnBoardingScre
     @Override
     public void onBindViewHolder(@NonNull OnBoardingScreenViewHolder holder, int position) {
 
-        holder.onBoardingImageView.setImageResource(mOnBoardingModelList.get(position).onBoardingImage);
-        holder.onBoardingTextTitle.setText(mOnBoardingModelList.get(position).onBoardingTextTitle);
-        holder.getOnBoardingTextDescription.setText(mOnBoardingModelList.get(position).onBoardingTextDescription);
+        holder.onBoardingImageView.setImageResource(mOnBoardingModelList.get(position).getOnBoardingImage());
+        holder.onBoardingTextTitle.setText(mOnBoardingModelList.get(position).getOnBoardingTextTitle());
+        holder.getOnBoardingTextDescription.setText(mOnBoardingModelList.get(position).getOnBoardingTextDescription());
+        if (mOnBoardingModelList.get(position).getOnBoardingAuthor() != null) {
+            holder.onAuthor.setVisibility(View.VISIBLE);
+            holder.onAuthor.setText(mOnBoardingModelList.get(position).getOnBoardingAuthor());
+        }
 
     }
 
@@ -48,6 +52,7 @@ public class OnBoardingScreenAdapter extends RecyclerView.Adapter<OnBoardingScre
         ImageView onBoardingImageView;
         TextView onBoardingTextTitle;
         TextView getOnBoardingTextDescription;
+        TextView onAuthor;
 
         OnBoardingScreenViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,6 +60,7 @@ public class OnBoardingScreenAdapter extends RecyclerView.Adapter<OnBoardingScre
             onBoardingImageView = itemView.findViewById(R.id.onboarding_image);
             onBoardingTextTitle = itemView.findViewById(R.id.onboarding_textTitle);
             getOnBoardingTextDescription = itemView.findViewById(R.id.onboarding_textDescription);
+            onAuthor = itemView.findViewById(R.id.text_ken);
         }
 
     }

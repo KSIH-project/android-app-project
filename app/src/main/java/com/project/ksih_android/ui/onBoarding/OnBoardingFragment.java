@@ -43,7 +43,7 @@ public class OnBoardingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_on_boarding, container, false);
+        View root = inflater.inflate(R.layout.fragment_on_boarding, container, false);
         mStorage = new SharedPreferencesStorage(root.getContext());
         return root;
     }
@@ -85,17 +85,17 @@ public class OnBoardingFragment extends Fragment {
 
         OnboardingModel onBoardingModel_one = new OnboardingModel(R.drawable.ksih,
                 getResources().getString(R.string.on_boarding_text_title1)
-                , getResources().getString(R.string.on_boarding_text_description1));
+                , getResources().getString(R.string.on_boarding_text_description1), getResources().getString(R.string.ken_saro_wiwa));
         modelList.add(onBoardingModel_one);
 
         OnboardingModel onBoardingModel_two = new OnboardingModel(R.drawable.connect,
                 getResources().getString(R.string.on_boarding_text_title2),
-                getResources().getString(R.string.on_boarding_text_description2));
+                getResources().getString(R.string.on_boarding_text_description2), "");
         modelList.add(onBoardingModel_two);
 
         OnboardingModel onBoardingModel_three = new OnboardingModel(R.drawable.inform,
                 getResources().getString(R.string.on_boarding_text_title3),
-                getResources().getString(R.string.on_boarding_text_description3));
+                getResources().getString(R.string.on_boarding_text_description3), "");
         modelList.add(onBoardingModel_three);
 
 
