@@ -1,10 +1,7 @@
 package com.project.ksih_android.ui;
 
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ import com.project.ksih_android.utility.DividerItemDecoration;
 import com.project.ksih_android.utility.Methods;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -119,7 +115,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Navigate user to profile screen when user clicks the nav header
         imageView.setOnClickListener(view -> {
-            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            if (FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
                 Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment).navigate(R.id.profileFragment);
                 drawer.closeDrawers();
             } else {
@@ -158,6 +154,8 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.onBoardingFragment:
                 case R.id.editPhotoFragment:
                 case R.id.zoomFragment:
+                case R.id.eventAddFragment:
+                case R.id.eventDetailsFragment:
                     hideCustomToolBar();
                     disableNavDrawer();
                     break;
@@ -212,8 +210,4 @@ public class HomeActivity extends AppCompatActivity {
         mToggle.setDrawerIndicatorEnabled(false);
         mToggle.syncState();
     }
-
-
-
-
 }

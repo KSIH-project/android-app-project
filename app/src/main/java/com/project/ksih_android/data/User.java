@@ -18,13 +18,14 @@ public class User implements Serializable {
     public String user_facebookUrl;
     public String user_twitterUrl;
     public String user_image;
+    public String user_id;
 
     public User() {
     }
 
-    public User(String user_name, String user_firstName, String user_lastName, String user_email,
-                String user_mobile, String user_stack, String user_linkedInUrl, String user_githubUrl,
-                String user_mediumUrl, String user_facebookUrl, String user_twitterUrl, String user_image) {
+    public User(String user_name, String user_firstName, String user_lastName, String user_email, String user_mobile,
+                String user_stack, String user_linkedInUrl, String user_githubUrl, String user_mediumUrl,
+                String user_facebookUrl, String user_twitterUrl, String user_image, String user_id) {
         this.user_name = user_name;
         this.user_firstName = user_firstName;
         this.user_lastName = user_lastName;
@@ -37,5 +38,6 @@ public class User implements Serializable {
         this.user_facebookUrl = user_facebookUrl;
         this.user_twitterUrl = user_twitterUrl;
         this.user_image = user_image;
+        this.user_id = user_id;
     }
 }

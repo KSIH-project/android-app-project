@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="202dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/frameLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.events.EventAddFragment">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageView_add"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ksih_background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_corner_radius="300dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout_tittle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    style="@style/textInputLayoutStyle"
+                    app:startIconDrawable="@drawable/ic_name"
+                    app:startIconTint="@color/colorSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView_add">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/textInputEdittextStyle"
+                        android:inputType="textPersonName"
+                        android:hint="Title of Event" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:startIconDrawable="@drawable/ic_map_marker"
+                    app:startIconTint="@color/colorSecondary"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_tittle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/textInputEdittextStyle"
+                        android:maxLines="2"
+                        android:hint="Event Venue" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:startIconDrawable="@drawable/ic_description"
+                    app:startIconTint="@color/colorSecondary"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_location">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/textInputEdittextStyle"
+                        android:maxLines="5"
+                        android:hint="Description of event" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout_contactsEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:startIconDrawable="@drawable/ic_at"
+                    app:startIconTint="@color/colorSecondary"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_desc">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/textInputEdittextStyle"
+                        android:inputType="textEmailAddress"
+                        android:hint="Contacts email" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/ic_phone"
+                    app:startIconTint="@color/colorSecondary"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_contactsEmail">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Contacts Phone"
+                        style="@style/textInputEdittextStyle"
+                        android:inputType="phone"
+                        android:maxLength="11" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/textInputLayout_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    style="@style/textInputEdittextStyle"
+                    android:drawableStart="@drawable/ic_calendar_month"
+                    android:drawablePadding="8dp"
+                    android:padding="16dp"
+                    android:hint="@string/select_a_date"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout_phone"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout_phone"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_phone" />
+
+                <TextView
+                    android:id="@+id/textInputLayout_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    style="@style/textInputEdittextStyle"
+                    android:drawableStart="@drawable/ic_clock_outline"
+                    android:drawablePadding="16dp"
+                    android:hint="@string/choose_time"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout_date"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_date" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout_rsvp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:startIconDrawable="@drawable/ic_web"
+                    app:startIconTint="@color/colorSecondary"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout_tittle"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_time">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textWebEditText"
+                        style="@style/textInputEdittextStyle"
+                        android:hint="RSVP link" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_add_events"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:backgroundTint="@color/colorSecondaryDark"
+                    android:text="ADD Event"
+                    android:textColor="@color/secondaryTextColor"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout_rsvp"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout_rsvp"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_rsvp" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView_add"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView_add"
+                    app:srcCompat="@drawable/ic_image_edit" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.victor.loading.rotate.RotateLoading
+            android:id="@+id/progress_bar_events_add_fragment"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loading_color="@color/colorSecondaryDark"
+            app:loading_width="5dp">
+
+        </com.victor.loading.rotate.RotateLoading>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

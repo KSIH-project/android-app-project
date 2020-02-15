@@ -46,6 +46,9 @@ public class EditProfileFragment extends Fragment {
             viewModel.preChangedData.setValue(user);
         }
         mProfileBinding.setEditUser(user);
+        mProfileBinding.firstNameTextLayout.setHelperText("* Required");
+        mProfileBinding.lastNameTextLayout.setHelperText("* Required");
+        mProfileBinding.mobileTextLayout.setHelperText("* Required");
         mProfileBinding.saveProfileButton.setOnClickListener(view ->  updateUserProfile());
         viewModel.postChangedData.setValue(mProfileBinding.getEditUser());
         return mProfileBinding.getRoot();
@@ -58,6 +61,9 @@ public class EditProfileFragment extends Fragment {
         } else if (mProfileBinding.lastNameEditText.getText().toString().isEmpty()) {
             Toast.makeText(getParentFragment().getContext(), "Last name is required", Toast.LENGTH_SHORT).show();
             mProfileBinding.lastNameEditText.requestFocus();
+        } else if (mProfileBinding.mobileEditText.getText().toString().isEmpty()) {
+            Toast.makeText(getParentFragment().getContext(), "Phone Number is required", Toast.LENGTH_SHORT).show();
+            mProfileBinding.mobileEditText.requestFocus();
         } else {
             startProgressBar(mProfileBinding.editProfileProgressBar);
             hideButton(mProfileBinding.saveProfileButton);
