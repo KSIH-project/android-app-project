@@ -83,4 +83,16 @@
         <item name="contentPadding">8dp</item>
         <item name="cardCornerRadius">8dp</item>
     </style>
+
+
+    <style name="MainText" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/colorMainText</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+
+    <style name="SubText" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/colorSubText</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
 </resources>
