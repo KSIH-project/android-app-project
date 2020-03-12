@@ -1,16 +1,15 @@
 package com.project.ksih_android.ui.startup;
 
 import android.os.Bundle;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -145,6 +144,8 @@ public class StartUpDetailsFragment extends Fragment {
     private void showDialog() {
         MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(requireContext());
         dialog.setMessage("Are you sure you want to delete this Startup?")
+                .setTitle("Delete Start Up")
+                .setIcon(R.drawable.ksih_background)
                 .setPositiveButton("YES", (dialogInterface, i) -> {
                     startProgressBar(mDetailsBinding.startupDetailsProgressBar);
                     deleteStartup(mField.getId());
