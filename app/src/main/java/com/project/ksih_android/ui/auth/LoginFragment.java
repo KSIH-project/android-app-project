@@ -7,6 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,12 +29,6 @@ import com.project.ksih_android.storage.SharedPreferencesStorage;
 import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 import com.victor.loading.rotate.RotateLoading;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
 import timber.log.Timber;
 
 import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
@@ -71,8 +72,8 @@ public class LoginFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.navigation_project);
-            Toast.makeText(getParentFragment().getContext(), "You are already signed In", Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(getParentFragment().getView()).navigate(R.id.navigation_member);
+//            Toast.makeText(getParentFragment().getContext(), "You are already signed In", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -156,7 +157,7 @@ public class LoginFragment extends Fragment {
 
     private void navigateToHomeActivity() {
         if (Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).getCurrentDestination().getId() == R.id.loginFragment) {
-            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_navigation_project);
+            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment).navigate(R.id.navigation_member);
         }
     }
 
