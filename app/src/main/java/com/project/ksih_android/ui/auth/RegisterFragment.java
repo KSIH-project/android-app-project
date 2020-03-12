@@ -6,8 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,12 +24,6 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentRegisterBinding;
 import com.victor.loading.rotate.RotateLoading;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
 import timber.log.Timber;
 
 /**
@@ -103,7 +102,9 @@ public class RegisterFragment extends Fragment {
                                     navigateToLoginFragment(mRegisterBinding.buttonRegister);
                                     logout();
                                 } else {
-                                    Toast.makeText(getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
+                                    assert getParentFragment() != null;
+                                    Toast.makeText(getParentFragment().getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
+                                    logout();
                                     stopProgressBar(mRegisterBinding.progressBar);
                                     showButton(mRegisterBinding.buttonRegister);
                                     Timber.d("Sending Verification Failed: %s", task2.getException().getMessage());

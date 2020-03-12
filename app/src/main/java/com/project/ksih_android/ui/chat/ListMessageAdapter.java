@@ -81,7 +81,7 @@ public class ListMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((ItemMessageFriendHolder)holder).messangerImageView.setOnClickListener(v -> {
                     ZoomFragment zoomFragment = new ZoomFragment();
                     Bundle args = new Bundle();
-                    args.putString("photo_url", chatMessage.get(position).getPhotoUrl() );
+                    args.putString("photo", chatMessage.get(position).getPhotoUrl());
                     zoomFragment.setArguments(args);
                     Navigation.findNavController(v).navigate(R.id.editPhotoFragment, args);
                 });
