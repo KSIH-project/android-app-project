@@ -39,7 +39,7 @@ public class Methods {
     }
 
     public static boolean checkAdmin(String uId) {
-        isAdmin = false;
+        ;
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("admin").child("uId");
         Timber.d("reference: %s", reference.toString());
         reference.addValueEventListener(new ValueEventListener() {
@@ -50,9 +50,7 @@ public class Methods {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 adminId = dataSnapshot.getValue(String.class);
                 Timber.d("reference: %s", adminId);
-                if (uId.equals(adminId)) {
-                    isAdmin = true;
-                }
+                isAdmin = uId.equals(adminId);
 
             }
 

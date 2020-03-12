@@ -14,6 +14,8 @@ import androidx.navigation.Navigation;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -25,10 +27,13 @@ import com.victor.loading.rotate.RotateLoading;
 
 import org.jetbrains.annotations.NotNull;
 
+import timber.log.Timber;
+
 import static com.project.ksih_android.utility.Constants.EDIT_STARTUP_DETAILS_KEY;
 import static com.project.ksih_android.utility.Constants.STARTUP_DETAILS_BUNDLE_KEY;
 import static com.project.ksih_android.utility.Constants.STARTUP_FIREBASE_DATABASE_REFERENCE;
 import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
+import static com.project.ksih_android.utility.Methods.checkAdmin;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +46,7 @@ public class StartUpDetailsFragment extends Fragment {
 
     private StartUpField mField;
     private FragmentStartUpDetailsBinding mDetailsBinding;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -87,7 +93,13 @@ public class StartUpDetailsFragment extends Fragment {
     private void setupToolbar(MaterialToolbar startUpDetailsToolbar) {
         startUpDetailsToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         startUpDetailsToolbar.setTitle(mField.getStartupName());
-        startUpDetailsToolbar.inflateMenu(R.menu.edit_menu);
+        if (user != null) {
+            if (checkAdmin(user.getUid())) {
+                startUpDetailsToolbar.inflateMenu(R.menu.edit_menu);
+                Timber.d("currentUser: %s", user.getUid());
+            }
+        }
+
         startUpDetailsToolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.edit_startup) {
                 editStartupDetails();
