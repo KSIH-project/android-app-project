@@ -6,6 +6,12 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,14 +19,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
-import timber.log.Timber;
-
-import android.provider.MediaStore;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
@@ -43,6 +41,8 @@ import com.victor.loading.rotate.RotateLoading;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
+
+import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
@@ -140,45 +140,52 @@ public class ProfileFragment extends Fragment {
             mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
         } else { // Argument is not null
             User user = (User) getArguments().getSerializable("members_bundle");
-            if (FirebaseAuth.getInstance().getUid().equals(user.user_id)) {
-                // Edit Profile
-                mProfileBinding.setUser(user);
-                // Load user image
-                Glide.with(getParentFragment().getContext())
-                        .load(user.user_image)
-                        .placeholder(R.drawable.ic_profile_photo)
-                        .error(R.drawable.ic_profile_photo)
-                        .into(mProfileBinding.userProfileImage);
-                stopProgressBar(mProfileBinding.profileProgressBar);
-                showEditButton(mProfileBinding.editProfileButton);
-                showEditPhotoButton(mProfileBinding.editProfilePhoto);
-                mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user_data", user);
-                mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
-                        .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
-                mProfileBinding.userProfileImage.setOnClickListener(view -> {
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
-                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
-                });
+
+            if (FirebaseAuth.getInstance().getUid() == null) {
+                Toast.makeText(getParentFragment().getContext(), "Please Sign In to view members profile Details", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(getParentFragment().getView()).navigate(R.id.loginFragment);
             } else {
-                // Different user's profile
-                mProfileBinding.setUser(user);
-                // Load user image
-                Glide.with(getParentFragment().getContext())
-                        .load(user.user_image)
-                        .placeholder(R.drawable.ic_profile_photo)
-                        .error(R.drawable.ic_profile_photo)
-                        .into(mProfileBinding.userProfileImage);
-                stopProgressBar(mProfileBinding.profileProgressBar);
-                hideEditPhotoButton(mProfileBinding.editProfilePhoto);
-                mProfileBinding.userProfileImage.setOnClickListener(view -> {
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
-                    Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
-                });
+                if (FirebaseAuth.getInstance().getUid().equals(user.user_id)) {
+                    // Edit Profile
+                    mProfileBinding.setUser(user);
+                    // Load user image
+                    Glide.with(getParentFragment().getContext())
+                            .load(user.user_image)
+                            .placeholder(R.drawable.ic_profile_photo)
+                            .error(R.drawable.ic_profile_photo)
+                            .into(mProfileBinding.userProfileImage);
+                    stopProgressBar(mProfileBinding.profileProgressBar);
+                    showEditButton(mProfileBinding.editProfileButton);
+                    showEditPhotoButton(mProfileBinding.editProfilePhoto);
+                    mProfileBinding.editProfilePhoto.setOnClickListener(view -> openGallery());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user_data", user);
+                    mProfileBinding.editProfileButton.setOnClickListener(view -> Navigation.findNavController(view)
+                            .navigate(R.id.action_profileFragment_to_editProfileFragment, bundle));
+                    mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
+                        Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
+                    });
+                } else {
+                    // Different user's profile
+                    mProfileBinding.setUser(user);
+                    // Load user image
+                    Glide.with(getParentFragment().getContext())
+                            .load(user.user_image)
+                            .placeholder(R.drawable.ic_profile_photo)
+                            .error(R.drawable.ic_profile_photo)
+                            .into(mProfileBinding.userProfileImage);
+                    stopProgressBar(mProfileBinding.profileProgressBar);
+                    hideEditPhotoButton(mProfileBinding.editProfilePhoto);
+                    mProfileBinding.userProfileImage.setOnClickListener(view -> {
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString(ZOOM_IMAGE_GENERAL_KEY, user.user_image);
+                        Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_messageRecyclerView, bundle1);
+                    });
+                }
             }
+
         }
 
         return mProfileBinding.getRoot();

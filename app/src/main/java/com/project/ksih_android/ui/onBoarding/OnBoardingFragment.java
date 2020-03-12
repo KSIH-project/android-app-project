@@ -6,10 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.project.ksih_android.R;
-import com.project.ksih_android.storage.SharedPreferencesStorage;
-import com.project.ksih_android.utility.Constants;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -18,6 +14,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.project.ksih_android.R;
+import com.project.ksih_android.storage.SharedPreferencesStorage;
+import com.project.ksih_android.utility.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public class OnBoardingFragment extends Fragment {
         mOnBoardingViewModel.mUserStatesMutableLiveData.observe(this, userStates -> {
             switch (userStates) {
                 case SEEN_ON_BOARDING_SCREEN:
-                    mNavController.navigate(R.id.navigation_project);
+                    mNavController.navigate(R.id.navigation_member);
                     break;
                 case NOT_SEEN_ON_BOARDING_SCREEN:
                     // Display OnBoarding Screen
@@ -110,7 +110,7 @@ public class OnBoardingFragment extends Fragment {
             if (mOnBoardingViewPager.getCurrentItem() < 2)
                 mOnBoardingViewPager.setCurrentItem(mOnBoardingViewPager.getCurrentItem() + 1, true);
             else {
-                mNavController.navigate(R.id.navigation_project);
+                mNavController.navigate(R.id.navigation_member);
                     mOnBoardingViewModel.seenOnBoardingScreen(true);
                     mStorage.setSeenOnBoardingScreen(Constants.ON_BOARDING_KEY, true);
             }
