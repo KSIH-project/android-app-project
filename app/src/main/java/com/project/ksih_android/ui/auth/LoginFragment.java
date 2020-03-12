@@ -73,7 +73,7 @@ public class LoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             Navigation.findNavController(getParentFragment().getView()).navigate(R.id.navigation_member);
-//            Toast.makeText(getParentFragment().getContext(), "You are already signed In", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getParentFragment().getContext(), "You are already signed In", Toast.LENGTH_SHORT).show();
         }
     }
 

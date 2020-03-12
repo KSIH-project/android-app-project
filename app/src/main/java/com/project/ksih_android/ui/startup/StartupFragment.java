@@ -13,12 +13,19 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentStartupBinding;
+
+import timber.log.Timber;
+
+import static com.project.ksih_android.utility.Methods.checkAdmin;
 
 public class StartupFragment extends Fragment {
 
     private StartupViewModel mStartupViewModel;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -29,8 +36,20 @@ public class StartupFragment extends Fragment {
 
     private View setUpBinding(LayoutInflater inflater, ViewGroup container) {
         FragmentStartupBinding startupBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_startup, container, false);
+        if (user != null) {
+            if (checkAdmin(user.getUid())) {
+                startupBinding.tempFab.setVisibility(View.VISIBLE);
+                Timber.d("currentUser: %s", user.getUid());
+            } else {
+                Timber.d("currentUser: %s", user.getUid());
+                startupBinding.tempFab.setVisibility(View.GONE);
+            }
+        } else {
+            startupBinding.tempFab.setVisibility(View.GONE);
+        }
         startupBinding.rotateLoading.start();
         setUpRecyclerView(startupBinding);
+
         startupBinding.tempFab.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_addStartUpFragment));
         return startupBinding.getRoot();
     }

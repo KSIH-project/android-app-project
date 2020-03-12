@@ -1,28 +1,28 @@
 package com.project.ksih_android.ui.events;
 
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.LayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.project.ksih_android.R;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentEventBinding;
-import com.project.ksih_android.storage.SharedPreferencesStorage;
 
 import org.jetbrains.annotations.NotNull;
+
+import timber.log.Timber;
+
+import static com.project.ksih_android.utility.Methods.checkAdmin;
 
 
 /**
@@ -32,6 +32,7 @@ public class EventFragment extends Fragment {
 
     private EventViewModel eventViewModel;
     private FragmentEventBinding mFragmentEventBinding;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -40,6 +41,18 @@ public class EventFragment extends Fragment {
         // Inflate the layout for this fragment
         mFragmentEventBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_event, container, false);
         mFragmentEventBinding.progressBar.start();
+        if (user != null) {
+            if (checkAdmin(user.getUid())) {
+                mFragmentEventBinding.floatingActionButton.setVisibility(View.VISIBLE);
+                Timber.d("currentUser: %s", user.getUid());
+            } else {
+                Timber.d("currentUser: %s", user.getUid());
+                mFragmentEventBinding.floatingActionButton.setVisibility(View.GONE);
+            }
+        } else {
+            mFragmentEventBinding.floatingActionButton.setVisibility(View.GONE);
+        }
+
         mFragmentEventBinding.floatingActionButton.setOnClickListener(view ->
                 Navigation.findNavController(view).navigate(R.id.action_navigation_event_to_eventAddFragment));
         setupRecyclerView();
