@@ -18,5 +18,14 @@
     <color name="color_text_default">#CC000000</color>
     <color name="color_text_pressed">#888888</color>
     <color name="colorDivider">#AAAAAA</color>
+    <color name="app_info_blue">#7587EE</color>
     <color name="color_black">#000000</color>
+    <color name="chat_bubble_color">#60A540</color>
+    <color name="Black">#201E1E</color>
+    <color name="icon_tint">#8B0000</color>
+
+
+
+    <color name="colorMainText">#212121</color>
+    <color name="colorSubText">#757575</color>
 </resources>

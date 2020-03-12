@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import timber.log.Timber;
@@ -43,7 +40,7 @@ public class ForgotPasswordFragment extends Fragment {
 
     private View setUpBindings(Bundle savedInstanceState, LayoutInflater inflater, ViewGroup container) {
         mForgotPasswordBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_forgot_password, container, false);
-        onBackPressed(mForgotPasswordBinding.forgotPasswordToolbar);
+        //onBackPressed(mForgotPasswordBinding.forgotPasswordToolbar);
         mViewModel = ViewModelProviders.of(this).get(ForgotPasswordViewModel.class);
         if (savedInstanceState == null) {
             mViewModel.init();
@@ -54,47 +51,35 @@ public class ForgotPasswordFragment extends Fragment {
     }
 
     private void setUpButtonClick() {
-        mViewModel.getButtonClick().observe(this, new Observer<ForgotPasswordField>() {
-            @Override
-            public void onChanged(ForgotPasswordField authFields) {
-                startProgressBar(mForgotPasswordBinding.progressBar);
-                hideButton(mForgotPasswordBinding.buttonResetPassword);
-                //TODO: Navigate to Login Fragment
-                resetPassword(authFields.getEmail());
-            }
+        mViewModel.getButtonClick().observe(this, authFields -> {
+            startProgressBar(mForgotPasswordBinding.progressBar);
+            hideButton(mForgotPasswordBinding.buttonResetPassword);
+            resetPassword(authFields.getEmail());
         });
     }
 
     private void onBackPressed(MaterialToolbar toolbar) {
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requireActivity().onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> requireActivity().onBackPressed());
     }
 
     private void resetPassword(String password) {
-        mAuth.sendPasswordResetEmail(password).addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Check your email for password reset link", Toast.LENGTH_SHORT).show();
-                    stopProgressBar(mForgotPasswordBinding.progressBar);
-                    showButton(mForgotPasswordBinding.buttonResetPassword);
-                    navigateToLoginFragment(mForgotPasswordBinding.forgotPasswordToolbar);
-                } else {
-                    Toast.makeText(requireContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    stopProgressBar(mForgotPasswordBinding.progressBar);
-                    showButton(mForgotPasswordBinding.buttonResetPassword);
-                    Timber.d(task.getException().getLocalizedMessage());
-                }
+        mAuth.sendPasswordResetEmail(password).addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(requireContext(), "Check your email for password reset link", Toast.LENGTH_SHORT).show();
+                stopProgressBar(mForgotPasswordBinding.progressBar);
+                showButton(mForgotPasswordBinding.buttonResetPassword);
+                navigateToLoginFragment(mForgotPasswordBinding.buttonResetPassword);
+            } else {
+                Toast.makeText(requireContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                stopProgressBar(mForgotPasswordBinding.progressBar);
+                showButton(mForgotPasswordBinding.buttonResetPassword);
+                Timber.d(task.getException().getLocalizedMessage());
             }
         });
     }
 
     private void navigateToLoginFragment(View v) {
-        Navigation.findNavController(v).navigate(R.id.loginFragment);
+        Navigation.findNavController(v).navigate(R.id.action_forgotPasswordFragment_to_loginFragment);
     }
 
     private void startProgressBar(RotateLoading loading) {

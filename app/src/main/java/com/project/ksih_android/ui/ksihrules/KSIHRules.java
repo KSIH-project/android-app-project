@@ -3,46 +3,52 @@ package com.project.ksih_android.ui.ksihrules;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.ksih_android.R;
-import com.project.ksih_android.ui.member.MemberViewModel;
+import com.project.ksih_android.databinding.FragmentKsihrulesBinding;
+
+import timber.log.Timber;
+
+import static com.project.ksih_android.utility.Constants.KSIH_RULES_FIREBASE_REFERENCE;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class KSIHRules extends Fragment {
-
-    private KSIHRulesViewModel mKSIHRulesViewModel;
-
-    public KSIHRules() {
-        // Required empty public constructor
-    }
-
+    private FragmentKsihrulesBinding mFragmentKsihrulesBinding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mKSIHRulesViewModel =
-                ViewModelProviders.of(this).get(KSIHRulesViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_ksihrules, container, false);
-        final TextView textView = root.findViewById(R.id.text_rules);
-        mKSIHRulesViewModel.getText().observe(this, new Observer<String>() {
+        mFragmentKsihrulesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_ksihrules, container, false);
+        mFragmentKsihrulesBinding.ksihRulesProgressBar.start();
+        DatabaseReference databaseReferenceKsihRules = FirebaseDatabase.getInstance().getReference(KSIH_RULES_FIREBASE_REFERENCE);
+        databaseReferenceKsihRules.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mFragmentKsihrulesBinding.textviewKsihRules.setText(dataSnapshot.getValue(String.class));
+                mFragmentKsihrulesBinding.ksihRulesProgressBar.stop();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                mFragmentKsihrulesBinding.ksihRulesProgressBar.stop();
+                Timber.d("Database Error: %s", databaseError.getDetails());
             }
         });
-        return root;
+        return mFragmentKsihrulesBinding.getRoot();
     }
-
 }

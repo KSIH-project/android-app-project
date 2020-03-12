@@ -9,137 +9,145 @@
             type="com.project.ksih_android.ui.auth.RegistrationViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="260dp"
-            android:layout_height="240dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ksih_background"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
-            app:layout_constraintVertical_bias="0.26999998"
-            app:layout_constraintVertical_chainStyle="spread" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="260dp"
+                android:layout_height="240dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ksih_background"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.26999998"
+                app:layout_constraintVertical_chainStyle="spread" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/sign_up_toolbar"
-                android:layout_width="match_parent"
+            <!--        <com.google.android.material.appbar.AppBarLayout
+                        android:id="@+id/app_bar_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <com.google.android.material.appbar.MaterialToolbar
+                            android:id="@+id/sign_up_toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxHeight="?attr/actionBarSize"
+                            app:navigationIcon="@drawable/ic_back_button"
+                            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
+                            app:title="Sign Up"
+                            app:titleTextAppearance="@style/toolBarTextAppearance" />
+                    </com.google.android.material.appbar.AppBarLayout>-->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_register"
+                style="@style/buttonStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxHeight="?attr/actionBarSize"
-                app:navigationIcon="@drawable/ic_arrow_left"
-                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-                app:title="Sign Up"
-                app:titleTextAppearance="@style/toolBarTextAppearance" />
-        </com.google.android.material.appbar.AppBarLayout>
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="52dp"
+                android:enabled="@{registerModel.registration.valid}"
+                android:onClick="@{() -> registerModel.onButtonClick()}"
+                android:text="Sign Up"
+                android:textAppearance="@style/buttonTextStyle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_register"
-            style="@style/buttonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
-            android:layout_marginEnd="52dp"
-            android:enabled="@{registerModel.registration.valid}"
-            android:onClick="@{() -> registerModel.onButtonClick()}"
-            android:text="Sign Up"
-            android:textAppearance="@style/buttonTextStyle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+            <com.victor.loading.rotate.RotateLoading
+                android:id="@+id/progress_bar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:loading_color="@color/button_color_background"
+                app:loading_width="4dp"
+                app:layout_constraintBottom_toBottomOf="@id/button_register"
+                app:layout_constraintEnd_toEndOf="@id/button_register"
+                app:layout_constraintStart_toStartOf="@id/button_register"
+                app:layout_constraintTop_toTopOf="@id/button_register" />
 
-        <com.victor.loading.rotate.RotateLoading
-            android:id="@+id/progress_bar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:loading_color="@color/button_color_background"
-            app:loading_width="4dp"
-            app:layout_constraintBottom_toBottomOf="@id/button_register"
-            app:layout_constraintEnd_toEndOf="@id/button_register"
-            app:layout_constraintStart_toStartOf="@id/button_register"
-            app:layout_constraintTop_toTopOf="@id/button_register" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/textInputLayoutStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Email"
+                app:error="@{registerModel.registration.emailError}"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/textInputLayoutStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            app:error="@{registerModel.registration.emailError}"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_edittext"
+                    style="@style/textInputEdittextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:text="@={registerModel.registration.email}"
+                    app:onFocus="@{registerModel.getEmailOnFocusChangeListener()}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_edittext"
-                style="@style/textInputEdittextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
-                android:text="@={registerModel.registration.email}"
-                app:onFocus="@{registerModel.getEmailOnFocusChangeListener()}" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                style="@style/textInputLayoutStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Password"
+                app:error="@{registerModel.registration.passwordError}"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+                app:passwordToggleEnabled="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            style="@style/textInputLayoutStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            app:error="@{registerModel.registration.passwordError}"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-            app:passwordToggleEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_edittext"
+                    style="@style/textInputEdittextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:text="@={registerModel.registration.password}"
+                    app:onFocus="@{registerModel.getPasswordOnFocusChangeListener()}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_edittext"
-                style="@style/textInputEdittextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPassword"
-                android:text="@={registerModel.registration.password}"
-                app:onFocus="@{registerModel.getPasswordOnFocusChangeListener()}" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout3"
+                style="@style/textInputLayoutStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Confirm Password"
+                app:error="@{registerModel.registration.passwordError}"
+                app:layout_constraintBottom_toTopOf="@id/button_register"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+                app:passwordToggleEnabled="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout3"
-            style="@style/textInputLayoutStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Confirm Password"
-            app:error="@{registerModel.registration.passwordError}"
-            app:layout_constraintBottom_toTopOf="@id/button_register"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-            app:passwordToggleEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirm_password_edittext"
+                    style="@style/textInputEdittextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:text="@={registerModel.registration.confirmPassword}"
+                    app:onFocus="@{registerModel.getConfirmPasswordOnFocusChangeListener()}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/confirm_password_edittext"
-                style="@style/textInputEdittextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPassword"
-                android:text="@={registerModel.registration.confirmPassword}"
-                app:onFocus="@{registerModel.getConfirmPasswordOnFocusChangeListener()}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

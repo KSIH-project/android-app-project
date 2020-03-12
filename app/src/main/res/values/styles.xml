@@ -69,4 +69,38 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="textHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:textColor">@color/colorSecondary</item>
+    </style>
+
+    <style name="textBody">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="eventCardDetails">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">8dp</item>
+        <item name="cardCornerRadius">8dp</item>
+    </style>
+
+
+    <style name="MainText" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/colorMainText</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+
+    <style name="SubText" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/colorSubText</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
 </resources>
