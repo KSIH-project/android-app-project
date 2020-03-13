@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.User;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by SegunFrancis
@@ -42,6 +42,7 @@ public class MembersRecyclerAdapter extends RecyclerView.Adapter<MembersRecycler
     public void onBindViewHolder(@NonNull MembersViewHolder holder, int position) {
         String name = membersList.get(position).user_firstName + " " + membersList.get(position).user_lastName;
         holder.membersName.setText(name);
+        holder.itemView.findViewById(R.id.memebersCardView).setVisibility(View.VISIBLE);
         holder.membersStack.setText(membersList.get(position).user_stack);
         Glide.with(mContext)
                 .load(membersList.get(position).user_image)
