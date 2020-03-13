@@ -28,7 +28,7 @@ public class MemberViewModel extends ViewModel {
     }
 
     LiveData<List<User>> getMembers() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("development/users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

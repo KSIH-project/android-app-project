@@ -72,7 +72,7 @@ public class RegisterFragment extends Fragment {
                 String current_userID = mAuth.getCurrentUser().getUid();
                 String name = email.substring(0, email.lastIndexOf("@"));
 
-                storeDefaultDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(current_userID);
+                storeDefaultDatabaseReference = FirebaseDatabase.getInstance().getReference("development/users").child(current_userID);
 
                 storeDefaultDatabaseReference.child("user_name").setValue(name);
                 storeDefaultDatabaseReference.child("user_firstName").setValue("");
@@ -89,7 +89,8 @@ public class RegisterFragment extends Fragment {
                 storeDefaultDatabaseReference.child("created_at").setValue(ServerValue.TIMESTAMP);
                 storeDefaultDatabaseReference.child("user_image").setValue("default image");
                 storeDefaultDatabaseReference.child("device_token").setValue(deviceToken);
-                storeDefaultDatabaseReference.child("user_id").setValue(current_userID)
+                storeDefaultDatabaseReference.child("user_id").setValue(current_userID);
+                storeDefaultDatabaseReference.child("is_verified").setValue(false)
                         .addOnCompleteListener(task1 -> {
                             // Sign in success
                             Timber.d("CreateUserWithEmail:success");

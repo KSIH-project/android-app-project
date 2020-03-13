@@ -29,9 +29,9 @@ import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
+import static com.project.ksih_android.utility.Constants.EDIT_EVENT_DETAILS_KEY;
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
 import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
-import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
 import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
 import static com.project.ksih_android.utility.Methods.checkAdmin;
 
@@ -162,7 +162,7 @@ public class EventDetailsFragment extends Fragment {
 
     private void editEvent() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EVENT_TO_EDIT, mEvents);
+        bundle.putParcelable(EDIT_EVENT_DETAILS_KEY, mEvents);
         Navigation.findNavController(requireView()).navigate(R.id.action_eventDetailsFragment_to_eventAddFragment, bundle);
     }
 
