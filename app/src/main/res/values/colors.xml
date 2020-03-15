@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#c2402a</color>
     <color name="colorPrimary">#1b6985</color>
     <color name="colorPrimaryLight">#5497b5</color>
     <color name="colorPrimaryDark">#003e58</color>
-    <color name="colorSecondary">#8e2623</color>
-    <color name="colorSecondaryLight">#c3554b</color>
-    <color name="colorSecondaryDark">#5b0000</color>
-    <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#ffffff</color>
+    <color name="colorSecondary">#8b0000</color>
+    <color name="colorSecondaryLight">#c2402a</color>
+    <color name="colorSecondaryDark">#580000</color>
+    <color name="primaryTextColor">#DFFFFFFF</color>
+    <color name="secondaryTextColor">#D9FFFFFF</color>
 
 
     <color name="button_color_disabled">#966A69</color>
     <color name="dark_text_color">#111111</color>
     <color name="color_text_input_background">#C4C4C4</color>
-    <color name="color_text_default">#000000</color>
+    <color name="color_text_default">#CC000000</color>
     <color name="color_text_pressed">#888888</color>
     <color name="colorDivider">#AAAAAA</color>
     <color name="app_info_blue">#7587EE</color>

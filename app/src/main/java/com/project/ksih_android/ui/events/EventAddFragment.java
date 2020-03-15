@@ -8,19 +8,18 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.provider.MediaStore;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputLayout;
@@ -33,21 +32,20 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.Events;
 import com.project.ksih_android.databinding.FragmentEventAddBinding;
 
-
-import static android.app.Activity.RESULT_OK;
-import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
-import static com.project.ksih_android.utility.Constants.EVENT_FIREBASE_STORAGE_REFRENCE_PATH;
-import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
-import static com.project.ksih_android.utility.Constants.REQUEST_CODE_EVENTS_IMAGE;
-import static com.project.ksih_android.utility.Constants.SAVE_EVENTS_BUTTON_TEXT;
-import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 
 import timber.log.Timber;
+
+import static android.app.Activity.RESULT_OK;
+import static com.project.ksih_android.utility.Constants.EDIT_EVENT_DETAILS_KEY;
+import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
+import static com.project.ksih_android.utility.Constants.EVENT_FIREBASE_STORAGE_REFRENCE_PATH;
+import static com.project.ksih_android.utility.Constants.REQUEST_CODE_EVENTS_IMAGE;
+import static com.project.ksih_android.utility.Constants.SAVE_EVENTS_BUTTON_TEXT;
+import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -126,7 +124,7 @@ public class EventAddFragment extends Fragment {
         });
         if (getArguments() != null) {
             binding.buttonAddEvents.setText(SAVE_EVENTS_BUTTON_TEXT);
-            mEvents = getArguments().getParcelable(EVENT_TO_EDIT);
+            mEvents = getArguments().getParcelable(EDIT_EVENT_DETAILS_KEY);
             getEventsDetails();
         }
         return binding.getRoot();

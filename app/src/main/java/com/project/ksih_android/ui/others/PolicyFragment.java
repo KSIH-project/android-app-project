@@ -2,15 +2,13 @@ package com.project.ksih_android.ui.others;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.fragment.app.Fragment;
 
 import com.project.ksih_android.R;
 
@@ -18,11 +16,6 @@ import com.project.ksih_android.R;
  * A simple {@link Fragment} subclass.
  */
 public class PolicyFragment extends Fragment {
-
-
-    public PolicyFragment() {
-        // Required empty public constructor
-    }
 
 
     @Override
