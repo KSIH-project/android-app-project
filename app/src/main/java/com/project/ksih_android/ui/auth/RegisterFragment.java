@@ -121,6 +121,7 @@ public class RegisterFragment extends Fragment {
                         stopProgressBar(mRegisterBinding.progressBar);
                         showButton(mRegisterBinding.buttonRegister);
                         navigateToLoginFragment(mRegisterBinding.buttonRegister);
+                        logout();
                     } else {
                         Toast.makeText(getContext(), "Couldn't send verification mail. " + task12.getException().getMessage(),
                                 Toast.LENGTH_SHORT).show();
