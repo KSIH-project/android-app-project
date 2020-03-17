@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.User;
 
+import timber.log.Timber;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
 
 /**
@@ -55,15 +59,25 @@ public class EditPhotoDialogFragment extends DialogFragment {
 
         imageView.setOnClickListener(view1 -> {
             Bundle bundle = new Bundle();
-            mUser = (User) getArguments().getSerializable("photo_url");
-            bundle.putString(ZOOM_IMAGE_GENERAL_KEY, mUser.user_image);
-            Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment)
-                    .navigate(R.id.action_editPhotoFragment_to_messageRecyclerView, bundle);
+            String chatPhotoMedium;
+            chatPhotoMedium = (String) getArguments().getSerializable("photo");
+
+                bundle.putString(ZOOM_IMAGE_GENERAL_KEY, chatPhotoMedium);
+                Navigation.findNavController(getParentFragment().getActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.action_editPhotoFragment_to_messageRecyclerView, bundle);
+
+
+
+
+
         });
         Bundle memberInfoBundle = new Bundle();
-        memberInfoBundle.putSerializable("members_bundle", getArguments().getSerializable("photo_url"));
-        imageViewInfo.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
-                .navigate(R.id.action_editPhotoFragment_to_profileFragment, memberInfoBundle));
+        if (getArguments().getSerializable("photo_url") != null){
+            memberInfoBundle.putSerializable("members_bundle", getArguments().getSerializable("photo_url"));
+            imageViewInfo.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                    .navigate(R.id.action_editPhotoFragment_to_profileFragment, memberInfoBundle));
+
+        }
 
 
         imageViewPhone.setOnClickListener(v1 -> {

@@ -145,7 +145,7 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getParentFragment().getContext(), "Please Sign In to view members profile Details", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(getParentFragment().getView()).navigate(R.id.loginFragment);
             } else {
-                if (FirebaseAuth.getInstance().getUid().equals(user.user_id)) {
+                if (user != null && FirebaseAuth.getInstance().getUid().equals(user.user_id)) {
                     // Edit Profile
                     mProfileBinding.setUser(user);
                     // Load user image
