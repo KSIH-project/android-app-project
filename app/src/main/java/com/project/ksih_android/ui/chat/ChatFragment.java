@@ -10,16 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,6 +23,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,12 +47,12 @@ import com.project.ksih_android.R;
 import com.project.ksih_android.data.ChatMessage;
 import com.project.ksih_android.utility.Constants;
 
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
+
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -196,13 +195,12 @@ public class ChatFragment extends Fragment {
             //send message with sender details
         mSendButton.setOnClickListener(view -> {
 
-
             if (mMessageEditText.getText().toString().trim().isEmpty()) {
                 Toast.makeText(getContext(), "write something", Toast.LENGTH_SHORT).show();
             }else{
                 String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
+                FirebaseDatabase.getInstance().getReference().child("development/users").child(user_uID)
                         .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -394,7 +392,7 @@ public class ChatFragment extends Fragment {
                     String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     final Uri uri = data.getData();
 
-                    FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
+                    FirebaseDatabase.getInstance().getReference().child("development/users").child(user_uID)
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -474,7 +472,7 @@ public class ChatFragment extends Fragment {
                                 String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-                                FirebaseDatabase.getInstance().getReference().child("users").child(user_uID)
+                                FirebaseDatabase.getInstance().getReference().child("development/users").child(user_uID)
                                         .addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

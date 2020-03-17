@@ -1,21 +1,22 @@
 package com.project.ksih_android.ui.events;
 
 
-
 import android.os.Bundle;
-import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -26,9 +27,13 @@ import com.project.ksih_android.databinding.FragmentEventDetailsBinding;
 
 import org.jetbrains.annotations.NotNull;
 
+import timber.log.Timber;
+
+import static com.project.ksih_android.utility.Constants.EDIT_EVENT_DETAILS_KEY;
 import static com.project.ksih_android.utility.Constants.EVENTS_FIREBASE_PATH;
-import static com.project.ksih_android.utility.Constants.EVENT_TO_EDIT;
+import static com.project.ksih_android.utility.Constants.EVENTS_ITEM_KEY;
 import static com.project.ksih_android.utility.Constants.ZOOM_IMAGE_GENERAL_KEY;
+import static com.project.ksih_android.utility.Methods.checkAdmin;
 
 
 /**
@@ -38,6 +43,7 @@ public class EventDetailsFragment extends Fragment {
     private FragmentEventDetailsBinding binding;
 
     private Events mEvents;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     @Override
@@ -102,7 +108,13 @@ public class EventDetailsFragment extends Fragment {
     private void setupToolBar(MaterialToolbar eventsDetailsToolbar) {
         eventsDetailsToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         eventsDetailsToolbar.setTitle(mEvents.getEventName());
-        eventsDetailsToolbar.inflateMenu(R.menu.events_menu);
+        if (user != null) {
+            if (checkAdmin(user.getUid())) {
+                eventsDetailsToolbar.inflateMenu(R.menu.events_menu);
+                Timber.d("currentUser: %s", user.getUid());
+            }
+        }
+
         eventsDetailsToolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).navigateUp());
         eventsDetailsToolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.events_edit_menu)
@@ -150,7 +162,7 @@ public class EventDetailsFragment extends Fragment {
 
     private void editEvent() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EVENT_TO_EDIT, mEvents);
+        bundle.putParcelable(EDIT_EVENT_DETAILS_KEY, mEvents);
         Navigation.findNavController(requireView()).navigate(R.id.action_eventDetailsFragment_to_eventAddFragment, bundle);
     }
 

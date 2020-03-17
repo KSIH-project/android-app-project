@@ -59,12 +59,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_project"
-        android:name="com.project.ksih_android.ui.project.ProjectFragment"
-        android:label="@string/title_project"
-        tools:layout="@layout/fragment_project" />
-
-    <fragment
         android:id="@+id/navigation_member"
         android:name="com.project.ksih_android.ui.member.MemberFragment"
         android:label="@string/title_members"

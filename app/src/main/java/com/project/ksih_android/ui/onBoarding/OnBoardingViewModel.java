@@ -25,4 +25,5 @@ public class OnBoardingViewModel extends ViewModel {
             mUserStatesMutableLiveData.setValue(UserStates.SEEN_ON_BOARDING_SCREEN);
         }
     }
+
 }

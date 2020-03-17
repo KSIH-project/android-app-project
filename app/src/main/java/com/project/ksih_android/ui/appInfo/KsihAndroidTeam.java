@@ -1,17 +1,15 @@
 package com.project.ksih_android.ui.appInfo;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
@@ -56,7 +54,7 @@ public class KsihAndroidTeam extends Fragment {
 
         mRotateLoadingAboutDevelopers.start();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("developer_profile");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("development/developer_profile");
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

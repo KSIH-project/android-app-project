@@ -11,19 +11,18 @@ public class Constants {
     public static String ON_BOARDING_KEY = "user_seen_onboarding_screen";
     public static String REMEMBER_ME = "user_checks_remember_me_checkbox";
     public static String SHARED_PREF_KEY = "KSIH-android-app";
-    public static final String EVENT_TO_EDIT = "eventToEdit";
-    public static final String EVENTS_FIREBASE_PATH = "events";
+    public static final String EDIT_EVENT_DETAILS_KEY = "eventToEdit";
+    public static final String EVENTS_FIREBASE_PATH = "development/events";
     public static String ALERT_DIALOG_PREF_KEY = "KSIH-android-app-alert_dialog-key";
 
 
-
-    public static String KSIH_RULES_FIREBASE_REFERENCE = "ksih_rules/ksih_rules";
-    public static String ABOUT_KSIH_FIREBASE_REFERENCE = "about_ksih/about_ksih";
+    public static String KSIH_RULES_FIREBASE_REFERENCE = "development/ksih_rules/ksih_rules";
+    public static String ABOUT_KSIH_FIREBASE_REFERENCE = "development/about_ksih/about_ksih";
     public static int REQUEST_CODE = 1208;
     public static String EDIT_STARTUP_DETAILS_KEY = "edit_startup_details";
     public static String STARTUP_DETAILS_BUNDLE_KEY = "startup_details";
     public static String STARTUP_FIREBASE_STORAGE_REFERENCE = "images/startup_logo/";
-    public static String STARTUP_FIREBASE_DATABASE_REFERENCE = "startups";
+    public static String STARTUP_FIREBASE_DATABASE_REFERENCE = "development/startups";
     public static final String SAVE_EVENTS_BUTTON_TEXT = "Save Events";
     public static final int DEFAULT_MSG_LENTH_LIMIT = 10;
     public static final String ANONYMOUS = "anonymous";
@@ -35,8 +34,8 @@ public class Constants {
     public static String PROFILE_PHOTO_KEY = "user_profile_photo_url";
     public static int PROFILE_IMAGE_REQUEST_CODE = 1209;
     public static String PROFILE_FIREBASE_STORAGE_REFERENCE = "images/user_profile/";
-    public static String PROFILE_FIREBASE_DATABASE_REFERENCE = "users";
-    public static String MESSAGES_CHILD = "messages";
+    public static String PROFILE_FIREBASE_DATABASE_REFERENCE = "development/users";
+    public static String MESSAGES_CHILD = "development/messages";
     public static int REQUEST_INVITE = 1;
     public static int REQUEST_IMAGE = 2;
     public static String UID = "";

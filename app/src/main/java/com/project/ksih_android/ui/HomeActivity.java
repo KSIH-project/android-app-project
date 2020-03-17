@@ -6,8 +6,18 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.appbar.MaterialToolbar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
@@ -19,15 +29,6 @@ import com.project.ksih_android.ui.sharedViewModel.SharedViewModel;
 import com.project.ksih_android.utility.DividerItemDecoration;
 import com.project.ksih_android.utility.Methods;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import timber.log.Timber;
 
 import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
@@ -135,7 +136,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
-        else if (mNavController.getCurrentDestination().getId() == R.id.navigation_project)
+        else if (mNavController.getCurrentDestination().getId() == R.id.navigation_member)
             showDialog();
         else
             mNavController.navigateUp();
@@ -183,6 +184,8 @@ public class HomeActivity extends AppCompatActivity {
     private void showDialog() {
         MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(HomeActivity.this);
         dialog.setMessage("Are you sure you want to exit?")
+                .setTitle("Exit!")
+                .setIcon(R.drawable.ksih_background)
                 .setPositiveButton("YES", (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     System.exit(0);
