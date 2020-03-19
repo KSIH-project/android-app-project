@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.ksih_android.data.User;
+import com.project.ksih_android.utility.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class MemberViewModel extends ViewModel {
     }
 
     LiveData<List<User>> getMembers() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("development/users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.USERS_FIREBASE_PATH);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
