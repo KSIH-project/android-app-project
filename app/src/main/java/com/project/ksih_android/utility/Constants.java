@@ -5,6 +5,7 @@ package com.project.ksih_android.utility;
  */
 public class Constants {
     public static final String EVENT_FIREBASE_STORAGE_REFRENCE_PATH = "images/events_flyers/";
+    public static final String ADMIN = "development/admin";
     public static String ZOOM_IMAGE_GENERAL_KEY = "everyone_should_use_this_general_key_for_zoom_image";
     public static String EMAIL_KEY = "user_email";
     public static String PASSWORD_KEY = "user_password";

@@ -40,7 +40,7 @@ public class Methods {
 
     public static boolean checkAdmin(String uId) {
         ;
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("admin").child("uId");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.ADMIN).child("uId");
         Timber.d("reference: %s", reference.toString());
         reference.addValueEventListener(new ValueEventListener() {
 
