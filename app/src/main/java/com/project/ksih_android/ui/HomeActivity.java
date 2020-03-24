@@ -213,4 +213,6 @@ public class HomeActivity extends AppCompatActivity {
         mToggle.setDrawerIndicatorEnabled(false);
         mToggle.syncState();
     }
+
+
 }

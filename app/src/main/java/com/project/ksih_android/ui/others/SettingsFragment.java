@@ -51,7 +51,7 @@ public class SettingsFragment extends Fragment {
                 Snackbar.make(root.findViewById(R.id.constraintLayout),
                         "Please Sign In", Snackbar.LENGTH_LONG)
                         .setAction("Sign In", v1 ->
-                                Navigation.findNavController(textViewSignOut).navigate(R.id.action_nav_settings_to_loginFragment)).show();
+                                Navigation.findNavController(v).navigate(R.id.action_nav_settings_to_loginFragment)).show();
 
             }
         });

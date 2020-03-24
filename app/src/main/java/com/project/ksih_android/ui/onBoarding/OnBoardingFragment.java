@@ -85,7 +85,7 @@ public class OnBoardingFragment extends Fragment {
 
         OnboardingModel onBoardingModel_one = new OnboardingModel(R.drawable.ksih,
                 getResources().getString(R.string.on_boarding_text_title1)
-                , getResources().getString(R.string.on_boarding_text_description1), getResources().getString(R.string.ken_saro_wiwa));
+                , getResources().getString(R.string.ken_quote), getResources().getString(R.string.ken_saro_wiwa));
         modelList.add(onBoardingModel_one);
 
         OnboardingModel onBoardingModel_two = new OnboardingModel(R.drawable.connect,

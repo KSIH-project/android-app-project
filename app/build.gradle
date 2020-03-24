@@ -2,6 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
+ext.versionMajor = 1
+ext.versionMinor = 1
+ext.versionPatch = 1
+ext.versionClassifier = null
+ext.isSnapshot = true
+ext.minimumSdkVersion = 19
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -9,8 +16,8 @@ android {
         applicationId "com.project.ksih_android"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.1"
+        versionCode generateVersionCode()
+        versionName "1.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -29,6 +36,12 @@ android {
         targetCompatibility = 1.8
     }
 }
+
+private static Integer generateVersionCode() {
+    return 19 * 10000000 + 1 * 10000 + 1 * 100 + 1
+}
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -72,8 +85,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
     implementation 'com.firebaseui:firebase-ui-database:6.0.2'
-    //implementation 'com.google.firebase:firebase-analytics:17.2.1'
-    //implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+    implementation 'com.google.firebase:firebase-analytics:17.2.3'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+        // dataBiding
     annotationProcessor 'com.android.databinding:compiler:3.1.4'
 
     //whatsapp formatter
