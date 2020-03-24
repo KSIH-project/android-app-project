@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.ksih_android.R;
 import com.project.ksih_android.storage.SharedPreferencesStorage;
@@ -47,7 +48,11 @@ public class SettingsFragment extends Fragment {
             if (mFirebaseAuth.getCurrentUser() != null) {
                 dialogQuestion();
             } else {
-                Toast.makeText(getActivity(), "Please Sign in!", Toast.LENGTH_SHORT).show();
+                Snackbar.make(root.findViewById(R.id.constraintLayout),
+                        "Please Sign In", Snackbar.LENGTH_LONG)
+                        .setAction("Sign In", v1 ->
+                                Navigation.findNavController(textViewSignOut).navigate(R.id.action_nav_settings_to_loginFragment)).show();
+
             }
         });
 
