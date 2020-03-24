@@ -7,6 +7,7 @@ public class Constants {
     public static final String EVENT_FIREBASE_STORAGE_REFRENCE_PATH = "images/events_flyers/";
     public static final String ADMIN = "production/admin";
     public static final String USERS_FIREBASE_PATH = "production/users";
+    //    public static final String DEVELOPMENT_USERS = "development/users";
     public static String ZOOM_IMAGE_GENERAL_KEY = "everyone_should_use_this_general_key_for_zoom_image";
     public static String EMAIL_KEY = "user_email";
     public static String PASSWORD_KEY = "user_password";

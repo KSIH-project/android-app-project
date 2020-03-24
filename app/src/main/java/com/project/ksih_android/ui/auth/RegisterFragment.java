@@ -22,6 +22,7 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.ksih_android.R;
 import com.project.ksih_android.databinding.FragmentRegisterBinding;
+import com.project.ksih_android.utility.Constants;
 import com.victor.loading.rotate.RotateLoading;
 
 import timber.log.Timber;
@@ -72,7 +73,7 @@ public class RegisterFragment extends Fragment {
                 String current_userID = mAuth.getCurrentUser().getUid();
                 String name = email.substring(0, email.lastIndexOf("@"));
 
-                storeDefaultDatabaseReference = FirebaseDatabase.getInstance().getReference("development/users").child(current_userID);
+                storeDefaultDatabaseReference = FirebaseDatabase.getInstance().getReference(Constants.USERS_FIREBASE_PATH).child(current_userID);
 
                 storeDefaultDatabaseReference.child("user_name").setValue(name);
                 storeDefaultDatabaseReference.child("user_firstName").setValue("");
