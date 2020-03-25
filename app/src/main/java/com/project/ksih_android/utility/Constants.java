@@ -4,7 +4,7 @@ package com.project.ksih_android.utility;
  * Created by SegunFrancis
  */
 public class Constants {
-    public static final String EVENT_FIREBASE_STORAGE_REFRENCE_PATH = "images/events_flyers/";
+    public static final String EVENT_FIREBASE_STORAGE_REFERENCE_PATH = "images/events_flyers/";
     public static final String ADMIN = "production/admin";
     public static final String USERS_FIREBASE_PATH = "production/users";
     //    public static final String DEVELOPMENT_USERS = "development/users";

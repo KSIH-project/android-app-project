@@ -50,12 +50,15 @@
 
         <TextView
             android:id="@+id/text_events_no"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="No Events Added"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_medium"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/imageView_illustration"
+            android:text="No Startup Added"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_illustration"
             app:layout_constraintEnd_toEndOf="@+id/imageView_illustration"
             app:layout_constraintStart_toStartOf="@+id/imageView_illustration" />
 
