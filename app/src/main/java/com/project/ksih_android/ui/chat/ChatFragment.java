@@ -200,7 +200,7 @@ public class ChatFragment extends Fragment {
             }else{
                 String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                FirebaseDatabase.getInstance().getReference().child("development/users").child(user_uID)
+                FirebaseDatabase.getInstance().getReference().child("production/users").child(user_uID)
                         .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -392,7 +392,7 @@ public class ChatFragment extends Fragment {
                     String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     final Uri uri = data.getData();
 
-                    FirebaseDatabase.getInstance().getReference().child("development/users").child(user_uID)
+                    FirebaseDatabase.getInstance().getReference().child("production/users").child(user_uID)
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -472,7 +472,7 @@ public class ChatFragment extends Fragment {
                                 String user_uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-                                FirebaseDatabase.getInstance().getReference().child("development/users").child(user_uID)
+                                FirebaseDatabase.getInstance().getReference().child("production/users").child(user_uID)
                                         .addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

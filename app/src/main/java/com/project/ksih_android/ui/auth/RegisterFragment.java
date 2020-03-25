@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -106,41 +107,21 @@ public class RegisterFragment extends Fragment {
                                     navigateToLoginFragment(mRegisterBinding.buttonRegister);
                                     hideSoftKeyboard(getParentFragment().getActivity());
                                     logout();
-                                } else {
-                                    assert getParentFragment() != null;
-                                    Toast.makeText(getParentFragment().getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
-                                    logout();
-                                    stopProgressBar(mRegisterBinding.progressBar);
-                                    showButton(mRegisterBinding.buttonRegister);
-                                    Timber.d("Sending Verification Failed: %s", task2.getException().getMessage());
                                 }
+                            }).addOnFailureListener(e -> {
+                                assert getParentFragment() != null;
+                                Toast.makeText(getParentFragment().getContext(), "Couldn't send verification mail. Try again", Toast.LENGTH_SHORT).show();
+                                logout();
+                                stopProgressBar(mRegisterBinding.progressBar);
+                                showButton(mRegisterBinding.buttonRegister);
                             });
                         });
-                // Sign in success
-                Timber.d("CreateUserWithEmail:success");
-                FirebaseUser user = mAuth.getCurrentUser();
-                user.sendEmailVerification().addOnCompleteListener(task12 -> {
-                    if (task12.isSuccessful()) {
-                        Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
-                        stopProgressBar(mRegisterBinding.progressBar);
-                        showButton(mRegisterBinding.buttonRegister);
-                        navigateToLoginFragment(mRegisterBinding.buttonRegister);
-                        logout();
-                    } else {
-                        Toast.makeText(getContext(), "Couldn't send verification mail. " + task12.getException().getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                        stopProgressBar(mRegisterBinding.progressBar);
-                        showButton(mRegisterBinding.buttonRegister);
-                        Timber.d("Sending Verification Failed: %s", task12.getException().getMessage());
-                    }
-                });
-            } else {
-                // Sign in fails
-                Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                stopProgressBar(mRegisterBinding.progressBar);
-                showButton(mRegisterBinding.buttonRegister);
-                Timber.d("CreateUserWithEmail:failure %s", task.getException().getMessage());
             }
+        }).addOnFailureListener(e -> {
+            // Sign in fails
+            Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            stopProgressBar(mRegisterBinding.progressBar);
+            showButton(mRegisterBinding.buttonRegister);
         });
     }
 
