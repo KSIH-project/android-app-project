@@ -27,6 +27,8 @@ import com.victor.loading.rotate.RotateLoading;
 
 import timber.log.Timber;
 
+import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
+
 /**
  * Created by SegunFrancis
  */
@@ -102,6 +104,7 @@ public class RegisterFragment extends Fragment {
                                     stopProgressBar(mRegisterBinding.progressBar);
                                     showButton(mRegisterBinding.buttonRegister);
                                     navigateToLoginFragment(mRegisterBinding.buttonRegister);
+                                    hideSoftKeyboard(getParentFragment().getActivity());
                                     logout();
                                 } else {
                                     assert getParentFragment() != null;
@@ -114,23 +117,23 @@ public class RegisterFragment extends Fragment {
                             });
                         });
                 // Sign in success
-                Timber.d("CreateUserWithEmail:success");
-                FirebaseUser user = mAuth.getCurrentUser();
-                user.sendEmailVerification().addOnCompleteListener(task12 -> {
-                    if (task12.isSuccessful()) {
-                        Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
-                        stopProgressBar(mRegisterBinding.progressBar);
-                        showButton(mRegisterBinding.buttonRegister);
-                        navigateToLoginFragment(mRegisterBinding.buttonRegister);
-                        logout();
-                    } else {
-                        Toast.makeText(getContext(), "Couldn't send verification mail. " + task12.getException().getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                        stopProgressBar(mRegisterBinding.progressBar);
-                        showButton(mRegisterBinding.buttonRegister);
-                        Timber.d("Sending Verification Failed: %s", task12.getException().getMessage());
-                    }
-                });
+//                Timber.d("CreateUserWithEmail:success");
+//                FirebaseUser user = mAuth.getCurrentUser();
+//                user.sendEmailVerification().addOnCompleteListener(task12 -> {
+//                    if (task12.isSuccessful()) {
+//                        Toast.makeText(getContext(), "Check your email for verification mail", Toast.LENGTH_SHORT).show();
+//                        stopProgressBar(mRegisterBinding.progressBar);
+//                        showButton(mRegisterBinding.buttonRegister);
+//                        navigateToLoginFragment(mRegisterBinding.buttonRegister);
+//                        logout();
+//                    } else {
+//                        Toast.makeText(getContext(), "Couldn't send verification mail. " + task12.getException().getMessage(),
+//                                Toast.LENGTH_SHORT).show();
+//                        stopProgressBar(mRegisterBinding.progressBar);
+//                        showButton(mRegisterBinding.buttonRegister);
+//                        Timber.d("Sending Verification Failed: %s", task12.getException().getMessage());
+//                    }
+//                });
             } else {
                 // Sign in fails
                 Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();

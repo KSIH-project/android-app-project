@@ -35,6 +35,7 @@ import static com.project.ksih_android.utility.Constants.EMAIL_KEY;
 import static com.project.ksih_android.utility.Constants.PROFILE_FIREBASE_DATABASE_REFERENCE;
 import static com.project.ksih_android.utility.Constants.PROFILE_PHOTO_KEY;
 import static com.project.ksih_android.utility.Constants.USERNAME_KEY;
+import static com.project.ksih_android.utility.Methods.hideSoftKeyboard;
 
 /**
  * Created by SegunFrancis
@@ -105,6 +106,7 @@ public class LoginFragment extends Fragment {
                             Toast.makeText(getActivity(), "Your Email has not been verified", Toast.LENGTH_SHORT).show();
                             stopProgressBar(mLoginBinding.progressBar);
                             showButton(mLoginBinding.buttonSignIn);
+                            hideSoftKeyboard(getParentFragment().getActivity());
                             logout();
                             Timber.d("UserNotVerified");
                         } else {
@@ -116,6 +118,7 @@ public class LoginFragment extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     User user = dataSnapshot.getValue(User.class);
                                     // Update view model
+                                    assert user != null;
                                     mSharedViewModel.username.setValue(user.user_name);
                                     mSharedViewModel.userEmail.setValue(user.user_email);
                                     mSharedViewModel.userProfilePhotoUrl.setValue(user.user_image);
@@ -134,6 +137,7 @@ public class LoginFragment extends Fragment {
                             stopProgressBar(mLoginBinding.progressBar);
                             showButton(mLoginBinding.buttonSignIn);
                             Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
+                            hideSoftKeyboard(getParentFragment().getActivity());
                             navigateToHomeActivity();
                         }
                     } else {
