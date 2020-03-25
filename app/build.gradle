@@ -38,7 +38,7 @@ android {
 }
 
 private static Integer generateVersionCode() {
-    return 19 * 10000000 + 1 * 10000 + 1 * 100 + 1
+    return 19 * 10000000 + 1 * 10000 + 1 * 100 + 2
 }
 
 
