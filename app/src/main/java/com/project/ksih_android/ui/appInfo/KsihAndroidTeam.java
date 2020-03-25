@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.ksih_android.R;
 import com.project.ksih_android.data.AboutDevelopersAdapter;
 import com.project.ksih_android.data.AboutDevelopersData;
+import com.project.ksih_android.utility.Constants;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class KsihAndroidTeam extends Fragment {
 
         mRotateLoadingAboutDevelopers.start();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("development/developer_profile");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference(Constants.DEVELOPMENT_DEVELOPER_PROFILE);
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

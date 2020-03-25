@@ -26,7 +26,7 @@ public class AppInfo extends Fragment {
 
         fragmentAppInfoBinding.toolbarAppInfo.setNavigationOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
-        fragmentAppInfoBinding.textViewAppVersion.setText("v1" + BuildConfig.VERSION_NAME);
+        fragmentAppInfoBinding.textViewAppVersion.setText("v" + BuildConfig.VERSION_NAME);
 
         fragmentAppInfoBinding.textViewByKsihAndroidTeam.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_appInfo_to_fragment_ksih_android_team));
 
