@@ -69,4 +69,5 @@
     <string name="on_boarding_text_title3">INFORMATION</string>
     <string name="on_boarding_text_description3">A place to keep you abreast of all tech events and training that
         will bring tech to the Niger-Delta</string>
+    <string name="no_event_added">No Event Added</string>
 </resources>

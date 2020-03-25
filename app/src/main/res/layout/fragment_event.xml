@@ -56,7 +56,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium"
             android:visibility="gone"
-            android:text="No Startup Added"
+            android:text="@string/no_event_added"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_illustration"
             app:layout_constraintEnd_toEndOf="@+id/imageView_illustration"
