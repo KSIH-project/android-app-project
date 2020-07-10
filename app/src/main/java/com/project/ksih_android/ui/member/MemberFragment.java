@@ -4,32 +4,51 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.ksih_android.R;
+import com.project.ksih_android.data.User;
+import com.victor.loading.rotate.RotateLoading;
+
+import java.util.ArrayList;
 
 public class MemberFragment extends Fragment {
 
-    private MemberViewModel mMemberViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mMemberViewModel =
-                ViewModelProviders.of(this).get(MemberViewModel.class);
+        MemberViewModel memberViewModel = ViewModelProviders.of(this).get(MemberViewModel.class);
         View root = inflater.inflate(R.layout.fragment_member, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        mMemberViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+        ArrayList userList = new ArrayList();
+        RotateLoading membersProgressBar = root.findViewById(R.id.members_progress_bar);
+        startProgressBar(membersProgressBar);
+        memberViewModel.getMembers().observe(this, users -> {
+            userList.clear();
+            for (User user : users) {
+                if (!user.user_stack.isEmpty()) {
+
+                    userList.add(user);
+                }
             }
+            MembersRecyclerAdapter adapter = new MembersRecyclerAdapter(userList, requireContext());
+            RecyclerView recyclerView = root.findViewById(R.id.members_recycler_view);
+//            adapter. notifyItemRangeChanged(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()),users.size());
+//            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+            stopProgressBar(membersProgressBar);
         });
         return root;
+    }
+
+    private void startProgressBar(RotateLoading loading) {
+        loading.start();
+    }
+
+    private void stopProgressBar(RotateLoading loading) {
+        loading.stop();
     }
 }

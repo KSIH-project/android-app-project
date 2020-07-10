@@ -25,7 +25,7 @@ public class RegistrationViewModel extends ViewModel {
             @Override
             public void onFocusChange(View view, boolean focused) {
                 TextInputEditText et = (TextInputEditText) view;
-                if (et.getText().length() > 0 && focused) {
+                if (et.getText().length() > 0 && !focused) {
                     registration.isEmailValid(true);
                 }
             }

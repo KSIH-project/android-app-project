@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+            app:cardPreventCornerOverlap="true"
+        android:focusable="true"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/text_events_description"
+                    style=""
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto"
+                    android:maxLines="3"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/text_events_tittle"
+                    app:layout_constraintStart_toStartOf="@+id/text_events_tittle"
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_tittle"
+                    tools:text="Description" />
+
+
+                <TextView
+                    android:id="@+id/text_events_date"
+                    style=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/text_events_description"
+                    app:layout_constraintStart_toStartOf="@+id/text_events_description"
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_description"
+                    tools:text="21 august 2010" />
+
+                <TextView
+                    android:id="@+id/text_events_time"
+                    style=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/roboto"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/text_events_date"
+                    app:layout_constraintStart_toStartOf="@+id/text_events_date"
+                    app:layout_constraintTop_toBottomOf="@+id/text_events_date"
+                    tools:text="12:am" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/image_events_list"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ksih_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_corner_radius="340dp" />
+
+                <TextView
+                    android:id="@+id/text_events_tittle"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_events_list"
+                    app:layout_constraintTop_toTopOf="@+id/image_events_list"
+                    tools:text="Dev C " />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

@@ -13,7 +13,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/button_color</item>
+        <item name="colorAccent">@color/colorSecondaryDark</item>
     </style>
 
     <!-- Toolbar text style -->
@@ -22,6 +22,14 @@
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--  CardView style -->
+    <style name="cardViewApperance">
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="contentPadding">4dp</item>
+
     </style>
 
     <!-- Button text style -->
@@ -59,5 +67,40 @@
         <item name="android:background">@color/color_text_input_background</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="textHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:textColor">@color/colorSecondary</item>
+    </style>
+
+    <style name="textBody">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="eventCardDetails">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">8dp</item>
+        <item name="cardCornerRadius">8dp</item>
+    </style>
+
+
+    <style name="MainText" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/colorMainText</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+
+    <style name="SubText" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/colorSubText</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 </resources>

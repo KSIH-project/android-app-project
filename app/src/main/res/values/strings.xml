@@ -13,4 +13,64 @@
     <string name="events">Events</string>
     <string name="navigation_drawer_open">Drawer open</string>
     <string name="navigation_drawer_close">Drawer close</string>
+    <string name="about_developers">This is the official mobile app for Ken saro-wiwa Innovation hub developed by the Android mobile app team of the hub.</string>
+    <string name="by_ksih_android_team"><u>By KSIH android team</u></string>
+    <string name="app_version">v1.0</string>
+    <string name="ksih_app_title">KSIH App </string>
+    <string name="title_about_ksih">About KSIH</string>
+    <string name="select_a_date">Select a Date</string>
+    <string name="choose_time">Choose Time</string>
+    <string name="about_the_ken_saro_wiwa_innovation_hub">ABOUT THE KEN SARO WIWA INNOVATION HUB</string>
+
+    //alert dialog message
+    <string name="event_delete_alert_message">Do you want to delete this event?</string>
+    // event text field validation error
+    <string name="event_error_message">Please fill in the field</string>
+    <string name="event_location">Event Location</string>
+
+    <string name="clear_history">Clear History</string>
+
+    //for chat
+    <string-array name="spinerViewPeople">
+        <item>Default</item>
+        <item>Name</item>
+        <item>Date</item>
+    </string-array>
+
+    <string name="profile">Profile</string>
+    <string name="friends">Friends</string>
+    <string name="all_peoples">Peoples</string>
+    <string name="all_friends">Friends</string>
+    <string name="menu_search">Search</string>
+    <string name="profile_settings">My Profile</string>
+    <string name="active_now">Active now</string>
+    <string name="friendship_date">Friendship date -</string>
+    <string name="kish_rules_text">KSIH Rules</string>
+    <string name="first_time_welcoming_message">
+        Welcome to Ken Saro-Wiwa Innovation hub mobile appilication, Check out our Events, Startups, Members, and Project we have in our hub, we hope you have a great time with us, please Register with us and enjoy more fun.
+    </string>
+
+
+    <string name="onboard_app_name">Ken Saro-Wiwa Innovation hub Mobile App</string>
+    <string name="ken_quote">Whether I live or die is immaterial. It is enough
+        to know that there are people who commit time, money and energy to fight this one evil among so
+        many others predominating worldwide. If they do not succeed today, they will succeed tomorrow.</string>
+    <string name="ken_saro_wiwa">Ken \nSaro-wiwa</string>
+    <string name="start_onboarding_text">START</string>
+    <string name="next_onboarding_text">NEXT</string>
+    <string name="prev_onboarding_text">PREV</string>
+    <string name="indicator_image_description">Indicator Image</string>
+    <string name="first_onboarding_text">Have access to various Nigerian meals</string>
+    <string name="second_onboarding_text">See how they are prepared</string>
+    <string name="third_onboarding_text">Prepare Nigerian meals and enjoy with friends and family</string>
+    <string name="on_boarding_text_title1">KSIH MOBILE APP</string>
+    <string name="on_boarding_text_description1">It is enough to know that are poeple who commit time,
+     money and energy to fight this evil one among so many others predominating worldwide. if they do not succeed today they will
+    tomorrow</string>
+    <string name="on_boarding_text_title2">CONNECT</string>
+    <string name="on_boarding_text_description2">A place where lovers of tech can connect and share ideas
+    on how to develop the tech Eco system in the Niger-Delta and in Nigeria in General</string>
+    <string name="on_boarding_text_title3">INFORMATION</string>
+    <string name="on_boarding_text_description3">A place to keep you abrest of all tech events and training that
+        will bring tech to the Niger-Delta</string>
 </resources>

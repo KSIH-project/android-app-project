@@ -1,45 +1,86 @@
 package com.project.ksih_android.ui.startup;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.Group;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.project.ksih_android.R;
-import com.project.ksih_android.ui.AuthActivity;
+import com.project.ksih_android.databinding.FragmentStartupBinding;
+
+import timber.log.Timber;
+
+import static com.project.ksih_android.utility.Methods.checkAdmin;
 
 public class StartupFragment extends Fragment {
 
     private StartupViewModel mStartupViewModel;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mStartupViewModel =
                 ViewModelProviders.of(this).get(StartupViewModel.class);
-        final View root = inflater.inflate(R.layout.fragment_startup, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        mStartupViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //textView.setText(s);
+        return setUpBinding(inflater, container);
+    }
+
+    private View setUpBinding(LayoutInflater inflater, ViewGroup container) {
+        FragmentStartupBinding startupBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_startup, container, false);
+        if (user != null) {
+            if (checkAdmin(user.getUid())) {
+                startupBinding.tempFab.setVisibility(View.VISIBLE);
+                Timber.d("currentUser: %s", user.getUid());
+            } else {
+                Timber.d("currentUser: %s", user.getUid());
+                startupBinding.tempFab.setVisibility(View.GONE);
             }
-        });
-        // TODO: Remove temporary navigation
-        textView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(root.getContext(), AuthActivity.class));
+        } else {
+            startupBinding.tempFab.setVisibility(View.GONE);
+        }
+        startupBinding.rotateLoading.start();
+        setUpRecyclerView(startupBinding);
+
+        startupBinding.tempFab.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_navigation_startup_to_addStartUpFragment));
+        return startupBinding.getRoot();
+    }
+
+    private void setUpRecyclerView(FragmentStartupBinding startupBinding) {
+        startupBinding.startUpRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        mStartupViewModel.getStartUps().observe(this, startUpFields -> {
+            StartUpAdapter adapter = new StartUpAdapter(startUpFields, requireContext());
+            startupBinding.startUpRecyclerView.setHasFixedSize(true);
+            startupBinding.startUpRecyclerView.setAdapter(adapter);
+            // Toggle empty list sign
+            if (startUpFields.size() < 1) {
+                displayEmptyListImage(startupBinding.emptyListGroup);
+            } else {
+                hideEmptyListImage(startupBinding.emptyListGroup);
             }
+            startupBinding.rotateLoading.stop();
         });
-        return root;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mStartupViewModel.removeListeners();
+    }
+
+    private void displayEmptyListImage(Group emptyListGroup) {
+        emptyListGroup.setVisibility(View.VISIBLE);
+    }
+
+    private void hideEmptyListImage(Group emptyListGroup) {
+        emptyListGroup.setVisibility(View.INVISIBLE);
     }
 }
